@@ -1,9 +1,5 @@
 # Combine's Experimental Transhumans and Synths
 
-<p align="center">
-  <sub>OVERVIEW</sub>
-</p>
-
 These addons expand the Half-Life experience in Garry's Mod by adding a large amount of new content, including:
 
 - NPCs
