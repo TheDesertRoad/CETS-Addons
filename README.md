@@ -40,11 +40,19 @@ Download the addon as a `.zip` file, then extract it.
 
 After extracting, you should have a folder similar to:
 
-vjguardfixim
-├── lua
-├── materials
+
+├── 
+├── 
 ├── models
 └── sound
+
+| Folder Name ||
+|-------------|-|
+| `vjguardfixim` ||
+| `/lua` ||
+| `/materials` ||
+| `/models` ||
+| `/sounds` ||
 
 Important: The addon folder should directly contain folders like lua, materials, models, etc. It should not be nested inside another folder. The game expects addons to be placed directly under the addons directory.
 
