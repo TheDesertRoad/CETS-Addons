@@ -1,0 +1,28 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/v_oicw/v_oicw_sheet"
+	"$bumpmap" "Models/Weapons/v_oicw/v_oicw_sheet_normal"
+	"$selfillum" 	1
+
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/weapons/v_oicw/v_oicw_sheet"
+		"$selfillummask" 	"models/weapons/v_oicw/v_oicw_sheet_light"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/weapons/v_oicw/v_oicw_sheet"
+	}
+
+	"360?$color2" "[ 0.8 0.8 0.8 ]"
+
+	"$phong" "1"
+	"$phongexponent" "16"
+	"$phongboost"	"16"
+	"$phongfresnelranges"	"[.1 0.8 3]"
+
+	"$envmaptint" "[.01 .01 .02]"
+	"$envmap" "env_cubemap"
+}

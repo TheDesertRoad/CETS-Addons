@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_hazmat/hazmatbody"
+	"$bumpmap" "models/hl2_hazmat/hazmatbody_n"
+	"$surfaceprop" "flesh"
+	"$model" 1
+	"$phong" "1"
+	"$phongBoost" "3"
+	"$phongexponenttexture" "models/hl2_hazmat/hazmatbody_pingphong"
+	"$phongFresnelRanges" "[0.1 0.5 1]"
+}

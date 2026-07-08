@@ -1,0 +1,12 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+//"Wireframe"
+{
+	"$bumpmap" "models/hl2_fassassin/chest_normal"
+	"$phong" "1"
+	"$phongboost" "5"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+	"$model" 1
+}

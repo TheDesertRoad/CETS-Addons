@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/hl2_alienranger/fanny"
+
+	$ambientocclusion	1
+	$halflambert	1
+	$nocull	1
+}

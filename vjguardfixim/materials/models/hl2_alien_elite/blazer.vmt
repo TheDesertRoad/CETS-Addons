@@ -1,0 +1,16 @@
+UnlitGeneric
+{
+	$basetexture models/hl2_alien_elite/blazer
+	$additive 1
+	$nocull 1
+		"$nodecal" "1"
+	Proxies
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 1
+			"texturescrollangle" 90
+		}
+	}
+}

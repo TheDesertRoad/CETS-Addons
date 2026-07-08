@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/police/supercop_lens"
+	"$bumpmap" "models/police/supercop_lens_n"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$halflambert" 1
+	"$envmaptint" "[.5 .5 .5]"
+	"$selfillum" 1
+}

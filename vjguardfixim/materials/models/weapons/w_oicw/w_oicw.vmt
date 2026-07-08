@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Weapons/W_oicw/w_oicw"
+
+	"$surfaceprop" "metal"
+	"$bumpmap" "models/Weapons/W_oicw/w_oicw_n"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+	"$envmaptint" "[ .16 .17 .35 ]"
+}

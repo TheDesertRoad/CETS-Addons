@@ -1,0 +1,31 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\c_eng_m\combinesoldier_backpac2"
+	"$selfillum" 1
+	"$model" 1
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" .50
+			"texturescrollangle" -90
+		}
+	}
+
+//	"$phong" 1
+//	"$phongboost" "0.4"
+//	"$halflambert" "1"
+//	"$phongexponent" "25"
+//	"$phongalbedotint" "1"										
+//	"$phongfresnelranges"	"[.1 .5 1.0]"
+	"$phong" 1
+	"$phongboost" "1"
+	"$halflambert" "1"
+	"$phongexponent" "25"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+}
+
+
+

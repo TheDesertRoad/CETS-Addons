@@ -1,0 +1,6 @@
+UnlitGeneric
+{
+    "$basetexture" "models/hl2_alien_elite/plasma_v_alpha"
+	"$nodecal" "1"
+	$additive 1
+}

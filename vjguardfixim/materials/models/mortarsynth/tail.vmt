@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitSelfIlluminatedTexture
+	"$basetexture" "models/MortarSynth/tail"
+	"$selfillum" 1
+
+	"$envmaptint" "[ .02 .02 .02 ]"
+	"$normalmapalphaenvmapmask" 1
+	"$bumpmap" "models/Synth/mainbody_n"
+	"$halflambert" 1
+	// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+ 
+ 	"$phong"     "1"
+ 	"$phongboost"   "2"
+
+	"$phongexponent"   "20"
+ 	"$phongwarptexture" "Models/synth/synthenvmap"
+ 	"$phongalbedotint" 1
+
+	$detail "detail\noise_detail_01"
+	$detailscale "7.74"
+	$detailblendfactor "0.4"
+	$detailblendmode "0"
+}

@@ -1,0 +1,15 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+//"Wireframe"
+{
+	"$bumpmap" "models/hl2_outfassassin/chest_normal"
+	//"$normalmapalphaenvmapmask" 1
+	//"$envmap" "shadertest/cubemap"
+	"$model" 1
+	"$basetexture" "models/hl2_outfassassin/chest2"
+	"$phong" "1"
+	"$phongboost" "5"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+}

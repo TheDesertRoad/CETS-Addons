@@ -1,0 +1,5 @@
+ENT.Base 			= "npc_fassassin_vj_cets"
+ENT.Type 			= "ai"
+ENT.PrintName 		= "Overwatch Assassin"
+ENT.Author 			= "VALVe"
+ENT.Category		= "Combine"

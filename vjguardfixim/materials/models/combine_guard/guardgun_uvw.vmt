@@ -1,0 +1,29 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/Combine_Guard/guardgun_uvw"
+	"$selfillum" 1
+
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/Combine_Guard/guardgun_uvw"
+		"$selfillummask" 	"models/Combine_Guard/guardgun_uvw_light"
+	}
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/Combine_Guard/guardgun_uvw"
+	}
+	"$surfaceprop" "solidmetal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$envmaptint" "[ .015 .020 .015]"
+	"$envmapsaturation" 1
+	"$envmapcontrast" 1
+
+	"$phong" 1
+	"$phongboost" "2"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.3 .5 .3]"
+	"$bumpmap" "models/Combine_Guard/guardgun_uvw_n"
+}

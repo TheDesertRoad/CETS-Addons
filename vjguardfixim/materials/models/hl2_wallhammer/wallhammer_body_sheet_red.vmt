@@ -1,0 +1,32 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_wallhammer/wallhammer_body_sheet_red"
+	"$bumpmap" "models/hl2_wallhammer/wallhammer_body_sheet_n"
+
+//	"$phong" 1
+//	"$phongboost" "0.4"
+//	"$halflambert" "1"
+//	"$phongexponent" "25"
+//	"$phongalbedotint" "1"										
+//	"$phongfresnelranges"	"[.1 .5 1.0]"
+	"$model" 1
+	"$phong" 1
+	"$phongboost" "2"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+
+	"$selfillum" 1
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"Models/hl2_wallhammer/combinesoldier_shotgun_noalpha"
+		"$selfillummask" 	"Models/Combine_soldier/combinesoldierselfillummask"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"Models/hl2_wallhammer/combinesoldiersheet_shotgun"
+	}
+}

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/items/crafting_metal/resin_pucks"
+	"$surfaceprop"	"item"
+	"$bumpmap"	"models/items/crafting_metal/resin_pucks_normal"
+	"$model" "1"
+	"$phong" "1"
+	"$phongboost" "1"
+}
+

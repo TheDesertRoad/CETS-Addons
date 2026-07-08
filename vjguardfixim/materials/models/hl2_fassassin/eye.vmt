@@ -1,0 +1,14 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	//"$envmap" "env_cubemap"
+	//"$envmaptint" "[1.0 0.9 0.0]"
+	$selfillum 1
+	"$basetexture" "models/hl2_fassassin/eye"
+	"$model" 1
+	"$phong" "1"
+	"$phongboost" "5"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+}

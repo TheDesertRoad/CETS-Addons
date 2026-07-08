@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/hl2_alienranger/neak_cl"
+
+	$ambientocclusion	1
+	$halflambert	1
+	$nocull	1
+	
+	"$phong" "1"
+	"$phongboost" "10"
+	"$phongexponenttexture" "models/hl2_alienranger/combine_elite_phong"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.01"
+}

@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Combine_Guard/face"
+	"$surfaceprop" "flesh"
+	"$nodecal" 1
+	"$surfaceprop" "flesh"
+	"$bumpmap" "models/Combine_Guard/face_n"
+	$halflambert 1
+	$detail "detail/organic_detail_06"
+	"$detailblendfactor" 1.10
+	"$phong" 1
+	"$phongboost" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .2 .1]"
+	$phongexponent 120
+}

@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Assassin/eyepiecered"
+	$bumpmap "models/Assassin/eyepiecered_n"
+	$phong 1
+	$phongalbedotint 1
+	$phongfresnelranges "[0.4 0.7 0.9]"
+	$halflambert 1
+	$phongboost 2
+}

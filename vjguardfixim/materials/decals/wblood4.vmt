@@ -1,0 +1,9 @@
+"DecalModulate"
+{
+	"$translucent" 1
+	"$basetexture" "Decals/wblood4"
+	"$decal" 1
+	"$decalscale" .25
+	"$vertexcolor" 1
+	"$vertexalpha" 1
+}

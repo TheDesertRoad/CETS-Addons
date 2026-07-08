@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_ordinal/ordinal_sheet"
+	"$bumpmap" "models/hl2_ordinal/ordinal_sheet_n"
+
+//	"$phong" 1
+//	"$phongboost" "0.4"
+//	"$halflambert" "1"
+//	"$phongexponent" "25"
+//	"$phongalbedotint" "1"										
+//	"$phongfresnelranges"	"[.1 .5 1.0]"
+	"$phong" 1
+	"$phongboost" "1"
+	"$halflambert" "1"
+	"$phongexponent" "25"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+}

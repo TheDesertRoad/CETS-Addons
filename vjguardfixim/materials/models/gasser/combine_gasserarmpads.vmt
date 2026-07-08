@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/gasser/combine_gasserarmpads"
+	$BumpMap 				   "models\ej_police\combine_heavyarmpads_n"
+
+	$phong 					   1
+	$phongboost 			   0.2
+	$phongfresnelranges 	   "[0.18 0.33 5]"
+	$phongexponenttexture      "models\gasser\combine_heavyarmpads_exp"
+
+	$detail 				   "models\gasser\combine_heavyarmpads_glow"
+	$detailscale 			   1
+	$detailblendfactor 	   	   1
+	$detailblendmode 		   5
+
+	$rimlight                  1
+	$rimlightexponent          75
+	$rimlightboost             .15
+
+	$nocull					   1
+
+	$selfillum				   1
+	$selfillumtint			   "[-0.5 2 10]"
+	$selfillummask			   "models\gasser\combine_heavyarmpads_glow"
+}

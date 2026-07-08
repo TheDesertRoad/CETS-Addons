@@ -1,0 +1,32 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_alienranger/headmask_cl"
+	"$bumpmap" "Models/hl2_alienranger/headmask_cl_normal"
+
+	$ambientocclusion	1
+	$halflambert	1
+	$nocull	1
+
+	"$selfillum" 1
+
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/hl2_alienranger/headmask_cl"
+		"$selfillummask" 	"models/hl2_alienranger/headmask_cl_l"
+	}
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/hl2_alienranger/headmask_cl"
+	}
+	
+// Concept art-style Phong
+	"$phong" "1"
+	"$phongboost" "14"
+	"$phongexponenttexture" "models/hl2_alienranger/combine_elite_phong"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.01"
+}

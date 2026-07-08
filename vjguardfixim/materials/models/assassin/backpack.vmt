@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Assassin/backpack"
+	$bumpmap "models/Assassin/backpack_n"
+	$phong 1
+	$phongalbedotint 1
+	$phongfresnelranges "[0.4 0.7 0.9]"
+	$halflambert 1
+	$phongboost 0.3
+}

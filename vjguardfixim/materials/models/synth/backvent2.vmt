@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Synth/backvent2"
+	"$bumpmap" "models/Synth/backvent2_n"
+	"$halflambert" 1
+	// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+ 
+ 	"$phong"     "1"
+ 	"$phongboost"   "2"
+
+	"$phongexponent"   "20"
+ 	"$phongwarptexture" "Models/synth/synthenvmap"
+ 	"$phongalbedotint" 1
+
+	$detail "detail\noise_detail_01"
+	$detailscale "7.74"
+	$detailblendfactor "0.4"
+	$detailblendmode "0"
+}

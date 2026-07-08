@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_transperiod/transperiod_sheet_blue"
+	"$bumpmap" "models/hl2_transperiod/transperiod_sheet_n"
+
+	"$phong" 1
+	"$phongboost" "0.4"
+	"$halflambert" "1"
+	"$phongexponent" "25"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+}

@@ -1,0 +1,13 @@
+AddCSLuaFile("shared.lua")
+include("shared.lua")
+/*-----------------------------------------------
+	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
+	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
+	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
+-----------------------------------------------*/
+ENT.Model = "models/hl2_wscanner.mdl"
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Init()
+	self:SetSpawnEffect(false)
+	self:SetCollisionBounds(Vector(20, 20, 26), Vector(-20, -20, -6))
+end

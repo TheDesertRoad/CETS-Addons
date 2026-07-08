@@ -1,0 +1,12 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	"$bumpmap" "models/hl2_outfassassin/head_normal"
+	//"$envmap" "shadertest/cubemap"
+	"$model" 1
+	"$phong" "1"
+	"$phongboost" "5"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+}

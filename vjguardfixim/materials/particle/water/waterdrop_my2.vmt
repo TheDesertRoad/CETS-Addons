@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"particle/water/WaterDrop_My2"
+	"$vertexcolor" 1 
+	"$vertexalpha" 1 
+	$maxsize .85
+	$startfadesize .675
+	$endfadesize .75
+}

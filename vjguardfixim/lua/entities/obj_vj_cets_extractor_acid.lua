@@ -1,0 +1,129 @@
+AddCSLuaFile()
+/*-----------------------------------------------
+	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
+	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
+	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
+-----------------------------------------------*/
+ENT.Type 			= "anim"
+ENT.Base 			= "obj_vj_grenade"
+ENT.PrintName		= "Extractor"
+ENT.Author 			= ""
+ENT.Spawnable = false
+
+ENT.Model = {"models/weapons/w_comgrenade_acid.mdl"}
+
+ENT.SoundTbl_OnCollide = {"physics/metal/metal_grenade_impact_hard1.wav", "physics/metal/metal_grenade_impact_hard2.wav", "physics/metal/metal_grenade_impact_hard3.wav"}
+
+ENT.IdleSoundLevel = 80
+ENT.OnCollideSoundLevel = 65
+ENT.CollisionDecal = "BeerSplash"
+
+ENT.RadiusDamageRadius = 320 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
+ENT.RadiusDamage = 75 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
+ENT.RadiusDamageType = DMG_ACID
+
+ENT.VJ_ID_Grabbable = true
+ENT.AcidCount = 8
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnInitialize()
+	self.StartTime = CurTime()
+	self.NextBlip = CurTime()
+
+	local pos = self:GetPos()
+	local pitch = math.random(105, 115)
+	local function beepSound(time, snd)
+		timer.Simple(time, function()
+			sound.Play(snd, pos, 100, pitch)
+		end)
+	end
+
+	beepSound(0, "weapons/grenade/timebomb2.wav")
+	beepSound(1.0, "weapons/grenade/timebomb2.wav")
+	beepSound(1.9, "weapons/grenade/timebomb3.wav")
+
+	hook.Add("GravGunOnPickedUp", self, function(_, ply, ent)
+		if ent == self then
+			self:SetOwner(ply, ent)
+		end
+	end)
+
+	hook.Add("OnPlayerPhysicsPickup", self, function(_, ply, ent)
+		if ent == self then
+			self:SetOwner(ply, ent)
+		end
+	end)
+
+	hook.Add("OnPhysgunPickup", self, function(_, ply, ent)
+		if ent == self then
+			self:SetOwner(ply, ent)
+		end
+	end)
+
+	util.SpriteTrail(self, 1, Color(0, 255, 0), true, 8, 0.5, 1.0, 0.1, "effects/blueblacklargebeam")
+
+	timer.Simple(2, function()
+		if IsValid(self) then
+			self:Destroy()
+			VJ.ApplyRadiusDamage(self, self, self:GetPos(), self.RadiusDamageRadius, self.RadiusDamage, self.RadiusDamageType, true, true, {DisableVisibilityCheck=true, Force=160})
+		end
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Use(plyUse)
+	plyUse:PickupObject( self )
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local defAngle = Angle(0, 0, 0)
+local vecZ4 = Vector(0, 0, 4)
+local vezZ100 = Vector(0, 0, 100)
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnDestroy()
+	local myPos = self:GetPos()
+
+	self:SetLocalPos(myPos + vecZ4) -- Because the entity is too close to the ground
+	local tr = util.TraceLine({
+		start = myPos,
+		endpos = myPos - vezZ100,
+		filter = self
+	})
+	
+	self:DealDamage()
+
+	if self:WaterLevel() > 1 then 
+		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 100, 200)
+		VJ.EmitSound(self, "weapons/grenade/grenade_acid_fadein.wav", 100, math.random(95, 105))
+		util.ScreenShake(myPos, 5, 35, 1, 313)
+
+		ParticleEffect("water_gren_test1", self:GetPos(), Angle(0,0,0), nil)
+		ParticleEffect("assassin_projectile_explosion_1", self:GetPos(), Angle(0,0,0))
+	else
+		VJ.EmitSound(self, "weapons/grenade/grenade_acid_fadein.wav", 100, math.random(95, 105))
+		VJ.EmitSound(self, "weapons/fire_explode.wav", 90, math.random(105, 110))
+		util.ScreenShake(myPos, 60, 70, 1, 4096)
+	
+		ParticleEffect("assassin_projectile_explosion_1", self:GetPos(), Angle(0,0,0))
+
+		local expLight = ents.Create("light_dynamic")
+		expLight:SetKeyValue("brightness", "2")
+		expLight:SetKeyValue("distance", "256")
+		expLight:SetLocalPos(myPos)
+		expLight:SetLocalAngles(self:GetAngles())
+		expLight:Fire("Color", "32 100 255")
+		expLight:SetParent(self)
+		expLight:Spawn()
+		expLight:Activate()
+		expLight:Fire("TurnOn", "", 0)
+		self:DeleteOnRemove(expLight)
+
+		util.Decal(VJ.PICK(self.CollisionDecal), tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
+	end
+
+	for i = 1,self.AcidCount do
+		self.FireThrows = ents.Create("npc_acid_throw_vj_cets")
+		self.FireThrows:SetPos(self:GetPos() + Vector(math.random(-86, 86), math.random(-86, 86), 0))
+		self.FireThrows:Spawn()
+		self.FireThrows:Activate() 
+		self.FireThrows:SetOwner(self)
+		self:SetGroundEntity(NULL)
+	end
+end

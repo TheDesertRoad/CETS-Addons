@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_grunt/citizen_sheet"
+	"$nocull" "1"
+}

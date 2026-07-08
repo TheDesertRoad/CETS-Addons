@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Assassin/eyepiece"
+	"$selfillum" 1
+	$bumpmap "models/Assassin/eyepiece_n"
+	$phong 1
+	$phongalbedotint 1
+	$phongfresnelranges "[0.4 0.7 0.9]"
+	$halflambert 1
+	$phongboost 2
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/Assassin/eyepiece"
+		"$selfillummask" 	"models/Assassin/eyepiece_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/Assassin/eyepiece"
+	}
+}

@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_d"
+	"$bumpmap"    "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_n"
+	"$halflambert" "1"
+	
+	"$detail" "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_ao"
+	"$detailscale"	"1"
+	"$detailblendfactor"	"0.1"
+
+	"$surfaceprop" "metal"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+	"$envmaptint" "[ .75 .9 1.6]"
+	"$basealphaenvmapmask" 1
+	"360?$color2" "[ 0.6 0.6 0.6 ]"	
+}
+
+

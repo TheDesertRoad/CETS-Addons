@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/police/supercop_sheet_ret"
+	"$bumpmap" "models/police/supercop_sheet_n"
+	"$halflambert" 1
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmaptint" "[.5 .5 .5]"
+
+	"$detail" "models/police/supercop_sheet_ret_l"
+	"$detailscale" "1"
+	"$detailblendfactor" "1.20"
+	"$detailblendmode" "5""
+}

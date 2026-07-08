@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/player/puntleycmb/cmbworker_helmet.vtf"
+	"$bumpmap" "Models/player/puntleycmb/cmbworker_helmet_normal.vtf"
+	
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "5"
+	"$phongfresnelranges" "[0.05 0.2 0.6]"
+}

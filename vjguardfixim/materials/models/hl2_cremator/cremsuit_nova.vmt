@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/hl2_cremator/cremsuit_nova"
+	$bumpmap "models/hl2_cremator/cremsuit_normal"
+	$phong 1
+	$phongexponent 30
+	$phongexponenttexture "models/hl2_cremator/cremsuit_exponent"
+	$phongfresnelranges "[1 0.5 1]"
+	$phongtint "[.70 0.75 .55]"
+	$phongboost 0.75
+	$halflambert 1
+}

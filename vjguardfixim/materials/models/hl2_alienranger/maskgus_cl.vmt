@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_alienranger/maskgus_cl"
+	
+	$ambientocclusion	1
+	$halflambert	1
+	$nocull	1
+}

@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\hl2_ordinal\drop_bag"
+	"$envmap" "env_cubemap"	
+	"$bumpmap" "models\hl2_ordinal\drop_bag_normal"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$surfaceprop" "flesh"
+	"$model" 1
+	"$selfillum" 1
+}

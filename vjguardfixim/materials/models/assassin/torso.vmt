@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Assassin/torso"
+	$bumpmap "models/Assassin/torso_n"
+	$phong 1
+	$phongalbedotint 1
+	$phongfresnelranges "[0.4 0.7 0.9]"
+	$halflambert 1
+	$phongboost 0.3
+	$phongexponent 30
+}

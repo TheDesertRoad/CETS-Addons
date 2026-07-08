@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/Combine_Guard/misc"
+	"$envmap" "env_cubemap"
+	"$envmaptint" 0.01 0.01 0.01
+
+	"$nodecal" 1
+	"$phong" 1
+	"$phongboost" "1"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.3 .5 .3]"
+	$detail "detail/metal_detail_01"
+	$phongexponent 120
+	"$bumpmap" "models/Combine_Guard/misc_n"
+}

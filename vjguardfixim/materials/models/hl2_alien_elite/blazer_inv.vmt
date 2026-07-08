@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	$basetexture models/hl2_alien_elite/blazer_inv
+	$Translucent 1
+	$nodecal 1
+}

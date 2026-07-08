@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	$BaseTexture 			"models/gasser/soldier_thighbag"
+	$BumpMap 			"models/gasser/soldier_thighbagn"
+}

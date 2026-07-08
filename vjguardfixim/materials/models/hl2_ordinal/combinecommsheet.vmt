@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models\hl2_ordinal\combinecommsheet"
+	//"$envmap" "env_cubemap"	
+	"$bumpmap" "models\hl2_ordinal\combinecommsheet_normal"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" "1.25"
+	"$model" 1
+	"$selfillum" 1
+	"$halflambert" 1
+}
+
+
+
+

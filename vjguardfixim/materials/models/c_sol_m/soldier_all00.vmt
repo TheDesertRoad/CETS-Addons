@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models\c_sol_m\soldier_all00"
+	"$bumpmap" "models\c_sol_m\soldier_all00_normal"
+	"$surfaceprop" "flesh"
+	"$model" 1
+	"$phong" 1
+	"$phongboost" "1"
+	"$halflambert" "1"
+	"$phongexponenttexture" "models/combine_soldier/combinesoldier_phong"
+	"$phongalbedotint" "1"		
+	"$selfillum" 1								
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+}
+
+
+
+

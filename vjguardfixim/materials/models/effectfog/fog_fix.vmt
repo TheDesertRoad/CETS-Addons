@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/effectfog/fog"
+	"$translucent" 1
+}

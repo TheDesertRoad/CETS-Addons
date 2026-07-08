@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gasser/combine_heavykneepads"
+	"$bumpmap" "models/gasser/combine_heavykneepads_n"
+}

@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"Models/hl2_alienranger/Combine_elite"
+	"$bumpmap" "models/hl2_alienranger/combine_elite_normal"
+	
+	$halflambert	1
+	$alphatest 		1
+	
+	"$phong" "1"
+	"$phongboost" "10"
+	"$phongexponenttexture" "models/hl2_alienranger/combine_elite_phong"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.01"
+}
+
+
+

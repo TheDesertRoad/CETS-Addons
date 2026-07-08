@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitSelfIlluminatedTexture
+	"$basetexture" "models/Synth/innereng"
+	"$selfillum" 1
+	"$halflambert" 1
+
+	$detail "detail\noise_detail_01"
+	$detailscale "7.74"
+	$detailblendfactor "0.4"
+	$detailblendmode "0"
+}

@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+    "$basetexture" "models/hl2_alien_elite/sfsworld_p"
+	"$nodecal" "1"
+}

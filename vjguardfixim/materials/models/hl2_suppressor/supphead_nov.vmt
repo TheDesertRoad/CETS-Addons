@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_suppressor/supphead_nov"
+	"$bumpmap" "models/hl2_suppressor/supphead_n"
+	"$basealphaenvmapmask" 1
+	"$model" 1
+	"$phong" 1
+	"$phongboost" "0.8"
+	"$phongexponent" "15"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+}

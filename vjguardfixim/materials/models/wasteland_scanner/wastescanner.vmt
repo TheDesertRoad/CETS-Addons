@@ -1,0 +1,32 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/wasteland_scanner/wastescanner"
+	"$bumpmap" "models/wasteland_scanner/wastescanner_normal"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" 0.8
+	"$envmapsaturation" .01
+	"$envmaptint" "[ .02 .02 .02 ]"
+	"$normalmapalphaenvmapmask" 1
+
+	"$phong" 1
+	"$phongboost" "0.6"
+	"$phongexponent" "64"
+	"$halflambert" "1"									
+	"$phongfresnelranges"	"[.01 .05 .01]"
+	"$phongwarptexture"  "models/wasteland_scanner/w_iridescence"
+
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"Models/wasteland_scanner/wastescanner"
+		"$selfillummask" 	"Models/wasteland_scanner/wastescanner_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"Models/wasteland_scanner/wastescanner"
+	}
+}

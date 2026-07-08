@@ -1,0 +1,17 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_outfassassin/arm"
+	"$bumpmap" "models/hl2_outfassassin/neck_normal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$envmaptint" "[ .03 .03 .03 ]"
+	"$envmapconstrast" "1"
+	"$model" "1"
+	"$phong"     "1"
+	"$phongexponent"  "64"
+	"$phongboost"   "2"
+	"$phongfresnelranges"   "[1 .8 .3]"
+	"$phongwarptexture"  "models/ministrider/mini_iridescence"
+	"$halflambert" "1"
+}

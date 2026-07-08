@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/hl2_suppressor/grunteyes_nova"
+	"$surfaceprop" "flesh"
+	"$model" 1
+	"$selfillum" 1
+	"$halflambert" "1"
+}

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "models\beta\weapons\v_hmg1\lens"
+	"$translucent" 1
+	"$nodraw" 1
+}

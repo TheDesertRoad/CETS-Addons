@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/healthpen/healthpen"
+	"$surfaceprop" "Default"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .4 .4 .4]"
+	"$envmapmask" "Models/healthpen/healthpen_envmask"
+	"$selfillum" 1
+	" $selfillummask" "Models/healthpen/healthpen_mask"
+}

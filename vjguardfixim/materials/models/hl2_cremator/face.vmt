@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture "models/hl2_cremator/face"
+	$bumpmap "models/hl2_cremator/face_n"
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongtint "[1 0.90 0.40]"
+	$phongexponent 50
+	$phongboost 2
+	$halflambert 1
+}

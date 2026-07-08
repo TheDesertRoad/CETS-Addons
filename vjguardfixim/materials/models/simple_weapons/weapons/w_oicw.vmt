@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/simple_weapons/weapons/w_oicw"
+	"$envmapmask" "models/simple_weapons/weapons/w_oicw"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" "1.0"
+	"$selfillum" "1"
+}

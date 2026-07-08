@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/hl2_hazmat/cmbworker_helmet.vtf"
+	"$bumpmap" "Models/hl2_hazmat/cmbworker_helmet_n.vtf"
+	
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "5"
+	"$phongfresnelranges" "[0.05 0.2 0.6]"
+}

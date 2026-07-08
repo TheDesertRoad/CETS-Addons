@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	"$basetexture" "models/hl2_alien_elite/headside"
+	"$bumpmap" "models/hl2_alien_elite/headside_n"
+	"$halflambert" "1"
+	"$surfaceprop"	"alienflesh"
+//	"$selfillum" "1"
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"0.1"
+	"$phongexponent"	"32"
+	"$phongfresnelranges"	"[.1 0 0]"
+}

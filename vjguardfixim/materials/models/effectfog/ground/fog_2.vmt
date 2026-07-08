@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/effectfog/ground/fog"
+	"$bumpmap" "models/effectfog/ground/normal"
+	"$translucent" 1
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\weapons\flamethrower\w_flamethrower"
+	"$halflambert" "1"
+}

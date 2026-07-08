@@ -1,0 +1,6 @@
+ENT.Base 			= "npc_vj_creature_base"
+ENT.Type 			= "ai"
+ENT.PrintName 		= "Wasteland Scanner"
+ENT.Author 			= "VALVe"
+ENT.Contact 		= ""
+ENT.Category		= "Combine"

@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/player/puntleycmb/cmbworker_sheet_orange2"
+	"$bumpmap" "Models/player/puntleycmb/cmbworker_sheet_normal.vtf"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmaptint" "[.5 .5 .5]"
+//	"$envmap" "models/Police/envmap"
+//	"$envmapsphere" 1	
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1.5"
+	"$phongfresnelranges" "[0.05 0.2 0.6]"
+}
