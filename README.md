@@ -33,3 +33,41 @@ If you install these addons locally in your Garry's Mod installation, you can mo
 1. Download or clone the repository.
 2. Place the addon folders into your `(steamapps\common\GarrysMod\garrysmod\addons)` directory.
 3. (Optional) Mount the included `.fdg` file in Hammer if you map with these addons.
+
+## Manual Addons Installation
+
+Download the addon as a `.zip` file, then extract it.
+
+After extracting, you should have a folder similar to:
+
+vjguardfixim
+├── lua
+├── materials
+├── models
+└── sound
+
+Important: The addon folder should directly contain folders like lua, materials, models, etc. It should not be nested inside another folder. The game expects addons to be placed directly under the addons directory.
+
+Open your Steam library, right-click Garry's Mod, then select:
+
+Manage → Browse Local Files
+
+Open the following folder:
+
+`(garrysmod/addons/)`
+
+The full path is usually:
+
+`(Steam/steamapps/common/GarrysMod/garrysmod/addons/)`
+
+Drag the extracted addon folder into the addons folder.
+
+Example:
+
+garrysmod/
+└── addons/
+    ├── vjguardfixim
+    ├── vjguardfiximdlc1
+    ├── vjguardfiximdlc3
+    ├── aspma
+    └── vjguardfixim_resources
