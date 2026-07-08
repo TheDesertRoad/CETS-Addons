@@ -1,4 +1,4 @@
-# VJ Guard Fixim Addons
+# Combine's Experimental Transhumans and Synths
 
 <p align="center">
   <sub>OVERVIEW</sub>
