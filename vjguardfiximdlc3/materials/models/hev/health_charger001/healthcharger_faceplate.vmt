@@ -1,0 +1,18 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/hev/health_charger001/healthcharger_faceplate"
+	"$surfaceprop" "metal"
+	"%keywords" "charger,hev"
+
+	"$detail" "models\hev\detail\metal_detail_01"
+	"$detailscale" 1
+
+	"$detailblendfactor" .65
+
+	"$detailblendmode" "0"
+
+	"$selfillum" "1"
+	
+    "$selfillummask" "models/hev/health_charger001/healthcharger_faceplate_glow"
+
+}

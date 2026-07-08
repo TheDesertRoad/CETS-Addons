@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/diskette01"
+	"$surfaceprop" "Wood_Box"
+	"$alphatest" 1
+	"$translucent" 1
+}

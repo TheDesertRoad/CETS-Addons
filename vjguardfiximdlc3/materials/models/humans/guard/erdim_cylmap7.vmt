@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\humans\guard\erdim_cylmap7"
+	"$halflambert" "1"
+
+}

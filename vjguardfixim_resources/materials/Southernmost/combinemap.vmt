@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "southernmost/combinemap"
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+}

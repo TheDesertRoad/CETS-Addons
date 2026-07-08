@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_qz/hazard_bucket"
+	"$surfaceprop" "Plastic"
+}

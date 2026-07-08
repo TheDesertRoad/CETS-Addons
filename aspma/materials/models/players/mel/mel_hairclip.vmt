@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\players/mel/mell_hairclip"
+
+
+	"$bumpmap" "models\players/mel/mel_hairclip_normal"
+	"$phong" "1"
+	
+	"$phongboost" "10"	
+	"$phongfresnelranges"	"[0 0.5 1]"
+
+
+	"$translucent" 1
+	"$halflambert" 1
+	"$nodecal" "1"
+	"$nocull" 1 
+
+}

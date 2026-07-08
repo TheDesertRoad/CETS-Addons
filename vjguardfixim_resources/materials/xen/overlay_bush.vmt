@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$basetexture" "xen/overlay_bush"
+	"$alphatest" 1
+	"$decal" 1
+	"$decalscale" .25
+}

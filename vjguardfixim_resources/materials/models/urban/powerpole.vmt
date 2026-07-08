@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\powerpole"
+	"$model" 1
+	"$surfaceprop" "metal"
+	"$selfillum" 1	
+}

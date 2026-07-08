@@ -1,0 +1,12 @@
+"UnlitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "decals/cets_gauss_b"
+
+	"$additive" 1
+	"$vertexcolor" 1
+	"$vertexalpha" 1
+
+	"$decal" 1
+	"$decalscale" 	0.2
+}

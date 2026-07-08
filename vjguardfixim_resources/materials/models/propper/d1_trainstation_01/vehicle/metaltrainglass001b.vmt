@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Vehicle/metaltrainglass001b"
+	"$translucent"		"1"
+	"$envmapmask"		"Vehicle/metaltrainglass001b_mask"
+	"$envmaptint"		"[ 0.75 0.75 0.75 ]"
+	"$envmap"		"env_cubemap"
+	"$envmapcontrast"		"1"
+	"$envmapsaturation"		"1"
+	"$model"		"1"
+}

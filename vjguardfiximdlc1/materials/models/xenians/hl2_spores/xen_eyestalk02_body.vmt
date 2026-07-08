@@ -1,0 +1,39 @@
+"VertexLitGeneric"
+{
+
+	$basetexture "models/xenians/hl2_spores/xen_eyestalk02_d"
+	$bumpmap "models/xenians/hl2_spores/xen_eyestalk02_n"
+
+	"$nocull"  "1"
+	"$nodecal"  "1"
+
+	"$halflambert" "1"
+	"$surfaceprop" "alienflesh"
+
+	"$selfillum" 1
+
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/xenians/hl2_spores/xen_eyestalk02_d"
+		"$selfillummask" 	"models/xenians/hl2_spores/xen_eyestalk02_si"
+	}
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/xenians/hl2_spores/xen_eyestalk02_d"
+	}
+
+ 	"$phong" "1"
+	"$phongexponent" "64"
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[0.4 0.1 0.0]"
+	"$phongwarptexture"  "models/xenians/hl2_spores/xen_eyestalk02_chrome"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.02 0.001 0]"
+	$normalmapalphaenvmapmask "1"
+
+	$detail "models/xenians/hl2_gonarch/detail"
+	$detailscale "10"
+	$detailblendfactor "0.8"
+	$detailblendmode "0"
+}

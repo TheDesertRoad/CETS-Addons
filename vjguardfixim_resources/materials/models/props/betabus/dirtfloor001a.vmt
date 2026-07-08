@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	// Original shader: BaseTimesLightmap
+	"$basetexture" "models/props/betabus/dirtfloor001a"
+	"%detailtype" "citygrass01"
+	"$surfaceprop" "dirt"
+}

@@ -1,0 +1,11 @@
+LightmappedGeneric
+{
+	$basetexture xeno/BIOTECH_1H
+	$bumpmap xenbumpmap/BIOTECH_1H
+	
+	"$envmapcontrast" "1"
+	"$envmapsaturation" 1
+	"$envmap"	"env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$normalmapalphaenvmapmask" "1"
+}

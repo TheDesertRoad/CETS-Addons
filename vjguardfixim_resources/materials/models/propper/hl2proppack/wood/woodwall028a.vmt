@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Wood/woodwall028a"
+	"%keywords"		"wasteland"
+	"$parallaxmap"		"Wood/woodwall028a_height"
+	"$parallaxmapscale"		"0.035000"
+	"$model"		"1"
+}

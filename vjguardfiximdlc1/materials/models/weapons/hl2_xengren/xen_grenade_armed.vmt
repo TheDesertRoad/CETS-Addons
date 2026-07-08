@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Weapons/hl2_xengren/xen_grenade"
+	"$bumpmap" "models/Weapons/hl2_xengren/xen_grenade_normal"
+
+	"$phongexponenttexture" "models/Weapons/hl2_xengren/xen_grenade_exponent"
+
+	"$phong" "1"
+	"$phongboost"	"9.9934895"
+	"$phongfresnelranges"	"[0.05 0.115 0.945]"
+
+	"$selfillum" "1"
+	"$selfillummask" "models/Weapons/hl2_xengren/xen_grenade_illum"
+	"$selfillumtint" "[0.588235 4.98039 5.000000]"
+
+	"$nodecal" "1"
+}
+
+//	Material using pseudo pbr method 34.2 (Metalness)
+//	Engine branch: Garrys Mod
+//	Hierarchy: Stack 1/5
+//	This vmt affects: Non-metals

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Wood/woodfloor005a"
+	"%keywords"		"c17skyscraper"
+	"$parallaxmap"		"Wood/woodfloor005a_height"
+	"$parallaxmapscale"		"0.020000"
+	"$model"		"1"
+}

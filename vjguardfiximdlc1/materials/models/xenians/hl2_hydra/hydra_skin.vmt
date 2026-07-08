@@ -1,0 +1,16 @@
+Vertexlitgeneric
+{
+	$basetexture models/xenians/hl2_hydra/hydra_brain
+	$additive 1
+	$nocull 1
+	
+	Proxies
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.1
+			"texturescrollangle" 0
+		}
+	}
+}

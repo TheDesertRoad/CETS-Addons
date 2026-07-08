@@ -1,0 +1,20 @@
+"EyeRefract"
+{
+	"$Iris"               "models\gregrogers\otis\eye"			  // Iris color in RGB with cornea noise in A
+	"$AmbientOcclTexture" "models\gregrogers\otis\eye-extra"				  // Ambient occlusion in RGB, A unused
+	"$Envmap"             "env_cubemap"    // Reflection environment map
+	"$CorneaTexture"      "models\gregrogers\otis\eye-cornea"                 // Special texture that has 2D cornea normal in RG and other data in BA
+
+	"$EyeballRadius" "0.5"				// Default 0.5
+	"$AmbientOcclColor" "[0.57 0.40 0.38]"  	// Default 0.33, 0.33, 0.33
+	"$Dilation" "0.3"					// Default 0.5
+	"$Glossiness" ".050"					// Glossiness of eye (1 is default, 0 is not glossy at all)
+	"$ParallaxStrength" "0.25"          // Default 0.25
+	"$CorneaBumpStrength" "1.0"			// Default 1.0
+
+	"$halflambert" "1"
+
+	// These effects are only available in ps.2.0b and later
+	"$RaytraceSphere" "0"				// Default 1 - Enables raytracing in the pixel shader to make the eyeball look round
+	"$SphereTexkillCombo" "0"			// Default 1 - Enables killing pixels that don't ray-intersect the sphere
+}

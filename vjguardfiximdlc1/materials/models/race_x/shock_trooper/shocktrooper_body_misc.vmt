@@ -1,0 +1,22 @@
+"SDK_VertexLitGeneric"
+{
+	"$surfaceprop" "default"
+	"$basetexture" "Models/race_x/shock_trooper/shocktrooper_body_misc"
+	"$bumpmap" "Models/race_x/shock_trooper/shocktrooper_body_n"
+	"$phong" "1"
+	"$phongboost" "2"
+	$phongexponent	24
+	"$phongexponenttexture" "Models/vortigaunt/vortigaunt_exponent"
+	"$phongfresnelranges" "[.1 .3 .3]"
+	"$halflambert" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "12"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "1"										// Boost for ambient cube component of rim lighting
+
+	$detail "detail\organic_detail_01"
+	$detailscale "6"
+	$detailblendfactor "0.8"
+	$detailblendmode "0"
+}

@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$baseTexture" 		"models\props_xen\zombie_bloater_exp"
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+
+	"$halflambert" "1"
+
+	"$nodecal" "1"
+}

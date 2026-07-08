@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/ej_conscripts/cons_body"
+        "$bumpmap" "models/ej_conscripts/ct_urban_normal"
+	"$normalmapalphaenvmapmask" 1
+	"$halflambert" "1"
+}
+

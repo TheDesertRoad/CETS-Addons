@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$baseTexture "models\cg\aspma\stealth\helmetmaindirt"
+	$surfaceprop solidmetal
+	$phong 1
+	$phongexponent 50
+	$phongfresnelranges "[5 1 2]"
+	$phongboost ".6"
+	$basemapalphaphongmask 1
+	$nodecal 1
+}

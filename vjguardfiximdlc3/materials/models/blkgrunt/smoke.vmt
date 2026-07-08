@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hgrunt/smoke"
+
+	"$bumpmap" "models/hgrunt/smoke_n"
+
+	"$detail" "detail/detail_noise1"
+
+	"$detailscale" 2.5
+
+	"$halflambert" 1
+
+	"$surfaceprop" "flesh"
+}

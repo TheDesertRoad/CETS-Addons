@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	$basetexture "models/props_combineal/dave/crafting_station_1001_color_tga_6c2cc75d_albedo.vtf"
+   //            "$bumpmap"     "models/props_combineal/dave/crafting_station_1001_rough_tga_c445c872.vtf"
+	"$surfaceprop" "metal"
+	"%keywords" "combine"
+	"$envmaptint" "[ .1 .12 .14 ]"
+	"$envmap" "env_cubemap"
+}

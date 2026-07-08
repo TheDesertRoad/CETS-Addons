@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+// File Created by Wall Worm Pro ( http://dev.wallworm.com )
+
+// BEGIN Textures
+	$basetexture "cmb-computer-main/cmb-computer-main"
+	$bumpmap "cmb-computer-main/cmb-computer-main-normal"
+	"$model" 1
+	"$phong" "1"
+	"$phongexponent" "50"
+	"$phongboost" "4"		
+	"$phongfresnelranges"	"[.05 .5 5]"
+	"$halflambert" "1"
+
+$selfillum 1
+// END Textures
+
+
+
+}

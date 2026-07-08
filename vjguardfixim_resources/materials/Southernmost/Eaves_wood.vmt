@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/eaves_wood"
+	"$surfaceprop" "wood"
+                "$translucent" "1"
+}

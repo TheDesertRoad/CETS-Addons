@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "parking_lot/hekerwall"
+	"$surfaceprop" "plastic"
+}

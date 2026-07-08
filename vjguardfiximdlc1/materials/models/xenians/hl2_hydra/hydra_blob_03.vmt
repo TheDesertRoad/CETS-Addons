@@ -1,0 +1,32 @@
+// should match hydra_world_c
+
+VertexlitGeneric
+{
+	$basetexture models/xenians/hl2_hydra/hydra_skin
+	$surfaceprop flesh
+	$alphatest 1
+	$allowalphatocoverage 1
+	$nocull 1
+	$nodecal 1
+	$color2 "[50 50 50]"
+	$model 1
+		
+	$emissiveBlendEnabled 		1
+	$emissiveBlendTexture 		models/xenians/hl2_hydra/hydra_skin
+	$emissiveBlendBaseTexture 	models/xenians/hl2_hydra/hydra_skin
+	$emissiveBlendFlowTexture 	flowmaps\flashing
+	$emissiveBlendTint 			"[50 50 50]"
+	$emissiveBlendStrength 		20.5
+	$emissiveBlendScrollVector "[0 0.01]"
+		
+	Proxies
+	{
+		Sine
+		{
+			sineMin 1
+			sineMax 20
+			sineperiod 3.5
+			resultVar $emissiveblendstrength
+		}
+	}
+}

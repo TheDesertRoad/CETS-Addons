@@ -1,0 +1,28 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/vort_zombie/vortigaunt_sheet"
+	"$bumpmap" "Models/Vortigaunt/vortigaunt_normal"
+//	"$envmap" "env_cubemap"
+//	"$normalmapalphaenvmapmask" 1
+//	"$envmapcontrast" "1"
+//	"$envmaptint" "[.5 .5 .5]"
+
+	$halflambert 1
+
+	"$surfaceprop" "flesh"
+	"$model" "1"
+
+	//phong parameters
+
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+}

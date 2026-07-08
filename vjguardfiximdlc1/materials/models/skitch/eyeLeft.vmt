@@ -1,0 +1,6 @@
+SDK_VertexLitGeneric
+{
+	$baseTexture			"models/skitch/eyetex"
+	$corneatexture		"models/skitch/mas_eyenormal"
+	$ambientoccltexture 	"models/skitch/mas_eyeao"
+}

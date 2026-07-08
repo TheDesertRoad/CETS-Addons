@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "t_asmwalls/t_walldeet1"
+	"$surfaceprop" "metal"
+	"$bumpmap" "t_asmwalls/t_walldeet1_normal"
+}

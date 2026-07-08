@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/persiana"
+	"$surfaceprop" "metal"
+	"$alphatest" 1
+}

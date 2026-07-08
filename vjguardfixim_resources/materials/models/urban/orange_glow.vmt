@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\orange_glow"
+	"$model" 1	
+	"$selfillum" 1	
+	"$surfaceprop" "glass"
+	"$nocull" 1
+	
+}

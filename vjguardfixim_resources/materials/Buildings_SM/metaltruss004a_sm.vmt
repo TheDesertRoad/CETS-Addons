@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"%compilepassbullets" 1
+	"$translucent" 1
+	"$basetexture" "Buildings_SM/metaltruss004a_sm"
+	"$surfaceprop" "metal"
+	"%keywords" "c17industrial,wasteland"
+}

@@ -1,0 +1,28 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/headcrab_armored/hc_armor"
+	"$bumpmap" "models/headcrab_armored/hc_armor_n"
+
+	"$selfillum" 	"1"
+
+	"$phong"     "1"
+	"$phongexponent"   "50"
+	"$phongboost"   "1"
+
+	"$surfaceprop"   "antlion"
+
+	"$phongfresnelranges"	"[.2 0.4 1]"
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/headcrab_armored/hc_armor"
+		"$selfillummask" 	"models/headcrab_armored/hc_armor_light"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/headcrab_armored/hc_armor"
+	}
+}

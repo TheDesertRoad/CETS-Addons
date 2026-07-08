@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\advert_baked01"
+	"$model" 1
+	"$surfaceprop" "metal"
+	"$decalsecondpass" 1
+	"$nocull" 1
+}

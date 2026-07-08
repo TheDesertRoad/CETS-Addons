@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hgrunt/Chrome_black"
+	"$envmap" "env_cubemap"
+}

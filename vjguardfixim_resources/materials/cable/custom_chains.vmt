@@ -1,0 +1,10 @@
+"Cable"
+{
+	"$basetexture"        "cable\custom_chains2"
+	"$bumpmap"            "cable\cablenormalmap"
+	"$nocull"			1
+	"$MinLight"			0.0
+	"$MaxLight"			0.3
+	"$alphatest" 1
+}
+

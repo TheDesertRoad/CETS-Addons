@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\props_natural\moon"
+	"$bumpmap" "models\props_natural\moon_n"
+	"$model" 1
+	$halflambert 1
+
+	"$phong" "1"
+	"$phongexponent" "128"
+	"$phongboost"	"0.1"
+	$phongtint "[1 1 1]"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$normalmapalphaenvmapmask" 1
+
+	"$rimlight" "1" 
+	"$rimlightexponent" "32" 
+	"$rimlightboost" "1.0"
+}
+
+
+

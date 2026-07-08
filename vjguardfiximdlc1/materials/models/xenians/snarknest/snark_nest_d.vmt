@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\xenians\snarknest/snark_nest_d"
+	"$bumpmap" "models\xenians\snarknest/snark_nest_n"
+	"$selfillum" 1
+	"$model" 1
+	"$surfaceprop" "alienflesh"
+	"$multipass" 1
+	
+// for iridescence "$halflambert" must be disabled and "$phongfresnelranges" values reversed.
+
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+
+}
+

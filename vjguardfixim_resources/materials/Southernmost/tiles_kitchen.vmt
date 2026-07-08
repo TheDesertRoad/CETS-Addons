@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/tiles_kitchen"
+	"$surfaceprop"	"concrete"
+//	"$detail" "detail\noise_detail_01"
+//	"$detailscale" "3.000"
+//	"$detailblendfactor" .3
+//	"$detailblendmode" "0"
+}

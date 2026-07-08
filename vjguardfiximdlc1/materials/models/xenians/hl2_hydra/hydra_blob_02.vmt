@@ -1,0 +1,31 @@
+// should match hydra_world_b
+
+VertexlitGeneric
+{
+	$basetexture models/xenians/hl2_hydra/hydra_skin
+	$surfaceprop flesh
+	$additive 1
+	$nocull 1
+	$color2 "[20 20 20]"
+	$model 1
+	$nodecal 1
+		
+	$emissiveBlendEnabled 		1
+	$emissiveBlendTexture 		custom_uni/dark_noise
+	$emissiveBlendBaseTexture 	models/xenians/hl2_hydra/hydra_skin
+	$emissiveBlendFlowTexture 	flowmaps\dummy
+	$emissiveBlendTint 			"[5 50 50]"
+	$emissiveBlendStrength 		20.5
+	$emissiveBlendScrollVector "[0 0.01]"
+	
+	Proxies
+	{
+		Sine
+		{
+			sineMin 1
+			sineMax 20
+			sineperiod 3.5
+			resultVar $emissiveblendstrength
+		}
+	}
+}

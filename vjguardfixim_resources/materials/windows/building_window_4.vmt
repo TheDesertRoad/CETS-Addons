@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapSelfIllum
+	"$basetexture" "windows\building_window_4"
+	"$surfaceprop" "concrete"
+}

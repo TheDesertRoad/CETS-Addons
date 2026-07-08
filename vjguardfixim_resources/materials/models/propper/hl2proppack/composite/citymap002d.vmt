@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Composite/citymap002d"
+	"$selfillum"		"1"
+	"%keywords"		"c17citadel"
+	"$model"		"1"
+}

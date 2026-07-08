@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/blkgrunt/pc_soldier_face_cmdr_wht"
+
+	"$detail" "detail/detail_noise1"
+
+	"$detailscale" 2.5
+
+	"$halflambert" 1
+
+	"$surfaceprop" "flesh"
+}

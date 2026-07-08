@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/New_Truss_Temp1"
+	"$surfaceprop" "metal"
+	"$alphatest" 1
+}

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\p_advertpole_screen"
+	"$selfillum" 1
+	"$model" 1
+	"$surfaceprop" "glass"
+	"$nocull" 1
+}

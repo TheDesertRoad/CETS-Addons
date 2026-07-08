@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	$baseTexture	"models/gregrogers/otis/otis_face"
+	$bumpmap	"models/gregrogers/otis/otis_face_nrml"
+	"$halflambert" 1
+	"$nodecal" "1"
+}

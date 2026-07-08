@@ -1,0 +1,14 @@
+"UnlitGeneric"
+{
+	"$basetexture" "Southernmost/tesla_cursor"
+	"$additive" 1
+	"proxies"
+	{
+	AnimatedTexture
+	{
+	"animatedtexturevar" "$basetexture"
+	"animatedTextureFrameNumVar" "$frame" 
+	"animatedTextureFrameRate" "2" 
+	}
+	}
+}

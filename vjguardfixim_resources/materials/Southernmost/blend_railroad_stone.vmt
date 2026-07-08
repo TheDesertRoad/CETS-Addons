@@ -1,0 +1,17 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "southernmost/railroad01"
+	"$basetexture2" "nature/gravelfloor002a"
+	 "%tooltexture" "nature/gravelfloor002b"
+	"$surfaceprop" "dirt"
+	"$surfaceprop2" "dirt"
+//	"$bumpmap" "southernmost/forest_dirt_02_normal"
+//	"$bumpmap2" "stone/stonefloor006a_normal"
+	"$envmap" "env_cubemap"
+	"$envmap2" "env_cubemap"
+	"$envmaptint" "[ .1 .1 .1 ]"
+//	"$normalmapalphaenvmapmask" 1
+	"$blendmodulatetexture" "nature/blendtexture01"
+	 "%detailtype" "forest_floor_01"
+}
+  

@@ -1,0 +1,11 @@
+LightmappedGeneric
+{
+	$basetexture xeno/XENO_20E
+	$bumpmap xenbumpmap/XENO_20E
+	
+	"$envmapcontrast" "1"
+	"$envmapsaturation" 1
+	"$envmap"	"env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$normalmapalphaenvmapmask" "1"
+}

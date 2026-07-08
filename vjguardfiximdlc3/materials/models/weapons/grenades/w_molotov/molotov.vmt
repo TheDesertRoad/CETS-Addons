@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "Models\weapons\grenades\w_molotov\molotov"
+	"$bumpmap" "Models\weapons\grenades\w_molotov\molotov_normal"
+	"$halflambert" "1"
+}
+

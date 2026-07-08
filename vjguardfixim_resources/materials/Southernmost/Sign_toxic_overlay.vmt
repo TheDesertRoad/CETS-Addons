@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/Sign_toxic_overlay"
+	"$translucent" 1
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$decal" 1
+	"$decalscale" "0.125"
+}

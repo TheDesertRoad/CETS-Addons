@@ -1,0 +1,99 @@
+DI_Refract_DX90
+{
+	$normalmap bumpmaps/bump_organic01
+	$model 1
+	$refractamount 0.1
+	$colortint "[0 1.3 1.6]"
+	$silhouetteenabled 1
+	$SilhouetteThickness 1
+	$SilhouetteColor "[0 0.3 4]"
+	$GroundMin 8
+	$GroundMax 0
+	$BlurAmount 1
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture models\xenians/hl2_hydra\gradient
+	$emissiveBlendBaseTexture models\xenians/hl2_hydra\emissive
+	$emissiveBlendFlowTexture flowmaps\dummy
+	$emissiveBlendTint "[1 1 1]"
+	$emissiveBlendStrength 0.1
+	$emissiveBlendScrollVector "[0 -1]"
+
+	Proxies
+	{
+		//passive pulse
+		//Sine
+		//{
+		//	sineperiod 5
+		//	sinemin 0.3
+		//	sinemax 2
+		//	resultVar "$SilhouetteColor[1]"
+		//}
+		//
+		//Sine
+		//{
+		//	sineperiod 5
+		//	sinemin 4
+		//	sinemax 8
+		//	resultVar "$SilhouetteColor[2]"
+		//}
+		//Sine
+		//{
+		//	sineperiod 5
+		//	sinemin 0.6
+		//	sinemax 3
+		//	resultVar "$colortint[2]"
+		//}
+
+		//agressive pulse
+		Sine
+		{
+			sineperiod 3
+			sinemin 2
+			sinemax 6
+			resultVar "$SilhouetteColor[0]"
+		}
+		Sine
+		{
+			sineperiod 0.5
+			sinemin 2
+			sinemax 3
+			resultVar "$SilhouetteColor[1]"
+		}
+		
+		Sine
+		{
+			sineperiod 0.3
+			sinemin 6
+			sinemax 14
+			resultVar "$SilhouetteColor[2]"
+		}
+		Sine
+		{
+			sineperiod 1
+			sinemin 0
+			sinemax 0.5
+			resultVar "$colortint[0]"
+		}
+		Sine
+		{
+			sineperiod 1
+			sinemin 1.1
+			sinemax 1.4
+			resultVar "$colortint[1]"
+		}
+		Sine
+		{
+			sineperiod 0.5
+			sinemin 2
+			sinemax 3
+			resultVar "$colortint[2]"
+		}
+		Sine
+		{
+			sineperiod 5
+			sinemin 0
+			sinemax 1
+			resultVar "$emissiveBlendStrength"
+		}
+	}
+}

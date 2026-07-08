@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	// Original shader: DecalBaseTimesLightmapAlphaBlend
+	"$translucent" 1
+	"$basetexture" "decals/cets_mom4"
+	"$decal" 1
+	"$decalscale" 	0.6
+}

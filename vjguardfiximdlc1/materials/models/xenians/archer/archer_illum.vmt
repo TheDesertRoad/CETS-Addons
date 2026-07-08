@@ -1,0 +1,36 @@
+VertexLitGeneric
+{
+	$basetexture "models/xenians/archer/archer_diff"
+	$bumpmap "models/xenians/archer/archer_normal"
+	$surfaceprop Alienflesh
+
+	$envmap "env_cubemap"
+	$normalmapalphaenvmapmask 1
+	$envmaptint "[0.70 0.70 0.70]"
+
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongexponent 25
+	$phongboost 1.1
+	$phongalbedoboost 1.1
+
+	$rimlight 1
+	$rimlightexponent 60
+	$rimlightboost 0.5
+
+	$selfillum 1
+	$selfillumtint "[0.28 0.58 0.87]"
+
+	%keywords "bshift , rimas"
+
+	$model 1
+
+	//Emissive
+ 	"$emissiveBlendEnabled" "1"
+	"$emissiveBlendBaseTexture" "models/xenians/archer/archer_illum"
+	$emissiveBlendTexture models/xenians/archer\bs_xen_survey_powerline_pulse
+	$emissiveBlendFlowTexture models/xenians/archer\bs_xen_survey_powerline_flow
+	$emissiveBlendTint       "[.3 13.3 24.4]"
+	$emissiveBlendStrength 1
+	"$emissiveBlendScrollVector" "[0.15 .16]" 
+}

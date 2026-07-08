@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\hound\hl2_houndeye\eyelid"
+	"$model" 1
+	"$nocull" 1
+}

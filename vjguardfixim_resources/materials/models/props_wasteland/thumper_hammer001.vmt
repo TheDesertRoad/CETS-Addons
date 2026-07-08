@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/props_wasteland/Thumper_Hammer001"
+	"$surfaceprop" "metal"
+	"$basealphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .95 .95 .95]"
+
+}
+

@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "cets_parking_lot/store_logo_2"
+	"$decal" 1
+	"$translucent" 1
+	"$decalscale" 0.5
+}
+

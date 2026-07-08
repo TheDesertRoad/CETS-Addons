@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "neon/dog_neon10"
+	"$surfaceprop" "glass"
+	"$selfillum" 1
+}

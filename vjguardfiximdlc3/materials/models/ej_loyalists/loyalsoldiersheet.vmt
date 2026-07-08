@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/ej_loyalists/loyalsoldiersheet"
+	"$nocull" 1
+}

@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapAlphaBlend
+	"$translucent" 1
+	"$texscale"	1      "$basetexture" "xeno/{xeno_17c"
+	"$surfaceprop" "flesh"
+	"$baseTextureOffset" "[0.5 0.5]"	"Proxies"	{	"TextureTransform"	{	"translateVar" "$baseTextureOffset"	"scaleVar"     "$texscale"	"resultVar"    "$baseTextureTransform"	}	}	}

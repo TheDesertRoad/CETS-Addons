@@ -1,0 +1,33 @@
+"vertexlitgeneric"
+{
+$baseTexture	models/xenians/hl2_controller/hl1con
+$bumpmap		models/xenians/hl2_controller/hl1con_normal
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "16"
+	"$phongexponenttexture" "Models/vortigaunt/vortigaunt_exponent"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.08 .08 .08]"
+	"$halflambert" "1"
+	"$nodecal" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "10"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "3"
+
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/xenians/hl2_controller/hl1con"
+		"$selfillummask" 	"models/xenians/hl2_controller/hl1con_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/xenians/hl2_controller/hl1con"
+	}
+}

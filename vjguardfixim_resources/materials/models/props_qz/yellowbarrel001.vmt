@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_qz/yellowbarrel001"
+	"$surfaceprop" "Plastic_barrel"
+}

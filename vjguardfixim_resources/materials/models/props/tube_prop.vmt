@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{        
+	"$basetexture" "models\props\tube_prop"  
+	"$surfaceprop" "metal"
+	"$model" 1  
+	"$envmapmask" "models\props\tube_prop_a"  
+	"$envmap" "env_cubemap" 
+		   
+	
+}

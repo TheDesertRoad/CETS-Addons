@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"concrete/concretewall013b"
+	"$detail"		"detail\noise_detail_01"
+	"$detailscale"		"7.345000"
+	"$detailblendfactor"		"0.200000"
+	"$detailblendmode"		"0"
+	"$envmap"		"env_cubemap"
+	"$basealphaenvmapmask"		"1"
+	"$envmapcontrast"		"1"
+	"$envmapsaturation"		"1"
+	"$envmaptint"		"[ .6 .6 .6]"
+	"$model"		"1"
+}

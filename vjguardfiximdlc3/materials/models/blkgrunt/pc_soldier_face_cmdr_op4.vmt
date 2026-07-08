@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hgrunt/pc_soldier_face_cmdr_op4"
+
+	"$bumpmap" "models/hgrunt/pc_soldier_face_cmdr_op4_normal"
+
+	"$detail" "detail/detail_noise1"
+
+	"$detailscale" 2.5
+
+	"$halflambert" 1
+
+	"$surfaceprop" "flesh"
+}

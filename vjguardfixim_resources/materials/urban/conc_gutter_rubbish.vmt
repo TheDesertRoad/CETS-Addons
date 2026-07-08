@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapSelfIllum
+	"$basetexture" "urban\conc_gutter_rubbish"
+	"$surfaceprop" "concrete"
+}

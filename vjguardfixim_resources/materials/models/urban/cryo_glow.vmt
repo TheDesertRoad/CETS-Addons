@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\cryo_glow"
+	"$model" 1
+	"$surfaceprop" "metal"	
+	"$selfillum" 1
+	"$additive" 1
+}

@@ -1,0 +1,77 @@
+VertexLitGeneric
+{
+	$basetexture models/xenians/hl2_hydra/hydra_skin
+
+	"$additive" "1"
+	"$bumpmap" 	"models/xenians/hl2_hydra/hydra_skin_n"
+	"$model" 1
+	"$selfillum" "1"
+	//"$selfIllumFresnel" "1"
+	//"$selfIllumFresnelMinMaxExp" "[0.2 2.2 3]" // 0.0 1.0 1.0 is the default
+	//"$selfillumtint"	"[1.15 1.15 0.55]"
+	"$phong"     "1"
+	"$phongexponent"   "20"
+	"$phongboost"   "6"
+	"$phongfresnelranges"   "[.1 1 1]"
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "5"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.6 .6 .6]"
+	"$lightwarptexture" "Models/antlion/antlion_worker_warp"
+
+	$detail models\xenians/hl2_hydra\hydra_skin
+	$detailblendmode 5
+	$detailblendfactor 1
+	$detailscale 0.9
+	
+	$detailglowfactor 0
+	$livenpcfactor 0
+	
+	$detailglowadd -0.6
+		
+	Proxies
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" -0.054
+			"texturescrollangle" 0
+		}
+
+		"TextureScroll"
+		{
+			"texturescrollvar" "$detailtexturetransform"
+			"texturescrollrate" 0.05
+			"texturescrollangle" 90
+		}
+
+		IsNPC
+		{
+			scale 1
+			resultVar $livenpcfactor
+		}
+		
+		Sine
+		{
+			sineperiod 6
+			sinemin 0.5
+			sinemax 2.0
+			resultVar $detailglowfactor
+		}
+		
+		Multiply
+		{
+			srcVar1 $livenpcfactor
+			srcVar2 $detailglowfactor
+			resultVar $detailblendfactor
+		}
+		
+		Add
+		{
+			srcVar1 $detailblendfactor
+			srcVar2 $detailglowadd
+			resultVar $detailblendfactor
+		}
+	}
+}

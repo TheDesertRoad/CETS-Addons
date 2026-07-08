@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/worker_04/armsheet"
+	"$bumpmap" "models/worker_04/armsheet_n"
+	"$halflambert" 1
+}

@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$basetexture "models/props_left4dead/military_big_sign07"
+$surfaceprop default
+}

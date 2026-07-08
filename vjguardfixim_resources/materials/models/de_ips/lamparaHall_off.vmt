@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models/de_ips/lamparaHall"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/de_ips/lamparaHall_reflect"
+}

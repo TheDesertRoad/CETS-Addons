@@ -1,0 +1,14 @@
+SDK_VertexLitGeneric
+{
+	"$baseTexture" "models\xen_eggs/translucent_outer"
+	"$bumpmap" "models\xen_eggs/translucent_outer_n"
+	"$phong"     "1"
+	"$phongexponent"  "11"
+	"$phongboost"   "1"
+	"$phongfresnelranges"   "[1 3 .3]"
+	"$phongwarptexture"  "models/xen_eggs/bullsquid_egg_iridescence"
+	$translucent 1
+	$nocull 1
+	$halflambert 1
+	$nodecal 1
+}

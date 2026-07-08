@@ -1,0 +1,15 @@
+DI_Refract_DX90
+{
+	$model 1
+ 	$refractamount 0
+	$refracttint "[14 2 .6]"
+ 	$normalmap bumpmaps/bump_generic02
+	$FADEOUTONSILHOUETTE 1
+	$silhouetteenabled 1
+	$SilhouetteThickness .8
+	$SilhouetteColor "[5 6 1]"
+	$GroundMin 3
+	$GroundMax .1
+	$BlurAmount 1
+	$nodecal 1
+}

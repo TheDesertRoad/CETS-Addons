@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/PLcombine/light_glow_bright_green.vtf"
+                "$translucent" 1	
+} 
+

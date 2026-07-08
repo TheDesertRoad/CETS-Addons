@@ -1,0 +1,19 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/xenians/hl2_gonarch/body"
+	"$surfaceprop" "AlienFlesh"
+	"$bumpmap" "models/xenians/hl2_gonarch/body_n"
+	"$nodecal" "1"
+	"$halflambert" "1"
+
+ 	"$phong" "1"
+	"$phongexponent" "32"
+	"$phongboost"	"0.4"
+	"$phongfresnelranges"	"[0.2 0.2 0.1]"
+	"$phongwarptexture"  "models/xenians/hl2_gonarch/MOM_Chrome2"
+
+	"$detail" "models/xenians/hl2_gonarch/detail"
+	"$detailscale" "10"
+	"$detailblendfactor" 1.3
+	"$detailblendmode" 0
+}

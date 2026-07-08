@@ -1,0 +1,33 @@
+"SDK_Vertexlitgeneric"
+{
+	"$basetexture" "models/race_x/voltigore/volt_body_rework2"
+	"$bumpmap" "models/race_x/voltigore/volt_body_n2"
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/race_x/voltigore/volt_body_rework2"
+		"$selfillummask" 	"models/race_x/voltigore/volt_body_light"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/race_x/voltigore/volt_body_rework2"
+	}
+
+	"$phong" "1"
+	"$phongboost" "1"
+        "$phongexponent" "50"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.4 .4 1]"
+	"$nodecal" "1"
+	"$nocull" "1"	
+	"$halflambert" "1"
+
+// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "60"             // Exponent for phong component of rim lighting
+	"$rimlightboost" "2"	               // Boost for ambient cube component of rim lighting
+}

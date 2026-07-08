@@ -1,0 +1,23 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/de_shipped/shipped_sea"
+	"$nocull" "1"
+
+"Proxies"
+	{
+	
+		"TextureScroll"
+		{
+			"texturescrollvar"
+ 			 "$basetexturetransform" //tells the proxy what texture to move. 
+			"texturescrollrate" .02 // This is how fast to scroll the texture.
+			"texturescrollangle" 270 //this is the angle at which it will scroll. 
+		}
+	
+
+	}
+
+}
+
+
+

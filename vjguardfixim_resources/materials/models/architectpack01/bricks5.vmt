@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+	$basetexture "models/architectpack01/bricks5"
+	$surfaceprop Concrete
+}

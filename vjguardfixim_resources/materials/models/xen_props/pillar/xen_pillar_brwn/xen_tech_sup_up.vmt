@@ -1,0 +1,18 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "xen/xen_tech_sup_up"
+	"$bumpmap" "xen/normal"
+ 	"$detail" "detail\xen"
+	"$detailscale" "15"
+	"$detailblendfactor" 0.50
+	"$detailblendmode" 0
+
+
+	"$phong" "1"
+	"$phongexponent" "1"
+	"$phongboost"	"0.1"
+	"$phongfresnelranges"	"[0.1 0.5 0.1]"
+	"$rimlight" "1" 
+	"$rimlightexponent" "1" 
+	"$rimlightboost" "0.05"
+}

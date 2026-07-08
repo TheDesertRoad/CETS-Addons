@@ -1,0 +1,7 @@
+"Teeth"
+{
+	"$basetexture" "models/Admin/mouth"
+	"$model" 1
+	"$clientshader" "MouthShader"
+	"$halflambert" 1
+}

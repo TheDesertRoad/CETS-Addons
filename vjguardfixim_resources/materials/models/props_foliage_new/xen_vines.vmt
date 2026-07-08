@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	$basetexture models/props_foliage_new/xen_vines
+	$translucent 1
+	$nocull 1
+}

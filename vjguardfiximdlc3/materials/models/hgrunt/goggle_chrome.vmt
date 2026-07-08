@@ -1,0 +1,20 @@
+"VertexLitGeneric_DX6"
+{
+	"$baseTexture" "models/hgrunt/goggle_chrome"
+
+	"$bumpmap" "models/hgrunt/goggle_chrome_normal"
+
+	"$surfaceprop" "metal"
+
+        "$envmap" "models/hgrunt/goggle_chrome"
+
+	"$envmapsphere"	"1"
+
+	"$envmapmode" "1"
+
+	"$multipass" "1"
+
+	"$nodecal" "1"
+
+        "$envmapsaturation" "0"
+}

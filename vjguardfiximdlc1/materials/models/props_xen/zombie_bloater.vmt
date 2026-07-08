@@ -1,0 +1,28 @@
+"VertexlitGeneric"
+{
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+
+	"$halflambert" "1"
+
+	"$nodecal" "1"
+
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models\props_xen\zombie_bloater"
+		"$selfillummask" 	"models\props_xen\zombie_bloater_illum"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models\props_xen\zombie_bloater"
+	}
+}

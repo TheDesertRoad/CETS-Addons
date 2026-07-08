@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "models\MrFunreal/props_vehicles/airport_fuel_truck_new"
+$envmapmask "models\MrFunreal/props_vehicles\airport_fuel_truck_new_ref"
+$envmap env_cubemap
+$envmaptint "[.2 .2 .2]"
+}

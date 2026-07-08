@@ -1,0 +1,5 @@
+"unlitgeneric"
+{
+	"$basetexture" "southernmost/TV_cell_load"
+	"$translucent" 1
+}

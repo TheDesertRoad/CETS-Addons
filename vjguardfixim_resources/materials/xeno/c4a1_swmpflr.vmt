@@ -1,0 +1,5 @@
+"WorldVertexTransition"
+{
+	"$texscale"	1           "$basetexture" "xeno/xeno_4c1c"
+	"$basetexture2" "xeno/xeno_7w1"
+	"$baseTextureOffset" "[0.5 0.5]"	"Proxies"	{	"TextureTransform"	{	"translateVar" "$baseTextureOffset"	"scaleVar"     "$texscale"	"resultVar"    "$baseTextureTransform"	}	}	}

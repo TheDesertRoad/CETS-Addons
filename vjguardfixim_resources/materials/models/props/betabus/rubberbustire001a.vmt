@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	// Original shader: BaseTimesLightmap
+	"$basetexture" "models/props/betabus/rubberbustire001a"
+	"$surfaceprop" "rubber"
+}

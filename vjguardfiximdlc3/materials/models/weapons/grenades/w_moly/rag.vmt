@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "Models\weapons\grenades\w_moly\rag"
+	"$surfaceprop" "Concrete"
+}
+

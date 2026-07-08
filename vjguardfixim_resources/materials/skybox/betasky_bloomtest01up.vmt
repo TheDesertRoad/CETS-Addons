@@ -1,0 +1,7 @@
+"Sky"
+{
+	// Original shader: BaseTexture
+	"$basetexture" "skybox/betasky_bloomtest01up"
+	"$nofog" 1
+	$ignorez 1
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/Weapons/w_gauss/w_gauss"
+	"$halflambert" "1"
+}

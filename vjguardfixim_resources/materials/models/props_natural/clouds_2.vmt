@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\props_natural\clouds_2"
+	$halflambert 1
+	$translucent 1
+	"Proxies"
+	{
+
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" .01
+			"texturescrollangle" 0
+		}
+	}
+}
+
+
+

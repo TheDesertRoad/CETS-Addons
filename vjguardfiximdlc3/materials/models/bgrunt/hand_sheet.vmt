@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/bgrunt/hand_sheet"
+
+	"$bumpmap" "models/bgrunt/pc_soldier_skin_wht_normal"
+
+	"$detail" "detail/detail_noise1"
+
+	"$detailscale" 2.5
+
+	"$halflambert" 1
+
+	"$surfaceprop" "flesh"
+}

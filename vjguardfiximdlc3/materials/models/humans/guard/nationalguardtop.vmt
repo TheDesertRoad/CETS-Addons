@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/humans\guard/NationalGuardTop"
+        "$bumpmap"     "models/humans\guard/NationalGuardTop_n"
+        "$halflambert" "1"
+}

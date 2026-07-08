@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"filipvictor/citadel_fog2"
+	"$translucent"	1
+ 	"$nodecal" 1 
+
+}

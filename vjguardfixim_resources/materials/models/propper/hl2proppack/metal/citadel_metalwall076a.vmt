@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"metal/metalwall076a"
+	"$basealphaenvmapmask"		"1"
+	"%keywords"		"combine"
+	"$envmap"		"env_cubemap"
+	"$envmaptint"		"[ 0.55 0.55 0.75 ]"
+	"$envmapcontrast"		"1"
+	"$envmapsaturation"		"1"
+	"LightmappedGeneric_hdr_dx9"
+	{
+		"$envmaptint"		"[ .09 .1 .12]"
+	}
+	"LightmappedGeneric_dx9"
+	{
+		"$envmaptint"		"[ .09 .1 .12]"
+	}
+	"$model"		"1"
+}

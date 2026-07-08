@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\p_monitor_pole01"
+	"$model" 1
+	"$surfaceprop" "metal"
+}

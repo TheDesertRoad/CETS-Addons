@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_vehicles\fixed/DV_UV_FIX"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models\props_vehicles\fixed\DV_UV_Fix_ref"
+	"$envmaptint" "[0.65 0.65 0.65]"
+}

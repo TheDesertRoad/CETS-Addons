@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/headcrab_cultists/cultist_mask_z"
+	"$halflambert" "1"
+}

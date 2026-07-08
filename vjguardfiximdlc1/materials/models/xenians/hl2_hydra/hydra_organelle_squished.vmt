@@ -1,0 +1,15 @@
+DI_Refract_DX90
+{
+	$model 1
+ 	$refractamount 0
+	$refracttint "[8 12 .6]"
+ 	$normalmap nature/xen_web
+	$FADEOUTONSILHOUETTE 1
+	$silhouetteenabled 1
+	$SilhouetteThickness .8
+	$SilhouetteColor "[5 6 1]"
+	$GroundMin 30
+	$GroundMax 1
+	$BlurAmount 1
+	$nodecal 1
+}

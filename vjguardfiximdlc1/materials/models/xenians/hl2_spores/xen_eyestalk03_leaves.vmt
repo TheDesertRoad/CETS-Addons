@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	$basetexture "models/xenians/hl2_spores/xen_eyestalk03_mothleaves"
+
+	"$surfaceprop" "flesh"
+
+	"$nocull"  "1"
+	"$alphatest" "1"
+
+        $halflambert 0
+}

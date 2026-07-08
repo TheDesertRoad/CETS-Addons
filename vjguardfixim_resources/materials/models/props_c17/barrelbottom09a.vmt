@@ -1,0 +1,5 @@
+VertexlitGeneric	
+{
+	$basetexture models/props_c17/barrelbottom_generic
+	$halflambert 1
+}

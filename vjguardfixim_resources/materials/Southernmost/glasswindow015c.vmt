@@ -1,0 +1,8 @@
+"unlitgeneric"
+//"LightmappedGeneric"
+{
+//	"$selfillum" 1
+	"$basetexture" "southernmost/glasswindow015a"
+//	"$surfaceprop" "glass"
+//	"$selfillummask" "southernmost/glasswindow015c_mask"
+}

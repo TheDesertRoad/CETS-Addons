@@ -1,0 +1,15 @@
+"unlitgeneric"
+{
+	"$basetexture" "southernmost/noise_signal"
+	"$translucent" 1
+	"Proxies"
+	 {
+        	 "TextureScroll"
+        		{
+            		"textureScrollVar" "$basetexturetransform"
+		"textureScrollRate" 0.5
+	                "textureScrollAngle" 90
+        		 }
+    	 }
+
+}

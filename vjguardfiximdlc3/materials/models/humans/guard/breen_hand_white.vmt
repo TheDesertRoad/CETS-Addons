@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/humans\guard/BREEN_HAND_white"
+        "$halflambert" 1
+}

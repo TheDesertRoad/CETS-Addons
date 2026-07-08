@@ -1,0 +1,20 @@
+"vertexlitgeneric"
+{
+$baseTexture	Models/xenians/hl2_agrunt/hl1grunt
+$bumpmap	Models/xenians/hl2_agrunt/hl1grunt_normal
+
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "16"
+	"$phongexponenttexture" "Models/vortigaunt/vortigaunt_exponent"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.08 .08 .08]"
+	"$halflambert" "1"
+	"$nodecal" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "10"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "3"
+
+}

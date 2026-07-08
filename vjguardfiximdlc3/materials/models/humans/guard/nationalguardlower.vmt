@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\humans\guard/NationalGuardLower"
+	"$bumpmap" "models\humans\guard/NationalGuardLower_n"
+        "$halflambert" "1"
+}

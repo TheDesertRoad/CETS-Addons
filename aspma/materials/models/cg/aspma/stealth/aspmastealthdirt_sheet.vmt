@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\cg\aspma\stealth\aspmastealthdirt_sheet"
+	"$bumpmap" "models\cg\aspma\stealth\aspmastealth_normal"
+}

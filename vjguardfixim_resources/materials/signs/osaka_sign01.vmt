@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapSelfIllum
+	"$basetexture" "signs\osaka_sign01"      
+	"$surfaceprop" "glass"
+	"$selfillum" 1
+}

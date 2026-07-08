@@ -1,0 +1,11 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "southernmost/richmond_ladder"
+                "$bumpmap" "models/southernmost/richmond_ladder_normal"
+	"$phong" "1"
+	"$phongexponenttexture" "models/southernmost/richmond_ladder_specular"
+	"$phongboost" "7"
+	"$phongfresnelranges" "[0.4 1 5]"
+}
+
+ 

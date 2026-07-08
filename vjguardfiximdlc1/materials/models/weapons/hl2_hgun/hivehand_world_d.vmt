@@ -1,0 +1,29 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\hl2_hgun\hivehand_world_d"
+	"$bumpmap" "models\weapons\hl2_hgun\hivehand_n"
+
+	"$surfaceprop" "flesh"
+	"$model" "1"
+	"$halflambert" "1"
+
+	//phong parameters
+
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+//	"$rimlightboost" "1"
+	"$selfillum" "1"
+	"$selfIllumFresnel" "1"
+	"$selfIllumFresnelMinMaxExp" "[.1 2.4 2]"
+
+
+}

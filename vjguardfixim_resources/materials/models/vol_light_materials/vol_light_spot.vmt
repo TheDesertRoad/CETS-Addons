@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/Vol_light_Materials/Vol_light_spot"
+	"$reflectivity" "[1 1 1]"
+	"$translucent" "1"
+	"$alpha" "1"
+	"$color2" "[1 1 1]"
+}

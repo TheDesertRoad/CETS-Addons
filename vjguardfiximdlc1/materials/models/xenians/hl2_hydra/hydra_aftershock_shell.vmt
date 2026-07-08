@@ -1,0 +1,11 @@
+Aftershock
+{
+	$normalmap bumpmaps/bump_organic01
+	$refractamount 0.1
+	$colortint "[0 1.3 1.6]"
+	$SilhouetteThickness 1
+	$SilhouetteColor "[0 0.3 1]"
+	$GroundMin 8
+	$GroundMax 0
+	$BlurAmount 1
+}

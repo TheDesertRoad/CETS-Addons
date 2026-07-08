@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/props_vehicles/Apc_Tire001"
+	"$surfaceprop" "rubber"
+	"$halflambert" "1"
+}

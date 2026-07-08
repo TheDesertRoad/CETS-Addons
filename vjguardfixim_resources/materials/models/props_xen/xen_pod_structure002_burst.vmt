@@ -1,0 +1,23 @@
+"VertexlitGeneric"
+{
+//Base
+	"$basetexture" 		"models\props_xen\xen_pod_structure002_burst_d"
+	"$bumpmap" 		"models\props_xen\xen_pod_structure002_burst_n"
+
+//Other	
+	"$blendTintByBaseAlpha"			"1"
+	"$nocull"	
+				"1"
+	"$halflambert" "1"
+	"$surfaceprop" "alienflesh"
+
+ 	"$phong" "1"
+	"$phongexponent" "64"
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[0.4 0.1 0.0]"
+	"$phongwarptexture"  "models/xenians/hl2_spores/xen_eyestalk01_chrome"
+
+	$envmap "env_cubemap"
+	$envmaptint "[0.02 0.001 0]"
+	$normalmapalphaenvmapmask "1"
+}

@@ -1,0 +1,34 @@
+DI_VertexLitGeneric_DX90
+{
+	$basetexture models/fungalfauna/polyp_yng_uvw
+	$bumpmap models/fungalfauna/polyp_yng_n
+	
+	$phong 1
+	$phongfresnelranges "[0.1 0.2 0.1]"
+	$phongexponent 30
+	$phongboost 1.2
+		
+	$subsurfaceenabled 1
+
+	"$surfaceprop" "alienflesh"
+
+	$transmatmaskstexture models/fungalfauna/polyp_yng_transmat
+	$translucentfresnelminmaxexp "[1.0 1.0 1.5]"
+		
+	$bumpstrength 1.3
+	$diffuseexponent 3.8 
+	
+	$bbmin "[-64 -64 -64]"
+	$bbmax "[64 64 64]"
+	
+	$hueShiftIntensity .9
+	$hueShiftFresnelExponent 2
+	
+	$ambientboost 0.3
+	$ambientboostmaskmode 5	
+	
+	$detail detail/organic_detail_03
+	$detailscale 2
+	$detailblendfactor 0.5
+	$detailblendmode 0
+}

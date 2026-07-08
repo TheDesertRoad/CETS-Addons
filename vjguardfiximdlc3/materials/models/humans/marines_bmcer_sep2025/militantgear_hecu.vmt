@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\humans\marines_bmcer_sep2025/militantgear_hecu"
+	"$bumpmap" "models\humans\marines_bmcer_sep2025/militantgear_normal"
+	
+	"$model" 1
+
+
+}

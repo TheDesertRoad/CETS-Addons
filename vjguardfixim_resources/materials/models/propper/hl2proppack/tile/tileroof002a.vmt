@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"tile/tileroof002a"
+	"%keywords"		"c17downtown"
+	"$envmap"		"env_cubemap"
+	"$normalmapalphaenvmapmask"		"1"
+	"$envmapcontrast"		"1"
+	"$envmapsaturation"		"1"
+	"$envmaptint"		"[ .72 .72 .72 ]"
+	"$model"		"1"
+}

@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+
+"$baseTexture" "models\southernmost\station_pillar"
+"$bumpmap" "models\southernmost\station_pillar_normal"
+//"$model" 1
+"$phong" "1"
+"$phongexponent" "10"
+"$phongboost" "17"
+"$phongfresnelranges" "[.0205 .5 5]"
+
+}

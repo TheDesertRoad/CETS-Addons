@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapSelfIllum
+	"$basetexture" "urban\conc_clean"
+	"$surfaceprop" "concrete"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "urban\conc_clean_mask"
+	"$envmaptint" "[0.1 0.1 0.1]"
+}

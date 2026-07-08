@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+	$basetexture "models/architectpack01/fabrics04_Base_Color"
+	$surfaceprop Default
+
+	$nocull 1
+}

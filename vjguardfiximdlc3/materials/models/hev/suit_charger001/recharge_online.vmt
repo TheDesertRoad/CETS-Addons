@@ -1,0 +1,21 @@
+"vertexlitgeneric"
+{
+	// original shader: basetimeslightmap
+	"$detail" "models\hev\detail\metal_detail_01"
+	"$detailscale" 1
+	"$basetexture" "models/hev/suit_charger001/recharge_online"
+	"$surfaceprop" "metal"
+	
+	"$selfillum" "1"
+	
+    "$selfillummask" "models/hev/suit_charger001/recharge_glow"
+
+	"proxies"
+	{
+		"toggletexture"
+		{
+			"toggletexturevar" "$basetexture"
+			"toggletextureframenumvar" "$frame"
+		}
+	}
+}

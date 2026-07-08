@@ -1,0 +1,33 @@
+"VertexlitGeneric"
+{
+//Base
+	"$basetexture" 		"models\props_xen\xen_tendril_03_d"
+	"$bumpmap" 		"models\props_xen\xen_tendril_03_n"
+
+//Other	
+	"$nocull"					"1"
+	"$alphatest"					"1"
+
+//Detail
+	"$Detail" 				  	  "models\props_xen\xen_tendril_03_emissive"
+	"$DetailScale" 			  	  "1"
+	"$DetailBlendFactor" 	  	  "1.5"
+	"$DetailBlendMode" 		   	  "5"
+
+	"$halflambert" "1"
+
+	//phong parameters
+
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+//	"$rimlightboost" "1"
+}

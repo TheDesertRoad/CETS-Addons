@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	
+	"$basetexture" "models/de_shipped/shipped_skysphere"	
+	"$translucent" 1
+	"$selfillum" "1"
+	"$nofog" "1"
+}

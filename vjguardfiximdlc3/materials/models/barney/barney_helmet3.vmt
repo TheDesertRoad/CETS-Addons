@@ -1,0 +1,5 @@
+"Vertexlitgeneric"
+{
+	"$baseTexture" "models\Barney\barney_helmet3"
+	"$bumpmap" "models\Barney\barney_helmet3_normal"
+}

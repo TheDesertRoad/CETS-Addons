@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "opfor/SIGN_H2O_LABS"
+	
+	"$detail" "detail/detail_noise1" 	
+	"$detailscale" 2.5 
+	"$surfaceprop" "metal"
+}

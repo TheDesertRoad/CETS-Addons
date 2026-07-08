@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props_qz/barrel_stirrer"
+	"$surfaceprop" "metal"
+	"$nocull" "1"
+}

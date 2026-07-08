@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$AlphaTest" "1"
+	"$AlphaTestReference" "0.3"
+	"$AllowAlphaToCoverage" "1"
+
+	"$basetexture" "southernmost/herb01"
+	"%compilepassbullets" 1
+                "$nocull" 1
+	
+}

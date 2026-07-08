@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\props\hl2don_shared/soda_box01a"
+	"$envmap" "env_cubemap"
+}

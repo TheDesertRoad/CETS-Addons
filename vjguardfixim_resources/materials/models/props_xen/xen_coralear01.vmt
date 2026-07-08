@@ -1,0 +1,25 @@
+"VertexlitGeneric"
+{
+//Base
+	"$basetexture" 		"models\props_xen\xen_coralear01_d"
+	"$bumpmap" 		"models\props_xen\xen_coralear01_n"
+
+//Other	
+	"$blendTintByBaseAlpha"			"1"
+	"$nocull"					"1"
+
+	"$Detail" 				  	  "models\props_xen\xen_coralear01_emissive"
+	"$DetailScale" 			  	  "1"
+	"$DetailBlendFactor" 	  	  "1.5"
+	"$DetailBlendMode" 		   	  "5"
+
+
+	"$phong" "1"
+	"$phongexponent" "24"
+	"$phongboost"	"2"
+	"$phongfresnelranges"	"[.1 0.8 3]"
+
+	"$halflambert"		"1"
+	"$envmaptint" "[.01 .01 .02]"
+	"$envmap" "env_cubemap"
+}

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/props_airex/pistons01b"
+	"$envmapmask" "models/props_airex/pistons01b_mask"
+	"$envmap" env_cubemap
+	"$multipass" 1
+}

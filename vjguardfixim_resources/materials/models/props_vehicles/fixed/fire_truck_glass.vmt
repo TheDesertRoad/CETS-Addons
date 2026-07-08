@@ -1,0 +1,9 @@
+VertexLitGeneric
+{
+
+$baseTexture "models/props_vehicles/fixed/fire_truck_glass.vtf"
+$surfaceprop glass
+$envmap env_cubemap
+$envmaptint "[0.7 0.7 0.7]"
+
+}

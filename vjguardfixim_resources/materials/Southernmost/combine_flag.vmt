@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/combine_flag"
+    	"$alphatest" 1 
+ //            "$nocull" 1
+}

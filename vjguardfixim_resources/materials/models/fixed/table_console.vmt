@@ -1,0 +1,9 @@
+VertexLitGeneric
+{
+$baseTexture "models\fixed/table_console"
+$envmap env_cubemap
+$envmapmask "models\fixed\table_console_ref"
+$envmapcontrast ".2"
+$envmaptint "[.49 .34 .27]"
+$envmapsaturation ".8"
+}

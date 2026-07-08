@@ -1,0 +1,13 @@
+"UnlitGeneric"
+{
+	$basetexture "skybox/xenspace6_up"
+	$ignorez 1
+
+	proxies
+	{
+		Clamp
+		{
+			min	1
+			max	1
+	}
+}

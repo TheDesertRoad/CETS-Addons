@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/gratesign"
+	"$alphatest" 1
+	"$nocull" 1
+}

@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "ResidualLife/rl00sign5"
+	
+	"$detail" "detail/detail_noise1" 	
+	"$detailscale" 2.5 
+	"$surfaceprop" "metal"
+}

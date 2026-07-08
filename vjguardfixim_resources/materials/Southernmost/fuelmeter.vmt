@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/fuelmeter"
+	"$surfaceprop" "metal"
+//	"$basealphaenvmapmask" 1
+//             "$envmap" "env_cubemap"
+}

@@ -1,0 +1,11 @@
+SDK_VertexLitGeneric
+{
+	"$baseTexture" "models/race_x/stukabat/STUKA_Head1"
+	"$bumpmap" "models/race_x/stukabat/STUKA_Head1_n"
+	"$phong"     "1"
+	"$phongexponent"  "32"
+	"$phongboost"   "1"
+	"$phongfresnelranges"   "[1 .7 .3]"
+	"$phongwarptexture"  "models/race_x/stukabat/stukabat_iridescence"
+	$selfillum 1
+}

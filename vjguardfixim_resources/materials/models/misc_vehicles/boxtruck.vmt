@@ -1,0 +1,18 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/misc_vehicles/TC05_freezertruck_A01_D"
+	"$envmapmask" "Models/misc_vehicles/TC05_freezertruck_A01_S"
+	"$surfaceprop" "solidmetal"
+	"$envmap" "env_cubemap"
+ 	"vertexlitgeneric_HDR_dx9"
+ 	{
+  		"$envmaptint" "[.25 .25 .25]"
+ 	}
+
+
+	"vertexlitgeneric_DX9"
+ 	{
+  		"$envmaptint" "[.25 .25 .25]"
+ 	}
+}

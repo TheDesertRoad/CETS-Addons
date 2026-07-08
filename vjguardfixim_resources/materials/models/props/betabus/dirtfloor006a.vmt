@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props/betabus/dirtfloor006a"
+	"$surfaceprop" "dirt"
+}

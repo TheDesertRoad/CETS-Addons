@@ -1,0 +1,33 @@
+// should match hydra_electrical_web
+
+VertexlitGeneric
+{
+	$basetexture nature/xen_web
+	$bumpmap nature/snowfloor002a_normal
+	$envmap env_cubemap
+	$envmaptint "[3 1 4]"
+	$normalmapalphaenvmapmask 1
+	$translucent 1
+	$nodecal 1
+	$nocull 1
+	$model 1
+	
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture models\xenians/hl2_hydra\gradient
+	$emissiveBlendBaseTexture nature/xen_web
+	$emissiveBlendFlowTexture models\xenians/hl2_hydra\gradient
+	$emissiveBlendTint "[1 7 5]"
+	$emissiveBlendStrength 0.1
+	$emissiveBlendScrollVector "[0 .1]"
+	
+	Proxies
+	{
+		Sine
+		{
+			sineMin 0.1
+			sineMax 0.2
+			sineperiod 7.2
+			resultVar $emissiveblendstrength
+		}
+	}
+}

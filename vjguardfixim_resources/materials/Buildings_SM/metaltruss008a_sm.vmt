@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmap
+	"$basetexture" "Buildings_SM/metaltruss008a_sm"
+	"$surfaceprop" "metal"
+	"%keywords" "c17industrial,wasteland"
+}

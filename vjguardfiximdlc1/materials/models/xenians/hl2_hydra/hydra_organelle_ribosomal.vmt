@@ -1,0 +1,32 @@
+Vertexlitgeneric
+{
+	$basetexture custom_nature\xeno01c
+ 	$bumpmap bumpmaps/bump_generic02
+	$nodecal 1
+	$halflambert 1
+		
+	$selfillum 1
+	$selfillummask detail/organic_detail_03
+	$selfIllumFresnel 1
+	$selfIllumFresnelMinMaxExp "[0.1 2 8]"
+	$selfillumtint "[.7 .6 .8]"
+		
+	Proxies
+	{
+		Sine
+		{
+			sineMin 0.5
+			sineMax 3
+			sineperiod 7.2
+			resultVar "$selfIllumFresnelMinMaxExp[1]"
+		}
+		
+		Sine
+		{
+			sineMin 0.2
+			sineMax 0.6
+			sineperiod 10
+			resultVar "$selfillumtint[1]"
+		}
+	}
+}

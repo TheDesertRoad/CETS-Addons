@@ -1,0 +1,14 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "southernmost/forest_dirt_02"
+	"$basetexture2" "southernmost/concretefloor009a"
+	 "%tooltexture" "concrete/concretefloor009a"
+	"$surfaceprop" "dirt"
+	"$surfaceprop2" "dirt"
+	"$blendmodulatetexture" "nature/blendtexture01"
+        	"$detail" "detail\noise_detail_01"
+	"$detailscale" "7.345"
+	"$detailblendfactor" .6
+	"$detailblendmode" 0
+}
+  

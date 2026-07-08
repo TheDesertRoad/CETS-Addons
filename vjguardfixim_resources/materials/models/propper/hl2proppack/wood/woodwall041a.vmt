@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Wood/woodwall041a"
+	"%keywords"		"c17downtown"
+	"$detail"		"detail\noise_detail_01"
+	"$detailscale"		"6.397400"
+	"$detailblendfactor"		"0.700000"
+	"$detailblendmode"		"0"
+	"$model"		"1"
+}

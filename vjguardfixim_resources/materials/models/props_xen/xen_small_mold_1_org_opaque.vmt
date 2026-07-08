@@ -1,0 +1,17 @@
+"VertexlitGeneric"
+{
+//Base
+	"$basetexture" 		"models\props_xen\xen_small_mold_1_org"
+	"$bumpmap" 		"models\props_xen\xen_small_mold_cluster_1_n"
+
+//Other	
+	"$blendTintByBaseAlpha"			"1"
+	"$nocull"					"1"
+	"$phongexponent" "15"
+
+//Phong	
+	"$phong" 						"1"
+	"$phongboost"					"5.5934895"
+	"$phongfresnelranges"			"[0.1 0.23 0.945]"
+	"$phongdisablehalflambert"		"1"
+}

@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/ypf_trim_metal"
+	"$surfaceprop" "metal"
+	"$selfillum" 1
+	"$selfillummask" "southernmost\ypf_trim_metal_selfillum"
+}

@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "custommat/powershields"
+	"$selfillum" "1"
+}

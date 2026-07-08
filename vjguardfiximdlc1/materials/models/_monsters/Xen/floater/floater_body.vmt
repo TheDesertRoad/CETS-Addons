@@ -1,0 +1,24 @@
+vertexlitgeneric
+{	
+	"$basetexture" 	"models/_Monsters/Xen/Floater/floater_body"
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.03 0.01 0.02]"
+
+	"$selfillum" 1
+
+	$halflambert 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/_Monsters/Xen/Floater/floater_body"
+		"$selfillummask" 	"models/_Monsters/Xen/Floater/floater_body_light"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/_Monsters/Xen/Floater/floater_body"
+	}
+}

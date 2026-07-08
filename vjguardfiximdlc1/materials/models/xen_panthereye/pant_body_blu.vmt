@@ -1,0 +1,25 @@
+"SDK_VertexLitGeneric"
+{
+	"$basetexture" "models/xen_panthereye/pant_body_blu"
+	"$bumpmap" "models/xen_panthereye/pant_body_n"
+
+	"$surfaceprop" "flesh"
+	"$model" 1
+
+ 	"$phong" "1"
+	"$phongexponent" "75"
+	"$phongboost"	"0.2"
+	"$phongfresnelranges"	"[0.1 0.4 0.8]"
+
+	$halflambert 1
+
+	$detail "detail\organic_detail_01"
+	$detailscale "6"
+	$detailblendfactor "0.5"
+	$detailblendmode "0"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "24"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "0.5"												// Boost for ambient cube component of rim lighting
+}

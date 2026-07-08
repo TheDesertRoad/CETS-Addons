@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/vagon_logo2"
+	"$surfaceprop"	"metal"
+	"$selfillum" 1
+	"$selfillummask" "southernmost\vagon_logo2_selfillum"
+}

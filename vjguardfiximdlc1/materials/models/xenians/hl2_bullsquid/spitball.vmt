@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/xenians/hl2_bullsquid/spitball"
+	"$envmap" "models/xenians/hl2_bullsquid/spitball_mask"
+	"$envmapsphere" 1
+	"$model" 1
+	"$additive" 1
+}

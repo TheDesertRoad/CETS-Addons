@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	// Original shader: BaseTimesLightmap
+	"$basetexture" "vaccine/dys_lightflur4"
+	"$surfaceprop" "metal"
+	"$bumpmap" "vaccine/dys_lightflur4_normal"
+}

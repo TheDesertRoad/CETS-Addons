@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/citizen/children/d_r_leg"
+	"$bumpmap" "models/citizen/children/d_r_leg_n"
+	"$halflambert" "1"
+	
+	"$phong" "1"
+	"$phongexponent" "3"
+	"$phongboost" "0.2"
+	"$phongfresnelranges" "[0.1 0.2 0.4]"
+}

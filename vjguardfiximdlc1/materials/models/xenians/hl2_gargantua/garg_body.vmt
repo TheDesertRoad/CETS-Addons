@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/xenians/hl2_gargantua/garg_body"
+	"$bumpmap" "models/xenians/hl2_gargantua/garg_body_normal"
+
+ 	"$phong" "1"
+	"$phongexponent" "2"
+	"$phongboost"	"0.1"
+	"$phongfresnelranges"	"[0.1 0.4 0.5]"
+
+	"$surfaceprop" "Antlion"
+
+	$halflambert 1
+
+	$detail "detail\organic_detail_01"
+	$detailscale "7"
+	$detailblendfactor "0.2"
+	$detailblendmode "0"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "24"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "0.3"	
+}

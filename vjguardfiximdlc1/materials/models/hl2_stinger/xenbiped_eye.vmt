@@ -1,0 +1,18 @@
+Vertexlitgeneric
+{
+	$basetexture models/hl2_stinger/xenbiped_eye
+	
+	$bumpmap "models/hl2_stinger/eye_n"	
+	
+	$phong 1
+	$phongfresnelranges "[0.01 0.75 7]"
+	$phongwarptexture "models/stinger/iridescence"
+	$phongexponent 0.1
+	$phongboost .2
+
+//	This selfillum creates effect similar to cat eyes
+	$selfillum 1
+	$selfillumtint "[0.1 0.02 0.02]"
+	$selfIllumFresnel 1
+	$selfIllumFresnelMinMaxExp "[0.01 0.75 1]"
+}

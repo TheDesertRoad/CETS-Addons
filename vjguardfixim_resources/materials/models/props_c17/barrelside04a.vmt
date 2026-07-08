@@ -1,0 +1,15 @@
+VertexlitGeneric
+{
+	$basetexture Models/props_c17/barrelside04a
+	$detail detail/detail_noise1
+	$detailscale 3.5
+	$detailblendfactor 4.5
+	$halflambert 1
+	
+	$envmapmask Models/props_c17/barrelside_mask
+	$envmap env_cubemap
+	$envmaptint 2.0
+	$envmapcontrast 0.5
+	$envmapsaturation 0.5
+}
+

@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_jeff/blindbitch_xen"
+	"$bumpmap" "models/hl2_jeff/blindbitch_xen_n"
+	"$surfaceprop" "flesh"
+	"$model" 1
+	"$halflambert" "1"
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "12" 
+	"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.3 .1 .1]"
+}

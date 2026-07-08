@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/ej_bomber/bomber_mask"
+	"$halflambert" "1"
+}

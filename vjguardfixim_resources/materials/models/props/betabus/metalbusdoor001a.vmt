@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	// Original shader: BaseTimesLightmapAlphaBlend
+                "$alphatest" 1
+                "$alphatestreference" 0.9
+	"$allowalphatocoverage" 1
+	"$basetexture" "models/props/betabus/metalbusdoor001a"
+	"$surfaceprop" "metal"
+}

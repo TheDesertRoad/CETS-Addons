@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/playermodels/caste/caste_head"
+	"$halflambert" "1"
+
+}

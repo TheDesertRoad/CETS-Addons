@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	"$surfaceprop" "solidmetal"
+	"$envmap"			"env_cubemap"
+	"$envmapmask"		"Models/props_vehicles/Apc001_bw"
+	"$envmaptint" "[ .75 .75 .8]"
+	"$envmapsaturation" 1
+	"$envmapcontrast" 1
+	"$halflambert" 1
+
+	"$selfillum" "1"
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$basetexture" "Models/props_vehicles/Apc001"
+		"$selfillummask" 	"Models/props_vehicles/Apc001_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$basetexture" "Models/props_vehicles/Apc001"
+	}
+}

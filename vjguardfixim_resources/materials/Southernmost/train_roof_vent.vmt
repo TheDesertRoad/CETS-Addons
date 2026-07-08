@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/train_roof_vent"
+                "$bumpmap" "southernmost/train_roof_vent_normal"
+                "$envmap" "env_cubemap"
+                "$normalmapalphaenvmapmask"  1	
+}

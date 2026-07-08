@@ -1,0 +1,40 @@
+"Refract"
+{
+	"$baseTexture" "models/xenians/hl2_nest/map2"
+	"$additive" 1
+	"$model" 1
+	"$refractamount" "1.0"
+//	"$refractamount" "0.0"
+	"$refracttint" "[1.0 1 1]"
+
+	"$dudvmap" "dev/water_dudv"
+	"$normalmap" "dev/water_normal"
+
+	"$surfaceprop" "water"
+	"$bumpframe" "0"
+
+	"$phong" "1"
+	"$phongboost" "5"
+	"$phongexponent" "2" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$normalmap"
+			"animatedtextureframenumvar" "$bumpframe"
+			"animatedtextureframerate" 20.00
+		}
+//
+//		"TextureScroll"
+//		{
+//			"texturescrollvar" "$bumptransform"
+//			"texturescrollrate" 2
+//			"texturescrollangle" 45.00
+//		}
+	}
+}
+

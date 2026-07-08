@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\metalrail"
+	"$model" 1
+	"$surfaceprop" "metal"	
+	
+}

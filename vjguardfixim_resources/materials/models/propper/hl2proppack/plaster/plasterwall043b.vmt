@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Plaster/plasterwall043b"
+	"$detail"		"detail\plaster_detail_01"
+	"$detailscale"		"6.783000"
+	"$detailblendfactor"		"0.800000"
+	"$detailblendmode"		"0"
+	"%keywords"		"c17downtown"
+	"$model"		"1"
+}

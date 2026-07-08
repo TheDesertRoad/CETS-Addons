@@ -1,0 +1,4 @@
+VertexLitGeneric
+{
+	$basetexture "models/xenians/hl2_xenlight/xen_light_discs"
+}

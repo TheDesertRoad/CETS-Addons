@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$surfaceprop" "default"
+	"$basetexture" "Models/xenians/hl2_bullsquid/NewBullsquidSheet"
+	"$bumpmap" "Models/xenians/hl2_bullsquid/NewBullSquidSheet_Normal"
+	"$alphatest" "1"
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponenttexture" "Models/xenians/hl2_bullsquid/NewBullSquidSheet_exponent"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.18 .4 1]"
+	"$halflambert" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "10"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "3"										// Boost for ambient cube component of rim lighting
+}
+
+

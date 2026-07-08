@@ -1,0 +1,14 @@
+"vertexlitgeneric"
+{
+$baseTexture	models/xenians/hl2_controller/hl1con_gibs
+$bumpmap		models/xenians/hl2_controller/hl1con_normal
+$phong	1
+$phongexponenttexture models/xenians/hl2_controller/hl1con_exponent
+$phongboost	4
+$phongfresnelranges	"[.1 .5 1]"
+$nodecal 1
+$selfillum 1
+$rimlight 1
+$rimlightboost .4
+$rimlightexponent 100
+}

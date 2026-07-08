@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/worker_04/worker_misc_d"
+	"$halflambert" 1
+	"$nocull" "1"
+	// Original shader: VertexLitTexture
+	"$phong" "1"
+	"$phongboost" "4"
+	"$phongexponent" "10"
+//	"$phongexponenttexture" "models/gman/gman_sheet_phong"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.01 .4 1]"
+}

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"		"models\nope\nothing"
+	"$vertexcolor" 		1
+	"$vertexalpha" 		1
+	"$nolod" 			1
+}

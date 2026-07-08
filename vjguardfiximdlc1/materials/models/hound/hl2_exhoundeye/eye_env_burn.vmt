@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture"	"models\hound\hl2_exhoundeye\eye_burn"
+	"$bumpmap" "models\hound\hl2_houndeye\eye_normal"
+}

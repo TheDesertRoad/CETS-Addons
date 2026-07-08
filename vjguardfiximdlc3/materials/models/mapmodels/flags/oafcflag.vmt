@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"MODELS\MAPMODELS\FLAGS\oafcflag"
+	"$nocull" "1"
+}

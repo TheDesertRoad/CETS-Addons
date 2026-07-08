@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Props/plasticexitsign001a"
+	"$selfillum"		"1"
+	"$model"		"1"
+}

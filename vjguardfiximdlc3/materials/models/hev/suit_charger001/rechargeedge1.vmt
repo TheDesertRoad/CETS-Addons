@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	// original shader: basetimeslightmap
+	"$detail" "models\hev\detail\metal_detail_01"
+	"$detailscale" 1
+	"$basetexture" "models/hev/suit_charger001/rechargeedge1"
+	"$surfaceprop" "metal"
+}

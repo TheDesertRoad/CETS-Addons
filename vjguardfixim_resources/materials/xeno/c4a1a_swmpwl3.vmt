@@ -1,0 +1,13 @@
+WorldVertexTransition
+{
+	$basetexture xeno/C4A1A_SWMPWL2
+	$bumpmap xenbumpmap/C4A1A_SWMPWL2
+	$basetexture2 xeno/tech_w4
+	$bumpmap2 xenbumpmap/tech_w4
+	
+	"$envmapcontrast" "1"
+	"$envmapsaturation" 1
+	"$envmap"	"env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$normalmapalphaenvmapmask" "1"
+}

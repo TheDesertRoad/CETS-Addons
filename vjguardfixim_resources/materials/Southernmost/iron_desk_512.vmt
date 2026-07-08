@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "models/southernmost/iron_desk_512"
+	"$surfaceprop" "metal"
+}

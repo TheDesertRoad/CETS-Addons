@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/indwindow_ref"
+	"$surfaceprop" "glass"
+	"$envmapmask" "southernmost/indwindow_mask"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.6 .6 .6]"
+}

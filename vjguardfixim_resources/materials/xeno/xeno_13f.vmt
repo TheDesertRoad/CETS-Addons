@@ -1,0 +1,16 @@
+WorldVertexTransition
+{
+	$basetexture xeno/XENO_13
+	$basetexture2 xeno/XENO_14
+	$bumpmap xenbumpmap/XENO_13
+	$bumpmap2 xenbumpmap/XENO_14
+	
+	// $detail XENO_13F_detail
+	$texscale 8
+ "$envmap"			"environment maps/xen_envmap"
+     "$envmapcontrast" "1"
+   "$envmapsaturation" 1 
+  "$envmaptint" "[.335 .335 .335]"
+   "$normalmapalphaenvmapmask" "1"
+	"$baseTextureOffset" "[0.5 0.5]"	"Proxies"	{	"TextureTransform"	{	"translateVar" "$baseTextureOffset"	"scaleVar"     "$texscale"	"resultVar"    "$baseTextureTransform"	}	}
+}

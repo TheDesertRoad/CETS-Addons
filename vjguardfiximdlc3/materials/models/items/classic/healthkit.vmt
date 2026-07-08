@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "Models/Items/classic/Healthkit"
+	"$bumpmap" "models/Items/classic/healthkit_normal"
+	"$selfillum" "1"
+	"$envmap" "env_cubemap"
+	"$nocull" "1"
+	"$envmaptint" "[.1 .1 .1]"
+	"$normalmapalphaenvmapmask" "1"
+	"$phong" "1"
+	"$phongboost" "3"
+	"$phongexponent" "20"
+	"$phongalbedotint" "1"								
+	"$phongfresnelranges"	"[.1 5 1]"
+}

@@ -1,0 +1,36 @@
+VertexlitGeneric
+{
+	$alphatest 1
+	$allowalphatocoverage 1
+	$alphatestreference .3
+	$basetexture models/props_foliage_new/xen_shrub
+	$bumpmap models/props_foliage_new/xen_shrub_n
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongexponent 100
+	$phongboost 2.5
+	$model 1
+	$nocull 1
+	$nodecal 1
+	$detail detail/organic_detail_03
+	$detailscale 10
+	$detailblendfactor 2
+	$detailblendmode 0
+	
+	$treesway							1		// height at which the effect is on fully (in world units)
+	$treeswayheight						64		// radius at which the effect is on fully (in world units)
+	$treeswaystartheight				0.15	// portion of height at which the effect starts to fade in (0-1)
+	$treeswayradius						600		// radius at which the effect is on fully (in world units)
+	$treeswaystartradius				0.05	// portion of radius at which the effect starts to fade in (0-1)
+	$treeswayspeed						0.2		// how quickly the tree sways (as a multiplier of time)
+	$treeswaystrength					1		// how much the tree sways (as a multiplier of position)
+	$treeswayscrumblespeed				10		// how quickly the leaves move (as a multiplier of time)
+	$treeswayscrumblestrength			0.5		// how much the leaves move( as a multiplier of position)
+	$treeswayscrumblefrequency			50		// spatial frequency of sine wave applied to leaves.  typically high-ish (10-25)
+	$treeswayscrumblefalloffexp			2.5		// falloff parameter for scrumble motion on leaves, higher means the core of the tree is more stable
+	$treeswayfalloffexp					2.5		// falloff parameter for wave motion on branches/trunk, higher means core of tree is more stable
+	$treeswayspeedhighwindmultiplier 	0.4  	// multiplier of movement speed at higher wind
+	$treeswayspeedlerpstart 			2.0		// wind speed at which high wind multiplier begins to have effect
+	$treeswayspeedlerpend 				10.0	// wind speed at which high wind multiplier is fully on
+}
+

@@ -1,0 +1,24 @@
+SDK_VertexLitGeneric
+{
+	"$baseTexture" "models\xen_eggs/translucent_inner"
+	"$bumpmap" "models\xen_eggs/translucent_inner_n"
+	"$phong"     "1"
+	"$phongexponent"  "11"
+	"$phongboost"   "1"
+	"$phongfresnelranges"   "[5 .7 .3]"
+	"$phongwarptexture"  "models/xen_eggs/bullsquid_egg_iridescence"
+	$translucent 1
+	$halflambert 1
+	$nodecal 1
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.02
+			"texturescrollangle" 90
+		}
+	}
+
+}

@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/xen_props/pillar/txen_broken"
+	"$bumpmap" "xen/xen_22_normal"
+	"$color2"	"[0.20 0.2 0.50]"
+	"$phong" "1"
+	"$phongexponent" "3"
+	"$phongboost"	"0.3"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$rimlight" "1" 
+	"$rimlightexponent" "0.3" 
+	"$rimlightboost" "2.5"
+	"$surfaceprop" "Flesh"
+}

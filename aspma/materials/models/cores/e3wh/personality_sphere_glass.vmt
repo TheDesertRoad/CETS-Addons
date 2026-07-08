@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+$baseTexture "models/cores/E3WH/personality_sphere_glass"
+
+$translucent 1
+
+
+
+
+
+}

@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/ypfcartel"
+	"$surfaceprop" "metal"
+	"$bumpmap" "southernmost/ypfcartel_normal"
+	"$selfillum" 1
+	"$selfillummask" "southernmost\ypfcartel_selfillum"
+}

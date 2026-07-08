@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "Models\weapons\grenades\w_molotov\rag"
+	"$surfaceprop" "Concrete"
+	"$halflambert" "1"
+}
+

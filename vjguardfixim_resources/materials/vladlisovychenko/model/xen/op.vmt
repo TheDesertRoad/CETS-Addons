@@ -1,0 +1,18 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "vladlisovychenko/model/xen/op"
+	"$surfaceprop" "Concrete"
+	"$bumpmap" "xen/xen_3_normal"
+	"$surfaceprop" "Flesh"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.10 .10 .10]"
+	"$phong" "1"
+	"$phongexponent" "2"
+	"$phongboost"	"0.4"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$normalmapalphaenvmapmask" 1
+	"$rimlight" "1" 
+	"$rimlightexponent" "0.4" 
+	"$rimlightboost" "0.5"
+
+}

@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/fake_shadow"
+                "$translucent" 1
+}

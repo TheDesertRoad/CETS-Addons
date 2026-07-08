@@ -1,0 +1,62 @@
+DI_Refract_DX90
+{
+	$basetexture models/xenians/hl2_hydra/hydra_innards
+//	$dudvmap dev\water_dudv
+//	$normalmap dev\water_normal
+//	$refracttinttexture models\props_lab\glass_tint001
+//	$refracttint "{0 100 200}" // 255 100 0
+//	$refractamount .0
+// 	$bluramount 1
+//	$translucent 1	
+	
+//	$envmap env_cubemap
+//	$envmaptint "[.5 .5 .5]"
+	
+ 	$model 1
+	$nocull 0
+	$scale "[1 1]"
+	$bumpframe 0
+	
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture detail/organic_detail_02
+	$emissiveBlendBaseTexture custom_uni\cityclouds001
+	$emissiveBlendFlowTexture flowmaps\goo
+	$emissiveBlendTint "[8 10 13]"
+	$emissiveBlendStrength 0.05
+	$emissiveBlendScrollVector "[-0.15 -0.01]"
+	
+	$SILHOUETTEENABLED 1
+	$normalmap bumpmaps/bump_organic01
+	$refractamount 0.0
+	$colortint "[1.1 1.3 1.6]"
+	$SilhouetteThickness 1
+	$SilhouetteColor "[0 1 0]"
+	$GroundMin 5
+	$GroundMax 0
+	$BlurAmount 0.2	
+	
+	"Proxies" 
+	{ 
+		"Sine" 
+		{ 
+			sineperiod "4" 
+			sinemin "1" 
+			sinemax "1" 
+			resultVar "$SilhouetteThickness" 
+		} 
+
+	//	"AnimatedTexture" 
+	//	{ 
+	//		"animatedtexturevar" "$dudvmap" 
+	//		"animatedtextureframenumvar" "$bumpframe" 
+	//		"animatedtextureframerate" 60.00 
+	//	} 
+
+		"TextureScroll" 
+		{ 
+			"texturescrollvar" "$bumptransform" 
+			"texturescrollrate" .05 
+			"texturescrollangle" 45.00 
+		} 
+	} 
+}

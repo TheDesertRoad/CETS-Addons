@@ -1,0 +1,12 @@
+
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/props_wasteland/thumper001"
+	"$surfaceprop" "metal"
+	"$nocull" 1
+	"$envmapmask" "models/props_wasteland/thumper001_mask"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .125 .125 .125]"
+	"$selfillum" 1
+	
+}

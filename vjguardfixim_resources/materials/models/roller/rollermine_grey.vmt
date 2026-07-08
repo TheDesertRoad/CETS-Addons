@@ -1,0 +1,32 @@
+VertexLitGeneric
+{
+	"$bumpmap"		"models\roller/rollermine_n"
+
+	"$phong"  				"1"
+	"$phongexponent" 		"48"
+	"$phongboost" 			"1"
+	"$phongfresnelranges"	"[1 2 3]"
+	"$phongtint" 			"[0.6 0.8 1]"
+	"$phongalbedotint" 		"1"	
+
+	"$envmapfresnel"	"0.5"
+	"$envmaptint"		"[0.1 0.1 0.1]"
+	"$normalmapalphaenvmapmask"	"1"
+
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$basetexture"		"models\roller/rollermine_brown"
+		"$selfillummask" 	"models\roller/rollermine_brown_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$basetexture"		"models\roller/rollermine_brown"
+	}
+}
+
+}

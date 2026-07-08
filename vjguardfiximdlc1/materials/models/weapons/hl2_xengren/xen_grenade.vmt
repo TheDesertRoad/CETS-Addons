@@ -1,0 +1,29 @@
+"VertexlitGeneric"
+{
+	"$bumpmap" "models/Weapons/hl2_xengren/xen_grenade_normal"
+
+	"$halflambert" 1
+	"$selfillum" 	1
+
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/Weapons/hl2_xengren/xen_grenade"
+		"$selfillummask" 	"models/Weapons/hl2_xengren/xen_grenade_illum"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/Weapons/hl2_xengren/xen_grenade"
+	}
+
+	"360?$color2" "[ 0.8 0.8 0.8 ]"
+
+	"$phong" "1"
+	"$phongexponent" "12"
+	"$phongboost"	"16"
+	"$phongfresnelranges"	"[.1 0.8 3]"
+
+	"$envmaptint" "[.1 .12 .1]"
+	"$envmap" "env_cubemap"
+}

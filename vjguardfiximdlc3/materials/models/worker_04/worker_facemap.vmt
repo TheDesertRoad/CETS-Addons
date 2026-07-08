@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/worker_04/dale_facemap"
+	"$halflambert" 1
+	// Original shader: VertexLitTexture
+
+}

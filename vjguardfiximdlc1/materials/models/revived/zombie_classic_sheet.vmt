@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/revived/Zombie_Classic_sheet"
+	"$bumpmap" "Models/revived/zombie_classic_normal"
+	"$model" "1"
+	"$phong" "1"
+	"$phongboost" "5"
+//	"$halflambert" "1"
+//	"$phongexponenttexture" "Models/revived/zombie_classic_phong"
+//	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[0.1 .5  1]"
+	"$phongexponent" 30
+	
+//
+
+//rimlight disabled for now, sunlight areas wreaking havoc
+	//rimlight parameters
+	//"$rimlight" "1"
+	//"$rimlightexponent" "24"
+	//"$rimlightboost" "1"
+
+}

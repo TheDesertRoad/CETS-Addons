@@ -1,0 +1,270 @@
+// This is an amazing american muscle car that must be experienced
+
+"vehicle"
+{
+	"wheelsperaxle"	"2"
+	"body"
+	{
+		"countertorquefactor"	"0.9"
+		"massCenterOverride"	"0 -30 12"
+		"massoverride"			"1000"		// kg
+		"addgravity"			"0.50"
+		"maxAngularVelocity"	"720"
+	}
+
+	"engine"
+	{
+		"horsepower"        "80"
+		"maxrpm"            "3000"
+		"maxspeed"          "12"
+		"maxReverseSpeed"   "4"
+		"autotransmission"  "1"
+		"axleratio"         "2.5"
+		"gear"              "8.0"
+		"shiftuprpm"        "2500"
+		"shiftdownrpm"      "1000"
+	}
+
+	"steering"
+	{
+		"degreesSlow"		"50"	// steering cone at zero to slow speed
+		"degreesFast"		"18"	// steering cone at fast speed to max speed
+		"degreesBoost"		"11"	// steering cone at max boost speed (blend toward this after max speed)
+		"steeringExponent"	"1.4"	// steering function is linear, then raised to this power to be slower at the beginning of the curve, faster at the end
+		"slowcarspeed"		"14"
+		"fastcarspeed"		"20"
+		"slowSteeringRate"	"4.0"		
+		"fastSteeringRate"	"2.0"
+		"steeringRestRateSlow"	"4.0"
+		"steeringRestRateFast"	"2.0"
+		"turnThrottleReduceSlow" "0.01"
+		"turnThrottleReduceFast" "2.0"
+		"brakeSteeringRateFactor"	"6"
+		"throttleSteeringRestRateFactor"	"2"
+		"boostSteeringRestRateFactor"	"1.7"
+		"boostSteeringRateFactor"	"1.7"
+
+		"powerSlideAccel"	"250"
+
+		"skidallowed"		"1"
+		"dustcloud"		"1"
+
+	}
+
+	// front axle
+	"axle"
+	{
+		"wheel"
+		{
+			"radius"	"28"
+			"mass"		"100"
+			"damping"	"0"
+			"rotdamping"	"0.0"
+			"material"	"jeeptire"
+			"skidmaterial"	"slidingrubbertire"
+			"brakematerial" "brakingrubbertire"
+		}
+		"suspension"
+		{
+			"springConstant"		"40"
+			"springDamping"			"0.7"
+			"stabilizerConstant"		"10"
+			"springDampingCompression"	"9"
+			"maxBodyForce"			"9"
+		}
+
+		"torquefactor"	"0.3"
+		"brakefactor"	"0.4"
+	}
+
+	// rear axle
+	"axle"
+	{
+		"wheel"
+		{
+			"radius"	"28"
+			"mass"		"100"
+			"damping"	"0"
+			"rotdamping"	"0.0"
+			"material"	"jeeptire"
+			"skidmaterial"	"slidingrubbertire"
+			"brakematerial" "brakingrubbertire"
+		}
+		"suspension"
+		{
+			"springConstant"		"40"
+			"springDamping"			"0.7"
+			"stabilizerConstant"		"10"
+			"springDampingCompression"	"9"
+			"maxBodyForce"			"9"
+		}
+		"torquefactor"	"0.7"
+		"brakefactor"	"0.6"
+	}
+}
+
+"vehicle_sounds"
+{
+	// List gears in order from lowest speed to highest speed
+
+	"gear"
+	{
+		"max_speed"		"0.27"
+		"speed_approach_factor" "1.0"
+	}
+
+	"gear"
+	{
+		"max_speed"		"0.5"
+		"speed_approach_factor" "0.05"
+	}
+	"gear"
+	{
+		"max_speed"		"0.75"
+		"speed_approach_factor" "0.052"
+	}
+	"gear"
+	{
+		"max_speed"		"0.95"
+		"speed_approach_factor" "0.034"
+	}
+	"gear"
+	{
+		"max_speed"		"1.5"
+		"speed_approach_factor" "0.033"
+	}
+	"gear"
+	{
+		"max_speed"		"2.0"
+		"speed_approach_factor" "0.03"
+	}
+	"state"
+	{
+		"name"		"SS_START_WATER"
+		"sound"		"ATV_start_in_water"
+	}
+
+	"state"
+	{
+		"name"		"SS_START_IDLE"
+		"sound"		"DIG_engine_start"
+		"min_time"	"4.0"
+	}
+	"state"
+	{
+		"name"		"SS_SHUTDOWN_WATER"
+		"sound"		"ATV_stall_in_water"
+	}
+	"state"
+	{
+		"name"		"SS_IDLE"
+		"sound"		"DIG_engine_idle"
+	}
+	"state"
+	{
+		"name"		"SS_REVERSE"
+		"sound"		"DIG_reverse"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_0"
+		"sound"		"DIG_rev"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_0_RESUME"
+		"sound"		"DIG_engine_idle"
+		"min_time"	"0.75"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_1"
+		"sound"		"DIG_firstgear"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_1_RESUME"
+		"sound"		"DIG_firstgear_noshift"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_2"
+		"sound"		"DIG_secondgear"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_2_RESUME"
+		"sound"		"DIG_secondgear_noshift"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_3"
+		"sound"		"DIG_thirdgear"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_3_RESUME"
+		"sound"		"DIG_thirdgear_noshift"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_4"
+		"sound"		"DIG_fourthgear"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_GEAR_4_RESUME"
+		"sound"		"DIG_fourthgear_noshift"
+		"min_time"	"0.5"
+	}
+	"state"
+	{
+		"name"		"SS_SLOWDOWN_HIGHSPEED"
+		"sound"		"DIG_throttleoff_fastspeed"
+		"min_time"	"2.0"
+	}
+	"state"
+	{
+		"name"		"SS_SLOWDOWN"
+		"sound"		"DIG_throttleoff_slowspeed"
+		"min_time"	"2.0"
+	}
+	"state"
+	{
+		"name"		"SS_TURBO"
+		"sound"		"DIG_turbo_on"
+		"min_time"	"2.5"
+	}
+	"state"
+	{
+		"name"		"SS_SHUTDOWN"
+		"sound"		"DIG_engine_stop"
+	}
+	"crashsound"
+	{
+		"min_speed"			"350"
+		"min_speed_change"	"250"
+		"sound"				"ATV_impact_medium"
+		"gear_limit"		"1"
+	}
+	"crashsound"
+	{
+		"min_speed"			"450"
+		"min_speed_change"	"350"
+		"sound"				"ATV_impact_heavy"
+	}
+
+	
+	"skid_lowfriction"		"JNK_skid_lowfriction"
+	"skid_normalfriction"	"JNK_skid_normalfriction"
+	"skid_highfriction"		"JNK_skid_highfriction"
+}

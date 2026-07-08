@@ -1,0 +1,58 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\hl2_hgun/hivehand_d"
+	"$bumpmap" "models\weapons\hl2_hgun/hivehand_n"
+	
+	"$surfaceprop" "flesh"
+	"$model" "1"
+	"$halflambert" "1"
+
+	//phong parameters
+
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongexponent" "24" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+//	"$rimlightboost" "1"
+
+	"$selfillum" "1"
+	"$selfIllumFresnel" "1"
+	"$selfIllumFresnelMinMaxExp" "[.1 2.4 2]"
+
+	"$tintA" "[3 1 0]"
+	"$tintB" "[0 0 0]"
+	"$tintC" "[0.6 0.3 0.3]"
+	"$tinttemp" "[0 0 0]"
+	
+	Proxies
+	{
+		ModelDetailFx
+		{
+		}
+	
+		"FlashyWeapon"
+		{
+			"resultVar" "$tintB"
+		}
+
+		"Multiply"
+		{
+			"srcVar1" "$tintA"
+			"srcVar2" "$tintB"
+			"resultVar" "$tinttemp"
+		}
+		"Add"
+		{
+			"srcVar1" "$tinttemp"
+			"srcVar2" "$tintC"
+			"resultVar" "$selfillumtint"
+		}
+	}
+}

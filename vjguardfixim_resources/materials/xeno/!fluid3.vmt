@@ -1,0 +1,41 @@
+// envmaptint_fix
+"LightmappedGeneric"
+{
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .5 1 1 ]"
+	"$envmapcontrast" "1"
+
+	"$surfaceprop" "water"
+	"%keywords" "Xen"
+	"%compileWater" 1
+
+	"$bottommaterial" "xeno/!fluid3"
+	"$abovewater" "1"
+
+	"$fogenable" 1
+	"$fogcolor" "{64 255 200}"
+	"$fogstart" 0.1
+	"$fogend" 0.1
+
+	"$basetexture" "xeno/!fluid3"
+	"$bumpmap" "xeno/!fluid3_n"
+	"$frame" "100"
+	"$normalmapalphaenvmapmask" "1"
+
+	"Proxies"
+	{
+
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$basetexture"
+			"animatedtextureframenumvar" "$frame"
+			"animatedtextureframerate" 30.00
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.01
+			"texturescrollangle" 0
+		}
+	}
+}

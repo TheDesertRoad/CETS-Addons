@@ -1,0 +1,28 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Weapons/V_Gauss/back_highres"
+	"$bumpmap" "models/Weapons/V_Gauss/back_highres_n"
+	"$phong" "1"
+	"$phongexponent" "56"
+	"$phongboost"	"2"
+	"$phongfresnelranges"	"[.3 .3 .3]"
+
+	"360?$color2" "[ 0.4 0.4 0.4 ]"
+
+	"$halflambert" "1"
+
+	"$selfillum" 1
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/Weapons/V_Gauss/back_highres"
+		"$selfillummask" 	"models/Weapons/V_Gauss/back_highres_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/Weapons/V_Gauss/back_highres"
+	}
+}

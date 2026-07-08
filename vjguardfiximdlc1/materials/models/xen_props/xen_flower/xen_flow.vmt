@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/xen_props/xen_flower/xen_flow"
+	"$surfaceprop" "Alienflesh"
+}

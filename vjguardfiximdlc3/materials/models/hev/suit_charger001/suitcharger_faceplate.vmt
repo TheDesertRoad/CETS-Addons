@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/hev/suit_charger001/suitcharger_faceplate"
+	"$surfaceprop" "metal"
+	"$detail" "models\hev\detail\metal_detail_01"
+	"$detailscale" 1
+	"%keywords" "charger,hev"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hgrunt/pc_soldier_armor"
+	"$bumpmap" "models/hgrunt/pc_soldier_armor_normal"
+
+}

@@ -1,0 +1,17 @@
+"Sprite"
+{
+	"$spriteorientation" "parallel_upright"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$basetexture" "sprites/hydra_cable_cets"
+	"$spriterendermode" 5
+
+	Proxies
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 1
+			"texturescrollangle" 90
+		}
+	}
+}

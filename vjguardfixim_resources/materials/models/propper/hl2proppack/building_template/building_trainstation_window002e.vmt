@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Building_Template/Building_Trainstation_Window002e"
+	"$selfillum"		"1"
+	"$model"		"1"
+}

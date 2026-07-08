@@ -1,0 +1,16 @@
+VertexLitGeneric
+{
+	$baseTexture		Models/Antlion_Soldier/antlion_soldier_c
+	$bumpmap		Models/Antlion_Soldier/antlion_sol_n
+
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongexponent" "15"
+	"$phongfresnelranges"	"[.1 .8 1.2]"
+	
+	// environment map
+	"$normalmapalphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.035 .05 .03]"
+	"$envmapfrensel" "1"
+}

@@ -1,0 +1,6 @@
+vertexlitGeneric
+{
+$baseTexture "models/props_left4dead/triage_tent_biohazard_blue"
+$surfaceprop metal
+$model 1
+}

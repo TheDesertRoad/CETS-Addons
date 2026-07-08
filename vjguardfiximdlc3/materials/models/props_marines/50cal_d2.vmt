@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/props_marines/50cal_d2"
+	"$bumpmap" "models/props_marines/50cal_n"
+	"$normalmapalphaenvmapmask" 1
+	"$envmaptint" "[ .2 .2 .2 ]"
+"$selfillum" 1
+
+"$phong" "1"
+	"$phongexponent" "25"
+	"$phongboost"	"1"
+	  $phongfresnelranges "[.4 .8 30]"
+
+	"$halflambert" 1
+	"$multipass" 1
+	"$model" "1"
+
+	// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "35"		// Exponent for phong component of rim lighting
+	"$rimlightboost" ".7"			// Boost for ambient cube component 
+}

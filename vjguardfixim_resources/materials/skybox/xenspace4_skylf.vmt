@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	$basetexture "skybox/xenspace4_lf"
+	$ignorez 1
+}

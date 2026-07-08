@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Stone/stonewall004a"
+	"%keywords"		"c17downtown"
+	"$parallaxmap"		"stone/stonewall004a_height"
+	"$parallaxmapscale"		"0.025000"
+	"$detail"		"detail\noise_detail_01"
+	"$detailscale"		"7.345000"
+	"$detailblendfactor"		"0.800000"
+	"$detailblendmode"		"0"
+	"$model"		"1"
+}

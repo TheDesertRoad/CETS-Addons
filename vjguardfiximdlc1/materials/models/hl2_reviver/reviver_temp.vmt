@@ -1,0 +1,32 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/hl2_reviver/reviver_temp"
+	"$bumpmap" "models/hl2_reviver/reviver_temp_normal"
+
+	"$surfaceprop" "flesh"
+	"$model" "1"
+	"$halflambert" "1"
+
+	//phong parameters
+
+	"$phong" "1"
+	"$phongboost" "3"
+	"$phongexponent" "24" 
+	//"$phongexponenttexture" "Models/headcrab/allinonebacup2_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.05 .5 1]"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+//	"$rimlightboost" "1"
+
+	"$emissiveblendenabled" "1"
+	"$emissiveblendtexture" "models/hl2_reviver/reviver_selfillum_wave"
+	"$emissiveblendflowTexture" "models/hl2_reviver/reviver_temp_flow"
+	"$emissiveblendbaseTexture" "models/hl2_reviver/reviver_temp_illum"
+	"$emissiveblendtint" "[3.576464 11.043136 16]"
+	"$emissiveblendscrollVector" "[0.787 0.787]"
+	"$emissiveblendstrength" "1"
+}

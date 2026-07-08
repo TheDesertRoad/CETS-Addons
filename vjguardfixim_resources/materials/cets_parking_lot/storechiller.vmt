@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "cets_parking_lot/storechiller"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+	"$envmaptint" "[ .4 .4 .4 ]"
+
+}

@@ -1,0 +1,35 @@
+VertexLitGeneric
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/xenians/hl2_gonome/zombie_assassin"
+	"$bumpmap" "models/xenians/hl2_gonome/zombie_assassin_n"
+
+	"$phong"     "1"
+	"$phongexponent"  "32"
+	"$phongboost"   "0.2"
+	"$phongfresnelranges"   "[1 .7 .3]"
+	"$phongwarptexture"  "models/xenians/hl2_gonome/zassassin_iridescence"
+
+	$halflambert 1
+
+	//"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/xenians/hl2_gonome/zombie_assassin"
+		"$selfillummask" 	"models/xenians/hl2_gonome/zombie_assassin_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/xenians/hl2_gonome/zombie_assassin"
+	}
+
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+	"$rimlightboost" "2"
+}

@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/hgrunt/pc_soldier_armor"
+	"$envmap" "env_envmap"
+	"$detail" "env_envmap"
+	"$envmapcontrast" 0
+	"$envmapsaturation" 0
+}

@@ -1,0 +1,24 @@
+VertexLitGeneric
+{
+	"$baseTexture" "models\skitch\skitch"
+	"$bumpmap" "models\skitch\skitch_n"
+	"$surfaceprop" "alienflesh"
+	
+	"$halflambert" "1"
+
+	"$phong"     "1"
+	"$phongexponent"  "11"
+	"$phongboost"   "1"
+	"$phongfresnelranges"   "[1 .7 .3]"
+	"$phongwarptexture"  "models/skitch/skitch_iridescence"
+
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "10"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "2"										// Boost for ambient cube component of rim lighting
+
+	$detail "models\skitch\detail_flesh"
+	$detailscale "12"
+	$detailblendfactor "2"
+	$detailblendmode "0"
+
+}

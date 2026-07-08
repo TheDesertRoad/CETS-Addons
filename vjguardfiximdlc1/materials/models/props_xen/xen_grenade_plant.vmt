@@ -1,0 +1,23 @@
+"VertexlitGeneric"
+{
+//Base
+	"$basetexture" 		"models\props_xen\xen_grenade_plant_d"
+	"$bumpmap" 		"models\props_xen\xen_grenade_plant_n"
+
+	"$blendTintByBaseAlpha"			"1"
+	"$nocull"					"1"
+
+	"$phong" "1"
+	"$phongexponent" "24"
+	"$phongboost"	"2"
+	"$phongfresnelranges"	"[.1 0.8 3]"
+
+	"$Detail" 				  	  "models\props_xen\xen_grenade_plant_emissive"
+	"$DetailScale" 			  	  "1"
+	"$DetailBlendFactor" 	  	  "1.5"
+	"$DetailBlendMode" 		   	  "5"
+
+	"$halflambert"		"1"
+	"$envmaptint" "[.12 .1 .12]"
+	"$envmap" "env_cubemap"
+}

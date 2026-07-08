@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapSelfIllum
+	"$basetexture" "urban\windows_scum2"
+	"$surfaceprop" "concrete"
+}

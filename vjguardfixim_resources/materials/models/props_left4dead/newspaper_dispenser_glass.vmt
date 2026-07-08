@@ -1,0 +1,9 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_left4dead/window_uban_apt_glass"
+$translucent 1
+$envmap env_cubemap
+$envmapmask "models\props_left4dead\window_uban_apt_glass_ref"
+$envmaptint "[1 1 1]"
+$envmapcontrast ".7"
+}

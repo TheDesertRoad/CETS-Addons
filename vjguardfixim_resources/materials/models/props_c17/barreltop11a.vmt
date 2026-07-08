@@ -1,0 +1,8 @@
+VertexlitGeneric	
+{	
+	$basetexture models/props_c17/barreltop11a
+	$detail detail/detail_noise1
+	$detailscale 3.5
+	$detailblendfactor 4.5
+	$halflambert 1
+}

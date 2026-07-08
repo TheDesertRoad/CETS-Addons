@@ -1,0 +1,7 @@
+
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "source_vehicles/cockpit"
+	"$surfaceprop" "metal"
+}

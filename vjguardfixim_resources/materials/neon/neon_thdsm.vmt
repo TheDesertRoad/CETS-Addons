@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "neon/neon_thdsm"
+	"$additive" 1
+}

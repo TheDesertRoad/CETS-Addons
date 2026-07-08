@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_left4dead/Patio_ChairWhite"
+$alphatest 1
+$nocull 1
+}

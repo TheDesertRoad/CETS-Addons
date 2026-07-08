@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "cets_parking_lot/stickers/sign_pizza"
+	$translucent 1
+	$decal 1
+	$decalscale 0.25
+}

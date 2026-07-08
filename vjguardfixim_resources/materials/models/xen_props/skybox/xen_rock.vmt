@@ -1,0 +1,24 @@
+VertexLitGeneric
+{
+	"$basetexture" "xen/xen_4a_alpha"
+	"$phong" "1"
+	"$phongexponent" "20"
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$normalmapalphaenvmapmask" 1
+	"$rimlight" "1" 
+	"$rimlightexponent" "1" 
+	"$rimlightboost" "1.2"
+	"$surfaceprop" "Concrete"
+//	"$envmaptint" "[ 5.3 .1 2.1 ]"
+//	"$envmap" "cubemaps/cubemap_xen2"
+	"$basealphaenvmapmask" "1"
+
+
+	"$detail"			"xen/xen_11"
+	"$detailscale"			"[ 5 5 ]"
+	"$detailblendmode" 0
+	"$detailblendfactor"		"0.5"
+
+
+}

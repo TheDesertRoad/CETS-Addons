@@ -1,0 +1,9 @@
+LightmappedGeneric
+{
+	$basetexture xeno/C4A1A_SWMPFLR
+	$bumpmap xenbumpmap/C4A1A_SWMPFLR
+	
+	// $detail C4A1A_SWMPFLR_detail
+	$texscale 8     "$envmapcontrast" "1"   "$envmapsaturation" 1 "$envmap"			"environment maps/xen_envmap"  "$envmaptint" "[.335 .335 .335]"   "$normalmapalphaenvmapmask" "1"
+	"$baseTextureOffset" "[0.5 0.5]"	"Proxies"	{	"TextureTransform"	{	"translateVar" "$baseTextureOffset"	"scaleVar"     "$texscale"	"resultVar"    "$baseTextureTransform"	}	}
+}

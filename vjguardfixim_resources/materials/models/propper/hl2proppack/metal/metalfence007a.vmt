@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$AlphaTest"		"1"
+	"$AlphaTestReference"		"0.350000"
+	"$basetexture"		"Metal/metalfence007a"
+	"%compilepassbullets"		"1"
+	"$detail"		"detail\metal_detail_01"
+	"$detailscale"		"4.283000"
+	"$detailblendfactor"		"0.800000"
+	"$detailblendmode"		"0"
+	"%keywords"		"c17downtown"
+	"$model"		"1"
+}

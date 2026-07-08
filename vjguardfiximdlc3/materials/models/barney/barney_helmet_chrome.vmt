@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\Barney\barney_helmet_chrome"
+	"$surfaceprop" "metal"
+	"$model" 1
+	"$translucent" 0
+	"$envmap" "env_cubemap"
+	"$envmapconstrast" "10"
+	"$normalmapalphaenvmapmask" 0
+	"$envmapsaturation" .2
+	"$envmaptint" "[ .90 .90 .90]"
+}

@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"xen/xen_pillar_cage_01a"
+	"$bumpmap" 	"xen/xen_pillar_cage_01a_normal"
+
+	"$basetexturetransform" "center 1 1 scale 1 2 rotate 0 translate 0 0"
+
+	"$envmap" 	"env_cubemap"
+	"$normalmapalphaenvmapmask" "1"
+	"$envmaptint" 	"[.6 .55 .5]"
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[0.3 0.6 1.8]"
+}

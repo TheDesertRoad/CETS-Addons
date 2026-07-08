@@ -1,0 +1,9 @@
+VertexLitGeneric
+{
+	"$baseTexture" "models/de_ips/artefactoVentana01"
+	"$surfaceprop" "wood"
+//"$bumpmap" "models/de_ips/artefactoVentana01_normal"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/de_ips/artefactoVentana01_reflect"
+//"$normalmapalphaenvmapmask" 1
+}

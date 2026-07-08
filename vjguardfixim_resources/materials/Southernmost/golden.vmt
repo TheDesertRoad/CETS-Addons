@@ -1,0 +1,12 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "southernmost/chrome"
+	"$surfaceprop"	"metal"
+  	"$envmap" "env_cubemap"
+    	"$basealphaenvmapmask" 1
+	"$envmaptint" "{ 220 200 110}"
+	"$envmapcontrast" 0.5
+	"$envmapsaturation" 1.2
+}
+
+//only for propper

@@ -1,0 +1,22 @@
+SDK_VertexLitGeneric
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/xenians/hl2_gonome/hcb_head"
+	"$bumpmap" "models/xenians/hl2_gonome/hcb_head_normal"
+
+	"$phong"     "1"
+	"$phongexponent"  "32"
+	"$phongboost"   "0.2"
+	"$phongfresnelranges"   "[1 .7 .3]"
+	"$phongwarptexture"  "models/xenians/hl2_gonome/zassassin_iridescence"
+
+	"$surfaceprop" "flesh"
+	"$model" "1"
+	"$halflambert" "1"
+	
+	//rimlight parameters	
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+	"$rimlightboost" "2"
+}

@@ -1,0 +1,7 @@
+vertexlitgeneric
+{	
+	$basetexture 	models/_Monsters/Xen/Floater/floater_antennae
+	$nocull			1
+	$translucent 		1
+//	$color2 		"[.5 .5 .5]"
+}

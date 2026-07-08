@@ -1,0 +1,20 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "southernmost/forest_dirt_02"
+	"$basetexture2" "southernmost/stonefloor006d"
+	 "%tooltexture" "nature/blendstonedirt001a_tooltexture"
+	"$surfaceprop" "dirt"
+	"$surfaceprop2" "concrete"
+	"$bumpmap" "southernmost/forest_dirt_02_normal"
+	"$bumpmap2" "southernmost/stonefloor006a_normal"
+	"$envmap" "env_cubemap"
+	"$envmapsaturation" 1
+	"$envmapcontrast" 1
+	"$envmaptint" "[ .07 .07 .06 ]"
+	"$normalmapalphaenvmapmask" 1
+	"$blendmodulatetexture" "nature/blendtexture_adoquin"
+	 "%detailtype" "canal_reeds2"
+	"$reflectivity" "[.4 .4 .4]"
+//	"$basetexturetransform" "center .5 .5 scale 2 2 rotate 0  translate 0 0"
+//	"$basetexturetransform2" "center .5 .5 scale 4 4 rotate 0 translate 0 0"
+}

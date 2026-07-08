@@ -1,0 +1,33 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\hound\hl2_exhoundeye\houndside2"
+	"$bumpmap" "models\hound\hl2_houndeye\houndside2_normal"
+	"$model" 1
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models\hound\hl2_exhoundeye\houndside2"
+		"$selfillummask" 	"models\hound\hl2_houndeye\houndside2_light"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models\hound\hl2_exhoundeye\houndside2"
+	}
+
+	"$normalmapalphaenvmapmask" "1"
+	"$phong" "1"
+	"$phongboost" "2"
+	"$phongexponent" "100"
+	"$phongfresnelranges" "[1 0.5 0]"
+	"$halflambert" "1"
+	"$phongwarptexture"  "models\hound\hl2_houndeye\iridescence"
+
+	// Rim lighting parameters
+	"$rimlight" "1"				// To enable rim lighting (requires phong)
+	"$rimlightexponent" "60"             // Exponent for phong component of rim lighting
+	"$rimlightboost" ".5"	               // Boost for ambient cube component of rim lighting
+}

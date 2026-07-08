@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Plaster/plasterwall017c"
+	"$detail"		"detail\plaster_detail_01"
+	"$detailscale"		"6.783000"
+	"$detailblendfactor"		"0.800000"
+	"$detailblendmode"		"0"
+	"%keywords"		"c17downtown"
+	"LightmappedGeneric_DX9"
+	{
+		"$bumpmap"		"plaster/plasterwall017c_normal"
+		"$envmap"		"env_cubemap"
+		"$normalmapalphaenvmapmask"		"1"
+		"$envmapcontrast"		"1"
+		"$envmapsaturation"		"1"
+		"$envmaptint"		"[ .56 .56 .56 ]"
+	}
+	"$model"		"1"
+}

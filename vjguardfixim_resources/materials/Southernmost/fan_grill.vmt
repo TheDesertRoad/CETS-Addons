@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/fan_grill"
+    	"$alphatest" 1 
+                "$nocull" 1
+}

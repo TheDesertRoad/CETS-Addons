@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/tiletable"
+	"$surfaceprop" "concrete"
+	"$bumpmap" "southernmost/tiletable_normal"
+}

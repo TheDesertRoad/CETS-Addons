@@ -1,0 +1,18 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_foliage/sea_plant/xen_plant1a"
+	"$bumpmap" "models/props_foliage/sea_plant/xen_plant1a_normal"
+//	"$bumpmap" "xen/xen_12_normal"
+	"$alphatest" 1
+	"$nocull" 1
+//	"$translucent" 1
+	"$alphatestreference" 0.5
+	"$AllowAlphaToCoverage" 1
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost"	"0.5"
+	"$phongfresnelranges"	"[1 1 1]"
+//	"$rimlight" "1" 
+	"$rimlightexponent" "4.5" 
+	"$rimlightboost" "3.5"
+}

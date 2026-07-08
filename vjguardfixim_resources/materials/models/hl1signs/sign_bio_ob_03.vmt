@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "opfor/SIGN_BIO_OB_03"
+	
+	"$detail" "detail/detail_noise1" 	
+	"$detailscale" 2.5 
+	"$surfaceprop" "metal"
+}

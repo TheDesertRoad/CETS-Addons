@@ -1,0 +1,23 @@
+"lightmappedreflective"
+{
+	"$basetexture" "cets_parking_lot/puddlefloor"
+	"$envmapmask" "cets_parking_lot/puddlefloormask"
+
+	"$refracttexture" "_rt_WaterRefraction"
+	"$refractamount" "-0.2"
+	"$refracttint" "[.5 .5 .5]"
+
+	"$reflecttexture" "_rt_WaterReflection"
+	"$reflectamount" ".2"
+	"$reflecttint" "[1 1 1]"
+
+	"$fresnelpower" "1"
+	"$minreflectivity" ".1"
+	"$maxreflectivity" ".5"
+	
+	"$normalmap" "dev/flat_normal"
+
+	"$surfaceprop" "concrete"
+	"$bumpframe" "0"
+}
+

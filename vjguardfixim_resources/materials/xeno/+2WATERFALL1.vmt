@@ -1,0 +1,11 @@
+LightmappedGeneric
+{
+	$basetexture xeno/+2WATERFALL1
+	$bumpmap xenbumpmap/+2WATERFALL1
+	
+	"$envmapcontrast" "1"
+	"$envmapsaturation" 1
+	"$envmap"	"env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$normalmapalphaenvmapmask" "1"
+}

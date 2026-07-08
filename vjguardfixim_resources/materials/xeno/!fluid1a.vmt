@@ -1,0 +1,24 @@
+// envmaptint_fix
+"LightmappedGeneric"
+{
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .5 .3 .1 ]"
+	"$envmapcontrast" "1"
+
+	"$surfaceprop" "Slime"
+	"%keywords" "Xen"
+	"%compileSlime" 1
+
+	"$bottommaterial" "xeno/!fluid1a"
+	"$abovewater" "1"
+
+	"$fogenable" 1
+	"$fogcolor" "{4 2 0}"
+	"$fogstart" 0.1
+	"$fogend" 0.1
+
+	"$basetexture" "xeno/!fluid1a"
+	"$bumpmap" "xeno/!fluid1a_n"
+	"$frame" "100"
+	"$normalmapalphaenvmapmask" "1"
+}

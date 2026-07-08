@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "opfor/SIGN_DANGER_01"
+	
+	"$detail" "detail/detail_noise1" 	
+	"$detailscale" 2.5 
+	"$surfaceprop" "metal"
+}

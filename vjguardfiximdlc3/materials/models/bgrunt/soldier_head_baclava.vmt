@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/bgrunt/soldier_head_baclava"
+
+	"$bumpmap" "models/bgrunt/soldier_head_baclava_normal"
+
+	"$detail" "detail/detail_noise1"
+
+	"$detailscale" 2.5
+
+	"$halflambert" 1
+
+	"$surfaceprop" "flesh"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\p_advertpole_pipe"
+	"$model" 1
+	"$surfaceprop" "metal"
+}

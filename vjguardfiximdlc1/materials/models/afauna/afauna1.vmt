@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{	
+	"$baseTexture" "models/AFauna/AFauna1"
+	"$surfaceprop" "AlienFlesh"	
+	"$model" 1
+}

@@ -1,0 +1,35 @@
+DI_Refract_DX90
+{
+ 	$normalmap bumpmaps/bump_generic02
+	$model 1
+ 	$refractamount 0
+	$refracttint "[2 6 .6]"
+	$fadeoutonsilhouette 1
+	$silhouetteenabled 1
+	$SilhouetteThickness 2
+	$SilhouetteColor "[5 6 1]"
+	$GroundMin 3
+	$GroundMax .1
+	$BlurAmount 1
+	$nodecal 1
+	$additive 1
+	
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture models\xenians/hl2_hydra\gradient
+	$emissiveBlendBaseTexture nature/xen_web
+	$emissiveBlendFlowTexture flowmaps/flashing
+	$emissiveBlendTint "[1.8 2.4 .8]"
+	$emissiveBlendStrength 1.0
+	$emissiveBlendScrollVector "[0 .0]"
+		
+	Proxies
+	{
+		Sine
+		{
+			sineMin 0.9
+			sineMax 2
+			sineperiod 7.2
+			resultVar "$SilhouetteThickness"
+		}
+	}
+}

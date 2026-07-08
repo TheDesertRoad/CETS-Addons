@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Concrete/concretewall032d"
+	"$detail"		"detail\noise_detail_01"
+	"$detailscale"		"7.345000"
+	"$detailblendfactor"		"0.600000"
+	"$detailblendmode"		"0"
+	"%keywords"		"c17sewers,wasteland"
+	"$parallaxmap"		"Concrete/concretewall032b_height"
+	"$parallaxmapscale"		"0.050000"
+	"$model"		"1"
+}

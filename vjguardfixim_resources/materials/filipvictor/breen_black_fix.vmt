@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"filipvictor/breen_black_fix"
+	"$translucent"	1
+ 	"$nodecal" 1 
+
+}

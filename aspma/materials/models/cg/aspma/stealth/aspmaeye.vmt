@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "models\cg\aspma\stealth\aspmaeye"
+$surfaceprop metal
+$selfillum 1
+$nodecal 1
+}

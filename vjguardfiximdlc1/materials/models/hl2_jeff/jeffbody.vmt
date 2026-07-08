@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2_jeff/jeffbody"
+	"$bumpmap" "models/hl2_jeff/hazmatbody_n"
+	"$surfaceprop" "flesh"
+	"$model" 1
+	"$phong" 1
+	"$phongboost" "2"
+	"$halflambert" "1"
+	"$phongexponenttexture" "models/combine_soldier/combinesoldier_phong"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/ej_conscripts/cons_mask"
+	"$Halflambert" "1"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "freaksnweirdos/greg_facemap"
+		"$halflambert" "1"
+}

@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "freaksnweirdos/vinnie/vinnie_hair1_b"
+	"$halflambert" "1"
+	"$translucent" "1"
+	"$nocull" "1"
+}

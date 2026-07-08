@@ -1,0 +1,17 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/xen_panthereye/pant_eye_blu"
+	"$bumpmap" "models/xen_panthereye/pant_eye_n"
+
+	"$surfaceprop" "flesh"
+	"$model" 1
+
+ 	"$phong" "1"
+	"$phongexponent" "1"
+	"$phongboost"	"2"
+	"$phongfresnelranges"	"[0.2 0.1 0.6]"
+	"$phongwarptexture"  "models/xenians/hl2_gargantua/garg_eye_Chrome_b"
+
+	"$nodecal" "1"
+	"$halflambert" "1"
+}

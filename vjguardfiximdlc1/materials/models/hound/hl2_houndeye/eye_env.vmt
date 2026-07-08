@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	"$baseTexture"	"models\hound\hl2_houndeye\eye"
+	"$bumpmap" "models\hound\hl2_houndeye\eye_normal"
+	//"$envmap" "models\hound\hl2_houndeye\eye_env"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" 0.6
+	"$envmapsphere" 1
+	"$multipass" 1
+	"$model" "1"
+
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		1
+	$phongfresnelranges	"[2 0 2]"
+	"$phongwarptexture"  "models/hound/hl2_houndeye/iridescence"
+
+	$rimlight			1
+	$rimlightexponent		2
+	$rimlightboost		1.5
+
+}

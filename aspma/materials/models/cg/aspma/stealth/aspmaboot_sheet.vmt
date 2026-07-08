@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\cg\aspma\stealth\aspmaboot_sheet"
+	"$bumpmap" "models\cg\aspma\stealth\aspmaboot_normal"
+	$nodecal 1
+}

@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/grafiti_tickets"
+	"$translucent" 1
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$decal" 1
+	"$decalscale" "0.15"
+
+}

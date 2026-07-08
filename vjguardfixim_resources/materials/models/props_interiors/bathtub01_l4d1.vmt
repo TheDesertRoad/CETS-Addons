@@ -1,0 +1,790 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_interiors/bathtub01_l4d1"
+$envmap env_cubemap
+$envmapmask "models\props_interiors\Bathtub01_ref"
+//////////////////////////////////////////////////////////////////////////////////
+// MAP SPECIFIC TEXTURES (by Ellie, 2020)
+//////////////////////////////////////////////////////////////////////////////////
+
+	$world_mins	"[0 0 0]"
+	$world_maxs	"[0 0 0]"
+	$minX		".0"
+	$maxX		".0"
+	$minY		".0"
+	$maxY		".0"
+	$minZ		".0"
+	$maxZ		".0"
+
+	$check		"0"
+
+	$zero		"0"
+	$one		"1"
+
+//--------------------------------------------------------------------NO-MERCY
+
+	$NM1maxY	"6656"
+	$NM1value	"1"
+
+	$NM2maxY	"9728"
+	$NM2value	"1"
+
+	$NM3maxY	"15360"
+	$NM3value	"1"
+
+	$NM4maxY	"16144"
+	$NM4value	"1"
+	
+	$NM5maxY	"14336"
+	$NM5value	"1"
+	
+//--------------------------------------------------------------------CRASH-COURSE
+
+	$CC1maxY	"256"
+	$CC1value	"1"
+
+	$CC2maxY	"10176"
+	$CC2value	"1"
+
+//--------------------------------------------------------------------DEATH-TOLL
+
+	$DT1maxY	"3625"
+	$DT1value	"1"
+
+	$DT2maxY	"1407"
+	$DT2value	"1"
+	
+	$DT3maxX	"880"
+	$DT3value	"1"
+
+	$DT4maxY	"1920"
+	$DT4value	"1"	
+	
+	$DT5maxY	"7584"
+	$DT5value	"1"	
+
+	
+//--------------------------------------------------------------------DEAD-AIR
+
+	$DA1maxY	"5280"
+	$DA1value	"1"
+
+	$DA2maxY	"8232"
+	$DA2value	"1"
+	
+	$DA3maxY	"6400"
+	$DA3value	"1"
+
+	$DA4maxY	"7320"
+	$DA4value	"1"	
+	
+	$DA5maxY	"14790"
+	$DA5value	"1"		
+	
+//--------------------------------------------------------------------BLOOD-HARVEST
+
+	$BH1maxY	"3359"
+	$BH1value	"1"
+
+	$BH2maxY	"4351"
+	$BH2value	"1"
+	
+	$BH3maxY	"6879"
+	$BH3value	"1"
+
+	$BH4maxY	"3872"
+	$BH4value	"1"	
+	
+	$BH5maxY	"5632"
+	$BH5value	"1"		
+
+//--------------------------------------------------------------------LAST-STAND
+
+	$LST1maxY	"11088"
+	$LST1value	"1"
+
+	$LST2maxY	"10352"
+	$LST2value	"1"	
+
+//--------------------------------------------------------------------END
+
+Proxies
+{
+//MST
+	WorldDims
+	{
+
+	}
+
+	Clamp
+	{
+		srcVar1	"$zero"
+		min	"$world_mins[0]"
+		max	"$world_mins[0]"
+		resultVar	"$minX"
+	}
+
+	Clamp
+	{
+		srcVar1	"$zero"
+		min	"$world_mins[1]"
+		max	"$world_mins[1]"
+		resultVar	"$minY"
+	}
+
+	Clamp
+	{
+		srcVar1	"$zero"
+		min	"$world_mins[2]"
+		max	"$world_mins[2]"
+		resultVar	"$minZ"
+	}
+
+	Abs
+	{
+		srcVar1	"$minX"
+		resultVar	"$minX"
+	}
+
+	Abs
+	{
+		srcVar1	"$minY"
+		resultVar	"$minY"
+	}
+
+	Abs
+	{
+		srcVar1	"$minZ"
+		resultVar	"$minZ"
+	}
+
+	Clamp
+	{
+		srcVar1	"$zero"
+		min	"$world_maxs[0]"
+		max	"$world_maxs[0]"
+		resultVar	"$maxX"
+	}
+
+	Clamp
+	{
+		srcVar1	"$zero"
+		min	"$world_maxs[1]"
+		max	"$world_maxs[1]"
+		resultVar	"$maxY"
+	}
+
+	Clamp
+	{
+		srcVar1	"$zero"
+		min	"$world_maxs[2]"
+		max	"$world_maxs[2]"
+		resultVar	"$maxZ"
+	}
+
+	Abs
+	{
+		srcVar1	"$maxX"
+		resultVar	"$maxX"
+	}
+
+	Abs
+	{
+		srcVar1	"$maxY"
+		resultVar	"$maxY"
+	}
+
+	Abs
+	{
+		srcVar1	"$maxZ"
+		resultVar	"$maxZ"
+	}
+
+//--------------------------------------------------------------------NO-MERCY1
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$NM1maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$NM1value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}
+
+//--------------------------------------------------------------------NO-MERCY2
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$NM2maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$NM2value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}
+
+//--------------------------------------------------------------------NO-MERCY3
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$NM3maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$NM3value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}
+
+//--------------------------------------------------------------------NO-MERCY4
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$NM4maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$NM4value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}
+	
+//--------------------------------------------------------------------NO-MERCY5
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$NM5maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$NM5value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------CRASH-COURSE1
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$CC1maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$CC1value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------CRASH-COURSE2
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$CC2maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$CC2value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEATH-TOLL1
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DT1maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DT1value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEATH-TOLL2
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DT2maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DT2value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEATH-TOLL3
+
+	Subtract
+	{
+		srcVar1	"$maxX"
+		srcVar2	"$DT3maxX"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DT3value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEATH-TOLL4
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DT4maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DT4value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEATH-TOLL5
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DT5maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DT5value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEAD-AIR1
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DA1maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DA1value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEAD-AIR2
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DA2maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DA2value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEAD-AIR3
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DA3maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DA3value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}		
+	
+//--------------------------------------------------------------------DEAD-AIR4
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DA4maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DA4value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------DEAD-AIR5
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$DA5maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$DA5value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------BLOOD-HARVEST1
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$BH1maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$BH1value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------BLOOD-HARVEST2
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$BH2maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$BH2value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------BLOOD-HARVEST3
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$BH3maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$BH3value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------BLOOD-HARVEST4
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$BH4maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$BH4value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------BLOOD-HARVEST5
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$BH5maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$BH5value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------LAST-STAND1
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$LST1maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$LST1value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}	
+	
+//--------------------------------------------------------------------LAST-STAND2
+
+	Subtract
+	{
+		srcVar1	"$maxY"
+		srcVar2	"$LST2maxY"
+		resultVar	"$check"
+	}
+
+	Abs
+	{
+		srcVar1	"$check"
+		resultVar	"$check"
+	}
+
+	LessOrEqual
+	{
+		LessEqualVar	"$LST2value"
+		greaterVar	"$frame"
+		srcVar1		"$check"
+		srcVar2		"$one"
+		resultVar		"$frame"
+	}
+
+//--------------------------------------------------------------------END
+
+Equals
+{
+	srcVar1	"$frame"
+	resultVar	"$bumpframe"
+}
+}
+}
+
+
+

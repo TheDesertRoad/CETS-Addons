@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/pennants"
+    	"$alphatest" 1 
+ //            "$nocull" 1
+}

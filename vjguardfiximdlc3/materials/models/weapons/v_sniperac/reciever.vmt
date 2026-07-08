@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/Weapons/V_sniperac/reciever"
+	"$bumpmap" "models/weapons/v_sniperac/reciever_normal"
+}

@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Kleiner/clean/einsteinhead"
+	"$bumpmap" "models/Kleiner/clean/einsteinhead_n"
+	"$envmapsphere" 1
+	"$halflambert" 1
+}

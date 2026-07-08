@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/baldozas_vainilla"
+                "$bumpmap" "southernmost/baldozas_vainilla_normal"
+	"$surfaceprop"	"concrete"
+	"$detail" "detail\noise_detail_01"
+	"$detailscale" "3.000"
+	"$detailblendfactor" .3
+	"$detailblendmode" "0"
+}

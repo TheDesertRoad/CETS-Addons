@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+	$basetexture "models/trusspack01/truss01clean"
+	$surfaceprop Metal
+}

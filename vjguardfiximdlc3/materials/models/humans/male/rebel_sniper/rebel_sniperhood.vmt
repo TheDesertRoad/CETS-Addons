@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/humans/male/rebel_sniper/rebel_sniperhood"
+	"$halflambert" "1"
+}

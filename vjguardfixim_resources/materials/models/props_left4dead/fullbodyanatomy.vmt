@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+$basetexture "models\props_left4dead\fullBodyAnatomy_col"
+$bumpmap "models\props_left4dead\fullBodyAnatomy_normal"
+$color2 "[.3 .3 .3]"
+$phong 0
+$phongexponent 70
+$phongboost 5
+$phongfresnelranges "[0.2 0.5 1.0]"
+$diffuseexp "1.0"
+}

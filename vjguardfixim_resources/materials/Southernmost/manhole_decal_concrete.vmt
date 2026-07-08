@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/manhole_decal_concrete"
+                //"$bumpmap" "southernmost/manhole_decal_concrete_normal"
+	"$translucent" 1
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$decal" 1
+	"$decalscale" "0.10"
+	"$surfaceprop" "metal"
+}

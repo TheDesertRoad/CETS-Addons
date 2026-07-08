@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/mostrador_wood2"
+	"$bumpmap" "southernmost/mostrador_wood_normal"
+	"$surfaceprop" "wood"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" "1.0"
+	"$envmapsaturation" "0.6"
+                "$envmaptint" .7 .7 .7
+}

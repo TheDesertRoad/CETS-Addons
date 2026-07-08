@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\white_awning"
+	"$model" 1
+	"$surfaceprop" "metal"
+}

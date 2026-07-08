@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$basetexture models/hl2_hopper/hopper_g
+	$bumpmap models/hl2_hopper/hopper_n
+	$phong 1
+	$phongfresnelranges "[0.5 0.75 1]"
+	$phongexponent 15
+	$phongboost 1
+
+	$halflambert 1
+}

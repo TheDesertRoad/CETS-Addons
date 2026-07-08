@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	
+	"$basetexture" "signs\os_s1_glow"      
+	"$surfaceprop" "glass"
+	"$additive" "1"
+	"$nocull" 1
+}

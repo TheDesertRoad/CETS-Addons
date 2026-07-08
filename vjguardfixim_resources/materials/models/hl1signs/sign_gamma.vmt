@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "opfor/SIGN_GAMMA"
+	
+	"$detail" "detail/detail_noise1" 	
+	"$detailscale" 2.5 
+	"$surfaceprop" "metal"
+}

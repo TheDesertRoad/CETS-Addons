@@ -1,0 +1,15 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models/hecu/mask_glass"
+	
+
+// Specularity
+	"$envmap" 			"env_cubemap"
+	"$envmapmask" "models/hecu/mask_glass_spec"
+//	"$envmapsaturation" 0.25
+
+// Transparency
+	"$translucent" 1
+	
+	
+}

@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/Weapons/mini_gun_skin"
+	"$envmapmask" "Models/Weapons/mini_gun_spec"
+	"$envmap" "env_cubemap"
+	"$selfillum" "1"
+}

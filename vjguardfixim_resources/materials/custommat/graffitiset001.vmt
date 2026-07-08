@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$basetexture" "custommat/graffitiset001"
+	"$decal" 1
+	"$decalscale" 0.6
+	"%keywords" "c17downtown"
+	"$translucent" 1
+}

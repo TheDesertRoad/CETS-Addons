@@ -1,0 +1,13 @@
+"VertexlitGeneric"
+
+{
+	"$basetexture" "models/xen_props/xen_hair/xen_hair"
+	"$bumpmap" "xen/xen_21_normal"
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost"	"1.8"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$rimlight" "1" 
+	"$rimlightexponent" "0.5" 
+	"$rimlightboost" "0.5"
+}

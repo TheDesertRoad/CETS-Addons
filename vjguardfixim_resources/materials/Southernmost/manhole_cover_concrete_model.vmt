@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "southernmost/manhole_cover_concrete_model"
+	"$bumpmap" "southernmost/manhole_cover_concrete_model_normal"
+                "$phong" 1
+                "$envmap" "env_cubemap"	
+                "$surfaceprop"	"metal"
+                "$normalmapalphaenvmapmask"  1
+}
+

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"dsbro/g_fence1"
+	"$translucent"		"1"
+	"$model"		"1"
+}

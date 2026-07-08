@@ -1,0 +1,18 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/hl2_reviver/reviver_eyeball"
+	"$bumpmap" "models/hl2_reviver/reviver_eyeball_normal"
+
+	"$phongexponenttexture" "models/hl2_reviver/reviver_eyeball_exponent"
+
+	"$phong" "1"
+	"$phongboost"	"9.9934895"
+	"$phongfresnelranges"	"[0.05 0.115 0.945]"
+
+	"$nodecal" "1"
+}
+
+//	Material using pseudo pbr method 34.2 (Metalness)
+//	Engine branch: Garrys Mod
+//	Hierarchy: Stack 1/5
+//	This vmt affects: Non-metals

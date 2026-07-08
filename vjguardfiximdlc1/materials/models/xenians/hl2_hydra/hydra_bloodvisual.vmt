@@ -1,0 +1,37 @@
+VertexLitGeneric
+{
+	$basetexture tools/toolsblack // we want to be invisible on the base, 
+								  // with colour derived from detail controlled by the proxy
+	$additive 1
+	$nocull 1
+
+	$emissiveBlendEnabled 		1
+	$emissiveBlendTexture 		custom_uni/noise_post
+	$emissiveBlendBaseTexture 	cable/red
+	$emissiveBlendFlowTexture 	flowmaps\dummy
+	$emissiveBlendTint 			"[2 1 1]"
+	$emissiveBlendStrength 		20.5
+	$emissiveBlendScrollVector "[0 0.05]"
+	
+	$bloodvisualfactor 0
+	$livenpcfactor 0
+	
+	Proxies
+	{
+		IsNPC
+		{
+			scale 1
+			resultVar $livenpcfactor
+		}
+		Hydra_BloodVisual
+		{
+			resultVar $bloodvisualfactor
+		}
+		Multiply
+		{
+			srcVar1 $livenpcfactor
+			srcVar2 $bloodvisualfactor
+			resultVar $emissiveBlendStrength
+		}
+	}
+}

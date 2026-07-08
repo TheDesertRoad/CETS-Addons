@@ -1,0 +1,19 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "concrete/concretefloor_bunker02b"
+	"$basetexture2" "concrete/concretefloor_bunker02b"
+	 "%tooltexture" "concrete/concretefloor_bunker02b"
+	"$surfaceprop" "concrete"
+	"$surfaceprop2" "concrete"
+	"$bumpmap" "concrete/concretefloor_bunker02b_normal"
+	"$bumpmap2" "concrete/concretefloor_bunker02b_normal2"
+	"$envmap" "env_cubemap"
+	"$envmapsaturation" 1
+	"$envmapcontrast" 1
+//	"$envmaptint" "[ .15 .15 .15 ]"
+	"$normalmapalphaenvmapmask" 1
+	"$blendmodulatetexture" "nature/blendslimetexture01"	
+//	"$reflectivity" "[.5 .5 .5]"
+//	"$basetexturetransform" "center .5 .5 scale 2 2 rotate 0  translate 0 0"
+//	"$basetexturetransform2" "center .5 .5 scale 4 4 rotate 0 translate 0 0"
+}

@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/central_command"
+	"$surfaceprop"	"metal"
+  	"$envmap" "env_cubemap"
+    	"$basealphaenvmapmask" 1 
+}

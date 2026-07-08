@@ -1,0 +1,8 @@
+vertexlitgeneric
+{
+	$basetexture "xeno/{xeno_17b"
+	$translucent 1
+	$model 1
+	$color2 "[0.18 0.15 .1]"
+	$nocull 1
+}

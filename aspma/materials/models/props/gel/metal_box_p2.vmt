@@ -1,0 +1,14 @@
+VertexLitGeneric
+{
+$baseTexture "models\props/Gel/Metal_box_p2"
+$phong 1
+
+$phongboost 1
+
+$phongfresnelranges "[5 1 2]"
+
+
+
+$selfillum 1
+$nodecal 1
+}

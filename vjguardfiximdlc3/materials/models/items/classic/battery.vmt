@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/Items/classic/battery"
+	"$bumpmap" "Models/Items/classic/battery_norm"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.2 .2 .2]"
+	//"$envmapsaturation" .5
+	"$normalmapalphaenvmapmask" "1"
+	"$phong" "1"
+	"$phongboost" "3"
+	"$phongexponent" "15"
+	"$phongalbedotint" "1"								
+	"$phongfresnelranges"	"[.2 5 1]"
+	"$EmissiveBlendEnabled" 		"1"
+	"$EmissiveBlendTint"			" [ 1 1 1 ] "		
+	"$EmissiveBlendStrength" 		"1"					// how strong the entire glow effect is.
+	"$EmissiveBlendTexture"		"vgui/white"			// This will be useless, but is required.
+	"$EmissiveBlendBaseTexture"  "Models/Items/classic/battery_glow"
+	"$EmissiveBlendFlowTexture" 	"vgui/white"	 
+	"$EmissiveBlendScrollVector" 	" [ 0 0 ] " 	
+}

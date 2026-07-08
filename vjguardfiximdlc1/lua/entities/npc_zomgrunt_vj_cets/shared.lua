@@ -1,0 +1,5 @@
+ENT.Base 			= "npc_vj_human_base"
+ENT.Type 			= "ai"
+ENT.PrintName 		= "Zombie Grunt"
+ENT.Category		= "Zombies + Enemies Aliens"
+ENT.Author		= "VALVe"

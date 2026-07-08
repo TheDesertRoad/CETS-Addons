@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	// Original shader: CubicEnvMapBlendMaskedBaseTimesLightmap
+	"$basetexture" "Buildings_SM/concretewall014c_sm"
+	"$surfaceprop" "concrete"
+	"%keywords" "c17downtown"
+}

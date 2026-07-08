@@ -1,0 +1,5 @@
+"UnLitGeneric"
+{
+	"$basetexture" 						"models\npcs\screen_retarget"
+    	"$Additive" 						"1"
+}

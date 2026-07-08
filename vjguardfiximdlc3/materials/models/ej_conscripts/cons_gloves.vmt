@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Humans/Male/Group03/citizen_sheet"
+	"$halflambert" 1
+}
+
+
+

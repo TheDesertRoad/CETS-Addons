@@ -1,0 +1,6 @@
+ENT.Base 			= "npc_vj_creature_base"
+ENT.Type 			= "ai"
+ENT.PrintName 		= "Alien Controller"
+ENT.Author 			= "VALVe"
+ENT.Contact 		= ""
+ENT.Category		= "Zombies + Enemy Aliens"

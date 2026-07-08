@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/concept_rebels/refugee_sheet"
+	$halflambert 1
+}

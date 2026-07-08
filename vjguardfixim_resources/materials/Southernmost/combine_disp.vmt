@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/props_combine/combine_interface_disp"
+	"$surfaceprop" "glass"
+//	"$additive" 1
+}

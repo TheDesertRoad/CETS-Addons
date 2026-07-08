@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models/de_ips/bustoSM"
+	"$surfaceprop" "metal"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/de_ips/bustoSM_mask"
+}

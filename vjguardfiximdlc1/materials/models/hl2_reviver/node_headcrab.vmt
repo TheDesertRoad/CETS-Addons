@@ -1,0 +1,29 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/hl2_reviver/node_headcrab"
+	"$bumpmap" "models/hl2_reviver/node_headcrab_normal"
+
+	"$phongexponenttexture" "models/hl2_reviver/node_headcrab_exponent"
+
+	"$phong" "1"
+	"$phongboost"	"9.9934895"
+	"$phongfresnelranges"	"[0.05 0.115 0.945]"
+
+	"$emissiveblendenabled" "1"
+	"$emissiveblendtexture" "models/hl2_reviver/reviver_selfillum_wave"
+	"$emissiveblendflowTexture" "models/hl2_reviver/node_headcrab_flow"
+	"$emissiveblendbaseTexture" "models/hl2_reviver/node_headcrab"
+	"$emissiveblendtint" "[5.4902 12.62746 15.45098]"
+	"$emissiveblendscrollVector" "[0.935 0.935]"
+	"$emissiveblendstrength" "1"
+	
+	"$color2" "[0.274510 0.631373 0.772549]"
+	"$blendtintbybasealpha" "1"
+
+	"$nodecal" "1"
+}
+
+//	Material using pseudo pbr method 34.2 (Metalness)
+//	Engine branch: Garrys Mod
+//	Hierarchy: Stack 1/5
+//	This vmt affects: Non-metals

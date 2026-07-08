@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	$basetexture "models/mallparking/plastic_strip"
+	$translucent 1
+}

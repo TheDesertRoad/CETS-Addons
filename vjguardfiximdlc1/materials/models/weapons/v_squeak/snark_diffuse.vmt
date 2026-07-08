@@ -1,0 +1,15 @@
+//"EDITOR_SHADER"
+"VertexLitGeneric"
+{
+	"$SHADERNAME" "model_standard"
+
+	"$baseTexture" "models\weapons\v_squeak/snark_diffuse"
+	"$bumpmap" "models\weapons\v_squeak/snark_normals"
+
+        "$lightwarptexture" "models\weapons\v_squeak\Base_M_caucasian_wrp"
+
+//metal
+	"$halflambert" 1
+	
+	"$model" 1
+}

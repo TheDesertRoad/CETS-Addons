@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\hound\hl2_exhoundeye\houndside2_burn"
+	"$bumpmap" "models\hound\hl2_houndeye\houndside2_normal"
+	"$model" 1
+	"$halflambert" "0"
+}

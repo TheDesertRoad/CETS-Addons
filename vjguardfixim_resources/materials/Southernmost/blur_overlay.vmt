@@ -1,0 +1,13 @@
+"Refract"
+{
+ 	"$refractamount" ".065"
+ 	"$bluramount" "1"
+	"$REFRACTTINT" "{214 225 193}"
+	"$scale" "[1 1]"
+	"$dudvmap" "Southernmost/blur_overlay"
+	"$normalmap" "Southernmost/blur_overlay"
+//	"$envmap" "env_cubemap"
+//	"$envmapcontrast" "1"
+//	"$envmapsaturation" "[1 1 1]"
+//	"$envmaptint" "[.3 .3 .3]"
+}

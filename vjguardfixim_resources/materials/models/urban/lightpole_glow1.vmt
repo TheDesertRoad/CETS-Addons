@@ -1,0 +1,8 @@
+"unlitGeneric"
+{
+	"$basetexture" "models\urban\lightpole_glow1"
+	"$selfillum" 1
+	"$model" 1
+	"$surfaceprop" "glass"
+	"$nocull" 1
+}

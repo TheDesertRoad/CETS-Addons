@@ -1,0 +1,21 @@
+"vertexlitgeneric"
+{
+	$basetexture	models/xenians/hl2_agrunt/hl1grunt_armor1
+	$bumpmap	models/xenians/hl2_agrunt/hl1grunt_armor1_normal
+
+	$phong	1
+	$phongexponenttexture	models/xenians/hl2_agrunt/hl1grunt_armor1_exponent
+	$phongboost	.1
+	$phongfresnelranges	"[1 .5 .3]"
+
+	$rimlight 1
+	$rimlightexponent 50
+	$rimlightboost .2
+
+	$nodecal 1
+
+	$detail "detail\detail_rust"
+	$detailscale "7"
+	$detailblendfactor "2"
+	$detailblendmode "0"
+}

@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/banderin_decal"
+	"$translucent" 1
+	"$vertexcolor" "1"
+	"$vertexalpha" "0.8"
+	"$decal" 1
+	"$decalscale" "0.20"
+}

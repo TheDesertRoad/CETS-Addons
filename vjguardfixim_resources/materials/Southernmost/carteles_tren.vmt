@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/carteles_tren"
+	"$surfaceprop" "glass"
+	"$basealphaenvmapmask" 1
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.2 .2 .2]"
+
+}

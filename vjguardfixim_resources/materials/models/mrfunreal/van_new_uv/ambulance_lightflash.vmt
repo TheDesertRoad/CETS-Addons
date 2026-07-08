@@ -1,0 +1,20 @@
+VertexLitGeneric
+{
+$baseTexture "models\mrfunreal\van_new_uv\ambulance_light"
+$envmap env_cubemap
+$envmapmask "models\mrfunreal\van_new_uv\ambulance_ref"
+
+$selfillum 1 
+$envmaptint "[.25 .25 .25]"
+
+"$frame" "3"
+"Proxies" 
+{
+"AnimatedTexture" 
+{ 
+"animatedTextureVar" "$basetexture" 
+"animatedTextureFrameNumVar" "$frame" 
+"animatedTextureFrameRate" "9.9"
+}
+}
+}

@@ -1,0 +1,5 @@
+ENT.Base 			= "npc_vj_creature_base"
+ENT.Type 			= "ai"
+ENT.PrintName 		= "Gonome"
+ENT.Author 			= "VALVe, Gearbox"
+ENT.Category		= "Zombies + Enemy Aliens"

@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\pillar01"
+	"$model" 1
+	"$surfaceprop" "concrete"
+	"$selfillum" 1
+}

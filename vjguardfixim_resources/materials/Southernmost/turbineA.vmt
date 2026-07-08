@@ -1,0 +1,16 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "southernmost/turbineA"
+	"$surfaceprop"	"metal"
+}
+
+
+//"lightmappedgeneric"
+//{
+//	"$basetexture" "southernmost/turbineA"
+//             "$bumpmap" "models/southernmost/turbineA_normal" bumpmap will disable prop_static's per-vertex lighting.
+//	"$phong" "1"
+//	"$phongexponenttexture" "models/southernmost/turbineA_specular"
+//	"$phongboost" "2"
+//	"$phongfresnelranges" "[0 0.5 1]"
+//}

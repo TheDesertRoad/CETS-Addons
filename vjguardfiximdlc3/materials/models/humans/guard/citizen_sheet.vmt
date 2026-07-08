@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	"$basetexture" "models\humans\guard\citizen_sheet"
+	"$bumpmap" "models\humans\guard\citizen_sheet_normal"
+
+}

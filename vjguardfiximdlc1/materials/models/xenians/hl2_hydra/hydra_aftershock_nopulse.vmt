@@ -1,0 +1,164 @@
+DI_Refract_DX90 // this is the default, skin 0 material
+{
+	//$basetexture models/xenians/hl2_hydra/hydra_innards
+	$model 1
+	$nocull 1
+	$scale "[1 1]"
+	$bumpframe 0
+	$additive 0
+	
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture models\xenians/hl2_hydra\gradient
+	$emissiveBlendBaseTexture models\xenians/hl2_hydra\emissive
+	$emissiveBlendFlowTexture flowmaps\dummy
+	$emissiveBlendTint "[1 1 1]"
+	$emissiveBlendStrength 0.1
+	$emissiveBlendScrollVector "[0 -1]"
+	
+	$SILHOUETTEENABLED 1
+	$normalmap bumpmaps/bump_organic01
+	$refractamount 0.1
+	$colortint "[0 1.3 1.6]"
+	$SilhouetteThickness .9
+	$SilhouetteColor "[0.18 0.3 4]"
+	$GroundMin 8
+	$GroundMax 0
+	$BlurAmount 10
+	
+	$timeToAttack 1
+	$timeToAttackShort 0
+	$timeToAttackShortShouldBeLessThan 1.0
+	$intensity 0
+	$added_intensity 0.01
+	$divide_coeff 10
+	$red_intensity 1
+	$reduce_red_intensity_by 5
+	
+	$minBlue 1
+	$maxBlue 10
+	$clampedBlue 1
+	
+	$deadColorReduce 0
+	$deadColorSum 0
+
+	Proxies
+	{
+		Hydra_Intensity
+		{
+			resultVar "$intensity" // this is set in the code depending on enemy distance and attack timing
+		}
+						
+		Hydra_Pulsation // retrieve time before attack
+		{
+			resultVar "$timeToAttack"
+		}	
+				
+		Hydra_Pulsation // do it again to see when it's very soon
+		{
+			resultVar "$timeToAttackShort"
+		}
+		
+		LessOrEqual // now compare the short time value to predefined figure (0.5 above)
+		{
+			lessEqualVar "$timeToAttackShort" 
+			greaterVar "$divide_coeff"
+			srcVar1 "$timeToAttack" 						// compare the general time before attack (TBA) with...
+			srcVar2 "$timeToAttackShortShouldBeLessThan" 	// this value (0.5), if TBA is less or equal, 
+															// TBA will be written into $timeToAttackShort.
+															// If not, then 10 (from $divide_coeff) will be slammed into it. 
+															// why 10? because then it will negate the $emissiveBlendTint[0]
+															// below, in the Divide proxy.
+			resultVar "$timeToAttackShort"
+		}
+				
+		Add
+		{
+			srcVar1 "$intensity"	// take the code-generated intensity,
+			srcVar2 "$added_intensity" // and combine it with this value, 
+			resultVar "$emissiveBlendStrength" // because subtle em. blend looks better than complete absence. 
+		}
+		
+		Divide
+		{
+			srcVar2 "$timeToAttackShort" 					// the time to the attack
+			srcVar1 "$divide_coeff" 						// will divide this value, so what we'll get is,
+															// if time is short (0.5 seconds or less),
+															// resultVar will be strong - 10 / 0.5 or higher
+															// but if it's more than 0.5 seconds before attack,
+															// then it'll be 10 / 10 = 1 = no extra boost
+															// to the R value of the em. blend tint.
+			resultVar "$red_intensity"
+		}
+		
+		Sine
+		{
+			sineMin "$intensity"
+			sineMax "$red_intensity"
+			sinePeriod .2
+			resultVar "$red_intensity"
+		}
+		
+		Divide
+		{
+			srcVar1 "$red_intensity"						// this is just tweaking.
+			srcVar2 "$reduce_red_intensity_by"				// divide the value we got above
+			resultVar "$emissiveBlendTint[0]"				// by factor of X (defined above).
+		}	
+			
+		//2 seconds before attack
+		Sine
+		{
+			sineperiod $timeToAttack 						// it'll quicken the sine and make it oscillate between 1x and 10x
+			sinemin 2										// B value boost, and if it's more than 2 seconds,
+			sinemax 30										// then the value from the code will be FLT_MAX
+			resultVar "$emissiveBlendTint[2]"				// which basically means the sine will be forever in the low.
+		}	
+		
+		Clamp
+		{
+			min "$minBlue"
+			max "$maxBlue"
+			srcVar1 "$clampedBlue"
+			resultVar "$clampedBlue"
+		}
+		
+		Equals
+		{
+			srcVar1 "$clampedBlue"
+			resultVar "$emissiveBlendTint[2]"
+		}
+		
+		Equals
+		{
+			srcVar1 "$intensity"
+			resultVar "$emissiveBlendStrength"
+		}
+		
+	//	Sine
+	//	{
+	//		sineperiod 6.0
+	//		sinemin .5
+	//		sinemax 1.2
+	//		resultVar "$SilhouetteColor[1]"
+	//	}		
+	//	Sine
+	//	{
+	//		sineperiod 1.2
+	//		sinemin .4
+	//		sinemax .9
+	//		resultVar "$SilhouetteColor[2]"
+	//	}
+		IsNPC
+		{
+			scale "1.0"
+			resultVar "$deadColorReduce"
+		}
+		Multiply
+		{
+			srcVar1	"$emissiveblendstrength"
+			srcVar2 "$deadColorReduce"
+			resultVar "$emissiveblendstrength"
+		}
+		
+	}
+}

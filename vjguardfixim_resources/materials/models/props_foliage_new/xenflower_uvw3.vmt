@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$basetexture models/props_foliage_new/xenflower_uvw3
+	$bumpmap bumpmaps/bump_organic01
+//	$envmap env_cubemap
+//	$envmaptint "[0.06 0.07 0.05]"
+	$phong 1
+	$phongfresnelranges "[0.1 0.2 0.1]"
+	$phongtint "[0.78 0.80 0.86]"
+	$phongexponent 90
+	$phongboost 2
+}

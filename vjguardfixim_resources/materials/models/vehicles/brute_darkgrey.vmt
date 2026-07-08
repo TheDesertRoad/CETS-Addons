@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/vehicles/brute_darkgrey"
+	"$surfaceprop" "metal"
+	"$envmapmask" "Models/vehicles/brute_mask"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .5 .5 .5]"
+	"$selfillum" 1
+}

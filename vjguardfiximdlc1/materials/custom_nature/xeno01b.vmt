@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "custom_nature/xeno01b"
+	"$surfaceprop" "dirt"
+	"$bumpmap" "custom_nature/xeno01_normal"
+}

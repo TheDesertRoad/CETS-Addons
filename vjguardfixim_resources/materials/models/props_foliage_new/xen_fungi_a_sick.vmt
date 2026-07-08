@@ -1,0 +1,15 @@
+VertexlitGeneric
+{
+	$basetexture models/props_foliage_new/xen_fungi
+	$bumpmap	 models/props_foliage_new/xen_fungi_n
+	$envmap 	 env_cubemap
+	$envmaptint  "[0.29 0.28 0.33]"
+	$basealphaenvmapmask 0
+	$normalmapalphaenvmapmask 0
+	$detail detail/organic_detail_03
+	$detailblendmode 0
+	$detailscale 1.5
+	$detailblendfactor 1.7
+	$color2 "[.92 .86 .9]"
+}
+

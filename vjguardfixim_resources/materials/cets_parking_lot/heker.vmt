@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "cets_parking_lot/heker"
+	"$decal" 1
+	"$translucent" 1
+	"$decalscale" 0.5
+}

@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	$basetexture "cets_parking_lot/confetti"
+	$decal 1
+	$decalscale 0.25
+	$translucent 1
+}

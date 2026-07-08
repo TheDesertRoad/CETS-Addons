@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+
+{
+	"$baseTexture" "3rd_party_content/decal_floorleaves1"
+	"$decal" "1"
+	"$alphatest" 1
+	"$decalscale" 0.25	
+}
+
+//credits to Zeno Clash demo

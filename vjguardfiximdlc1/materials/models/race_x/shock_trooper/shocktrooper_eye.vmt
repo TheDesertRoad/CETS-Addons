@@ -1,0 +1,17 @@
+"SDK_VertexLitGeneric"
+{
+	"$basetexture" "models/race_x/shock_trooper/shocktrooper_eye"	
+	"$bumpmap" "models/race_x/shock_trooper/shocktrooper_eye_n"	
+
+	"$Envmap"             "Engine/eye-reflection-cubemap-"
+	"$envmaptint" "[.03 .0 .0]"
+	"$normalmapalphaenvmapmask" 1
+
+	"$phong" "1"
+	"$phongboost" "12"
+	"$phongalbedotint" "1"
+	"$phongfresnelranges" "[.4 .4 1]"
+
+	"$halflambert" "1"
+	"$nodecal" "1"
+}

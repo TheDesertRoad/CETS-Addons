@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture"		"Vehicle/metaltrain002b"
+	"$envmap"		"env_cubemap"
+	"$normalmapalphaenvmapmask"		"1"
+	"$envmapcontrast"		"1"
+	"$envmapsaturation"		"1"
+	"$envmaptint"		"[ .56 .56 .56 ]"
+	"$detail"		"detail\metal_detail_01"
+	"$detailscale"		"5.345000"
+	"$detailblendfactor"		"0.400000"
+	"$detailblendmode"		"0"
+	"$model"		"1"
+}

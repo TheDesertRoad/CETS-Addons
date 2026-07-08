@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/Antlion_Soldier/antlion_innards"
+	"$surfaceprop" "flesh"
+}

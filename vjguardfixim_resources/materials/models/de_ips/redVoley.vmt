@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models/de_ips/redVoley"
+	"$surfaceprop" 	"metal_box"
+	"$translucent" 1
+}

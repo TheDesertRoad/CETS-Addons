@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "southernmost\damajuana2"
+                "$basealphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+}

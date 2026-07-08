@@ -1,0 +1,20 @@
+Vertexlitgeneric
+{
+	$basetexture models/props_foliage_new/xenbulb_body
+	$bumpmap models/props_foliage_new/xenbulb_body_n
+	$model 1
+	$phong	1
+	$phongexponenttexture custom_uni/exponent_albedotint
+	$phongalbedotint 1
+	$phongboost	0.8
+	$phongexponent	25
+	$phongfresnelranges "[.05 .5 1.5]"
+	$rimlight 		1	
+	$rimlightboost 	2.5
+	$rimlightexponent 150
+	
+	$detail detail/organic_detail_03
+	$detailscale 2
+	$detailblendfactor 0.5
+	$detailblendmode 0
+}

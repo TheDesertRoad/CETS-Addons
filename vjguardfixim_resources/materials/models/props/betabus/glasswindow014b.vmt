@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	// Original shader: BaseTimesLightmapAlphaBlend
+	"$translucent" 1
+	"$basetexture" "models/props/betabus/glasswindow014b"
+	"$surfaceprop" "glass"
+}

@@ -1,0 +1,6 @@
+"lightmappedgeneric"
+{
+//	"$basetexture" "engine/camerarendertarget"
+	"$basetexture" "dev/dev_measurecrate01"
+	"%tooltexture" "dev/dev_measurecrate01"
+}

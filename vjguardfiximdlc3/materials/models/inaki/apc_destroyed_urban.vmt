@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\Inaki\APC_Urban"
+	"$surfaceprop" "metal"
+	"$envmap" "env_cubemap"	
+	"$normalmapalphaenvmapmask" 1
+	"$envmaptint" "[ .75 .75 .75]"
+	"$envmapcontrast" 1
+
+ 	"$detail" "FF_Detail/metal14x_detail"
+	"$detailscale" 2
+
+}

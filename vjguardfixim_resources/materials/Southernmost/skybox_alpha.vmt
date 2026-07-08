@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "Southernmost/skybox_alpha"
+	"$alphatest" 1
+}

@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/Weapons/V_Gauss/coils_og"
+	"$bumpmap" "models/Weapons/V_Gauss/coils_og_n"
+	"$phong" "1"
+	"$phongexponent" "75"
+	"$phongboost"	"16"
+	"$phongfresnelranges"	"[2 2 2]"
+	"$phongwarptexture"  "models/Weapons/V_Gauss/coils_og_warp"
+
+	"$halflambert" "1"
+}

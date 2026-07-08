@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+
+"$baseTexture" "southernmost\K14"
+"$bumpmap" "southernmost\K14_normal"
+"$phong" "1"
+"$phongexponent" "10"
+"$phongboost" "17"
+"$phongfresnelranges" "[.0205 .5 5]"
+
+}

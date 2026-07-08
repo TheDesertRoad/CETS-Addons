@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+
+	"$surfaceprop" "metal"
+	"$basetexture" "models\humans\marines_bmcer_sep2025\core_eye"
+
+	"$EmissiveBlendEnabled" 		1						
+                "$EmissiveBlendStrength" 		8 					
+                "$EmissiveBlendTexture" 		"vgui/white"			
+                "$EmissiveBlendBaseTexture" 	"models\humans\marines_bmcer_sep2025\core_eye"	
+                "$EmissiveBlendFlowTexture" 	"vgui/white"	 		
+                "$EmissiveBlendTint" 			" [ 5 1 1 ] "		
+                "$EmissiveBlendScrollVector" 	" [ 0 0 ] " 	
+
+}

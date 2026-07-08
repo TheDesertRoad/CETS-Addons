@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props_qz/combine_fence01a"
+	"$surfaceprop" "metal"
+	"$selfillum" "1"
+}

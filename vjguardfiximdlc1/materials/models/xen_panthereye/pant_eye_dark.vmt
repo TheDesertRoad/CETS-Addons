@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/xen_panthereye/pant_eye_dark"
+	"$bumpmap" "models/xen_panthereye/pant_eye_n"
+
+	"$surfaceprop" "flesh"
+	"$model" 1
+
+	"$nodecal" "0"
+	"$halflambert" "1"
+}

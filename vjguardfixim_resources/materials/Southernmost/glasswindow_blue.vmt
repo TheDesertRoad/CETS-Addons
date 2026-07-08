@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "southernmost/glasswindow_blue"
+	"$selfillum" 1
+	"$surfaceprop" "glass"
+}

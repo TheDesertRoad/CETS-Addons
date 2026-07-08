@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/ej_conscripts/beret_conscript"
+        "$envmap" 			"env_cubemap"
+        "$bumpmap" "models/ej_conscripts/beret_conscript_n"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" 0.1
+	"$envmapsaturation" 0.2
+	"$envmaptint" "[ 0.16 0.16 0.16 ]"
+	"$Detail" 				  	  "detail/detail_fabric2"
+	"$DetailScale" 			  	  "1"
+	"$DetailBlendFactor" 	  	  ".7"
+	"$DetailBlendMode" 		   	  "0"
+}

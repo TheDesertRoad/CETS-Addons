@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\urban\Cryotec_logo"
+	"$model" 1
+	"$surfaceprop" "metal"
+	"$selfillum" 1
+	
+}

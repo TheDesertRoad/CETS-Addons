@@ -1,0 +1,668 @@
+//====== Copyright � 1996-2026, Valve Corporation, All rights reserved. =======
+//
+// Purpose: TheDesertRoad's VJBase Addons definition file (.fgd)
+//
+//=============================================================================
+
+@include "base.fgd"
+@include "halflife2.fgd"
+
+//-------------------------------------------------------------------------
+//
+// NPCs --- Combine's Experimental Transhumans and Synths --- Default
+//
+//-------------------------------------------------------------------------
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_ordinal.mdl") = npc_ordinal_vj_cets : "Combine Ordinal"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_alienranger.mdl") = npc_xrang_vj_cets : "Alien Supporter"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/assassin.mdl") = npc_assassin_synth_vj_cets : "Assassin Synth"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/cets_combine_apc.mdl") = npc_combine_apc_vj_cets : "(CETS) Combine APC"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_wallhammer.mdl") = npc_wallhammer_vj_cets : "Combine Charger"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_engineer.mdl") = npc_engi_vj_cets : "Combine Engineer"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_flamercomb_soldier.mdl") = npc_flamer_vj_cets : "Combine Flamer"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/combine_gasser.mdl") = npc_gasser_vj_cets : "Combine Gasser"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_grunt.mdl") = npc_echo_vj_cets : "Combine Grunt"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/vj_combine_guard_z.mdl") = npc_combineguard_vj_cets : "Combine Guard"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_hazmat.mdl") = npc_haz_vj_cets : "Combine Hazmat"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_medic.mdl") = npc_medic_vj_cets : "Combine Medic"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/vehicles/comb_swat.mdl") = npc_combine_swat_vj_cets : "Combine Prisioner Transport"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/combine_sniper.mdl") = npc_combsniper_vj_cets : "(CETS) Combine Sniper"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_spikewall_sized.mdl") = npc_spikewall_vj_cets : "Combine Spikewall"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Start with an automatic weapon" : 0
+		128 : "Start with a shotgun" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_suppressor.mdl") = npc_suppressor_vj_cets : "Combine Suppressor"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/workernpc.mdl") = npc_work_vj_cets : "Combine Worker"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_crabsynth.mdl") = npc_crabsynth_vj_cets : "(CETS) Crab Synth"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/cremator/cremator.mdl") = npc_cremator_vj_cets : "Cremator"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_elite_green.mdl") = npc_synthsoldier_elite_vj_cets : "Elite Synth Soldier"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/elitepolice.mdl") = npc_elitemetropolice_vj_cets : "Elite Metropolice"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/mortarsynth.mdl") = npc_mortarsynth_vj_cets : "(CETS) Mortar Synth"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/combine_hunter.mdl") = npc_huntersold_vj_cets : "Outlands Soldier"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_fassassin.mdl") = npc_fassassin_vj_cets : "Overwatch Assassin"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_elite_brown.mdl") = npc_synthsoldier_vj_cets : "Synth Soldier"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_transitionperiod.mdl") = npc_transold_vj_cets : "Transition Soldier"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Start with an automatic weapon" : 0
+		128 : "Start with a shotgun" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/vortigaunt_synth/vj_vortigaunt_synth_z.mdl") = npc_vortigaunt_synth_vj_cets : "Vortigaunt Synth"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_wscanner.mdl") = npc_wastescan_vj_cets : "Wasteland Scanner"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/assault_synth.mdl") = npc_assault_synth_vj_cets : "Assault Synth"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/synth_soldier.mdl") = npc_supersynth_vj_cets : "Super Synth Soldier"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_wscanner_tri.mdl") = npc_wastescan_pair_vj_cets : "Wasteland Scanner (Paired)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_alien_elite.mdl") = npc_alien_elite_vj_cets : "Alien Elite"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/combine_turrets/floor_turret.mdl") = npc_engi_sentry_vj_cets : "(CETS) Combine Sentry"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_outfassassin.mdl") = npc_hunterfassassin_vj_cets : "Outlands Overwatch Assassin"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_extra_effect/fog.mdl") = npc_toxic_gas_vj_cets : "Combine Ordinal"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_wscanner_tri.mdl") = npc_wastescan_pair_nova_vj_cets : "(Nova Prospekt) Wasteland Scanner"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_wscanner_tri.mdl") = npc_wastescan_pair_special_vj_cets : "(Special) Wasteland Scanner"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_wscanner.mdl") = npc_wastescan_vj_cets_ns : "(Other) Wasteland Scanner"
+[
+]
+
+@PointClass base(Item) studio("models/hl2_healthpen.mdl")= item_health_pen : "Health Pen" []
+
+@PointClass base(Weapon) studio("models/weapons/w_cgrenade.mdl") = weapon_ply_cguard_extractor : "Combine Dark-Energy Grenade" []
+@PointClass base(Weapon) studio("models/weapons/w_comgrenade.mdl") = weapon_ply_comgr : "Combine Grenade" []
+@PointClass base(Weapon) studio("models/weapons/w_comgrenade_acid.mdl") = weapon_ply_comgr_a : "Combine Grenade (Acid)" []
+@PointClass base(Weapon) studio("models/weapons/w_comgrenade_sonic.mdl") = weapon_ply_comgr_s : "Combine Grenade (Sonic)" []
+@PointClass base(Weapon) studio("models/weapons/w_eq_smokegrenade_thrown.mdl") = weapon_ply_gasser_extractor : "Gasser Extractor" []
+@PointClass base(Weapon) studio("models/weapons/w_hmg1.mdl") = weapon_vj_cets_hmg : "HMG" []
+@PointClass base(Weapon) studio("models/effects/combineball.mdl") = weapon_ply_ki_comb1 : "Ki Attack 1" []
+@PointClass base(Weapon) studio("models/effects/combineball.mdl") = weapon_ply_ki_comb2 : "Ki Attack 2" []
+@PointClass base(Weapon) studio("models/weapons/w_oicw.mdl") = weapon_vj_cets_oicw : "OICW" []
+@PointClass base(Weapon) studio("models/weapons/w_smg2.mdl") = weapon_vj_cets_mp5k : "MP5K" []
+
+//-------------------------------------------------------------------------
+//
+// NPCs --- Combine's Experimental Transhumans and Synths --- Aliens Addon
+//
+//-------------------------------------------------------------------------
+
+@NPCClass base(BaseNPC) studio("models/hl2_controller.mdl") = npc_aliencontroller_vj_cets : "Alien Controller"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_agrunt.mdl") = npc_aliengrunt_vj_cets : "Alien Grunt"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Antlions/soldier_ant.mdl") = npc_antheavy_vj_cets : "Antlion Heavy"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Antlions/spitter_ant.mdl") = npc_antspitter_vj_cets : "Antlion Spitter"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_combine_ordinal.mdl") = npc_archer_vj_cets : "Combine Ordinal"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_archer.mdl") = npc_armorcharger_vj_cets : "Archer"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Zombie/headcrabarmored.mdl") = npc_armorhead_vj_cets : "Armored Headcrab"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Zombie/armored.mdl") = npc_armorwork_vj_cets : "Armored Worker"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Zombie/classic_armored.mdl") = npc_armorzom_vj_cets : "Armored Zombie"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_babycrab.mdl") = npc_babycrab_vj_cets : "Baby Headcrab"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_boid.mdl") = npc_boid_vj_cets : "Boid"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_cets_aliens/boomerplant_01.mdl") = npc_boomplant_vj_cets : "Boomerplant"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_bullsquid.mdl") = npc_bullchicken_vj_cets : "(CETS) Bullsquid"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_bullsquid_water.mdl") = npc_bullchicken_water_vj_cets : "Aquatic Bullsquid"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/fungalfauna.mdl") = npc_fauna_vj_cets : "Fungal Fauna"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_flock_float.mdl") = npc_ffloater_vj_cets : "Flocking Floater"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_cets_aliens/xen_flower_s.mdl") = npc_flowerturret_vj_cets : "Xen Flower Turret"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_gargantua.mdl") = npc_gargantua_baby_vj_cets : "Gargantua (Baby)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_gargantua.mdl") = npc_gargantua_vj_cets : "Gargantua"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_gonarch.mdl") = npc_gonarch_vj_cets : "Gonarch"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_gonome.mdl") = npc_gonome_vj_cets : "Gonome"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_exhoundeye.mdl") = npc_hound_explo_vj_cets : "Explosive Houndeye"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Squad Leader" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_houndeye.mdl") = npc_hound_normal_vj_cets : "(CETS) Houndeye"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Squad Leader" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_rhoundeye.mdl") = npc_hound_r_vj_cets : "Tamed Houndeye"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_hydra_large.mdl") = npc_hydra_vj_cets : "(CETS) Hydra"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_ichthy.mdl") = npc_ichthyosaur_vj_cets : "(CETS) Ichthyosaur"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_extra_effect/fog.mdl") = npc_jeff_fungalgas_vj_cets : "Fungal Gas"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_jeff.mdl") = npc_jeff_vj_cets : "Jeff"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/xen_charger.mdl") = npc_knocker_vj_cets : "Knocker"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Lamarr.mdl") = npc_lamarr_vj_cets : "(CETS) Lamarr"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_mompod.mdl") = npc_mommapod_vj_cets : "Momma Pod"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_panthereye.mdl") = npc_panthereye_vj_cets : "Panthereye"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Red" : 0
+		128 : "Blue" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/props_extra_effect/fog.mdl") = npc_particlestorm_vj_cets : "Particle Storm"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/racex/hl2_pit_drone.mdl") = npc_pitdrone_vj_cets : "Pitdrone"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_reviver.mdl") = npc_reviver_vj_cets : "Reviver"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Zombie/classic.mdl") = npc_reviverzom_vj_cets : "Revived Zombie"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/racex/hl2_shockroach.mdl") = npc_shockroach_vj_cets : "Shockroach"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/racex/hl2_shock_trooper.mdl") = npc_shocktrooper_vj_cets : "Shocktrooper"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Squad Leader" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/skitch.mdl") = npc_skitch_vj_cets : "Skitch"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/vortigaunt_slave.mdl") = npc_slave_vj_cets : "Xenian Vortigaunt"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Zombie/vortigaunt_zombie.mdl") = npc_slave_z_vj_cets : "Zombigaunt"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_snark.mdl") = npc_snark_vj_cets : "Snark"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/racex/hl2_sporefish.mdl") = npc_sporefish_vj_cets : "Sporefish"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_snarknest.mdl") = npc_sqnest_vj_cets : "Snark Nest"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_stinger.mdl") = npc_stinger_r_vj_cets : "Tamed Stinger"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_stinger.mdl") = npc_stinger_vj_cets : "Stinger"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_stukabat.mdl") = npc_stukabat_vj_cets : "Stukabat"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_tentacle.mdl") = npc_tentacle_vj_cets : "Tentacle"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_hopper.mdl") = npc_tripod_hopper_vj_cets : "Tripod Hopper"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_hopper.mdl") = npc_tripod_r_vj_cets : "Tamed Tripod Hopper"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/racex/hl2_voltigore.mdl") = npc_voltigore_baby_vj_cets : "Voltigore (Baby)"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Squad Leader" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/racex/hl2_voltigore.mdl") = npc_voltigore_vj_cets : "Voltigore"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/xen_tree.mdl") = npc_xentree_vj_cets : "Xen Tree"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Zombie/vortigaunt_zombie.mdl") = npc_zomgrunt_vj_cets : "Zombigaunt"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_xenlight.mdl") = sent_xenlight_vj_cets : "Xen Light"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_xenlight.mdl") = sent_xenlighta_vj_cets : "Xen Light (Red)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_xenlight.mdl") = sent_xenlightb_vj_cets : "Xen Light (Blue)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_xenlight.mdl") = sent_xenlightc_vj_cets : "Xen Light (Green)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_xenlight.mdl") = sent_xenlightd_vj_cets : "Xen Light (White)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_cets_aliens/xen_grenade_plant.mdl") = sent_xenplantgren_vj_cets : "Xen Bionade Plant"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_sporelarge.mdl") = sent_xensporelarge_vj_cets : "Xen Spore (Large)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_sporemid.mdl") = sent_xensporemedium_vj_cets : "Xen Spore (Medium)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_sporesmall.mdl") = sent_xensporesmall_vj_cets : "Xen Spore (Small)"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_organest.mdl") = ent_cets_snark_ammo : "Snark Ammo"
+[
+]
+
+@PointClass base(Weapon) studio("models/weapons/w_hopwire.mdl") = weapon_ply_xenbionade : "Xen Bionade" []
+@PointClass base(Weapon) studio("models/weapons/w_hl2_snark.mdl") = weapon_ply_snark : "Snark" []
+@PointClass base(Weapon) studio("models/weapons/w_shock_rifle.mdl") = weapon_ply_shockroach : "Shockroach" []
+@PointClass base(Weapon) studio("models/weapons/w_hl2_hgun.mdl") = weapon_ply_hornetgun : "Hornet Gun" []
+@PointClass base(Weapon) studio("models/headcrab.mdl") = weapon_ply_brickbat : "(CETS) Brickbat" []
+
+//-------------------------------------------------------------------------
+//
+// NPCs --- Combine's Experimental Transhumans and Synths --- Humans Addon
+//
+//-------------------------------------------------------------------------
+
+@NPCClass base(BaseNPC) studio("models/props_lab/citizenradio.mdl") = ent_radio_broadcast : "Custom Radio Broadcast"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/male_bomber.mdl") = npc_bomber_vj_cets : "Suicidal"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/cnapc.mdl") = npc_conscript_apc_vj_cets : "Conscript APC"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/conscripts/capt_vance.mdl") = npc_conscript_vj_cets : "Conscript"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Start with an automatic weapon" : 0
+		128 : "Start with a shotgun" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/hl2_consul.mdl") = npc_consul_vj_cets : "Consul"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/headcrab_cultists/cultist_01.mdl") = npc_cultist_vj_cets : "Headcrab Cultist"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/conscripts_heavy/male_02.mdl") = npc_heavy_conscript_vj_cets : "Heavy Conscript"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/npcs/sentry_ground.mdl") = npc_hecu_sentry_vj_cets : "HECU Sentry"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/grunt/hgrunt1.mdl") = npc_hecu_vj_cets : "HECU"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Squad Leader" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/grunt/hgrunt1_mask.mdl") = npc_hecusniper_vj_cets : "HECU Sniper"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/grunt/hgrunt1_mask.mdl") = npc_hecu_shotgunner_vj_cets : "HECU Shotgunner"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/grunt/hgrunt_robot.mdl") = npc_hecu_robot_vj_cets : "HECU Mechanical Unit"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/alyn.mdl") = npc_citylesszen_vj_cets : "Citylesszen"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Squad Leader" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/caste_npc.mdl") = npc_citylesszen_vj_cets : "Caste"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/ej_loyalists/male_01.mdl") = npc_loyal_vj_cets : "Combine Loyalist"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/otis.mdl") = npc_otis_vj_cets : "Otis"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/Combine_turrets/Floor_turret.mdl") = npc_rengi_sentry_vj_cets : "(CETS) Rebel Sentry"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/worker/worker_04.mdl") = npc_rengi_vj_cets : "The Worker"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/rebel_sniper.mdl") = npc_resniper_vj_cets : "Rebel Sniper"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/scientist/dr_cohrt.mdl") = npc_scientist_vj_cets : "BM Scientist"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/security/bm_barney.mdl") = npc_secguard_vj_cets : "BM Security Guard"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/gman_spy/spy_04.mdl") = npc_spy_vj_cets : "The Infiltrator"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/cets_male_07.mdl") = npc_tau_vj_cets : "The Gauss Holder"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_marines/triplaser.mdl") = ent_cets_ammopackapc : "Ammo Pack APC"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/weapons/w_hl2_gaussammo.mdl") = ent_cets_atomic_ammo : "Atomic Ammo"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/weapons/hl2_mp5_grenade.mdl") = ent_cets_mp5grenades : "MP5SD Grenades"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/items/boxsniperroundz.mdl") = ent_cets_sniper_ammo : "Sniper Ammo"
+[
+]
+
+@PointClass base(Item) studio("models/items/classic_battery.mdl")= item_armor_c : "Classic Armor" []
+@PointClass base(Item) studio("models/items/classic_healthkit.mdl")= item_health_kit_c : "Classic Health Kit" []
+@PointClass base(Item) studio("models/items/classic_healthvial.mdl")= item_health_vial_c : "Classic Vial" []
+
+@PointClass base(Weapon) studio("models/weapons/w_frag.mdl") = weapon_ply_fragnade : "HECU Fragmentation Grenade" []
+@PointClass base(Weapon) studio("models/weapons/w_molotov.mdl") = weapon_ply_moly : "Molotov" []
+@PointClass base(Weapon) studio("models/weapons/w_hl2_mp5.mdl") = weapon_vj_cets_mp5sd : "MP5SD" []
+@PointClass base(Weapon) studio("models/weapons/w_g18_pistol.mdl") = weapon_vj_cets_glock : "Glock-18" []
+@PointClass base(Weapon) studio("models/weapons/W_hl2_taucannon.mdl") = weapon_vj_cets_tau : "Gauss Gun" []
+@PointClass base(Weapon) studio("models/weapons/w_hl2_m40a1.mdl") = weapon_vj_cets_hecusniper : "Green Hecu Sniper" []
+
+//-------------------------------------------------------------------------
+//
+// NPCs --- Combine's Experimental Transhumans and Synths --- Portal Addon
+//
+//-------------------------------------------------------------------------
+
+@NPCClass base(BaseNPC) studio("models/portal_aspma.mdl") = npc_aspma_vj_cets : "ASPMA Unit"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/portal_aspma.mdl") = npc_aspma_rot_vj_cets : "Roten ASPMA Unit"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_bts/rocket_sentry.mdl") = npc_portal_rocket_sentry_vj_cets : "Portal Rocket Sentry"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props/turret_01.mdl") = npc_portal_sentry_vj_cets : "Portal Sentry"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_bts/glados_body.mdl") = sent_glados_vj_cets : "GLAdOS"
+[
+]
+
+//-------------------------------------------------------------------------
+//
+// NPCs --- Combine's Experimental Transhumans and Synths --- Resources and Misc. Addon
+//
+//-------------------------------------------------------------------------
+
+@NPCClass base(BaseNPC) studio("models/props_cets/roller_spikes.mdl") = ent_cets_navalmine : "Sea Mine"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props_cets/dave/combine_crafting_station_2.mdl") = ent_cets_upgrade_station : "Combine Fabricator"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/items/crafting_metal/resin_puck01.mdl") = item_cets_resin : "Resin"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/magnusson_teleporter.mdl") = sent_vj_cets_magnusson_spawner : "(CETS) Magnusson Telespawner"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/props/CS_militia/footlocker01_closed.mdl") = ent_cets_chest : "Random Loot Chest"
+[
+]

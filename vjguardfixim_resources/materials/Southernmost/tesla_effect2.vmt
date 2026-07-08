@@ -1,0 +1,15 @@
+"UnlitGeneric"
+{
+	"$basetexture" "Southernmost/tesla_effect"
+	"$translucent" 1
+	"Proxies"
+	{
+
+	        "AnimatedTexture" 
+	        { 
+	        "animatedTextureVar" "$basetexture" 
+	        "animatedTextureFrameNumVar" "$frame" 
+	        "animatedTextureFrameRate" "30" 
+	         }
+	}
+}

@@ -1,0 +1,5 @@
+vertexlitgeneric 
+{ 
+	$basetexture  models/fungalfauna/polyp_yng_2
+	"$surfaceprop" "alienflesh"
+}

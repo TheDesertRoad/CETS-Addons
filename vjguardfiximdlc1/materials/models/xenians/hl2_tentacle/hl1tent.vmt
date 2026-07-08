@@ -1,0 +1,36 @@
+"vertexlitgeneric"
+{
+	$basetexture	models\xenians\hl2_tentacle\hl1tent
+	$bumpmap	models\xenians\hl2_tentacle\hl1tent_normal
+
+	$phong 1
+	$phongboost 0.2
+	$phongexponent 32
+	$phongfresnelranges "[1 3 1]"
+
+	$rimlight 1
+	$rimlightboost .5
+	$rimlightexponent 75
+
+	$halflambert 1
+
+	$detail "detail\organic_detail_04"
+	$detailscale "12"
+	$detailblendfactor "0.5"
+	$detailblendmode "0"
+
+	"$selfillum" 1
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models\xenians\hl2_tentacle\hl1tent"
+		"$selfillummask" 	"models\xenians\hl2_tentacle\hl1tent_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models\xenians\hl2_tentacle\hl1tent"
+	}
+}

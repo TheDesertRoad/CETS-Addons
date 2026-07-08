@@ -1,0 +1,9 @@
+VertexLitGeneric
+{
+$baseTexture "models\mrfunreal\van_new_uv/ambulance_l4d2"
+$envmap env_cubemap
+$envmapmask "models\mrfunreal\van_new_uv\ambulance_ref"
+$envmaptint "[.25 .25 .25]"
+}
+
+
