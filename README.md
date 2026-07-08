@@ -40,12 +40,6 @@ Download the addon as a `.zip` file, then extract it.
 
 After extracting, you should have a folder similar to:
 
-
-├── 
-├── 
-├── models
-└── sound
-
 | Folder Name ||
 |-------------|-|
 | `vjguardfixim` ||
@@ -72,10 +66,10 @@ Drag the extracted addon folder into the addons folder.
 
 Example:
 
-garrysmod/
-└── addons/
-    ├── vjguardfixim
-    ├── vjguardfiximdlc1
-    ├── vjguardfiximdlc3
-    ├── aspma
-    └── vjguardfixim_resources
+| Folder Name ||
+|-------------|-|
+| `vjguardfixim` ||
+| `vjguardfiximdlc1` ||
+| `vjguardfiximdlc3` ||
+| `aspma` ||
+| `vjguardfixim_resources` ||
