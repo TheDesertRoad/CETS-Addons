@@ -30,10 +30,10 @@ If you install these addons locally in your Garry's Mod installation, you can mo
 ## Requirements
 
 - Garry's Mod
-- VJ Base (if required by these addons)
+- VJ Base
 
 ## Installation
 
 1. Download or clone the repository.
-2. Place the addon folders into your `garrysmod/addons` directory.
+2. Place the addon folders into your `(steamapps\common\GarrysMod\garrysmod\addons)` directory.
 3. (Optional) Mount the included `.fdg` file in Hammer if you map with these addons.
