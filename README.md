@@ -1,4 +1,6 @@
-OVERVIEW
+<p align="center">
+  <sub>##OVERVIEW</sub>
+</p>
 #
 These addons add tons of new content related to the Half-Life world, mainly NPCs but also weapons and props. It also adds miscellaneous entities to make your game experience better.
 #
