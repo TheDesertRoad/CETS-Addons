@@ -25,6 +25,28 @@ function ENT:Initialize()
 		if phys:IsValid() then
 			phys:Wake()
 		end
+
+timer.Simple(0, function()
+    if not IsValid(self) then return end
+
+    local trigger = ents.Create("mp5_grenade_trigger")
+
+    if not IsValid(trigger) then return end
+
+    trigger:SetPos(self:GetPos())
+    trigger:SetParent(self)
+
+    trigger:SetCollisionBounds(
+        Vector(-32, -32, -32),
+        Vector(32, 32, 32)
+    )
+
+    trigger.Parent = self
+
+    trigger:Spawn()
+
+    self.TouchTrigger = trigger
+end)
 	end
 end
 

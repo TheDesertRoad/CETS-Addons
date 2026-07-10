@@ -15,6 +15,13 @@ ENT.Weapon_Strafe = true
 ENT.Weapon_CanCrouchAttack = false
 ENT.HasGrenadeAttack = false
 
+ENT.AnimTbl_MeleeAttack = "kick" -- Melee Attack Animations
+ENT.TimeUntilMeleeAttackDamage = 0.3 -- This counted in seconds | This calculates the time until it hits something
+ENT.MeleeAttackDamage = 10
+ENT.HasMeleeAttackKnockBack = true
+ENT.MeleeAttackDistance = 30 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDamageDistance = 30 -- How far does the damage go?
+
 ENT.PropInteraction = true
 ENT.CanChatMessage = false
 

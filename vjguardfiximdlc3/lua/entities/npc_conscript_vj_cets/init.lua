@@ -35,6 +35,8 @@ ENT.InvestigateSoundDistance = 18
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.FlinchChance = 4 -- Chance of it flinching from 1 to x | 1 will make it always flinch
 
+ENT.DisableFootStepSoundTimer = true
+
 ENT.AnimTbl_MeleeAttack = "meleeattack01" -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = 0.3 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 10
@@ -465,6 +467,10 @@ local SurfaceFootsteps = {
 	},
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnHandleAnimEvent(ev, evTime, evCycle, evType, evOptions)
+	if ev == 1004 then self:FootStepSoundCode() end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PlayFootstepSound(customSD)
 	local metaEntity = FindMetaTable("Entity")
 	local PICK = VJ.PICK
@@ -499,11 +505,11 @@ function ENT:PlayFootstepSound(customSD)
 			local pickedSD = customSD and PICK(customSD) or PICK(tbl)
 			if pickedSD then
 				if selfData.FootstepSoundTimerRun && self:GetMovementActivity() == ACT_RUN then
-					VJ.EmitSound(self, pickedSD, 70, 100)
+					VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
 					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Run", pickedSD) end
 					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerRun
 				elseif selfData.FootstepSoundTimerWalk && self:GetMovementActivity() == ACT_WALK then
-					VJ.EmitSound(self, pickedSD, 70, 100)
+					VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
 					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Walk", pickedSD) end
 					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerWalk
 				end

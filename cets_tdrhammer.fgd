@@ -548,7 +548,7 @@
 	]
 ]
 
-@NPCClass base(BaseNPC) studio("models/humans/caste_npc.mdl") = npc_citylesszen_vj_cets : "Caste"
+@NPCClass base(BaseNPC) studio("models/humans/caste_npc.mdl") = npc_caste_vj_cets : "Caste"
 [
 ]
 
@@ -588,6 +588,10 @@
 [
 ]
 
+@NPCClass base(BaseNPC) studio("models/humans/cets_male_05.mdl") = npc_egon_vj_cets : "The Egon Holder"
+[
+]
+
 @NPCClass base(BaseNPC) studio("models/props_marines/triplaser.mdl") = ent_cets_ammopackapc : "Ammo Pack APC"
 [
 ]
@@ -614,6 +618,7 @@
 @PointClass base(Weapon) studio("models/weapons/w_g18_pistol.mdl") = weapon_vj_cets_glock : "Glock-18" []
 @PointClass base(Weapon) studio("models/weapons/W_hl2_taucannon.mdl") = weapon_vj_cets_tau : "Gauss Gun" []
 @PointClass base(Weapon) studio("models/weapons/w_hl2_m40a1.mdl") = weapon_vj_cets_hecusniper : "Green Hecu Sniper" []
+@PointClass base(Weapon) studio("models/weapons/w_hl2_egon.mdl") = weapon_vj_cets_egon : "Gluon Gun" []
 
 //-------------------------------------------------------------------------
 //
@@ -665,4 +670,76 @@
 
 @NPCClass base(BaseNPC) studio("models/props/CS_militia/footlocker01_closed.mdl") = ent_cets_chest : "Random Loot Chest"
 [
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_exit.vmt") = sent_vj_cets_portal_a : "Xen Portal (Xen)"
+[
+	spawnflags(Flags) =
+	[
+		2 : "Spawn: Alien Controller" : 0
+		4 : "Spawn: Alien Grunt" : 0
+		8 : "Spawn: Aquatic Bullsquid" : 0
+		16 : "Spawn: Bullsquid" : 0
+		32 : "Spawn: Explosive Houndeye" : 0
+		64 : "Spawn: Houndeye" : 0
+		128 : "Spawn: Panthereye" : 0
+		256 : "Spawn: Slave" : 0
+		512 : "Spawn: Stukabat" : 0
+		1024 : "Spawn: Headcrab" : 0
+		2048 : "Spawn: Black Headcrab" : 0
+		4096 : "Spawn: Fast Headcrab" : 0
+		8192 : "Spawn: Reviver" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_exit.vmt") = sent_vj_cets_portal_ab : "Xen Portal (Xen - Bosses)"
+[
+	spawnflags(Flags) =
+	[
+		2 : "Spawn: Gargantua" : 0
+		4 : "Spawn: Gargantua (Baby)" : 0
+		8 : "Spawn: Gonarch" : 0
+		16 : "Spawn: Tentacle" : 0
+		32 : "Spawn: Particle Storm" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_exit.vmt") = sent_vj_cets_portal_b : "Xen Portal (RaceX)"
+[
+	spawnflags(Flags) =
+	[
+		2 : "Spawn: Shocktrooper" : 0
+		4 : "Spawn: Voltigore" : 0
+		8 : "Spawn: Voltigore (Baby)" : 0
+		16 : "Spawn: Pitdrone" : 0
+		32 : "Spawn: Shockroach" : 0
+		64 : "Spawn: Sporefish" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_exit.vmt") = sent_vj_cets_portal_c : "Xen Portal (Antlions)"
+[
+	spawnflags(Flags) =
+	[
+		2 : "Spawn: Antlion" : 0
+		4 : "Spawn: Antlion (Worker)" : 0
+		8 : "Spawn: Antlion Guard" : 0
+		16 : "Spawn: Antlion Heavy" : 0
+		32 : "Spawn: Antlion Spitter" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_exit.vmt") = sent_vj_cets_portal_d : "Xen Portal (Combine)"
+[
+	spawnflags(Flags) =
+	[
+		2 : "Spawn: Assassin Synth" : 0
+		4 : "Spawn: Hunter" : 0
+		8 : "Spawn: Clawscanner" : 0
+		16 : "Spawn: Synth Soldier Elite" : 0
+		32 : "Spawn: Synth Soldier" : 0
+		64 : "Spawn: Mortar Synth" : 0
+		128 : "Spawn: Vortigaunt Synth" : 0
+		256 : "Spawn: Crab Synth" : 0
+	]
 ]

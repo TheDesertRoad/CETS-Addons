@@ -81,9 +81,12 @@ function SWEP:CustomOnInitialize()
 end
 --------------------------------------------------------------------------------|
 function SWEP:StopChargeSound()
+	local owner = self:GetOwner()
+	local isNPC = owner:IsNPC()
+	local isPly = owner:IsPlayer()
 	self:StopSound(self.Secondary.Sound)
 
-	if IsValid(self.Owner) then
+	if IsValid(owner) then
 		self.Owner:StopSound(self.Secondary.Sound)
 	end
 end
@@ -141,55 +144,6 @@ function SWEP:CustomOnHolster()
 		self.Primary.DefaultClip = 999999
 		self.Primary.MaxAmmo = 999999
 	end
-end
---------------------------------------------------------------------------------|
-function SWEP:DrawGaussBeam(points)
-	if #points < 2 then return end
-
-	for i = 1, #points - 1 do
-		local ed = EffectData()
-		ed:SetStart(points[i])
-		ed:SetOrigin(points[i + 1])
-		ed:SetScale(1)
-		util.Effect("cets_taubeam_tracer_b", ed)
-	end
-end
---------------------------------------------------------------------------------|
-function SWEP:ApplyGaussSurfaceDecal(tr, energy)
-	if not tr.Hit or IsValid(tr.Entity) then return end
-
-	local mat = tr.MatType
-	local decal = "Impact.Concrete"
-
-	if mat == MAT_METAL then
-		decal = "Impact.Metal"
-
-	elseif mat == MAT_WOOD then
-		decal = "Impact.Wood"
-
-	elseif mat == MAT_DIRT then
-		decal = "Impact.Concrete"
-
-	elseif mat == MAT_GLASS then
-		decal = "Impact.Glass"
-
-	elseif mat == MAT_FLESH then
-		decal = "Impact.Flesh"
-		ParticleEffect("blood_impact_red_01", tr.HitPos, angle_zero, nil)
-
-	elseif mat == MAT_ALIENFLESH then
-		decal = "Impact.Antlion"
-	end
-
-	util.Decal(decal, tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
-end
---------------------------------------------------------------------------------|
-local function IsIgnoredSurface(tr)
-	if tr.HitSky then return true end
-	if not tr.HitTexture then return false end
-	if string.find(tr.HitTexture, "tools/") then return true end
-
-	return false
 end
 --------------------------------------------------------------------------------|
 function SWEP:PrimaryAttack(UseAlt)
@@ -259,7 +213,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Tracer = self.Primary.Tracer
 		bullet.TracerName       = self.Primary.TracerType
 		bullet.Force = self.Primary.Force 
-		bullet.Damage = 40
+		bullet.Damage = 0
 		bullet.AmmoType = self.Primary.Ammo 
 		bullet.Angles = self:GetAngles()
 		bullet.Callback = function(attacker, tracer, tr, dmginfo)
@@ -273,6 +227,27 @@ function SWEP:PrimaryAttack(UseAlt)
 					self.Spark1:Fire("StartSpark", "", 0)
 					self.Spark1:Fire("StopSpark", "", 0.1)
 				self:DeleteOnRemove(self.Spark1)
+
+				local radius = 8
+
+				for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
+					if not IsValid(ent) then continue end
+					if ent == self.Owner then continue end
+					if not SERVER then return end
+
+					if IsValid(ent) and ent ~= self then
+						local dmg = DamageInfo()
+						dmg:SetAttacker(self.Owner)
+						dmg:SetInflictor(self)
+						dmg:SetDamage(40)
+						dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM)) -- Change to any damage type you want
+						dmg:SetDamagePosition(tracer.HitPos)
+
+						if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
+							ent:TakeDamageInfo(dmg)
+						end
+					end
+				end
 
 				local effectdata = EffectData()
 					effectdata:SetStart(self.Owner:GetShootPos())
@@ -329,7 +304,28 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Damage = self.Primary.Damage
 		bullet.AmmoType = self.Primary.Ammo
 		bullet.Callback = function(attacker, tracer, tr, dmginfo)
-				self:SparksSmall(attacker, tracer, tr, dmginfo)
+			self:SparksSmall(attacker, tracer, tr, dmginfo)
+			local radius = 8
+
+			for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
+				if not IsValid(ent) then continue end
+				if ent == self.Owner then continue end
+				if not SERVER then return end
+
+				if IsValid(ent) and ent ~= self then
+					local dmg = DamageInfo()
+					dmg:SetAttacker(self.Owner)
+					dmg:SetInflictor(self)
+					dmg:SetDamage(self.Primary.Damage)
+					dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK)) -- Change to any damage type you want
+					dmg:SetDamagePosition(tracer.HitPos)
+
+					if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
+						ent:TakeDamageInfo(dmg)
+					end
+				end
+			end
+
 		end
 		self.Owner:FireBullets( bullet )
 
@@ -402,18 +398,16 @@ function SWEP:CustomOnThink()
 	local spawnPos = self:GetBulletPos()
 
 	if isPly then
-		for _, ply in ipairs(player.GetAll()) do
-			if not IsValid(owner) or not owner:Alive() then
-				self:StopChargeSound()
-				self.Spin = 0
-				return
-			end
+		if not IsValid(owner) or not owner:Alive() then
+			self:StopChargeSound()
+			self.Spin = 0
+			return
+		end
 
-			if owner:GetActiveWeapon() ~= self then
-				self:StopChargeSound()
-				self.Spin = 0
-				return
-			end
+		if owner:GetActiveWeapon() ~= self then
+			self:StopChargeSound()
+			self.Spin = 0
+			return
 		end
 
 		if self.Spin == 1 and not self.Owner:KeyDown(IN_ATTACK2) then
@@ -436,30 +430,55 @@ function SWEP:CustomOnThink()
 			bullet.Tracer = 1
 			bullet.TracerName       = "cets_taubeam_tracer_b"
 			bullet.Force = self.Primary.Force
-
-			if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
-				bullet.Damage = self.Primary.Damage
-			end
-
-			if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-				bullet.Damage = self.Primary.Damage * 2
-			end
-
-			if self.SpinTimer <= CurTime() + 6 then
-				bullet.Damage = self.Primary.Damage * 4
-			end
-
-			if self.SpinTimer <= CurTime() + 3 then
-				bullet.Damage = self.Primary.Damage * 8
-			end
-
-			if self.SpinTimer <= CurTime() + 1 then
-				bullet.Damage = self.Primary.Damage * 16
-			end
-
+			bullet.Damage = 0
 			bullet.AmmoType = self.Primary.Ammo
 			bullet.Callback = function(attacker, tracer, tr, dmginfo)
 				self:SparksHuge(attacker, tracer, tr, dmginfo)
+
+				local radius = 8
+
+				for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
+					if not IsValid(ent) then continue end
+					if ent == self.Owner then continue end
+					if not SERVER then return end
+
+					if IsValid(ent) and ent ~= self then
+						local dmg = DamageInfo()
+						dmg:SetAttacker(self.Owner)
+						dmg:SetInflictor(self)
+
+						if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
+							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+							dmg:SetDamage(self.Primary.Damage)
+						end
+
+						if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
+							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+							dmg:SetDamage(self.Primary.Damage * 2)
+						end
+
+						if self.SpinTimer <= CurTime() + 6 then
+							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+							dmg:SetDamage(self.Primary.Damage * 4)
+						end
+
+						if self.SpinTimer <= CurTime() + 3 then
+							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+							dmg:SetDamage(self.Primary.Damage * 8)
+						end
+
+						if self.SpinTimer <= CurTime() + 1 then
+							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+							dmg:SetDamage(self.Primary.Damage * 16)
+						end
+
+						dmg:SetDamagePosition(tracer.HitPos)
+	
+						if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
+							ent:TakeDamageInfo(dmg)
+						end
+					end
+				end
 			end
 
 			self.Owner:FireBullets( bullet )
@@ -551,9 +570,14 @@ function SWEP:CustomOnThink()
 				self.Idle = 0
 				self.Recoil = 0
 
-				self:ExplodeGauss()
+				if not self.Owner:HasGodMode() then
+					self:ExplodeGauss()
+				end
 			end
-			ParticleEffect("grenade_explosion_01",self:GetPos(),Angle(0, 0, 0),nil)
+			
+			if not self.Owner:HasGodMode() then
+				ParticleEffect("grenade_explosion_01",self:GetPos(),Angle(0, 0, 0),nil)
+			end
 		end
 	end
 end

@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$halflambert" "1"
+
+	"$selfillum" 1
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models\weapons\w_hl2_egon\w_egon_reference"
+		"$selfillummask" 	"models\weapons\w_hl2_egon\w_egon_reference_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models\weapons\w_hl2_egon\w_egon_reference"
+	}
+}

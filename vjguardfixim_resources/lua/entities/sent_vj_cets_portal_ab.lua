@@ -18,28 +18,48 @@ ENT.PauseSpawning = true
 
 ENT.Spawner_Distance = 400
 ENT.Spawner_NextCheckT = 0
-
-local Aliens = {
-	"npc_gargantua_vj_cets",
-	"npc_gonarch_vj_cets",
-	"npc_tentacle_vj_cets",
-}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local vecZ45 = Vector(0, 0, 45)
 local vecNZ20 = Vector(0, 0, -20)
+
+local Aliens = {
+	[2] = "npc_gargantua_vj_cets",
+	[4] = "npc_gargantua_baby_vj_cets",
+	[8] = "npc_gonarch_vj_cets",
+	[16] = "npc_tentacle_vj_cets",
+	[32] = "npc_particlestorm_vj_cets",
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	local entTbl = Aliens
+	local flags = self:GetSpawnFlags()
+	local HasFlags = false
+	
+	for flag, npc in pairs(Aliens) do
+		if bit.band(flags, flag) ~= 0 or self:HasSpawnFlags(flag) then
+			entTbl = {npc}
+			HasFlags = true
+			break
+		end
+	end
+
+	if not HasFlags then
+		local npcList = {}
+
+		for _, npc in pairs(Aliens) do
+			table.insert(npcList, npc)
+		end
+
+		entTbl = {npcList[math.random(#npcList)]}
+	end
+
 	timer.Simple(0.02, function()
 		if IsValid(self) then
 			self:SetPos(self:GetPos() + vecZ45)
 		end
 	end)
 
-	self.EntitiesToSpawn = {{
-		Entities = entTbl,
-		SpawnPosition = vecNZ20 -- Make the NPC spawn little bit down otherwise it tends to get stuck in ceilings
-	}}
+	self.EntitiesToSpawn = {{Entities = entTbl, SpawnPosition = vecNZ20}}
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()

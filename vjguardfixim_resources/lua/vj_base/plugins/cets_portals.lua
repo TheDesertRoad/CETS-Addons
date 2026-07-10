@@ -10,12 +10,19 @@ game.AddParticles("particles/vjguardporpar.pcf")
 local vCat = "Other"
 
 VJ.AddNPC("Warpball (Xen)", "sent_vj_cets_portal_a",vCat)
+VJ.AddNPC("Warpball (Xenian Boss)", "sent_vj_cets_portal_ab",vCat)
 VJ.AddNPC("Warpball (Race X)", "sent_vj_cets_portal_b",vCat)
 VJ.AddNPC("Warpball (Antlions)", "sent_vj_cets_portal_c",vCat)
 VJ.AddNPC("Warpball (Combine)", "sent_vj_cets_portal_d",vCat)
 //VJ.AddNPC("Vehicle 1", "npc_vehiclealive_1_vj_cets",vCat)
 
 VJ.AddConVar("vehicle_weapon_strip", 1, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_kill_announcer", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_kill_announcer_text", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_kill_announce_npc", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_friends_join_sound", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_friends_chat_sound", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_friends_chat_sound_hl1", 0, FCVAR_ARCHIVE)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then
 	local enable = CreateConVar("cets_use_sound", 0, {FCVAR_ARCHIVE, FCVAR_REPLICATED})

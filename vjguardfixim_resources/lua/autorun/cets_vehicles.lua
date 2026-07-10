@@ -2,6 +2,8 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then
 	util.AddNetworkString("JeepGunToggle")
+	util.AddNetworkString("KillAnnouncer_Message")
+	util.AddNetworkString("KillAnnouncer_FirstBlood")
 
 	local AllowedModels = {
 		["models/buggy.mdl"] = true,
@@ -47,7 +49,284 @@ if SERVER then
 
 		end
 	end)
+
+	local KillstreakSounds = {
+		[2] = {
+			"friends/ut_announcements/doublekill.wav",
+		},
+
+		[3] = {
+			"friends/ut_announcements/triplekill.wav",
+		},
+
+		[4] = {
+			"friends/ut_announcements/play.wav",
+		},
+
+		[5] = {
+			"friends/ut_announcements/monsterkill.wav",
+		},
+
+		[6] = {
+			"friends/ut_announcements/rampage.wav",
+		},
+
+		[7] = {
+			"friends/ut_announcements/killingspree.wav",
+		},	
+
+		[8] = {
+			"friends/ut_announcements/dominating.wav",
+		},	
+
+		[9] = {
+			"friends/ut_announcements/impressive.wav",
+		},	
+
+		[10] = {
+			"friends/ut_announcements/unstoppable.wav",
+		},	
+
+		[11] = {
+			"friends/ut_announcements/outstanding.wav",
+		},	
+
+		[12] = {
+			"friends/ut_announcements/megakill.wav",
+		},	
+
+		[13] = {
+			"friends/ut_announcements/ultrakill.wav",
+		},
+
+		[14] = {
+			"friends/ut_announcements/eagleeye.wav",
+		},	
+
+		[15] = {
+			"friends/ut_announcements/ownage.wav",
+		},	
+
+		[16] = {
+			"friends/ut_announcements/comboking.wav",
+		},	
+
+		[17] = {
+			"friends/ut_announcements/maniac.wav",
+		},	
+
+		[18] = {
+			"friends/ut_announcements/ludicrouskill.wav",
+		},	
+
+		[19] = {
+			"friends/ut_announcements/bullseye.wav",
+		},	
+
+		[20] = {
+			"friends/ut_announcements/excellent.wav",
+		},
+
+		[21] = {
+			"friends/ut_announcements/pancake.wav",
+		},
+	
+		[22] = {
+			"friends/ut_announcements/headhunter.wav",
+		},
+
+		[23] = {
+			"friends/ut_announcements/unreal.wav",
+		},
+
+		[24] = {
+			"friends/ut_announcements/assassin.wav",
+		},
+
+		[25] = {
+			"friends/ut_announcements/whickedsick.wav",
+		},
+
+		[26] = {
+			"friends/ut_announcements/massacre.wav",
+		},
+
+		[27] = {
+			"friends/ut_announcements/killingmachine.wav",
+		},
+
+		[28] = {
+			"friends/ut_announcements/monsterkill.wav",
+		},
+
+		[29] = {
+			"friends/ut_announcements/holyshit.wav",
+		},	
+
+		[30] = {
+			"friends/ut_announcements/godlike.wav",
+		},
+	}
+
+	hook.Add("PlayerInitialSpawn", "KillAnnouncer_Init", function(ply)
+		ply.Killstreak = 0
+		ply.FirstKillPlayed = false
+	end)
+
+	local function GiveKill(attacker)
+		if GetConVar("sv_cets_kill_announcer"):GetInt() == 0 then return end
+		if not IsValid(attacker) or not attacker:IsPlayer() then return end
+
+		if not attacker.FirstKillPlayed then
+			attacker.FirstKillPlayed = true
+    local snd = "friends/ut_announcements/firstblood.wav"
+
+    attacker:EmitSound(snd, 75, 100)
+
+    net.Start("KillAnnouncer_FirstBlood")
+        net.WriteString(snd)
+    net.Send(attacker)
+		end
+
+		attacker.Killstreak = (attacker.Killstreak or 0) + 1
+
+		local tbl = KillstreakSounds[attacker.Killstreak]
+
+		if tbl then
+			local snd = table.Random(tbl)
+			attacker:EmitSound(table.Random(tbl), 75, 100)
+
+			if GetConVar("sv_cets_kill_announcer_text"):GetInt() == 1 then
+				net.Start("KillAnnouncer_Message")
+				net.WriteUInt(attacker.Killstreak, 8)
+				net.WriteString(snd)
+				net.Send(attacker)
+			else
+			
+			end
+		end
+	end
+
+	hook.Add("PlayerDeath", "KillAnnouncer_PlayerDeath", function(victim, inflictor, attacker)
+		if IsValid(victim) then
+			victim.Killstreak = 0
+		end
+
+		if IsValid(attacker) and attacker:IsPlayer() and attacker ~= victim then
+			GiveKill(attacker)
+		end
+	end)
+
+	hook.Add("OnNPCKilled", "KillAnnouncer_NPCKilled", function(npc, attacker)
+		if GetConVar("sv_cets_kill_announce_npc"):GetInt() == 0 then return end
+
+		GiveKill(attacker)
+	end)
+
+	hook.Add("PlayerInitialSpawn", "JoinSound", function(ply)
+		if not IsValid(ply) then return end
+		if GetConVar("sv_cets_friends_join_sound"):GetInt() == 0 then return end
+
+		ply.HasPlayedSpawnSound = false
+
+		for _, v in ipairs(player.GetAll()) do
+			v:EmitSound("friends/friend_join.wav", 75, 100)
+		end
+	end)
+
+	hook.Add("PlayerSpawn", "ImOnline", function(ply)
+		if not IsValid(ply) then return end
+		if GetConVar("sv_cets_friends_join_sound"):GetInt() == 0 then return end
+		if ply.HasPlayedSpawnSound then return end
+
+		ply.HasPlayedSpawnSound = true
+
+		for _, v in ipairs(player.GetAll()) do
+			v:EmitSound("friends/friend_online.wav", 75, 100)
+		end
+	end)
+
+	hook.Add("PlayerSay", "ChatSound", function(ply, text)
+		if not IsValid(ply) then return end
+		if GetConVar("sv_cets_friends_chat_sound"):GetInt() == 0 then return end
+
+		for _, v in ipairs(player.GetAll()) do
+			if GetConVar("sv_cets_friends_chat_sound_hl1"):GetInt() == 0 then
+				v:EmitSound("friends/message.wav", 75, 100)
+			else
+				v:EmitSound("hl1/misc/talk.wav", 75, 100)
+			end			
+		end
+	end)
 else
+
+	surface.CreateFont("KillAnnouncerFont", {font = "Trebuchet MS", size = 48, weight = 900, antialias = true})
+
+	local KillMessages = {
+		[2] = "DOUBLE KILL",
+		[3] = "TRIPLE KILL",
+		[4] = "PLAY",
+		[5] = "MONSTER KILL",
+		[6] = "RAMPAGE",
+		[7] = "KILLING SPREE",
+		[8] = "DOMINATING",
+		[9] = "IMPRESSIVE",
+		[10] = "UNSTOPPABLE",
+		[11] = "OUTSTANDING",
+		[12] = "MEGA KILL",
+		[13] = "ULTRA KILL",
+		[14] = "EAGLE EYE",
+		[15] = "OWNAGE",
+		[16] = "COMBO KING",
+		[17] = "MANIAC",
+		[18] = "LUDICROUS KILL",
+		[19] = "BULLSEYE",
+		[20] = "EXCELLENT",
+		[21] = "PANCAKE",
+		[22] = "HEADHUNTER",
+		[23] = "UNREAL",
+		[24] = "ASSASSIN",
+		[25] = "WICKED SICK",
+		[26] = "MASSACRE",
+		[27] = "KILLING MACHINE",
+		[28] = "MONSTER KILL",
+		[29] = "HOLY SHIT",
+		[30] = "GODLIKE"
+	}
+
+	local CurrentKillMessage = ""
+	local KillMessageEnd = 0
+
+	net.Receive("KillAnnouncer_Message", function()
+		local streak = net.ReadUInt(8)
+		local sound = net.ReadString()
+
+		CurrentKillMessage = KillMessages[streak] or ""
+		KillMessageEnd = CurTime() + 2
+
+		surface.PlaySound(sound)
+	end)
+
+	net.Receive("KillAnnouncer_FirstBlood", function()
+		local sound = net.ReadString()
+
+		CurrentKillMessage = "FIRST BLOOD" or ""
+		KillMessageEnd = CurTime() + 2
+
+		surface.PlaySound(sound)
+	end)
+
+	hook.Add("HUDPaint", "KillAnnouncer_Draw", function()
+		if CurTime() > KillMessageEnd then return end
+		if CurrentKillMessage == "" then return end
+
+		local flicker = math.abs(math.sin(CurTime() * 12))
+		local alpha = math.Clamp(1 / 1, 0, 1) * 128
+		alpha = alpha * (0.5 + flicker * 0.5)
+
+		draw.SimpleTextOutlined(CurrentKillMessage, "KillAnnouncerFont", ScrW() / 2, ScrH() * 0.25, Color(255, 128, 0, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+	end)
+
 	local pressed = false
 
 	hook.Add("Think", "JeepGunToggleKey", function()

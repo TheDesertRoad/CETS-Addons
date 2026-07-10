@@ -11,7 +11,7 @@ game.AddAmmoType( {
 
 game.AddAmmoType( {
 	name = 'UraniumEnergy_CETS',
-	dmgtype = {DMG_ENERGYBEAM, DMG_SHOCK, DMG_PLASMA},
+	dmgtype = {DMG_ALWAYSGIB, DMG_ENERGYBEAM, DMG_SHOCK},
 	tracer = TRACER_NONE,
 	plydmg = 0,
 	npcdmg = 0,

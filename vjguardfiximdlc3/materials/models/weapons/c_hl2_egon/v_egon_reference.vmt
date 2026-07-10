@@ -1,0 +1,26 @@
+"VertexLitGeneric"
+{
+	"$bumpmap" "models\weapons\c_hl2_egon\v_egon_reference_n"
+	"$phong" "1"
+	"$phongexponent" "32"
+	"$phongboost"	"3"
+	"$phongfresnelranges"	"[.6 .6 .6]"
+
+	"360?$color2" "[ 0.4 0.4 0.4 ]"
+
+	"$halflambert" "1"
+
+	"$selfillum" 1
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models\weapons\c_hl2_egon\v_egon_reference"
+		"$selfillummask" 	"models\weapons\c_hl2_egon\v_egon_reference_l"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models\weapons\c_hl2_egon\v_egon_reference"
+	}
+}

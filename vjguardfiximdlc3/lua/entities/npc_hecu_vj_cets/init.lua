@@ -11,7 +11,7 @@ ENT.AlliedWithPlayerAllies = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Weapon_Accuracy = 1
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.AnimTbl_MeleeAttack = "melee_gunhit" -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = "kick" -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = 0.3 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 10
 ENT.HasMeleeAttackKnockBack = true

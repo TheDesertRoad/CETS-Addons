@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\weapons\w_hl2_egon\egonchrome2_no"
+	"$bumpmap" "models\weapons\w_hl2_egon\egonchrome2_n"
+	"$halflambert" 1
+	// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+ 
+ 	"$phong"     "1"
+ 	"$phongboost"   "1"
+
+	"$phongexponent"   "24"
+ 	"$phongwarptexture" "models\weapons\w_hl2_egon\egonchrome2"
+ 	"$phongalbedotint" 1
+
+	// requred to see specular on dx6+7 at all
+	"$multipass" 1
+}

@@ -210,6 +210,7 @@ function ENT:PlayFootstepSound(customSD)
 	local pickedSD = customSD and PICK(customSD) or PICK(tbl)
 			if pickedSD then
 				VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
+				VJ.EmitSound(self, "player/footsteps/metalgrate1.wav", selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
 				local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Event", pickedSD) end
 			end
 		elseif self:IsMoving() && CurTime() > selfData.NextFootstepSoundT && self:GetMoveDelay() <= 0 then
@@ -226,10 +227,12 @@ function ENT:PlayFootstepSound(customSD)
 			if pickedSD then
 				if selfData.FootstepSoundTimerRun && self:GetMovementActivity() == ACT_RUN then
 					VJ.EmitSound(self, pickedSD, 70, 100)
+					VJ.EmitSound(self, "player/footsteps/metalgrate1.wav", 70, 100)
 					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Run", pickedSD) end
 					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerRun
 				elseif selfData.FootstepSoundTimerWalk && self:GetMovementActivity() == ACT_WALK then
 					VJ.EmitSound(self, pickedSD, 70, 100)
+					VJ.EmitSound(self, "player/footsteps/metalgrate1.wav", 70, 100)
 					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Walk", pickedSD) end
 					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerWalk
 				end
