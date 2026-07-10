@@ -9,6 +9,7 @@ function EFFECT:Init( data )
 	self.Entity:SetRenderBoundsWS( self.StartPos, self.EndPos, Vector() * 1 )
 	self.Alpha = 255
 	self.FlashA = 255
+	self.Target = data:GetEntity()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function EFFECT:Think()
@@ -25,8 +26,22 @@ function EFFECT:Think()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function EFFECT:Render()
-	self.Length = ( self.StartPos - self.EndPos ):Length()
-	local texcoord = self.texcoord
+	if IsValid(self.Owner) then
+		self.EndPos = self.Owner:WorldSpaceCenter()
+	end
+
+	local att = self.WeaponEnt:GetAttachment(self.Attachment)
+
+	if att then
+		self.StartPos = att.Pos
+	end
+
+	if IsValid(self.WeaponEnt) then
+		self.StartPos = self:GetTracerShootPos(self.Position, self.WeaponEnt, self.Attachment)
+	end
+
+	self.Length = (self.StartPos - self.EndPos):Length()
+
 	render.SetMaterial( Material( "sprites/yellowlaser1" ) )
-	render.DrawBeam( self.StartPos, self.EndPos, 12, texcoord, texcoord + self.Length / 1024, Color( 255, 180, 0, 255) )
+	render.DrawBeam( self.StartPos, self.EndPos, 12, self.texcoord, self.texcoord + self.Length / 1024, Color( 255, 180, 0, 255) )
 end

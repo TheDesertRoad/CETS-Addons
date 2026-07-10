@@ -331,7 +331,7 @@ function SWEP:PrimaryAttack(UseAlt)
 					effectdata:SetAttachment( 1 )
 					effectdata:SetEntity( self.Weapon )
 					effectdata:SetRadius( 10 )
-				
+
 				if self.Mode == 0 then
 					ParticleEffect("egon_beam_cloud1", tr.HitPos, Angle(0, 0, 0), nil)
 					util.Effect("effect_cets_egonbeam", effectdata )
