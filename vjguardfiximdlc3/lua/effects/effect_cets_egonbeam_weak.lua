@@ -30,7 +30,9 @@ function EFFECT:Render()
 		self.EndPos = self.Owner:WorldSpaceCenter()
 	end
 
-	local att = self.WeaponEnt:GetAttachment(self.Attachment)
+	if IsValid(self.WeaponEnt) then
+		local att = self.WeaponEnt:GetAttachment(self.Attachment)
+	end
 
 	if att then
 		self.StartPos = att.Pos

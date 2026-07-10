@@ -35,8 +35,6 @@ ENT.InvestigateSoundDistance = 18
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.FlinchChance = 4 -- Chance of it flinching from 1 to x | 1 will make it always flinch
 
-ENT.DisableFootStepSoundTimer = true
-
 ENT.AnimTbl_MeleeAttack = "meleeattack01" -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = 0.3 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 10
@@ -56,7 +54,11 @@ ENT.ItemDropsOnDeath_EntityList = {
 	"item_health_pen",
 }
 
+ENT.FootStepTimeRun = 0.3
+ENT.FootStepTimeWalk = 0.5
+
 ENT.CanBeMedic = false
+ENT.FootStepSoundPitch = 100
 
 ENT.FootStepSoundLevel = 80
 ENT.IdleSoundLevel = 85
@@ -466,10 +468,6 @@ local SurfaceFootsteps = {
 		"player/footsteps/woodpanel4.wav",
 	},
 }
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnHandleAnimEvent(ev, evTime, evCycle, evType, evOptions)
-	if ev == 1004 then self:FootStepSoundCode() end
-end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PlayFootstepSound(customSD)
 	local metaEntity = FindMetaTable("Entity")
