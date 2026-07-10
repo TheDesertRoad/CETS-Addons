@@ -179,13 +179,13 @@ if SERVER then
 
 		if not attacker.FirstKillPlayed then
 			attacker.FirstKillPlayed = true
-    local snd = "friends/ut_announcements/firstblood.wav"
+			local snd = "friends/ut_announcements/firstblood.wav"
 
-    attacker:EmitSound(snd, 75, 100)
+			attacker:EmitSound(snd, 75, 100)
 
-    net.Start("KillAnnouncer_FirstBlood")
-        net.WriteString(snd)
-    net.Send(attacker)
+			net.Start("KillAnnouncer_FirstBlood")
+			net.WriteString(snd)
+			net.Send(attacker)
 		end
 
 		attacker.Killstreak = (attacker.Killstreak or 0) + 1

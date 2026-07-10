@@ -446,6 +446,7 @@ function SWEP:CustomOnThink()
 						local dmg = DamageInfo()
 						dmg:SetAttacker(self.Owner)
 						dmg:SetInflictor(self)
+						dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
 
 						if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
 							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
@@ -473,7 +474,7 @@ function SWEP:CustomOnThink()
 						end
 
 						dmg:SetDamagePosition(tracer.HitPos)
-	
+						dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
 						if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
 							ent:TakeDamageInfo(dmg)
 						end
