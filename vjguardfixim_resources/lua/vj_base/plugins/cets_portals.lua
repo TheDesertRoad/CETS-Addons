@@ -23,6 +23,9 @@ VJ.AddConVar("sv_cets_kill_announce_npc", 0, FCVAR_ARCHIVE)
 VJ.AddConVar("sv_cets_friends_join_sound", 0, FCVAR_ARCHIVE)
 VJ.AddConVar("sv_cets_friends_chat_sound", 0, FCVAR_ARCHIVE)
 VJ.AddConVar("sv_cets_friends_chat_sound_hl1", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("cets_dance_context_menu", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("cets_dance_spawn_menu", 1, FCVAR_ARCHIVE)
+VJ.AddConVar("cets_dance_music", 0, FCVAR_ARCHIVE)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then
 	local enable = CreateConVar("cets_use_sound", 0, {FCVAR_ARCHIVE, FCVAR_REPLICATED})

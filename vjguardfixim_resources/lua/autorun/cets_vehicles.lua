@@ -258,6 +258,29 @@ if SERVER then
 			end			
 		end
 	end)
+
+	local function TeleportCets(ply, cmd, args)
+		if not IsValid(ply) then return end
+		local targetName = args[1]
+		if not targetName then
+			ply:ChatPrint("Usage: cets_tp <player>")
+			return
+		end
+
+		local target
+
+		for _, pl in ipairs(player.GetAll()) do
+			if string.find(string.lower(pl:Nick()), string.lower(targetName), 1, true) then	        target = pl	        break	    end	end
+				if IsValid(target) then
+					ply:SetPos(target:GetPos())
+				else
+					ply:ChatPrint("Player not found")
+				end
+		end
+
+	hook.Add("PlayerSpawn", "DisablePlayerCollision", function(ply)	ply:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR) end)
+	
+	concommand.Add("cets_tp", TeleportCets)
 else
 
 	surface.CreateFont("KillAnnouncerFont", {font = "Trebuchet MS", size = 48, weight = 900, antialias = true})
