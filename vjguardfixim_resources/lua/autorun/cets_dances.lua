@@ -35,7 +35,7 @@ if SERVER then
 			return false
 		end
 		for name, constAct in pairs(ActConstants) do
-			if act == constAct and ActSounds[name] then
+			if act == constAct and ActSounds[name] && GetConVar("cets_dance_music"):GetInt() == 1 then
 				ply:EmitSound(ActSounds[name])
 				break
 			end
