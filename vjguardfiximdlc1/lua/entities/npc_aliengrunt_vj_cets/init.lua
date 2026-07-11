@@ -372,7 +372,7 @@ function ENT:ChargeThink()
 		end)
 	end
 
-	local speed = 256
+	local speed = 512
 
 	if self.Charge_ShouldApplyForce && self:IsOnGround() then
 		self:SetVelocity(self:GetForward()*speed)

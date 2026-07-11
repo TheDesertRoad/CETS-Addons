@@ -281,6 +281,8 @@ if SERVER then
 	hook.Add("PlayerSpawn", "DisablePlayerCollision", function(ply)	ply:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR) end)
 	
 	concommand.Add("cets_tp", TeleportCets)
+
+	local PhysgunPlayers = {}
 else
 
 	surface.CreateFont("KillAnnouncerFont", {font = "Trebuchet MS", size = 48, weight = 900, antialias = true})

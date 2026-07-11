@@ -54,7 +54,7 @@ ENT.FootstepSoundTimerWalk = 0.6
 
 ENT.LimitChaseDistance = false
 ENT.CanFlinch = true
-ENT.FlinchChance = 12 -- Chance of flinching from 1 to x | 1 = Always flinch
+ENT.FlinchChance = 24 -- Chance of flinching from 1 to x | 1 = Always flinch
 ENT.FlinchCooldown = 6 -- How much time until it can flinch again? | false = Base auto calculates the duration
 ENT.AnimTbl_Flinch = "chargeend"
 
@@ -274,7 +274,7 @@ function ENT:ChargeThink()
 		end)
 	end
 
-	local speed = 270
+	local speed = 628
 
 	if self.Charge_ShouldApplyForce && self:IsOnGround() then
 		self:SetVelocity(self:GetForward()*speed)
