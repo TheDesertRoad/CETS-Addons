@@ -395,6 +395,10 @@
 [
 ]
 
+@NPCClass base(BaseNPC) studio("models/hl2_stampeder.mdl") = npc_stampeder_vj_cets : "Stampeder"
+[
+]
+
 @NPCClass base(BaseNPC) studio("models/hl2_stukabat.mdl") = npc_stukabat_vj_cets : "Stukabat"
 [
 ]
