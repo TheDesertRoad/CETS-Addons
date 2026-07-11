@@ -140,6 +140,20 @@ function ENT:OnMeleeAttack(status, enemy)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:SpawnBebcrab()
+	if self:IsValid() then
+		self.Headcrab = ents.Create("npc_babycrab_vj_cets")
+		self.Headcrab:SetPos(self:GetPos() + self:GetUp()*10)
+		self.Headcrab:SetAngles(self:GetAngles())
+		self.Headcrab:SetSpawnFlags(8192)
+		self.Headcrab:AddSpawnFlags(8192)
+		self.Headcrab:Spawn()
+		self.Headcrab:Activate() 
+		self.Headcrab:SetOwner(self)
+		self:SetGroundEntity(NULL)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRangeAttack(status, enemy)
 	if status == "Init" then
 		local randRange = math.random(1, 4)
@@ -174,21 +188,8 @@ function ENT:OnRangeAttack(status, enemy)
 			self.TimeUntilRangeAttackProjectileRelease = 1
 			self.RangeAttackProjectiles = "obj_vj_nothing_of_the_lazyness"
 
-			self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-			self.Headcrab:SetPos(self:GetPos()+ self:GetRight()*15  + self:GetForward()*-15 + self:GetUp()*10)
-			self.Headcrab:SetAngles(self:GetAngles())
-			self.Headcrab:Spawn()
-			self.Headcrab:Activate() 
-			self.Headcrab:SetOwner(self)
-			self:SetGroundEntity(NULL)
-
-			self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-			self.Headcrab:SetPos(self:GetPos()+ self:GetRight()*15  + self:GetForward()*15 + self:GetUp()*10)
-			self.Headcrab:SetAngles(self:GetAngles())
-			self.Headcrab:Spawn()
-			self.Headcrab:Activate() 
-			self.Headcrab:SetOwner(self)
-			self:SetGroundEntity(NULL)
+			self:SpawnBebcrab()
+			self:SpawnBebcrab()
 
 			self.AnimTbl_RangeAttack = {"bebcrabspawn"}
 		end
@@ -228,37 +229,10 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo,hitgroup)
-	self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-	self.Headcrab:SetPos(self:GetPos()+ self:GetRight()*15  + self:GetForward()*-15 + self:GetUp()*25)
-	self.Headcrab:SetAngles(self:GetAngles())
-	self.Headcrab:Spawn()
-	self.Headcrab:Activate() 
-	self.Headcrab:SetOwner(self)
-	self:SetGroundEntity(NULL)
-
-	self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-	self.Headcrab:SetPos(self:GetPos()+ self:GetRight()*15  + self:GetForward()*15 + self:GetUp()*25)
-	self.Headcrab:SetAngles(self:GetAngles())
-	self.Headcrab:Spawn()
-	self.Headcrab:Activate() 
-	self.Headcrab:SetOwner(self)
-	self:SetGroundEntity(NULL)
-
-	self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-	self.Headcrab:SetPos(self:GetPos()+ self:GetRight()*-15  + self:GetForward()*-15 + self:GetUp()*25)
-	self.Headcrab:SetAngles(self:GetAngles())
-	self.Headcrab:Spawn()
-	self.Headcrab:Activate() 
-	self.Headcrab:SetOwner(self)
-	self:SetGroundEntity(NULL)
-
-	self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-	self.Headcrab:SetPos(self:GetPos()+ self:GetRight()*-15  + self:GetForward()*15 + self:GetUp()*25)
-	self.Headcrab:SetAngles(self:GetAngles())
-	self.Headcrab:Spawn()
-	self.Headcrab:Activate() 
-	self.Headcrab:SetOwner(self)
-	self:SetGroundEntity(NULL)
+	self:SpawnBebcrab()
+	self:SpawnBebcrab()
+	self:SpawnBebcrab()
+	self:SpawnBebcrab()
 
 	ParticleEffect("gonarch_bebcrab_spawn", self:GetPos(), Angle(0,0,0), nil)
 	ParticleEffect("gonarch_explode", self:GetPos(), Angle(0,0,0), nil)

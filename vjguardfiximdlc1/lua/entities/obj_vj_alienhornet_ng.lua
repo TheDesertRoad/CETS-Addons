@@ -48,7 +48,8 @@ ENT.Hor_Exp = false
 function ENT:Init()
 	self:SetSkin(math.random(0, 1))
 	self.Hor_Lifetime = CurTime() + math.Rand(4, 12)
-
+self.Hor_NoiseSeed = math.Rand(0, 100)
+self.Hor_NoiseTime = CurTime()
 	util.SpriteTrail(self, 1, Color(255, math.random(2, 160), 0, 64), true, 12, 0, 0.5, 0.1, "sprites/smoke.vmt")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -63,15 +64,22 @@ function ENT:OnThink()
 	end
 
 	ParticleEffectAttach("jeff_trails",PATTACH_ABSORIGIN_FOLLOW,self,0)
+	ParticleEffectAttach("jeff_trails", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	local trackedEnt = self.Track_Ent
 	if IsValid(trackedEnt) then -- Homing Behavior
 		local pos = trackedEnt:GetPos() + trackedEnt:OBBCenter()
 		if self:VisibleVec(pos) or self.Track_Position == defVec then
 			self.Track_Position = pos
 		end
+
 		local phys = self:GetPhysicsObject()
+
 		if IsValid(phys) then
-			phys:SetVelocity(VJ.CalculateTrajectory(self, trackedEnt, "Line", self:GetPos() + VectorRand(-25, 25), self.Track_Position + VectorRand(-25, 25), 600))
+			local targetVel = VJ.CalculateTrajectory(self, trackedEnt, "Line", self:GetPos(), self.Track_Position + VectorRand(-75, 75), 600)
+			local currentVel = phys:GetVelocity()
+			local smoothVel = LerpVector(FrameTime() * 30, currentVel, targetVel)
+
+			phys:SetVelocity(smoothVel)
 		end
 	end
 end

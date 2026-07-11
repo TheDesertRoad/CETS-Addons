@@ -6,7 +6,7 @@ SWEP.Author = "DrVrej"
 SWEP.Contact = "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Category = "VJ Base"
 SWEP.Spawnable = false
-SWEP.NPC_CanBePickedUp = false
+SWEP.NPC_CanBePickedUp = true
 
 if CLIENT then
 	VJ.AddKillIcon("weapon_vj_smg1", SWEP.PrintName, VJ.KILLICON_TYPE_ALIAS, "weapon_smg1")

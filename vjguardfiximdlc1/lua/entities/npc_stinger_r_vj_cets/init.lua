@@ -25,3 +25,17 @@ function ENT:Init()
 
 	self.BlackAmount = 0
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnThink()
+	if self:IsOnFire() then
+		self.Bleeds = false
+		self.HasIdleSounds = false
+		self.BlackAmount = math.min(self.BlackAmount + FrameTime() * 0.6, 1)
+		timer.Simple(6, function() if self:IsValid() && self:IsOnFire() then self:TakeDamage(self:GetMaxHealth(), self, self) end end)
+	else
+		self.HasIdleSounds = true
+	end
+
+	local value = math.Round(Lerp(self.BlackAmount, 255, 90))
+	self:SetColor(Color(value, value, value, 255))
+end

@@ -47,14 +47,21 @@ end
 function ENT:OnThink()
 	ParticleEffectAttach("jeff_trails",PATTACH_ABSORIGIN_FOLLOW,self,0)
 	local trackedEnt = self.Track_Ent
+	local trackedEnt = self.Track_Ent
 	if IsValid(trackedEnt) then -- Homing Behavior
 		local pos = trackedEnt:GetPos() + trackedEnt:OBBCenter()
 		if self:VisibleVec(pos) or self.Track_Position == defVec then
 			self.Track_Position = pos
 		end
+
 		local phys = self:GetPhysicsObject()
+
 		if IsValid(phys) then
-			phys:SetVelocity(VJ.CalculateTrajectory(self, trackedEnt, "Line", self:GetPos(), self.Track_Position + VectorRand(-75, 75), 600))
+			local targetVel = VJ.CalculateTrajectory(self, trackedEnt, "Line", self:GetPos(), self.Track_Position + VectorRand(-75, 75), 600)
+			local currentVel = phys:GetVelocity()
+			local smoothVel = LerpVector(FrameTime() * 30, currentVel, targetVel)
+
+			phys:SetVelocity(smoothVel)
 		end
 	end
 end

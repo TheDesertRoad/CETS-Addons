@@ -22,7 +22,7 @@ SWEP.AutoSwitchTo = true
 SWEP.UseHands = true
 SWEP.AutoSwitchFrom = false
 SWEP.Weight = 2
-SWEP.Slot = 3
+SWEP.Slot = 4
 SWEP.SlotPos = 4
 --------------------------------------------------------------------------------|
 SWEP.Spin = 0
@@ -68,7 +68,7 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Delay = 2
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
-SWEP.Secondary.Damage = 16
+SWEP.Secondary.Damage = 100
 SWEP.Secondary.TakeAmmo = 1
 --------------------------------------------------------------------------------|
 SWEP.NPC_NextPrimaryFire = 4
@@ -195,8 +195,15 @@ function SWEP:PrimaryAttack(UseAlt)
 	end
 
 	local ene = owner:GetEnemy()
-	local aimPos = owner:GetAimPosition(ene, spawnPos, 0)
-	local spread = owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1)
+	local aimPos
+
+	if owner.GetAimPosition then
+		aimPos = owner:GetAimPosition(ene, spawnPos, 0)
+	else
+		aimPos = ene:WorldSpaceCenter()
+	end
+
+	local spread = owner.GetAimSpread and owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1) or (self.NPC_CustomSpread or 1)
 
 	if self.Reloading or self:GetNextSecondaryFire() > curTime then return end
 	if isNPC && !owner.VJ_IsBeingControlled && !IsValid(owner:GetEnemy()) then return end -- If the NPC owner isn't being controlled and doesn't have an enemy, then return end
@@ -243,6 +250,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = (aimPos - spawnPos):GetNormal() //Gets where you're aiming
+		local spread = 0.001 or self.NPC_CustomSpread
 		bullet.Spread = Vector(spread, spread, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = self.Primary.Tracer
@@ -345,7 +353,11 @@ function SWEP:PrimaryAttack(UseAlt)
 							local dmg = DamageInfo()
 							dmg:SetAttacker(self.Owner)
 							dmg:SetInflictor(self)
-							dmg:SetDamage(self.Primary.Damage)
+							if ent == self.Owner then
+								dmg:SetDamage(6)
+							else
+								dmg:SetDamage(self.Primary.Damage)
+							end
 							dmg:SetDamageType(bit.bor(DMG_ALWAYSGIB, DMG_ENERGYBEAM, DMG_SONIC)) -- Change to any damage type you want
 							dmg:SetDamagePosition(tr.HitPos)
 
@@ -367,10 +379,10 @@ function SWEP:PrimaryAttack(UseAlt)
 							local dmg = DamageInfo()
 							dmg:SetAttacker(self.Owner)
 							dmg:SetInflictor(self)
-							if not ent == self.Owner then
-								dmg:SetDamage(self.Secondary.Damage)
-							else
+							if ent == self.Owner then
 								dmg:SetDamage(3)
+							else
+								dmg:SetDamage(self.Primary.Damage / 2)
 							end
 							dmg:SetDamageType(bit.bor(DMG_ALWAYSGIB, DMG_ENERGYBEAM, DMG_SONIC)) -- Change to any damage type you want
 							dmg:SetDamagePosition(tr.HitPos)

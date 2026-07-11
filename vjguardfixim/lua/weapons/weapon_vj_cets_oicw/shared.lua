@@ -72,8 +72,15 @@ function SWEP:PrimaryAttack(UseAlt)
 	if isNPC then
 
 	local ene = owner:GetEnemy()
-	local aimPos = owner:GetAimPosition(ene, spawnPos, 0)
-	local spread = owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1)
+	local aimPos
+
+	if owner.GetAimPosition then
+		aimPos = owner:GetAimPosition(ene, spawnPos, 0)
+	else
+		aimPos = ene:WorldSpaceCenter()
+	end
+
+	local spread = owner.GetAimSpread and owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1) or (self.NPC_CustomSpread or 1)
 
 	if self.Reloading or self:GetNextSecondaryFire() > curTime then return end
 	if isNPC && !owner.VJ_IsBeingControlled && !IsValid(owner:GetEnemy()) then return end -- If the NPC owner isn't being controlled and doesn't have an enemy, then return end
@@ -120,12 +127,19 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = (aimPos - spawnPos):GetNormal() //Gets where you're aiming
+		local spread = 0.15 or self.NPC_CustomSpread
 		bullet.Spread = Vector(spread, spread, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = self.Primary.Tracer
 		bullet.TracerName       = self.Primary.TracerType
 		bullet.Force = self.Primary.Force 
-		bullet.Damage = owner:ScaleByDifficulty(self.Primary.Damage)
+		local damage = self.Primary.Damage
+
+		if owner.ScaleByDifficulty then
+			damage = owner:ScaleByDifficulty(damage)
+		end
+
+		bullet.Damage = damage
 		bullet.AmmoType = self.Primary.Ammo 
 		bullet.Callback = function(attacker, tracer, tr, dmginfo)
 				local dmginfo = DamageInfo()

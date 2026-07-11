@@ -22,7 +22,7 @@ SWEP.AutoSwitchTo = true
 SWEP.UseHands = true
 SWEP.AutoSwitchFrom = false
 SWEP.Weight = 2
-SWEP.Slot = 3
+SWEP.Slot = 4
 SWEP.SlotPos = 4
 --------------------------------------------------------------------------------|
 SWEP.Spin = 0
@@ -78,6 +78,7 @@ function SWEP:CustomOnInitialize()
 		self.Primary.DefaultClip = 999999
 		self.Primary.MaxAmmo = 999999
 	end
+
 end
 --------------------------------------------------------------------------------|
 function SWEP:StopChargeSound()
@@ -145,6 +146,20 @@ function SWEP:CustomOnHolster()
 		self.Primary.MaxAmmo = 999999
 	end
 end
+
+function SWEP:GetWorldModelAttachment(name)
+	local owner = self:GetOwner()
+	if !IsValid(owner) then return end
+
+	for _, ent in ipairs(owner:GetChildren()) do
+		if ent:GetModel() == self.WorldModel then
+			local id = ent:LookupAttachment(name)
+			if id > 0 then
+				return ent:GetAttachment(id)
+			end
+		end
+	end
+end
 --------------------------------------------------------------------------------|
 function SWEP:PrimaryAttack(UseAlt)
 	//if self:GetOwner():KeyDown(IN_RELOAD) then return end
@@ -160,8 +175,15 @@ function SWEP:PrimaryAttack(UseAlt)
 	if isNPC then
 
 	local ene = owner:GetEnemy()
-	local aimPos = owner:GetAimPosition(ene, spawnPos, 0)
-	local spread = owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1)
+	local aimPos
+
+	if owner.GetAimPosition then
+		aimPos = owner:GetAimPosition(ene, spawnPos, 0)
+	else
+		aimPos = ene:WorldSpaceCenter()
+	end
+
+	local spread = owner.GetAimSpread and owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1) or (self.NPC_CustomSpread or 1)
 
 	if self.Reloading or self:GetNextSecondaryFire() > curTime then return end
 	if isNPC && !owner.VJ_IsBeingControlled && !IsValid(owner:GetEnemy()) then return end -- If the NPC owner isn't being controlled and doesn't have an enemy, then return end
@@ -208,6 +230,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = (aimPos - spawnPos):GetNormal() //Gets where you're aiming
+		local spread = 0.01 or self.NPC_CustomSpread
 		bullet.Spread = Vector(spread, spread, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = self.Primary.Tracer
@@ -250,14 +273,13 @@ function SWEP:PrimaryAttack(UseAlt)
 				end
 
 				local effectdata = EffectData()
-					effectdata:SetStart(self.Owner:GetShootPos())
-					effectdata:SetOrigin(tracer.HitPos)
-					effectdata:SetNormal(tracer.HitNormal)
+					effectdata:SetOrigin( tracer.HitPos )
+					effectdata:SetNormal( tracer.HitNormal )
+					effectdata:SetStart( owner:GetAimPosition(ene, spawnPos, 0) )
 					effectdata:SetAttachment( 1 )
 					effectdata:SetEntity( self.Weapon )
-					effectdata:SetRadius( 10 )
-				util.Effect("effect_cets_taubeam_b", effectdata )
-				util.Decal("redglowfade", tracer.HitPos + tracer.HitNormal, tracer.HitPos - tracer.HitNormal)
+				util.Effect( "effect_cets_taubeam_b", effectdata )
+				util.Decal("redglowfade", tracer.HitPos, tracer.HitPos - tracer.HitNormal)
 
 				dmginfo:SetWeapon(self)
 				dmginfo:SetInflictor(self)
@@ -281,16 +303,7 @@ function SWEP:PrimaryAttack(UseAlt)
 
 		if self.Weapon:Ammo1() <= 0 then return end
 		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
-		local tr = self.Owner:GetEyeTrace()
-
-		local effectdata = EffectData()
-			effectdata:SetOrigin( tr.HitPos )
-			effectdata:SetNormal( tr.HitNormal )
-			effectdata:SetStart( self.Owner:GetShootPos() )
-			effectdata:SetAttachment( 1 )
-			effectdata:SetEntity( self.Weapon )
-		util.Effect( "effect_cets_taubeam", effectdata )
-		util.Decal("redglowfade", tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
+				local tr = self.Owner:GetEyeTrace()
 
 		local bullet = {}
 		bullet.Num = self.Primary.NumberofShots
@@ -305,8 +318,17 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.AmmoType = self.Primary.Ammo
 		bullet.Callback = function(attacker, tracer, tr, dmginfo)
 			self:SparksSmall(attacker, tracer, tr, dmginfo)
-			local radius = 8
+			local tr = self.Owner:GetEyeTrace()
+			local effectdata = EffectData()
+				effectdata:SetOrigin( tracer.HitPos )
+				effectdata:SetNormal( tr.HitNormal )
+				effectdata:SetStart( self.Owner:GetShootPos() )
+				effectdata:SetAttachment( 1 )
+				effectdata:SetEntity( self.Weapon )
+			util.Effect( "effect_cets_taubeam", effectdata )
+			util.Decal("redglowfade", tracer.HitPos, tr.HitPos - tr.HitNormal)
 
+			local radius = 8
 			for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
 				if not IsValid(ent) then continue end
 				if ent == self.Owner then continue end
@@ -418,16 +440,6 @@ function SWEP:CustomOnThink()
 			end
 
 			if self.Spin == 1 and not self.Owner:KeyDown(IN_ATTACK2) then
-				local tr = self.Owner:GetEyeTrace()
-				local effectdata = EffectData()
-					effectdata:SetOrigin( tr.HitPos )
-					effectdata:SetNormal( tr.HitNormal )
-					effectdata:SetStart( self.Owner:GetShootPos() )
-					effectdata:SetAttachment( 1 )
-					effectdata:SetEntity( self.Weapon )
-				util.Effect( "effect_cets_taubeam_b", effectdata )
-				util.Decal("redglowfade", tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal)
-
 				local bullet = {}
 				bullet.Num = self.Primary.NumberofShots
 				bullet.Src = self.Owner:GetShootPos()
@@ -441,7 +453,15 @@ function SWEP:CustomOnThink()
 				bullet.AmmoType = self.Primary.Ammo
 				bullet.Callback = function(attacker, tracer, tr, dmginfo)
 					self:SparksHuge(attacker, tracer, tr, dmginfo)
-
+					local tr = self.Owner:GetEyeTrace()
+					local effectdata = EffectData()
+						effectdata:SetOrigin( tracer.HitPos )
+						effectdata:SetNormal( tr.HitNormal )
+						effectdata:SetStart( self.Owner:GetShootPos() )
+						effectdata:SetAttachment( 1 )
+						effectdata:SetEntity( self.Weapon )
+					util.Effect( "effect_cets_taubeam_b", effectdata )
+					util.Decal("redglowfade", tracer.HitPos, tr.HitPos - tr.HitNormal)
 					local radius = 8
 
 					for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do

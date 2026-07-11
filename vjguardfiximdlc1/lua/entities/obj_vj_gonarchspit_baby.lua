@@ -38,12 +38,21 @@ function ENT:Init()
 	ParticleEffectAttach("gonarch_trails_2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:SpawnBebcrab()
+	if self:IsValid() then
+		self.Headcrab = ents.Create("npc_babycrab_vj_cets")
+		self.Headcrab:SetPos(self:GetPos() + self:GetUp()*10)
+		self.Headcrab:SetAngles(self:GetAngles())
+		self.Headcrab:SetSpawnFlags(8192)
+		self.Headcrab:AddSpawnFlags(8192)
+		self.Headcrab:Spawn()
+		self.Headcrab:Activate() 
+		self.Headcrab:SetOwner(self)
+		self:SetGroundEntity(NULL)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDestroy(data, phys)
 	ParticleEffect("gonarch_gas1", data.HitPos, defAng)
-	self.Headcrab = ents.Create("npc_babycrab_vj_cets")
-	self.Headcrab:SetPos(self:GetPos() + self:GetUp()*16)
-	self.Headcrab:Spawn()
-	self.Headcrab:Activate() 
-	self.Headcrab:SetOwner(self)
-	self:SetGroundEntity(NULL)
+	self:SpawnBebcrab()
 end

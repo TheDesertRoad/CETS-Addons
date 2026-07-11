@@ -105,13 +105,32 @@ ENT.SoundTbl_UnFollowPlayer = {
 	"npc/stinger/stinger_use02.wav",
 	"npc/stinger/stinger_use03.wav",
 }
+
+ENT.FSquadrant_FollowOffsetPos = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetSpawnEffect(true)
 	self:SetCollisionBounds(Vector(20, 20, 45),  Vector(-20, -20, 0))
 
 	self.BlackAmount = 0
+
+	self.FSquadrant_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
+
+	if not IsValid(VJ.SquadC_Leader) then
+		for _, ent in ipairs(ents.GetAll()) do
+			if ent:IsNPC() and string.lower(ent:GetClass()) == "npc_stampeder_vj_cets" then
+					VJ.SquadC_Leader = ent
+				break
+			end
+		end
+	end
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local schedule_yield_leader = vj_ai_schedule.New("SCHEDULE_YIELD_LEADER")
+schedule_yield_leader:EngTask("TASK_MOVE_AWAY_PATH", 120)
+schedule_yield_leader:EngTask("TASK_WALK_PATH", 0)
+schedule_yield_leader:EngTask("TASK_WAIT_FOR_MOVEMENT", 0)
+schedule_yield_leader.TurnData = {Type = VJ.FACE_ENTITY_VISIBLE, Target = nil}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
 	if self:IsOnFire() then
@@ -125,6 +144,53 @@ function ENT:OnThink()
 
 	local value = math.Round(Lerp(self.BlackAmount, 255, 90))
 	self:SetColor(Color(value, value, value, 255))
+
+	local leader = VJ.SquadC_Leader
+
+	if IsValid(leader) then
+		if leader ~= self then
+			self.DisableWandering = true
+			if IsValid(self:GetEnemy()) or self:IsBusy() then return end
+
+			local targetPos = leader:GetPos() + self.FSquadrant_FollowOffsetPos
+			local leaderSpeed = leader:GetVelocity():Length()
+
+			local pos = leader:GetPos() + self.FSquadrant_FollowOffsetPos
+			local dist = self:GetPos():Distance(leader:GetPos())
+
+			if dist < 256 and not self:IsBusy() then
+				schedule_yield_leader.TurnData.Target = leader
+				self:StartSchedule(schedule_yield_leader)
+				return
+			end
+
+			self.DisableWandering = true
+
+			if leaderSpeed < 5 and dist < 260 then
+				self:StopMoving()
+				return
+			end
+
+			if not self.NextLeaderMove or CurTime() > self.NextLeaderMove then
+				self.NextLeaderMove = CurTime() + 0.5
+				self:SetLastPosition(leader:GetPos() + self.FSquadrant_FollowOffsetPos)
+
+				if leader.Alerted then
+					self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH")
+				else
+					self:VJ_TASK_GOTO_LASTPOS("TASK_WALK_PATH")
+				end
+			end
+		end
+	else
+		self.DisableWandering = false
+		for _, ent in ipairs(ents.GetAll()) do
+			if ent:IsNPC() and string.lower(ent:GetClass()) == "npc_stampeder_vj_cets" then
+					VJ.SquadC_Leader = ent
+				break
+			end
+		end
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)

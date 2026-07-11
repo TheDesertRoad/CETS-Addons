@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/hl2_stampeder/M_Stampeder"
+	"$bumpmap"	"models/hl2_stampeder/Stampeder_n"
+
+	$envmap env_cubemap
+	$envmaptint .02
+
+	$phong 1
+	$phongboost .2
+	$phongexponent 60
+	$phongfresnelranges "[1 1 1]"
+
+	$detail detail/organic_detail_03
+	$detailscale 15
+	$detailblendmode 0
+	$detailblendfactor .48
+
+	$color2 "[.94 .96 .90]"
+
+	$halflambert 1
+}

@@ -71,6 +71,13 @@ function ENT:Init()
 	self:SetSpawnEffect(true)
 	self:SetCollisionBounds(Vector(8, 10, 15), Vector(-8, -10, 0))
 
+	local flags = self:GetSpawnFlags()
+
+	if bit.band(flags, 8192) ~= 0 or self:HasSpawnFlags(8192) then
+		VJ.EmitSound(self, "npc/headcrab/alert1.wav", 60, 70)
+		timer.Simple(60, function() if self:IsValid() then self:TakeDamage(self:GetMaxHealth()) end end)
+	end
+
 	self.Squadrant_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
 
 	if not IsValid(VJ.SquadC_Leader) then
@@ -347,6 +354,8 @@ function ENT:CreateDeathCorpse(dmginfo, hitgroup)
 				end
 			end
 		end
+
+		timer.Simple(240, function() if corpse:IsValid() then corpse:Remove() end end)
 		
 		-- Health & stink system
 		if corpse:Health() <= 0 then

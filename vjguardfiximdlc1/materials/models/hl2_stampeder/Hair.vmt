@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/hl2_stampeder/Hair"
+        "$translucent" 1
+}

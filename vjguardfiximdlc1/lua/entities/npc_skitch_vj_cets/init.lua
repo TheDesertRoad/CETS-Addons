@@ -69,29 +69,36 @@ ENT.SoundTbl_Idle = {
 	"npc/skitch/skitch_hiss04.wav",
 	"npc/skitch/skitch_hiss05.wav",
 }
+
 ENT.SoundTbl_Alert = {
 	"npc/skitch/skitch_roar01.wav",
 	"npc/skitch/skitch_roar02.wav",
 }
+
 ENT.SoundTbl_Pain = {
 	"npc/skitch/skitch_squeak01.wav",
 	"npc/skitch/skitch_squeak02.wav",
 	"npc/skitch/skitch_squeak03.wav",
 	"npc/skitch/skitch_squeak04.wav",
 }
+
 ENT.SoundTbl_Death = {
 	"npc/skitch/skitch_growl01.wav",
 }
+
 ENT.SoundTbl_FollowPlayer = {
 	"npc/skitch/skitch_excitedsqueak01.wav",
 	"npc/skitch/skitch_excitedsqueak02.wav",
 }
+
 ENT.SoundTbl_UnFollowPlayer = {
 	"npc/skitch/skitch_sadsqueak01.wav",
 }
+
 ENT.SoundTbl_OnKilledEnemy = {
 	"npc/skitch/gentlesqueak01.wav",
 }
+
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"npc/skitch/skitch_growl01.wav",
 }

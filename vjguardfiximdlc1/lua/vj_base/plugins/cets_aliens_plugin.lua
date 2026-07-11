@@ -59,6 +59,7 @@ VJ.AddNPC("Voltigore (Baby)","npc_voltigore_baby_vj_cets",vCat)
 VJ.AddNPC("Tentacle","npc_tentacle_vj_cets",vCat)
 VJ.AddNPC("Hydra","npc_hydra_vj_cets",vCat)
 VJ.AddNPC("Reviver","npc_reviver_vj_cets",vCat)
+VJ.AddNPC("Stampeder","npc_stampeder_vj_cets",vCat)
 
 VJ.AddNPC("Tamed Stinger","npc_stinger_r_vj_cets",vCat1)
 VJ.AddNPC("Tamed Houndeye","npc_hound_r_vj_cets",vCat1)
@@ -88,6 +89,9 @@ VJ.AddNPC("Xen Spore (Medium)","sent_xensporemedium_vj_cets",vCat2)
 VJ.AddNPC("Xen Spore (Small)","sent_xensporesmall_vj_cets",vCat2)
 VJ.AddNPC("Xen Grenade Plant","sent_xenplantgren_vj_cets",vCat2)
 VJ.AddNPC("Revived Zombie","npc_reviverzom_vj_cets",vCat2)
+
+VJ.AddConVar("sv_cets_max_bebcrab_npcq", 24, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_limit_npcs_spawned", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("npc_bebcrab_stomp", 0, FCVAR_ARCHIVE)
 
@@ -139,6 +143,9 @@ VJ.AddConVar("sk_cets_bull_health", 120, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_cets_bullwat_health", 160, FCVAR_ARCHIVE)
 
 VJ.AddConVar("sk_cets_skitch_health", 850, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_stampeder_health", 500, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_stampeder_dmg_charge", 48, FCVAR_ARCHIVE)
 
 VJ.AddConVar("npc_cets_bulls_xenfriends", 0, FCVAR_ARCHIVE)
 
