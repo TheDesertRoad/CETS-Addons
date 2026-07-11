@@ -1,6 +1,5 @@
 local Gestures = {
 }
-
 local ActSounds = {
 	zombie = "friends/act_zombie1.wav",
 	dance = "friends/act_dance.wav",
@@ -8,36 +7,55 @@ local ActSounds = {
 	laugh = "friends/act_laugh.wav",
 	agree = "hl1/events/tutor_msg.wav",
 	disagree = "hl1/events/friend_died.wav",
-	//dance = "hl1/player/hoot" .. math.random(5, 6) .. ".wav",
+	muscle = "friends/act_muscle.wav",
+	robot = "friends/act_robot.wav",
+	cheer = "hl1/ambience/goal_1.wav",
+}
+
+local ActConstants = {
+	zombie = ACT_GMOD_GESTURE_TAUNT_ZOMBIE,
+	dance = ACT_GMOD_TAUNT_DANCE,
+	salute = ACT_GMOD_TAUNT_SALUTE,
+	laugh = ACT_GMOD_TAUNT_LAUGH,
+	agree = ACT_GMOD_GESTURE_AGREE,
+	disagree = ACT_GMOD_GESTURE_DISAGREE,
+	muscle = ACT_GMOD_TAUNT_MUSCLE,
+	robot = ACT_GMOD_TAUNT_ROBOT,
+	cheer = ACT_GMOD_TAUNT_CHEER,
 }
 
 if SERVER then 
+	for _, snd in pairs(ActSounds) do
+		util.PrecacheSound(snd)
+	end
 	util.AddNetworkString("Gesture")
+
+	hook.Add("PlayerShouldTaunt", "ActSounds_PlaySound", function(ply, act)
+		for name, constAct in pairs(ActConstants) do
+			if act == constAct and ActSounds[name] then
+				ply:EmitSound(ActSounds[name])
+				break
+			end
+		end
+	end)
 
 	concommand.Add("gesture", function(ply, _, args)
 		if not IsValid(ply) or ply:InVehicle() then
 			return
 		end
-
 		local name = string.lower(args[1] or "")
 		local seqName = Gestures[name]
-
-		if ActSounds[name] && GetConVar("cets_dance_music"):GetInt() == 1 then
-			surface.PlaySound(ActSounds[name])
-		else
-
-		end
-
 		if not seqName then
 			ply:ConCommand("act " .. name)
 			return
 		end
-
 		if ply:LookupSequence(seqName) < 0 then
 			ply:ConCommand("act " .. name)
 			return
 		end
-
+		if ActSounds[name] then
+			ply:EmitSound(ActSounds[name])
+		end
 		net.Start("Gesture")
 			net.WriteEntity(ply)
 			net.WriteString(seqName)
@@ -49,12 +67,6 @@ if CLIENT then
 	CreateClientConVar("cets_dance_use_gestures", "1", true, false, "Use gestures instead of acts")
 
 	local function PlayAnim(name)
-
-	if ActSounds[name] && GetConVar("cets_dance_music"):GetInt() == 1 then
-		surface.PlaySound(ActSounds[name])
-	else
-
-	end
 
 	if GetConVar("cets_dance_use_gestures"):GetBool() and Gestures[name] then
 			RunConsoleCommand("gesture", name)
