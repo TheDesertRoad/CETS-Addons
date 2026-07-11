@@ -31,6 +31,9 @@ if SERVER then
 	util.AddNetworkString("Gesture")
 
 	hook.Add("PlayerShouldTaunt", "ActSounds_PlaySound", function(ply, act)
+		if ply:InVehicle() then
+			return false
+		end
 		for name, constAct in pairs(ActConstants) do
 			if act == constAct and ActSounds[name] then
 				ply:EmitSound(ActSounds[name])
