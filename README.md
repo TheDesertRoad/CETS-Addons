@@ -1,4 +1,6 @@
 # Combine's Experimental Transhumans and Synths
+<img width="1680" height="512" alt="imagen" src="https://github.com/user-attachments/assets/01af3b53-a58c-4e73-b3e9-4df3a526d1b0" />
+
 https://steamcommunity.com/workshop/filedetails/?id=3540996502
 #
 These addons expand the Half-Life experience in Garry's Mod by adding a large amount of new content, including:
