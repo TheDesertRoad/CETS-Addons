@@ -48,17 +48,16 @@ function ENT:Init()
 			entTbl = {npc}
 			HasFlags = true
 			break
+		elseif not HasFlags then
+			local npcList = {}
+
+			for _, npc in pairs(Aliens) do
+				table.insert(npcList, npc)
+			end
+
+			entTbl = {npcList[math.random(#npcList)]}
+			break
 		end
-	end
-
-	if not HasFlags then
-		local npcList = {}
-
-		for _, npc in pairs(Aliens) do
-			table.insert(npcList, npc)
-		end
-
-		entTbl = {npcList[math.random(#npcList)]}
 	end
 
 	timer.Simple(0.02, function()
