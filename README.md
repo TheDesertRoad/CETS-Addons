@@ -12,6 +12,8 @@ These addons expand the Half-Life experience in Garry's Mod by adding a large am
 
 ## Hammer Support
 
+<img width="1680" height="512" alt="imagen" src="https://github.com/user-attachments/assets/577445c1-8d7d-49c9-bf49-03e371451995" />
+
 A `.fdg` file is included for use with Hammer.
 
 If you install these addons locally in your Garry's Mod installation, you can mount the `.fdg` file to gain access to all custom entities inside Hammer.
@@ -28,8 +30,8 @@ If you install these addons locally in your Garry's Mod installation, you can mo
 
 ## Requirements
 
-- Garry's Mod
-- VJ Base
+- Garry's Mod (https://store.steampowered.com/app/4000/Garrys_Mod/))
+- VJ Base (https://steamcommunity.com/sharedfiles/filedetails/?id=131759821)
 
 ## Simple Installation Guide
 
