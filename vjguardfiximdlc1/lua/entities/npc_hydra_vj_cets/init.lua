@@ -155,6 +155,15 @@ function ENT:OnThink()
 
 	local randRange = math.random(1, 200)
 
+	if IsValid(ene) then
+		local targetAng = self:GetTurnAngle((ene:GetPos() - self:GetPos()):Angle())
+		local curAng = self:GetAngles()
+
+		curAng.y = math.ApproachAngle(curAng.y, targetAng.y, FrameTime() * self.TurningSpeed * 100)
+
+		self:SetAngles(curAng)
+	end
+
 	if randRange == 200 then 
 		ParticleEffectAttach("vomit_hy", PATTACH_POINT_FOLLOW, self, 1)
 		VJ_EmitSound(self,"ambient/water/water_spray" .. math.random(1, 3) .. ".wav",100,80)

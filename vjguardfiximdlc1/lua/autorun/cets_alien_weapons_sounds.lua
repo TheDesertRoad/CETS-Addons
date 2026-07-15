@@ -1,11 +1,11 @@
 //HORNETGUN
 sound.Add( {
-    name = "Cets_Weapon_HIVEH.Fire",
-    channel = CHAN_WEAPON,
-    volume = 1.0,
-    pitch =	95,100,105,
-    soundlevel = SNDLVL_GUNFIRE,
-    sound = { "npc/alien_grunt/ag_fire1.wav", "npc/alien_grunt/ag_fire2.wav", "npc/alien_grunt/ag_fire3.wav" }
+	name = "Cets_Weapon_HIVEH.Fire",
+	channel = CHAN_WEAPON,
+	volume = 1.0,
+	pitch =	95,100,105,
+	soundlevel = SNDLVL_GUNFIRE,
+	sound = { "npc/alien_grunt/ag_fire1.wav", "npc/alien_grunt/ag_fire2.wav", "npc/alien_grunt/ag_fire3.wav" }
 } )
 
 game.AddAmmoType( {

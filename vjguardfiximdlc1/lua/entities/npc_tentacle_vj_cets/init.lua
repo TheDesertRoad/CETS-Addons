@@ -9,10 +9,10 @@ ENT.VJ_ID_Boss = true
 ENT.Model = "models/hl2_tentacle.mdl"
 ENT.StartHealth = GetConVar("sk_cets_tentacle_health"):GetInt()
 ENT.TurningSpeed = 8
-ENT.SightDistance = 900
-ENT.TimeUntilEnemyLost = 6
+ENT.SightDistance = 1299
+ENT.TimeUntilEnemyLost = 12
 ENT.IsGuard = true
-ENT.SightAngle = 90
+ENT.SightAngle = 180
 ENT.VJ_NPC_Class = {"CLASS_XVORTIGAUNT","CLASS_XEN"}	
 ENT.VJ_ID_Boss = true
 ENT.HullType = HULL_LARGE
@@ -104,6 +104,17 @@ local vecLvl0 = Vector(20, 20, 160)
 local vecLvl1 = Vector(20, 20, 380)
 local vecLvl2 = Vector(20, 20, 580)
 local vecLvl3 = Vector(20, 20, 650)
+
+ENT.ExplosionInvestigateRange = 2000
+ENT.ExplosionMemoryTime = 5
+ENT.ExplosionTurnSpeed = 8
+
+ENT.ExplosionSoundRange = 2000
+ENT.ExplosionSoundMemory = 5
+ENT.ExplosionSoundTurnSpeed = 8
+
+ENT.SoundAlertRange = 2000
+ENT.SoundAlertDuration = 800
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(20, 20, 160), Vector(-20, -20, 0))
@@ -126,6 +137,10 @@ function ENT:Init()
 			ResetOnDmg = false
 		}
 	end
+
+	self.LockTopLevel = false
+	self.ImDying = false
+	self.DeathSequence = false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_Initialize(ply, controlEnt)
@@ -179,19 +194,50 @@ function ENT:OnThink()
 	if self.VJ_IsBeingControlled then return end
 	local ene = self:GetEnemy()
 
+	if not IsValid(self:GetEnemy()) && self.LastExplosionSoundPos && CurTime() < self.LastExplosionSoundTime then
+		local targetAng = self:GetTurnAngle((self.LastExplosionSoundPos - self:GetPos()):Angle())
+		local ang = self:GetAngles()
+
+		ang.y = math.ApproachAngle(ang.y, targetAng.y, FrameTime() * self.ExplosionSoundTurnSpeed * 100)
+		self:SetAngles(ang)
+	end
+
+	if not IsValid(self:GetEnemy()) && self.LastExplosionPos && CurTime() < self.LastExplosionTime then
+		local targetAng = self:GetTurnAngle((self.LastExplosionPos - self:GetPos()):Angle())
+		local curAng = self:GetAngles()
+
+		curAng.y = math.ApproachAngle(curAng.y, targetAng.y, FrameTime() * self.ExplosionTurnSpeed * 100)
+		self:SetAngles(curAng)
+	end
+
+	if self.LastExplosionPos then
+		local dist = self:GetPos():Distance(self.LastExplosionPos)
+
+		if dist > 1 then
+			self:Tentacle_CalculateLevel(dist)
+		end
+	end
+
 	if IsValid(ene) then
-		-- If enemy is (on ground & moving) OR (its an NPC that is moving)
+		local targetAng = self:GetTurnAngle((ene:GetPos() - self:GetPos()):Angle())
+		local curAng = self:GetAngles()
+
+		curAng.y = math.ApproachAngle(curAng.y, targetAng.y, FrameTime() * self.TurningSpeed * 100)
+
+		self:SetAngles(curAng)
+	end
+
+	if IsValid(ene) then
 		if (ene:IsNPC() && ene:IsMoving()) or (VJ.GetMoveVelocity(ene):Length() > 50 && ene:IsOnGround()) then
 			self.CanTurnWhileStationary = true
 		else
 			self.CanTurnWhileStationary = false
 		end
 		
-		-- Take care of the level calculation
-		if self.CanTurnWhileStationary == true then
+		if self.CanTurnWhileStationary == true && not self.DeathSequence then
 			self:Tentacle_CalculateLevel((self:GetEnemyLastKnownPos() - self:GetPos()).z)
 		end
-	else -- Don't turn while idle!
+	else
 		self.CanTurnWhileStationary = false
 	end
 
@@ -306,6 +352,43 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo)
+	if self.DeathSequence then return end
+
+	local attacker = dmginfo:GetAttacker()
+	local inflictor = dmginfo:GetInflictor()
+
+	if self:Health() - dmginfo:GetDamage() <= 0 then
+	  	self.DeathSequence = true
+
+		dmginfo:SetDamage(0)
+		self:SetHealth(1)
+		self.GodMode = true
+
+		local function RiseAndDie()
+			if not IsValid(self) then return end
+
+			if self.Tentacle_Level == 0 then
+				self:Tentacle_CalculateLevel(170)
+				timer.Simple(0.5, RiseAndDie)
+
+			elseif self.Tentacle_Level == 1 then
+				self:Tentacle_CalculateLevel(430)
+				timer.Simple(0.5, RiseAndDie)
+
+			elseif self.Tentacle_Level == 2 then
+				self:Tentacle_CalculateLevel(570)
+				timer.Simple(0.5, RiseAndDie)
+			else
+				self.GodMode = false
+				self:TakeDamage(999999, attacker, inflictor)
+			end
+		end
+
+		RiseAndDie()
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnMeleeAttack(status, enemy)
 	local attapeak = self:GetAttachment(1)
 
@@ -325,6 +408,7 @@ end
 function ENT:Tentacle_DoLevelChange(num)
 	local lvl = self.Tentacle_Level + num
 	VJ.EmitSound(self, sdChangeLevel)
+
 	if lvl == 0 then
 		self.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 		self.Tentacle_Level = 0
@@ -348,46 +432,49 @@ end
 -- 1 to 0 = ACT_SIGNAL_ADVANCE		2 to 1 = ACT_SIGNAL_FORWARD		3 to 2 = ACT_SIGNAL_HALT
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Tentacle_CalculateLevel(eneDist)
-	-- 0 = Floor level
-	-- 1 = Medium Level
-	-- 2 = High Level
-	-- 3 = Extreme Level
-	//print("dist: " .. eneDist)
+	if self.NextLevelChange && CurTime() < self.NextLevelChange then
+		return
+	end
+
+	self.NextLevelChange = CurTime() + 1.0 
+
+	local targetLevel
+
 	if eneDist >= 570 then
-		if self.Tentacle_Level != 3 then
-			self:PlayAnim(ACT_SIGNAL3, true, false, false)
-			self:Tentacle_DoLevelChange(1)
-		end
+		targetLevel = 3
 	elseif eneDist >= 430 then
-		if self.Tentacle_Level != 2 then
-			if self.Tentacle_Level > 2 then
-				self:PlayAnim(ACT_SIGNAL_HALT, true, false, false)
-				self:Tentacle_DoLevelChange(-1)
-			else
-				self:PlayAnim(ACT_SIGNAL2, true, false, false)
-				self:Tentacle_DoLevelChange(1)
-			end
-		end
+		targetLevel = 2
 	elseif eneDist >= 170 then
-		if self.Tentacle_Level != 1 then
-			if self.Tentacle_Level > 1 then
-				self:PlayAnim(ACT_SIGNAL_FORWARD, true, false, false)
-				self:Tentacle_DoLevelChange(-1)
-			else
-				self:PlayAnim(ACT_SIGNAL1, true, false, false)
-				self:Tentacle_DoLevelChange(1)
-			end
-		end
+		targetLevel = 1
 	else
-		if self.Tentacle_Level != 0 then
-			if self.Tentacle_Level > 0 then
-				self:PlayAnim(ACT_SIGNAL_ADVANCE, true, false, false)
-				self:Tentacle_DoLevelChange(-1)
-			else
-				self:PlayAnim(ACT_SIGNAL1, true, false, false)
-				self:Tentacle_DoLevelChange(1)
-			end
+		targetLevel = 0
+	end
+
+	if self.Tentacle_Level == targetLevel then return end
+
+	if self.Tentacle_Level < targetLevel then
+		if self.Tentacle_Level == 0 then
+			self:PlayAnim(ACT_SIGNAL1, true, false, false)
+		elseif self.Tentacle_Level == 1 then
+			self:PlayAnim(ACT_SIGNAL2, true, false, false)
+		elseif self.Tentacle_Level == 2 then
+			self:PlayAnim(ACT_SIGNAL3, true, false, false)
 		end
+
+		self:Tentacle_DoLevelChange(1)
+		return
+	end
+
+	if self.Tentacle_Level > targetLevel then
+		if self.Tentacle_Level == 3 then
+			self:PlayAnim(ACT_SIGNAL_HALT, true, false, false)
+		elseif self.Tentacle_Level == 2 then
+			self:PlayAnim(ACT_SIGNAL_FORWARD, true, false, false)
+		elseif self.Tentacle_Level == 1 then
+			self:PlayAnim(ACT_SIGNAL_ADVANCE, true, false, false)
+		end
+
+		self:Tentacle_DoLevelChange(-1)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -401,11 +488,11 @@ function ENT:CustomOnKilled()
 	self.HasMeleeAttack = false
 	self.IsGuard = true
 	self.CallForHelp = false
+	self.EnemyDetection = false
 
 	VJ_EmitSound(self,"phx/explode00.wav",100,100)
 	VJ_EmitSound(self,"npc/gonarch/gon_explode.wav",100,100)
 
 	util.ScreenShake(self:GetPos(),22,500,1,500)
-
 	ParticleEffect("gonarch_explode_alternate2", self:GetPos(), Angle(0,0,0), nil)
 end
