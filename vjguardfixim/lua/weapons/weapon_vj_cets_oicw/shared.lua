@@ -420,7 +420,7 @@ if CLIENT then
 			dlight.r = 100
 			dlight.g = 255
 			dlight.b = 200
-			dlight.brightness = 4
+			dlight.brightness = 1
 			dlight.Size = 1024
 			dlight.Decay = 0
 			dlight.DieTime = CurTime() + 0.1
