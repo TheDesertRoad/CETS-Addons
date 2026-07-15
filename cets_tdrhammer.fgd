@@ -656,15 +656,15 @@
 //
 //-------------------------------------------------------------------------
 
+@NPCClass base(BaseNPC) studio("models/props_cets_aliens/jump_pad.mdl") = ent_cets_jumppad : "Jump Pad"
+[
+]
+
 @NPCClass base(BaseNPC) studio("models/props_cets/roller_spikes.mdl") = ent_cets_navalmine : "Sea Mine"
 [
 ]
 
 @NPCClass base(BaseNPC) studio("models/props_cets/dave/combine_crafting_station_2.mdl") = ent_cets_upgrade_station : "Combine Fabricator"
-[
-]
-
-@NPCClass base(BaseNPC) studio("models/items/crafting_metal/resin_puck01.mdl") = item_cets_resin : "Resin"
 [
 ]
 
@@ -747,3 +747,18 @@
 		256 : "Spawn: Crab Synth" : 0
 	]
 ]
+
+@PointClass base(Weapon) studio("models/props_phx/misc/egg.mdl") = weapon_ply_egg : "Throwable Egg" []
+@PointClass base(Weapon) iconsprite("effects/bluemuzzle.vmt") = weapon_vj_cets_confetti : "Confetti" []
+@PointClass base(Weapon) iconsprite("effects/bluemuzzle.vmt") = weapon_vj_cets_confetti_arg : "Confetti ARGENTINA" []
+
+@PointClass base(Item) studio("models/items/crafting_metal/resin_puck01.mdl")= item_cets_resin : "Resin" []
+@PointClass base(Item) studio("models/items/classic_misc_consume.mdl")= ent_cets_adrenaline : "Adrenaline" []
+@PointClass base(Item) studio("models/items/classic_misc_consume.mdl")= ent_cets_antibleed : "Antibleed" []
+@PointClass base(Item) studio("models/items/classic_misc_consume.mdl")= ent_cets_antidote : "Antidote" []
+@PointClass base(Item) studio("models/props_lab/smallmetalbox001a.mdl")= ent_cets_c_atomic_ammo : "Classic Uranium Ammo" []
+@PointClass base(Item) studio("models/props/hl2_knees.mdl")= ent_cets_longfallboots : "Advanced Knee Replacement" []
+@PointClass base(Item) studio("models/items/cets_nvg.mdl")= ent_cets_night_vision : "Night Vision" []
+@PointClass base(Item) studio("models/props_phx/mk-82.mdl")= ent_cets_nuke_a : "Nuclear Bomb" []
+@PointClass base(Item) studio("models/props_phx/ww2bomb.mdl")= ent_cets_nuke_b : "Cleaning Bomb" []
+@PointClass base(Item) studio("models/props_phx/misc/egg.mdl")= ent_cets_egg : "Physical Egg" []
