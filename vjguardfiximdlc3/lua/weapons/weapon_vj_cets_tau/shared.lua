@@ -518,7 +518,7 @@ function SWEP:CustomOnThink()
 					self.Owner:StopSound( self.Secondary.Sound )
 					self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK )
 					self.Owner:StopSound( "Cets_Weapon_Tau.Charge" )
-					self.Owner:EmitSound( "Cets_Weapon_Tau.FireAlt" )
+					self:EmitSound( "Cets_Weapon_Tau.FireAlt" )
 				end		
 
 				self.Owner:SetAnimation( PLAYER_ATTACK1 )
