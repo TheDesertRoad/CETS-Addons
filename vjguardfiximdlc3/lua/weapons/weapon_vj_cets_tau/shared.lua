@@ -312,7 +312,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Ang = self.Owner:GetAngles()
 		bullet.Spread = Vector( 1 * self.Primary.Spread, 1 * self.Primary.Spread, 0 )
 		bullet.Tracer = 1
-		bullet.TracerName       = self.Primary.TracerType
+		bullet.TracerName       = "cets_taubeam_tracer"
 		bullet.Force = self.Primary.Force
 		bullet.Damage = self.Primary.Damage
 		bullet.AmmoType = self.Primary.Ammo

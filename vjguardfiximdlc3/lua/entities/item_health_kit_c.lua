@@ -6,6 +6,7 @@ ENT.PrintName = "Classic Health Kit"
 ENT.Author = "VALVe"
 ENT.Spawnable = true
 ENT.Category = "Half-Life 2"
+ENT.SubCategory = "Ammo and Items"
 ENT.trigger = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Initialize()
@@ -19,33 +20,26 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
-	hook.Add("GravGunOnPickedUp", self, function(_, ply, ent)
-		if ent == self then
-			self:SetOwner(ply, ent)
-		end
-	end)
-
-	hook.Add("OnPlayerPhysicsPickup", self, function(_, ply, ent)
-		if ent == self then
-			self:SetOwner(ply, ent)
-		end
-	end)
-
-	hook.Add("OnPhysgunPickup", self, function(_, ply, ent)
-		if ent == self then
-			self:SetOwner(ply, ent)
-		end
-	end)
-
 	if SERVER then
 		self:SetTrigger(true)
+		self:SetUseType(SIMPLE_USE)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Use(ply)
-	if not ply:IsPlayer() then return end
-	if self:Touch(ply) then return end
-	ply:PickupObject(self)
+function ENT:Use(activator, caller)
+	if not IsValid(activator) or not activator:IsPlayer() then return end
+
+	activator:PickupObject(self)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:PhysicsCollide( data )
+	if data.Speed > 100 then
+		self.Entity:EmitSound( "Weapon.ImpactSoft" )
+	end
+
+	if data.Speed > 300 then
+		self.Entity:EmitSound( "Weapon.ImpactHard" )
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Touch(ply)

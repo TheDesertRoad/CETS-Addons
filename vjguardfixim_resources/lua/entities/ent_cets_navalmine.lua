@@ -27,52 +27,65 @@ function ENT:Initialize()
 
 	self:SetTrigger(true)
 
+	if self:WaterLevel() > 0 then
+		timer.Simple(math.Rand(0.05, 0.2), function()
+			if not IsValid(self) then return end
+			if self.RopeCreated then return end
 
-	timer.Simple(math.Rand(0.05, 0.2), function()
-		if not IsValid(self) then return end
+			self.RopeCreated = true
 
-		local pos = self:GetPos()
-		if self.RopeCreated then return end
-		self.RopeCreated = true
+			local pos = self:GetPos()
+			local surface = pos
 
-			for z = pos.z, pos.z + 5000, 16 do
-				if bit.band(util.PointContents(Vector(pos.x, pos.y, z)), CONTENTS_WATER) == 0 then
-					pos.z = z - 16
-				break
+			for z = pos.z, pos.z + 5000, 8 do
+				local p = Vector(pos.x, pos.y, z)
+
+				if bit.band(util.PointContents(p), CONTENTS_WATER) == 0 then
+				surface = Vector(pos.x, pos.y, z - 8)
+					break
+				end
 			end
-		end
 
-		self:SetPos(pos)
+			self:SetPos(surface - Vector(0, 0, 16))
 
-		local tr = util.TraceLine({
-			start = pos,
-			endpos = pos - Vector(0,0,10000),
-			filter = self
-		})
+			local tr = util.TraceLine({
+				start = self:GetPos(),
+				endpos = self:GetPos() - Vector(0, 0, 10000),
+				mask = MASK_SOLID_BRUSHONLY,
+				filter = self
+			})
 
-		constraint.Rope(self, game.GetWorld(), 0, 0, vector_origin, tr.HitPos, pos:Distance(tr.HitPos), 0, 0, 1, "cable/hose_black1", false)
-	end)
+			if not tr.Hit then return end
+
+			constraint.Rope(self, game.GetWorld(), 0, 0, vector_origin, tr.HitPos, self:GetPos():Distance(tr.HitPos), 0, 0, 1, "cable/hose_black1", false)
+		end)
+	else
+		self:SetCollisionBounds(Vector(2, 2, 5), Vector(-2, -2, -5))
+	end
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Think()
 	if CLIENT then return end
 
-	local phys = self:GetPhysicsObject()
-	if not IsValid(phys) then return end
+	if self:WaterLevel() > 0 then
+		local phys = self:GetPhysicsObject()
+		if not IsValid(phys) then return end
 
-	local t = CurTime()
-	local strength = 2
-	local speed = 0.2
-	local fx = math.sin(t * speed) * strength
-	local fy = math.cos(t * speed) * strength
+		local t = CurTime()
+		local strength = 2
+		local speed = 0.2
+		local fx = math.sin(t * speed) * strength
+		local fy = math.cos(t * speed) * strength
+		local force = Vector(fx, fy, 0)
 
-	local force = Vector(fx, fy, 0)
+		phys:ApplyForceCenter(force)
 
-	phys:ApplyForceCenter(force)
+		self:NextThink(CurTime())
 
-	self:NextThink(CurTime())
+		return true
+	else
 
-	return true
+	end
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Touch(ent)
@@ -94,10 +107,19 @@ function ENT:Detonate()
 	local pos = self:GetPos()
 
 	util.BlastDamage(self, self, pos, 300, 400)
+	VJ.EmitSound(self, "weapons/explode" .. math.random(3, 4) .. ".wav", 100, 100)
 
-	local ef = EffectData()
-	ef:SetOrigin(pos)
-	util.Effect("Explosion", ef)
+	if self:WaterLevel() > 0 then
+		local ef = EffectData()
+		ef:SetOrigin(pos)
+		ef:SetScale(2)
+		util.Effect("WaterSurfaceExplosion", ef)
+	else
+		local ef = EffectData()
+		ef:SetOrigin(pos)
+		ef:SetScale(2)
+		util.Effect("Explosion", ef)
+	end
 
 	self:Remove()
 end

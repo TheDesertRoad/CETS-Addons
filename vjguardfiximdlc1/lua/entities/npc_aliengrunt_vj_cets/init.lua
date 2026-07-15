@@ -398,7 +398,6 @@ function ENT:ChargeThink()
 		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(90,110))
 		ParticleEffect("gonarch_footstep_4", self:GetPos() + self:GetUp() * 30, Angle(0,0,0))
 		self:StopCharging(true, self.ChargeCooldown * 0.5)
-
 		self:TakeDamage(5)
 		return
 	end
@@ -427,7 +426,6 @@ function ENT:ChargeThink()
 
 	local forward = self:GetForward()
 	local right = self:GetRight()
-
 	local checks = {self:GetPos() + forward * 128, self:GetPos() + forward * 128 + right * 128, self:GetPos() + forward * 128 - right * 128}
 
 	for _, pos in ipairs(checks) do
@@ -436,7 +434,6 @@ function ENT:ChargeThink()
 			endpos = pos - Vector(0,0,70),
 			mask = MASK_SOLID_BRUSHONLY
 		})
-
 		if !tr.Hit then
 			self:StopCharging(true, self.ChargeCooldown * 0.5)
 			return

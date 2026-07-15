@@ -72,10 +72,26 @@ function ENT:OnDestroy()
 	local myPos = self:GetPos()
 
 	if self:WaterLevel() > 1 then 
-		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 100, 200)
-		util.ScreenShake(myPos, 5, 35, 1, 313)
+		local surface = myPos
+		local ed = EffectData()
+		ed:SetOrigin(myPos)
+		util.Effect("WaterSurfaceExplosion", ed, true, true)
 
-		ParticleEffect("water_gren_test1", self:GetPos(), Angle(0,0,0), nil)
+		local tr = util.TraceLine({
+			start = myPos,
+			endpos = myPos + Vector(0,0,32768),
+			mask = MASK_WATER
+		})
+
+		if tr.Hit then
+			local effect = EffectData()
+			effect:SetOrigin(tr.HitPos - tr.HitNormal)
+			effect:SetNormal(tr.HitNormal)
+			util.Effect("WaterSurfaceExplosion", effect)
+		end
+
+		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 80, 100)
+		util.ScreenShake(myPos, 5, 35, 1, 313)
 	else
 		VJ.EmitSound(self, "weapons/explode" .. math.random(3, 5) .. ".wav", 100, 100)
 		util.ScreenShake(myPos, 10, 70, 1, 625)

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "effects/cets/sol_de_mayo"
+	"$surfaceprop" "concrete"
+	"$translucent" "1"
+}

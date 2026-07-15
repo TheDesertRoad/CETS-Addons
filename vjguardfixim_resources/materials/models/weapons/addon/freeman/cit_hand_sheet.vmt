@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/addon/freeman/cit_hand_sheet"
+	"$bumpmap" "models/weapons/addon/freeman/hand_normal"
+	"$halflambert" "1"
+	
+	"$phong" "1"
+	"$phongexponent" "6"
+	"$phongboost" "0.5"
+	"$phongfresnelranges" "[0.1 0.2 0.4]"
+	
+	// "$rimlight" "1"
+	// "$rimlightexponent" "5"
+	// "$rimlightboost" "0.01"
+}

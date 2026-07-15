@@ -139,8 +139,6 @@ VJ.AddConVar("cets_keepcorpses_collide", 0, FCVAR_ARCHIVE)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("CreateEntityRagdoll", "stop_ragdoll_collide", function(owner, ragdoll)
 	if GetConVarNumber("cets_keepcorpses_collide") == 0 then  
-		ragdoll:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-	else
 		ragdoll:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 	end
 end)

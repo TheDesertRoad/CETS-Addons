@@ -42,26 +42,61 @@ function ENT:Init()
 	ParticleEffectAttach("Rocket_Smoke_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local function GetWaterSurface(myPos)
+	local surface = myPos
+
+	while bit.band(util.PointContents(surface), CONTENTS_WATER) ~= 0 do
+		surface = surface + Vector(0, 0, 8)
+	end
+
+	return surface
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 local defAngle = Angle(0, 0, 0)
 --
 function ENT:OnDestroy(data, phys)
-	VJ.EmitSound(self, "weapons/explode" .. math.random(3, 5) .. ".wav", 150, 100)
-	util.ScreenShake(data.HitPos, 100, 200, 1, 1024)
-	
-	local effectData = EffectData()
-	effectData:SetOrigin(data.HitPos)
-	//effectData:SetScale(500)
-	util.Effect("Explosion", effectData)
+	local myPos = self:GetPos()
 
-	local expLight = ents.Create("light_dynamic")
-	expLight:SetKeyValue("brightness", "4")
-	expLight:SetKeyValue("distance", "300")
-	expLight:SetLocalPos(data.HitPos)
-	expLight:SetLocalAngles(self:GetAngles())
-	expLight:Fire("Color", "255 150 0")
-	expLight:SetParent(self)
-	expLight:Spawn()
-	expLight:Activate()
-	expLight:Fire("TurnOn", "", 0)
-	self:DeleteOnRemove(expLight)
+	if self:WaterLevel() > 1 then 
+		local surface = myPos
+		local ed = EffectData()
+		ed:SetOrigin(myPos)
+		util.Effect("WaterSurfaceExplosion", ed, true, true)
+
+		local tr = util.TraceLine({
+			start = myPos,
+			endpos = myPos + Vector(0,0,32768),
+			mask = MASK_WATER
+		})
+
+		if tr.Hit then
+			local effect = EffectData()
+			effect:SetOrigin(tr.HitPos - tr.HitNormal)
+			effect:SetNormal(tr.HitNormal)
+			util.Effect("WaterSurfaceExplosion", effect)
+		end
+
+		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 80, 100)
+		util.ScreenShake(myPos, 5, 35, 1, 313)
+	else
+		local effectData = EffectData()
+		effectData:SetOrigin(data.HitPos)
+		//effectData:SetScale(500)
+		util.Effect("Explosion", effectData)
+
+		VJ.EmitSound(self, "weapons/explode" .. math.random(3, 5) .. ".wav", 150, 100)
+		util.ScreenShake(data.HitPos, 100, 200, 1, 1024)
+
+		local expLight = ents.Create("light_dynamic")
+		expLight:SetKeyValue("brightness", "4")
+		expLight:SetKeyValue("distance", "300")
+		expLight:SetLocalPos(data.HitPos)
+		expLight:SetLocalAngles(self:GetAngles())
+		expLight:Fire("Color", "255 150 0")
+		expLight:SetParent(self)
+		expLight:Spawn()
+		expLight:Activate()
+		expLight:Fire("TurnOn", "", 0)
+		self:DeleteOnRemove(expLight)
+	end
 end

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+ 	"$basetexture" "Effects/cets/hmg_scope1_s"
+	"$surfaceprop"	"no_decal"
+	"$translucent"	1
+}

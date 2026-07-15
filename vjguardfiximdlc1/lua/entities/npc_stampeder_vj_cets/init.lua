@@ -315,7 +315,7 @@ function ENT:ChargeThink()
 	for k,pos in pairs(collision_positions) do
 		local tr = util.TraceHull({
 			start = self:GetPos(),
-			endpos = self:GetPos() + self:GetForward() * 60,
+			endpos = self:GetPos() + self:GetForward() * 20,
 			mins = Vector(-18, -18, 0),
 			maxs = Vector(18, 18, 72),
 			filter = self,

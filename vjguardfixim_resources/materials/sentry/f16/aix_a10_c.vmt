@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "sentry/f16/aix_a10_c"
+	"$bumpmap" "sentry/f16/aix_a10_b"
+	"$model" 1
+	"$halflambert" 1
+}

@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+    $basetexture "models/items/cets_nvg/nvg_armasight_n-15_diff"
+    $halflambert 1
+}

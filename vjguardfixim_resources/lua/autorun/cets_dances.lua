@@ -1,17 +1,17 @@
-local Gestures = {
-}
+local Gestures = {}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local ActSounds = {
 	zombie = "friends/act_zombie1.wav",
 	dance = "friends/act_dance.wav",
 	salute = "hl1/events/task_complete.wav",
-	laugh = "friends/act_laugh.wav",
 	agree = "hl1/events/tutor_msg.wav",
 	disagree = "hl1/events/friend_died.wav",
 	muscle = "friends/act_muscle.wav",
 	robot = "friends/act_robot.wav",
 	cheer = "hl1/ambience/goal_1.wav",
+	laugh = math.random(1, 1024) == 1 and "friends/act_laugh_alt.wav" or "friends/act_laugh.wav"
 }
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local ActConstants = {
 	zombie = ACT_GMOD_GESTURE_TAUNT_ZOMBIE,
 	dance = ACT_GMOD_TAUNT_DANCE,
@@ -23,7 +23,7 @@ local ActConstants = {
 	robot = ACT_GMOD_TAUNT_ROBOT,
 	cheer = ACT_GMOD_TAUNT_CHEER,
 }
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then 
 	for _, snd in pairs(ActSounds) do
 		util.PrecacheSound(snd)
@@ -65,7 +65,7 @@ if SERVER then
 		net.Broadcast()
 	end)
 end
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
 	CreateClientConVar("cets_dance_use_gestures", "1", true, false, "Use gestures instead of acts")
 

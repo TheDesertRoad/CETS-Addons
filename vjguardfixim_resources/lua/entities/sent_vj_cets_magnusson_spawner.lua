@@ -38,7 +38,6 @@ function ENT:SpawnFunction(ply, tr, ClassName)
 	ent:Activate()
 	ent:SetSpawnEffect(true)
 	ent.BetaOwner = ply
-
  
 	return ent
 end

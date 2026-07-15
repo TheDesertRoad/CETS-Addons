@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models/freeman/helmet_sheet"
+	"$bumpmap" "models/freeman/helmet_sheet_normal"
+	"$halflambert" "1"
+}

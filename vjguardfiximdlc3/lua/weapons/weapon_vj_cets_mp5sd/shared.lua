@@ -9,7 +9,7 @@ SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
 SWEP.Category = "Half-Life 2"
-SWEP.HoldType = "smg"
+SWEP.HoldType = "ar2"
 SWEP.Purpose = false
 
 SWEP.MadeForNPCsOnly = false

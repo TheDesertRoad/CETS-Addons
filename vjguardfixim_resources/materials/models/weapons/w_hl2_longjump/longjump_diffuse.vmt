@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture"  "models\weapons\w_hl2_longjump\longjump_diffuse"
+	"$bumpmap" "models\weapons\w_hl2_longjump/longjump_normals"
+	"$halflambert" 1
+	
+	"$model" 1
+}

@@ -3,6 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "prop_vj_animatable"
 ENT.PrintName = "Health Pen"
+ENT.SubCategory = "Ammo and Items"
 ENT.Author = "VALVe"
 ENT.Spawnable = true
 ENT.Category = "Half-Life 2"
@@ -19,26 +20,9 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
-	hook.Add("GravGunOnPickedUp", self, function(_, ply, ent)
-		if ent == self then
-			self:SetOwner(ply, ent)
-		end
-	end)
-
-	hook.Add("OnPlayerPhysicsPickup", self, function(_, ply, ent)
-		if ent == self then
-			self:SetOwner(ply, ent)
-		end
-	end)
-
-	hook.Add("OnPhysgunPickup", self, function(_, ply, ent)
-		if ent == self then
-			self:SetOwner(ply, ent)
-		end
-	end)
-
 	if SERVER then
 		self:SetTrigger(true)
+		self:SetUseType(SIMPLE_USE)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,6 +30,16 @@ function ENT:Use(ply)
 	if not ply:IsPlayer() then return end
 	if self:Touch(ply) then return end
 	ply:PickupObject(self)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:PhysicsCollide( data )
+	if data.Speed > 100 then
+		self.Entity:EmitSound( "Plastic_Box.ImpactSoft" )
+	end
+
+	if data.Speed > 300 then
+		self.Entity:EmitSound( "Plastic_Box.ImpactHard" )
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Touch(ply)

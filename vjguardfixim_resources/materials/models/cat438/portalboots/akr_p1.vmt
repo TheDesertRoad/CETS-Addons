@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+//    File: materials\models\cat438\portalboots\akr_p1.vmt
+//   Addon: Portal Boots Mod
+//  Author: cat438 (https://steamcommunity.com/id/cat438/)
+////////////////////////////////////////////////////////////////////////////////
+
+"VertexLitGeneric"
+{
+  "$model" "1"
+  "$halflambert" "1"
+  "$nodecal" "1"
+
+  "$basetexture" "models/cat438/portalboots/akr_p1"
+  // "$basetexture" "models/player/chell_body"
+  "$surfaceprop" "weapon"
+
+  "$phong" "1"
+  "$phongexponent" "25"
+  "$phongboost" "6"
+  "$phongfresnelranges" "[0.04 0.4 1.0]"
+}

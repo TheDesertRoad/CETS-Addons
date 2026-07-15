@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/Items/classic_misc_consume/healthvial"
+	"$bumpmap" "models/Items/classic/healthvial_norm"
+	"$normalmapalphaenvmapmask" "1"
+	"$phong" "1"
+	"$phongboost" "3"
+	"$phongexponent" "15"
+	"$phongalbedotint" "1"								
+	"$phongfresnelranges"	"[.2 5 1]"
+	"$EmissiveBlendEnabled" 		"1"
+	"$EmissiveBlendTint"			" [ 1 1 1 ] "		
+	"$EmissiveBlendStrength" 		"1"					// how strong the entire glow effect is.
+	"$EmissiveBlendTexture"		"vgui/white"			// This will be useless, but is required.
+	"$EmissiveBlendBaseTexture"  "Models/Items/classic/healthvial_glow"
+	"$EmissiveBlendFlowTexture" 	"vgui/white"	 
+	"$EmissiveBlendScrollVector" 	" [ 0 0 ] " 	

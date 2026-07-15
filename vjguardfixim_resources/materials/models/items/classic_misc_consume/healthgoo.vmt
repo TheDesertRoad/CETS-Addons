@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/Items/classic_misc_consume/healthgoo"
+	"$envmap" "env_cubemap"
+	"$nocull" "1"
+	"$envmaptint" "[.4 .4 .4]"
+	//"$translucent" "1"
+	//$basetexturetransform "center .5 .5 scale 1 1 rotate 0 translate 0 0"
+	//"$envmapsaturation" .5
+	"$EmissiveBlendEnabled" 		"1"
+	"$EmissiveBlendTint"			" [ 3 3 3 ] "		
+	"$EmissiveBlendStrength" 		"1"					// how strong the entire glow effect is.
+	"$EmissiveBlendTexture"		"Models/Items/classic_misc_consume/healthgoo_glow"			// This will be useless, but is required.
+	"$EmissiveBlendBaseTexture"  "Models/Items/classic_misc_consume/healthgoo_base"
+	"$EmissiveBlendFlowTexture" 	"Models/Items/classic_misc_consume/healthgoo_flow"	 
+	"$EmissiveBlendScrollVector" 	" [ .1 -.1 ] " 	
+}

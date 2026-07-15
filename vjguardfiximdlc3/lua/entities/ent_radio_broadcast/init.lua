@@ -179,6 +179,16 @@ function ENT:Think()
 
 end
 
+function ENT:PhysicsCollide( data )
+	if data.Speed > 100 then
+		self.Entity:EmitSound( "Computer.ImpactSoft" )
+	end
+
+	if data.Speed > 300 then
+		self.Entity:EmitSound( "Computer.ImpactHard" )
+	end
+end
+
 function ENT:OnRemove()
 
     if CurrentSong ~= nil then

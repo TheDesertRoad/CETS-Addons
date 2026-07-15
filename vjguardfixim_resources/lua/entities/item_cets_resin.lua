@@ -6,6 +6,7 @@ ENT.PrintName = "Resin"
 ENT.Author = "VALVe"
 ENT.Spawnable = true
 ENT.Category = "Half-Life 2"
+ENT.SubCategory = "Ammo and Items"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Models = {
 	"models/items/crafting_metal/resin_puck01.mdl",
@@ -29,6 +30,16 @@ function ENT:Initialize()
 		if IsValid(phys) then
 			phys:Wake()
 		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:PhysicsCollide( data )
+	if data.Speed > 100 then
+		self.Entity:EmitSound( "Plastic_Box.ImpactSoft" )
+	end
+
+	if data.Speed > 300 then
+		self.Entity:EmitSound( "Plastic_Box.ImpactHard" )
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

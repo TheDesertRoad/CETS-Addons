@@ -32,7 +32,7 @@ function ENT:CustomOnInitialize()
 	local pitch = math.random(105, 115)
 	local function beepSound(time, snd)
 		timer.Simple(time, function()
-			sound.Play(snd, pos, 100, pitch)
+			sound.Play(snd, pos, 80, pitch)
 		end)
 	end
 
@@ -89,10 +89,26 @@ function ENT:OnDestroy()
 	})
 
 	if self:WaterLevel() > 1 then 
-		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 100, 200)
-		util.ScreenShake(myPos, 5, 35, 1, 313)
+		local surface = myPos
+		local ed = EffectData()
+		ed:SetOrigin(myPos)
+		util.Effect("WaterSurfaceExplosion", ed, true, true)
 
-		ParticleEffect("water_gren_test1", self:GetPos(), Angle(0,0,0), nil)
+		local tr = util.TraceLine({
+			start = myPos,
+			endpos = myPos + Vector(0,0,32768),
+			mask = MASK_WATER
+		})
+
+		if tr.Hit then
+			local effect = EffectData()
+			effect:SetOrigin(tr.HitPos - tr.HitNormal)
+			effect:SetNormal(tr.HitNormal)
+			util.Effect("WaterSurfaceExplosion", effect)
+		end
+
+		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 80, 100)
+		util.ScreenShake(myPos, 5, 35, 1, 313)
 	else
 		VJ.EmitSound(self, "weapons/sonic_explode.wav", 100, math.random(95, 105))
 		VJ.EmitSound(self, "hl1/misc/ear_ringing.wav", 70, 100)

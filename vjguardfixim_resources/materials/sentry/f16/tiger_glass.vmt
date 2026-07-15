@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+
+	"$basetexture" "sentry\f16\Tiger_glass"
+	"$model" 1
+	"$halflambert" 1
+	"$bumpmap" "sentry\f16\Tiger_glass_n"
+}

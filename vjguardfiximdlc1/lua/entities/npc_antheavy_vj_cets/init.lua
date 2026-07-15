@@ -183,6 +183,16 @@ function ENT:CheckThumperStatus()
 	self.IsAbleToLeapAttack = true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local function GetWaterSurface(myPos)
+	local surface = myPos
+
+	while bit.band(util.PointContents(surface), CONTENTS_WATER) ~= 0 do
+		surface = surface + Vector(0, 0, 8)
+	end
+
+	return surface
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink(ent)
 	self:ReactToThumper()
 	self:CheckThumperProtection()
@@ -195,23 +205,53 @@ function ENT:CustomOnThink(ent)
 		self:TakeDamage(self:GetMaxHealth())
 	end
 
+	local myPos = self:GetPos()
+
+	if self:IsOnFire() then
+		self.Bleeds = false
+		self:TakeDamage(self:GetMaxHealth())
+	end
+
 	if self:WaterLevel() > 1 then
 		self.MovementType = VJ_MOVETYPE_STATIONARY
 		self:SetBodygroup(1,0)
 		self:StopSound("npc/antlion/fly1.wav")
-		self.SightDistance = 1 
-		self.Behavior = VJ_BEHAVIOR_PASSIVE_NATURE
 		self.IsGuard = true
 		self.CallForHelp = false
-		self:VJ_TASK_IDLE_STAND("TASK_IDLE_STAND")
-		self:SetVelocity(Vector(0,0,1))
 		self:PlayAnim({"drown"}, true, false, true)
 		self.Bleeds = false
 		self.DisableChasingEnemy = true
 		self.HasLeapAttack = false
-		self:TakeDamage(1)
-		self:SetGravity(0)
-		self:SetGravity(1)
+
+		self:SetLocalVelocity(vector_origin)
+		self:SetVelocity(-self:GetVelocity())
+		self:StopMoving()
+
+		self.NextSplash = self.NextSplash or 0
+
+		if CurTime() >= self.NextSplash then
+			self.NextSplash = CurTime() + 1
+			local surface = myPos
+
+			while bit.band(util.PointContents(surface), CONTENTS_WATER) ~= 0 do
+				surface = surface + Vector(0, 0, 4)
+			end
+
+			local waterType = util.PointContents(surface - Vector(0,0,4))
+			if bit.band(waterType, CONTENTS_SLIME) == 0 then
+				local ed = EffectData()
+				ed:SetOrigin(surface)
+				ed:SetScale(8)
+				ed:SetFlags(2)
+				util.Effect("watersplash", ed, true, true)
+
+				self:EmitSound("ambient/water/water_splash" .. math.random(1,3) .. ".wav", 70, 100)
+			end
+
+			self:EmitSound("ambient/water/water_splash" .. math.random(1, 3) .. ".wav", 70, 100) 
+		end
+
+		timer.Simple(6, function() if self:IsValid() && self:WaterLevel() > 1 then self:TakeDamage(self:GetMaxHealth(), self, self) end end)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

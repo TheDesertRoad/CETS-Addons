@@ -83,6 +83,11 @@ else
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local Category = "Half-Life 2"
+local Category1 = "Chairs"
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function HandleRollercoasterAnimation( vehicle, player )
+	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
+end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local MVHL = {
 				// Required information
@@ -471,6 +476,374 @@ local V4 = {
 }
 
 list.Set( "Vehicles", "vehicle_cets_css_forklift", V4 )
+
+local Chair1 = {
+				// Required information
+				Name =	"Armchair",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "An Armchair",
+				Model =	"models/seats/armchair.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_armchair", Chair1 )
+
+local Chair2 = {
+				// Required information
+				Name =	"Barstool",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A Barstool",
+				Model =	"models/seats/barstool01.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_barstool", Chair2 )
+
+local Chair3 = {
+				// Required information
+				Name =	"Office Chair (Office)",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "An Office Chair",
+				Model =	"models/seats/chair_office.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_chair_office", Chair3 )
+
+local Chair4 = {
+				// Required information
+				Name =	"Chair Stool",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A chair stool",
+				Model =	"models/seats/chair_stool01a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_chair_stool", Chair4 )
+
+local Chair5 = {
+				// Required information
+				Name =	"Chair Antique",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "An antique chair",
+				Model =	"models/seats/chairantique.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_chair_antique", Chair5 )
+
+local Chair6 = {
+				// Required information
+				Name =	"Metal Chair",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A metallic chair",
+				Model =	"models/seats/controlroom_chair001a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_control_room_chair", Chair6 )
+
+local Chair7 = {
+				// Required information
+				Name =	"Couch",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A couch",
+				Model =	"models/seats/furniture_couch02a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_furniture_couch", Chair7 )
+
+local Chair8 = {
+				// Required information
+				Name =	"Yellow Armchair",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "An armchair",
+				Model =	"models/seats/furniturearmchair001a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_furniture_armchair_yellow", Chair8 )
+
+local Chair9 = {
+				// Required information
+				Name =	"Red Couch",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A couch",
+				Model =	"models/seats/furniturecouch001a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_furniture_couch_red", Chair9 )
+
+local Chair10 = {
+				// Required information
+				Name =	"Toilet",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A toilet",
+				Model =	"models/seats/furnituretoilet001a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_toilet", Chair10 )
+
+local Chair11 = {
+				// Required information
+				Name =	"Patio Chair",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A chair",
+				Model =	"models/seats/patio_chair.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_patio_chair", Chair11 )
+
+local Chair12 = {
+				// Required information
+				Name =	"Metal Patio Chair",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A metallic chair",
+				Model =	"models/seats/patio_chair2.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_metal_patio_chair", Chair12 )
+
+local Chair13 = {
+				// Required information
+				Name =	"Seat Hatchback",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A seat",
+				Model =	"models/seats/seat001a_hatchback.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_seat_hatchback", Chair13 )
+
+local Chair14 = {
+				// Required information
+				Name =	"Seat Truck",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A truck seat",
+				Model =	"models/seats/seat_truck001a.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_seat_hatchback_truck", Chair14 )
+
+local Chair15 = {
+				// Required information
+				Name =	"Sofa",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A sofa",
+				Model =	"models/seats/sofa_chair.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_sofa", Chair15 )
+
+local Chair16 = {
+				// Required information
+				Name =	"Train Seat",
+				Class = "prop_vehicle_prisoner_pod",
+				Category = Category1,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "A seat",
+				Model =	"models/seats/traincar_seats001.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+					limitview = "0",
+				},
+
+				Members = {
+					HandleAnimation = HandleRollercoasterAnimation,
+				}
+}
+
+list.Set( "Vehicles", "chair_cets_seat_train", Chair16 )
 
 // ******************************
 // CSS CAR SOUNDS

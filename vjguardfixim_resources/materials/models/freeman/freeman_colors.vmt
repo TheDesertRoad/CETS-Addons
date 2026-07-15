@@ -1,0 +1,71 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/freeman/freeman_colors"
+	"$bumpmap" "models/freeman/freeman_sheet_normal"
+	"$halflambert" "1"
+	
+	"$phong" "1"
+	"$phongexponent" "3"
+	"$phongboost" "0.5"
+	"$phongfresnelranges" "[0.1 0.2 0.4]"
+	
+	// "$rimlight" "1"
+	// "$rimlightexponent" "5"
+	// "$rimlightboost" "0.01"
+
+	// ------------------------------------------------------------------------
+	// PLAYER COLOR CUSTOMIZATION
+	// ------------------------------------------------------------------------
+	
+	// The following chain of proxies is to modulate phong tint (and rimlight,
+	// by extension) according to your chosen player color, but only within a
+	// certain saturation range: 50%. This might be confusing, I tried my best
+	// to comment it, e-mail maxofs2d@facepunchstudios.com if you have any
+	// questions regarding how player colourability is set up in VMTs. GLHF.
+	
+	"$blendtintbybasealpha" "1" // alpha channel of $basetexture: color mask.
+ 	"$blendtintcoloroverbase" "0" // blend mode. anything =/= 0 is ugly!
+
+	"$PhongBrightnessScalar" "1.0" // see below. "1.0" will get overwritten.
+	
+	Proxies
+	{
+		PlayerColor
+		{
+			resultVar	$color2 // pass the player color value to Gmod
+			default		0.23 0.35 0.41 // unused for now.
+		}
+		Clamp // clamp the chosen color between 1% and 125% (usually)
+		{
+			min 0.01
+			max 1.25
+			srcVar1 "$color2"
+			resultVar "$color2"
+		}
+		Clamp // copy this value to phong tint, clamp it to 50% min.
+		{
+			min 0.5
+			max 1.0
+			srcVar1 "$color2"
+			resultVar "$phongtint"
+		}
+		Equals // copy $color2 value to exterior variable. this makes it
+		{      // no longer a RGB array but a single float instead (!??)
+			srcVar1 "$color2"
+			resultVar "$PhongBrightnessScalar"
+		}
+		Multiply // multiply $phongtint by this new float value.
+		{
+			srcVar1 "$phongtint"
+			srcVar2 "$phongBrightnessScalar"
+			resultVar "$phongtint"
+		}
+		Clamp // the result of this multiply doesn't go any lower than 20%
+		{
+			min 0.25
+			max 1.00
+			srcVar1 "$phongtint"
+			resultVar "$phongtint"
+		}
+	}
+}

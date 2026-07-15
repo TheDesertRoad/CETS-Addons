@@ -1,5 +1,0 @@
-VertexLitGeneric
-{
-	$basetexture "models/architectpack01/glass_Base_Color"
-	$surfaceprop Glass
-}

@@ -30,13 +30,6 @@ function ENT:CustomOnInitialize()
 	self:SetAngles(self:GetVelocity():GetNormal():Angle())
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnThink()
-	if self:WaterLevel() > 0 then 
-		local pos = self:GetPos() +self:GetAngles():Forward()
-		effects.BubbleTrail(pos +Vector(-1, -1, -1), pos +Vector(1, 1, 1), math.random(0.3, 0.8), 0, 6, 0)
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 local defAngle = Angle(0, 0, 0)
 local vecZ4 = Vector(0, 0, 4)
 local vezZ100 = Vector(0, 0, 100)
@@ -45,11 +38,26 @@ function ENT:DeathEffects(data,phys)
 	local myPos = self:GetPos()
 
 	if self:WaterLevel() > 1 then 
-		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 100, 200)
-		VJ.EmitSound(self, "ambient/fire/mtov_flame" .. math.random(1, 3) .. ".wav", 90)
-		util.ScreenShake(myPos, 50, 50, 1, 500)
+		local surface = myPos
+		local ed = EffectData()
+		ed:SetOrigin(myPos)
+		util.Effect("WaterSurfaceExplosion", ed, true, true)
 
-		ParticleEffect("water_gren_test1", self:GetPos(), Angle(0,0,0), nil)
+		local tr = util.TraceLine({
+			start = myPos,
+			endpos = myPos + Vector(0,0,32768),
+			mask = MASK_WATER
+		})
+
+		if tr.Hit then
+			local effect = EffectData()
+			effect:SetOrigin(tr.HitPos - tr.HitNormal)
+			effect:SetNormal(tr.HitNormal)
+			util.Effect("WaterSurfaceExplosion", effect)
+		end
+
+		VJ.EmitSound(self, "weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 80, 100)
+		util.ScreenShake(myPos, 5, 35, 1, 313)
 		ParticleEffect("nigga_fire", myPos, defAngle)
 	else
 		ParticleEffect("nigga_fire", myPos, defAngle)

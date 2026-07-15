@@ -1,4 +1,152 @@
+list.Set("PlayerOptionsModel", "Freeman", "models/player/freeman.mdl")
+player_manager.AddValidModel("Freeman", "models/player/freeman.mdl")
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list.Set("PlayerOptionsModel", "Freeman", "models/weapons/addon/c_arms_freeman.mdl")
+player_manager.AddValidHands( "Freeman", "models/weapons/addon/c_arms_freeman.mdl", 0, "00000000" )
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list.Set("PlayerOptionsModel", "Worker", "models/humans/worker/worker_04.mdl")
+player_manager.AddValidModel("Worker", "models/humans/worker/worker_04.mdl")
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list.Set("PlayerOptionsModel", "Worker", "models/humans/worker/c_worker_arms.mdl")
+player_manager.AddValidHands( "Worker", "models/humans/worker/c_worker_arms.mdl", 0, "00000000" )
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list.Set("PlayerOptionsModel", "Infiltrator", "models/humans/gman_spy/spy_04.mdl")
+player_manager.AddValidModel("Infiltrator", "models/humans/gman_spy/spy_04.mdl")
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list.Set("PlayerOptionsModel", "Infiltrator", "models/weapons/addon/c_spy_arms.mdl")
+player_manager.AddValidHands( "Infiltrator", "models/weapons/addon/c_spy_arms.mdl", 0, "00000000" )
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+list.Set("PlayerOptionsModel", "Cultist", "models/headcrab_cultists/player_cultist.mdl")
+player_manager.AddValidModel("Cultist", "models/headcrab_cultists/player_cultist.mdl")
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//JUMPMODULE
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	concommand.Add("cets_remove_longjump", function(ply)
+		if not IsValid(ply) or not ply:IsPlayer() then return end
+		ply:SetNWBool("HasLongJump", false)
+		ply.jumpmodule_can_use = nil
+		ply.jumpmodule_keypress = nil
+		ply.LongJumpBattery = nil
+		ply.LongJumpRecharge = nil
+	end)
+
+	local function CETS_DoJump(ply)
+
+		if not ply.jumpmodule_can_use then return end
+
+		local vel = ply:GetVelocity()
+		vel.x = math.Clamp(vel.x, -500, 500)
+		vel.y = math.Clamp(vel.y, -500, 500)
+		vel.z = math.Clamp(vel.z, 470, 270)
+
+		ply.CETS_LongJumpBoost = vel
+
+		ply:SetVelocity(vel)
+		ply.jumpmodule_can_use = false
+
+		ply:EmitSound("player/cets_jumpmod_boost1.wav", 70, math.random(100,110))
+	end
+
+	local played_sound
+
+	hook.Add("KeyPress", "CETS_LongJumpUpgrade", function(ply, key)
+
+		if not ply:GetNWBool("HasLongJump", false) then return end
+		if ply:GetMoveType() ~= MOVETYPE_WALK then return end
+
+		if ply:Crouching() and key == IN_JUMP then
+			local longjump = ply.jumpmod_keypress and CurTime() - ply.jumpmod_keypress < 0.4 and not ply:OnGround()
+
+			if longjump then
+				CETS_DoJump(ply)
+			else
+				ply.jumpmod_keypress = CurTime()
+			end
+		end
+
+		if SERVER and key == IN_BACK and not ply.jumpmodule_can_use and not played_sound and ply.CETS_LongJumpBoost then
+			ply:SetVelocity(-ply.CETS_LongJumpBoost)
+			ply.CETS_LongJumpBoost = nil
+
+			played_sound = true
+			ply:EmitSound("hl1/fvox/buzz.wav", 100, 100)
+		end
+	end)
+
+	hook.Add("OnPlayerHitGround", "CETS_LongJumpUpgrade", function(ply, water, float, speed)
+		if not ply:GetNWBool("HasLongJump", false) then return end
+		if water then return end
+
+		ply.jumpmodule_can_use = true
+		played_sound = nil
+	end)
+
+	hook.Add("PlayerDeath", "CETS_LongJumpRemove", function(ply)
+		ply:SetNWBool("HasLongJump", false)
+		ply.jumpmodule_can_use = nil
+		ply.jumpmod_keypress = nil
+	end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//KNEEGGER
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	concommand.Add("cets_remove_advancedknees", function(ply)
+		if not IsValid(ply) or not ply:IsPlayer() then return end
+		ply:SetNWBool("HasFallDampener", false)
+	end)
+
+	hook.Add("EntityTakeDamage", "CETS_KneeReplaceDamage", function(ent, dmginfo)
+		if not ent:IsPlayer() then return end
+		if not ent:GetNWBool("HasFallDampener", false) then return end
+
+		if dmginfo:IsDamageType(DMG_FALL) then
+			dmginfo:SetDamage(0)
+			return true
+		end
+	end)
+
+	hook.Add("PlayerDeath", "CETS_KneeReplaceReset", function(ply)
+		ply:SetNWBool("HasFallDampener", false)
+	end)
+
+	hook.Add("GetFallDamage", "CETS_KneeReplace", function(ply, speed)
+		if ply:GetNWBool("HasFallDampener", false) then
+			return 0
+		end
+	end)
+
+	local FootstepSounds = {
+		"player/futureshoes1.wav",
+		"player/futureshoes2.wav"
+	}
+
+	hook.Add("OnPlayerHitGround", "CETS_KneeReplaceLanding", function(ply, inWater, onFloater, speed)
+		if not ply:GetNWBool("HasFallDampener", false) then return end
+		if inWater then return true end
+
+		if speed >= 360 then
+			ply:EmitSound(FootstepSounds[math.random(#FootstepSounds)], 70, math.random(95, 105))
+		end
+	end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//ADRENALINE
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	hook.Add("PlayerDeath", "CETS_SpeedBoostReset", function(ply)
+		timer.Remove("CETS_SpeedBoost_" .. ply:EntIndex())
+
+		if ply.CETS_OriginalWalkSpeed then
+			ply:SetWalkSpeed(ply.CETS_OriginalWalkSpeed)
+		end
+
+		if ply.CETS_OriginalRunSpeed then
+			ply:SetRunSpeed(ply.CETS_OriginalRunSpeed)
+		end
+
+		ply.CETS_OriginalWalkSpeed = nil
+		ply.CETS_OriginalRunSpeed = nil
+		ply:SetNWBool("HasSpeedBoost", false)
+	end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //TELEP
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -63,12 +211,25 @@ if SERVER then
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	local HeldAngles = {}
 	local HeldBy = {}
+	local HeldMoveType = {}
+	local HeldLastPos = {}
+	local HeldVelocity = {}
+
+	local THROW_SMOOTHING = 0.56
+	local MAX_THROW_SPEED = 8192
 
 	hook.Add("PhysgunPickup", "GrabPlayers_AllowPickup", function(ply, ent)
 		if GetConVar("cets_grab_players_phys"):GetInt() == 0 then return end
 		if ent:IsPlayer() then
 			HeldAngles[ent] = ent:GetAngles()
 			HeldBy[ent] = ply
+			HeldMoveType[ent] = ent:GetMoveType()
+			HeldLastPos[ent] = ent:GetPos()
+			HeldVelocity[ent] = vector_origin
+
+			ent:SetVelocity(-ent:GetVelocity())
+			ent:Freeze(true)
+			ent:SetMoveType(MOVETYPE_NONE)
 			return true
 		end
 	end)
@@ -76,29 +237,126 @@ if SERVER then
 	hook.Add("PhysgunDrop", "GrabPlayers_RestoreAngles", function(ply, ent)
 		if ent:IsPlayer() and HeldAngles[ent] then
 			ent:SetAngles(HeldAngles[ent])
+			ent:SetMoveType(HeldMoveType[ent] or MOVETYPE_WALK)
+			ent:Freeze(false)
+
+			local throwVel = HeldVelocity[ent] or vector_origin
+
+			if throwVel:Length() > MAX_THROW_SPEED then
+				throwVel = throwVel:GetNormalized() * MAX_THROW_SPEED
+			end
+
+			ent:SetVelocity(throwVel)
+
 			HeldAngles[ent] = nil
 			HeldBy[ent] = nil
-		end
-	end)
-
-	hook.Add("GetDamage", "GrabPlayers_NoFallDamage", function(ply, speed)
-		if GetConVar("cets_grab_players_phys"):GetInt() == 0 then return end
-		if ply:IsPlayerHolding() then
-			return 0
+			HeldMoveType[ent] = nil
+			HeldLastPos[ent] = nil
+			HeldVelocity[ent] = nil
 		end
 	end)
 
 	hook.Add("Think", "GrabPlayers_LookAtHolder", function()
+		local ft = FrameTime()
 		for ent, holder in pairs(HeldBy) do
 			if not IsValid(ent) or not IsValid(holder) then
+				if IsValid(ent) then
+					ent:Freeze(false)
+					ent:SetMoveType(HeldMoveType[ent] or MOVETYPE_WALK)
+					HeldMoveType[ent] = nil
+				end
 				HeldBy[ent] = nil
+				HeldLastPos[ent] = nil
+				HeldVelocity[ent] = nil
 				continue
 			end
+
 			local ang = (holder:GetPos() - ent:GetPos()):Angle()
 			ang.pitch = 0
 			ang.roll = 0
 			ent:SetEyeAngles(ang)
 			ent:SetAngles(ang)
+
+			if ft > 0 then
+				local currentPos = ent:GetPos()
+				local rawVel = (currentPos - (HeldLastPos[ent] or currentPos)) / ft
+				HeldVelocity[ent] = LerpVector(1 - THROW_SMOOTHING, HeldVelocity[ent] or vector_origin, rawVel)
+				HeldLastPos[ent] = currentPos
+			end
+		end
+	end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//PHYSNPC
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	local HeldBy = {}
+	local HeldLastPos = {}
+	local HeldVelocity = {}
+
+	local THROW_SMOOTHING = 0.72
+	local MAX_THROW_SPEED = 2048
+
+	hook.Add("PhysgunPickup", "GrabNPCs_AllowPickup", function(ply, ent)
+		if GetConVar("cets_better_npc_phys"):GetInt() == 0 then return end
+		if ent:IsNPC() then
+			HeldBy[ent] = ply
+			HeldLastPos[ent] = ent:GetPos()
+			HeldVelocity[ent] = vector_origin
+
+			ent:SetVelocity(-ent:GetVelocity())
+			ent:SetSchedule(SCHED_NPC_FREEZE)
+			return true
+		end
+	end)
+
+	hook.Add("PhysgunDrop", "GrabNPCs_ThrowVelocity", function(ply, ent)
+		if ent:IsNPC() and HeldBy[ent] then
+			ent:SetCondition(COND.NPC_UNFREEZE) -- let its AI take back over
+
+			local throwVel = HeldVelocity[ent] or vector_origin
+
+			if throwVel:Length() > MAX_THROW_SPEED then
+				throwVel = throwVel:GetNormalized() * MAX_THROW_SPEED
+			end
+
+			ent:SetVelocity(throwVel)
+
+			local phys = ent:GetPhysicsObject()
+
+			if IsValid(phys) then
+				phys:SetVelocity(throwVel)
+			end
+
+			HeldBy[ent] = nil
+			HeldLastPos[ent] = nil
+			HeldVelocity[ent] = nil
+		end
+	end)
+
+	hook.Add("Think", "GrabNPCs_TrackVelocity", function()
+
+		local ft = FrameTime()
+		for ent, holder in pairs(HeldBy) do
+			if not IsValid(ent) or not IsValid(holder) then
+				if IsValid(ent) then
+					ent:SetCondition(COND.NPC_UNFREEZE)
+				end
+
+				HeldBy[ent] = nil
+				HeldLastPos[ent] = nil
+				HeldVelocity[ent] = nil
+				continue
+			end
+
+			if not ent:IsCurrentSchedule(SCHED_NPC_FREEZE) then
+				ent:SetSchedule(SCHED_NPC_FREEZE)
+			end
+
+			if ft > 0 then
+				local currentPos = ent:GetPos()
+				local rawVel = (currentPos - (HeldLastPos[ent] or currentPos)) / ft
+				HeldVelocity[ent] = LerpVector(1 - THROW_SMOOTHING, HeldVelocity[ent] or vector_origin, rawVel)
+				HeldLastPos[ent] = currentPos
+			end
 		end
 	end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -276,7 +534,9 @@ if SERVER then
 
 		GiveKill(attacker)
 	end)
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//PLAYERSOCIAL
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	hook.Add("PlayerSay", "ChatSound", function(ply, text)
 		if not IsValid(ply) then return end
 		if GetConVar("sv_cets_friends_chat_sound"):GetInt() == 0 then return end
@@ -305,6 +565,80 @@ if SERVER then
 			net.Broadcast()
 		end)
 	end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//QUAKESOUNDS
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	hook.Add("SetupMove", "QuakeLandSounds", function(ply, mv)
+		if not IsValid(ply) or not ply:Alive() then return end
+		if ply:GetMoveType() == MOVETYPE_NOCLIP then return end
+		if GetConVar("cets_quake_jump_sounds"):GetInt() == 0 then return end
+
+		local jumped = mv:KeyPressed(IN_JUMP)
+
+		if jumped and ply:OnGround() then
+			ply.Jumping = true
+			ply:EmitSound("hl1/player/PLYRJMP8.WAV", 65, 100)
+		end
+	end)
+
+
+	hook.Add("OnPlayerHitGround", "QuakeFallSounds", function(ply, inWater, onFloater, speed)
+		if not IsValid(ply) or not ply:Alive() then return end
+		if inWater then return end
+		if speed < 256 then return end
+		if GetConVar("cets_quake_jump_sounds"):GetInt() == 0 then return end
+
+		timer.Simple(0, function()
+			if not IsValid(ply) then return end
+			if ply.TookFallDamage then
+				ply:EmitSound("hl1/player/LAND2.WAV", 65, 100)
+			else
+				ply:EmitSound("hl1/player/LAND.WAV", 65, 100)
+			end
+
+			ply.TookFallDamage = false
+		end)
+	end)
+
+	hook.Add("EntityTakeDamage", "DetectFallDamage", function(ent, dmg)
+		if GetConVar("cets_quake_jump_sounds"):GetInt() == 0 then return end
+		if not ent:IsPlayer() then return end
+
+		if dmg:IsFallDamage() then
+			ent.TookFallDamage = true
+		end
+	end)
+
+	hook.Add("EntityEmitSound", "MuteDefaultSounds", function(data)
+		if GetConVar("cets_quake_burn_sounds"):GetInt() == 0 then return end
+		local snd = string.lower(data.SoundName)
+
+		if snd:find("player/pl_burnpain1.wav") or snd:find("player/pl_burnpain2.wav") or snd:find("player/pl_burnpain3.wav") then return false end
+	end)
+
+	hook.Add("Think", "QuakeOnFire", function()
+		if GetConVar("cets_quake_burn_sounds"):GetInt() == 0 then return end
+		for _, ply in ipairs(player.GetAll()) do
+			if not IsValid(ply) or not ply:Alive() then continue end
+
+			if ply:IsOnFire() then
+				if not ply.NextFireSound or CurTime() >= ply.NextFireSound then
+					ply:EmitSound("hl1/player/LBURN" .. math.random(1, 2) .. ".WAV", 65, 100)
+					ply.NextFireSound = CurTime() + 0.4
+				end
+			else
+				ply.NextFireSound = nil
+			end
+		end
+	end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//NUKECOMMANDSOUNDS
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	cvars.AddChangeCallback("cets_spawnable_nuke", function(name, old, new)
+		if tonumber(new) == 1 && GetConVar("cets_spawnable_nuke_cvar_sound"):GetInt() == 1 then
+				sound.Play("friends/cvar_nuke_activate.wav", Vector(0,0,0))
+			end
+	end, "NukeSoundCvar")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 else
 	local NextOnlineSound = 0
@@ -398,5 +732,66 @@ else
 		alpha = alpha * (0.5 + flicker * 0.5)
 
 		draw.SimpleTextOutlined(CurrentKillMessage, "KillAnnouncerFont", ScrW() / 2, ScrH() * 0.25, Color(255, 128, 0, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+	end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//WINDSOUNDS
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	local windSound
+	local targetVolume = 0
+	local currentVolume = 0
+	local windFile = "player/fling_whoosh.wav"
+
+	CreateClientConVar("cets_falling_wind", "1", true, false)
+
+	local function StopWindSound()
+		if windSound then
+			windSound:Stop()
+			windSound = nil
+		end
+
+		currentVolume = 0
+		targetVolume = 0
+	end
+
+	hook.Add("Think", "FallingWindSound", function()
+		local ply = LocalPlayer()
+
+		if not IsValid(ply) or not ply:Alive() then
+			StopWindSound()
+			return
+		end
+
+		if not GetConVar("cets_falling_wind"):GetBool() then
+			StopWindSound()
+
+		elseif ply:GetMoveType() == MOVETYPE_NOCLIP then
+			StopWindSound()
+
+		else
+			local velocity = ply:GetVelocity()
+			local verticalSpeed = velocity.z
+
+			if verticalSpeed < -100 and not ply:IsOnGround() then
+				targetVolume = math.Clamp((-verticalSpeed - 100) / 800, 0, 1)
+
+				if not windSound then
+					windSound = CreateSound(ply, windFile)
+					windSound:PlayEx(0, 100)
+				end
+			else
+				StopWindSound()
+			end
+		end
+
+		currentVolume = Lerp(FrameTime() * 3, currentVolume, targetVolume)
+
+		if windSound then
+			windSound:ChangeVolume(currentVolume, 0)
+			windSound:ChangePitch(100 + currentVolume * 50, 0)
+
+			if currentVolume <= 0.01 then
+				StopWindSound()
+			end
+		end
 	end)
 end

@@ -3,6 +3,7 @@ ENT.Type = "anim"
 ENT.Base = "base_anim"
 ENT.PrintName = "Sniper Ammo"
 ENT.Author = "VALVe"
+ENT.SubCategory = "Ammo and Items"
 ENT.Category = "Half-Life 2"
 ENT.Editable = true
 ENT.Spawnable = true

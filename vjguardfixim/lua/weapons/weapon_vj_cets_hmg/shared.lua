@@ -38,6 +38,8 @@ SWEP.Secondary.Ammo = "none"
 --------------------------------------------------------------------------------|
 SWEP.UseScope				= true	
 SWEP.Zoom = 0
+local ScopeMat = Material("effects/cets/oicw_scope1")
+local ScopeMat1 = Material("effects/cets/hmg_scope1_s")
 --------------------------------------------------------------------------------|
 SWEP.NPC_NextPrimaryFire = 6
 SWEP.NPC_TimeUntilFire = 0.1
@@ -254,23 +256,58 @@ function SWEP:SecondaryAttack()
 	local isNPC = owner:IsNPC()
 	local isPly = owner:IsPlayer()
 
-	if (self.Zoom == 0) && isPly then
-		self.Owner:SetFOV( 24, .5 )
-		self.Owner:DrawViewModel(false)
-		self:EmitSound("Weapon_AR2.Special1")
-		self.Zoom = 1
-		self.Owner:ScreenFade( SCREENFADE.STAYOUT, Color( 32, 16, 255, 32 ), 0.1, 0.1 ) 
-		self.Owner:GetCanZoom( 1 )
-		self.Owner:SetCanZoom( 0 )
+	if not IsValid(owner) or not owner:IsPlayer() then return end
 
-	elseif (self.Zoom == 1) && isPly then
-		self.Owner:SetFOV( 0, .5 )
-		self.Owner:DrawViewModel(true)
+	if self.Zoom == 0 then
+		owner:SetFOV(24, 0.5)
+		owner:DrawViewModel(false)
 		self:EmitSound("Weapon_AR2.Special1")
+
+		self.Zoom = 1
+		self:SetNWBool("Scoped", true)
+
+		owner:SetCanZoom(false)
+	else
+		owner:SetFOV(0, 0.5)
+		owner:DrawViewModel(true)
+		self:EmitSound("Weapon_AR2.Special1")
+
 		self.Zoom = 0
-		self.Owner:ScreenFade( SCREENFADE.PURGE, Color( 0, 0, 0, 0 ), 0.1, 0.1 )
-		self.Owner:GetCanZoom( 0 )
-		self.Owner:SetCanZoom( 1 )
+		self:SetNWBool("Scoped", false)
+
+		owner:SetCanZoom(true)
+	end
+
+	self:SetNextSecondaryFire(CurTime() + 0.3)
+end
+--------------------------------------------------------------------------------|
+function SWEP:DrawHUD()
+	if not self:GetNWBool("Scoped", false) then return end
+
+	local w = ScrW()
+	local h = ScrH()
+	local size = math.min(w, h)
+	local x = (w - size) / 2
+	local y = (h - size) / 2
+
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.SetMaterial(ScopeMat)
+
+	surface.DrawTexturedRect(x, y, size, size)
+
+	surface.SetMaterial(ScopeMat1)
+	surface.DrawTexturedRect(x, y, size, size)
+
+	surface.SetDrawColor(0, 0, 0, 255)
+
+	if x > 0 then
+		surface.DrawRect(0, 0, x, h)
+		surface.DrawRect(w - x, 0, x, h)
+	end
+
+	if y > 0 then
+		surface.DrawRect(0, 0, w, y)
+		surface.DrawRect(0, h - y, w, y)
 	end
 end
 --------------------------------------------------------------------------------|
@@ -324,7 +361,7 @@ function SWEP:Reload()
 			self.Owner:DrawViewModel(true)
 			self.Owner:GetCanZoom( 0 )
 			self.Owner:SetCanZoom( 1 )
-			self.Owner:ScreenFade( SCREENFADE.PURGE, Color( 0, 0, 0, 0 ), 0.1, 0.1 )
+			self:SetNWBool("Scoped", false)
 		end
 
 		self.Owner:SetFOV( 0, .5 )
@@ -352,7 +389,7 @@ function SWEP:Holster()
 	self.Owner:DrawViewModel(true)
 	self:EmitSound("Weapon_AR2.Special1")
 	self.Zoom = 0
-	self.Owner:ScreenFade( SCREENFADE.PURGE, Color( 0, 0, 0, 0 ), 0.1, 0.1 )
+	self:SetNWBool("Scoped", false)
 	self.Owner:GetCanZoom( 0 )
 	self.Owner:SetCanZoom( 1 )
 
@@ -362,4 +399,24 @@ function SWEP:Holster()
 	self.PLY_NextIdleAnimT = CurTime() + 2
 	//self:SendWeaponAnim(ACT_VM_HOLSTER)
 	return self:OnHolster(newWep) != true
+end
+--------------------------------------------------------------------------------|
+if CLIENT then
+	function SWEP:Think()
+		if self.Owner ~= LocalPlayer() then return end
+		if not self:GetNWBool("Scoped", false) then return end
+
+		local dlight = DynamicLight(self:EntIndex())
+
+		if dlight then
+			dlight.pos = EyePos()
+			dlight.r = 48
+			dlight.g = 58
+			dlight.b = 255
+			dlight.brightness = 4
+			dlight.Size = 1024
+			dlight.Decay = 0
+			dlight.DieTime = CurTime() + 0.1
+		end
+	end
 end

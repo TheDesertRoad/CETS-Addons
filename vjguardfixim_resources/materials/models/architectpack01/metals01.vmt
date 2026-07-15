@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/architectpack01/metals01"
-	"$surfaceprop" "Metal"
-	"$nocull" 1
-}

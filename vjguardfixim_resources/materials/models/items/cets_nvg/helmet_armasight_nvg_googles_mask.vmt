@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+    $basetexture "models/items/cets_nvg/helmet_armasight_nvg_googles_mask_LOD0_diff"
+    $halflambert 1
+}
