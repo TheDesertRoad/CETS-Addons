@@ -16,7 +16,7 @@ if SERVER then
 			if ent:Crouching() then return end
 			if ent:GetVelocity():Length2D() < 20 then return end
 		else
-			local isExplosion = string.find(snd, "explode") or string.find(snd, "grenade") or string.find(snd, "weapon") or string.find(snd, "shoot") or string.find(snd, "impact") or string.find(snd, "rpg")
+			local isExplosion = string.find(snd, "explode") or string.find(snd, "grenade") or string.find(snd, "weapon") or string.find(snd, "fire") or string.find(snd, "impact") or string.find(snd, "rpg")
 			if not isExplosion then return end
 		end
 
@@ -34,7 +34,20 @@ if SERVER then
 			if not IsValid(ent) then return end
 
 			for _, npc in ipairs(ents.FindByClass("npc_tentacle_vj_cets")) do
-				if IsValid(npc) && npc:GetPos():DistToSqr(pos) <= npc.ExplosionSoundRange^2 then
+				if not IsValid(npc) then continue end
+
+				local aiDisabled = GetConVar("ai_disabled"):GetBool()
+				local aiIgnorePlayers = GetConVar("ai_ignoreplayers"):GetBool()
+
+				if aiDisabled then return end
+
+				for _, npc in ipairs(ents.FindByClass("npc_tentacle_vj_cets")) do
+					if not IsValid(npc) then continue end
+
+					if isFootstep and aiIgnorePlayers then
+						continue
+					end
+
 					npc.LastExplosionSoundPos = pos
 					npc.LastExplosionSoundTime = CurTime() + npc.ExplosionSoundMemory
 				end

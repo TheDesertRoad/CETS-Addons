@@ -10,7 +10,7 @@ ENT.Model = "models/hl2_tentacle.mdl"
 ENT.StartHealth = GetConVar("sk_cets_tentacle_health"):GetInt()
 ENT.TurningSpeed = 8
 ENT.SightDistance = 1299
-ENT.TimeUntilEnemyLost = 12
+ENT.TimeUntilEnemyLost = 5
 ENT.IsGuard = true
 ENT.SightAngle = 180
 ENT.VJ_NPC_Class = {"CLASS_XVORTIGAUNT","CLASS_XEN"}	
@@ -105,16 +105,16 @@ local vecLvl1 = Vector(20, 20, 380)
 local vecLvl2 = Vector(20, 20, 580)
 local vecLvl3 = Vector(20, 20, 650)
 
-ENT.ExplosionInvestigateRange = 2000
+ENT.ExplosionInvestigateRange = 360
 ENT.ExplosionMemoryTime = 5
 ENT.ExplosionTurnSpeed = 8
 
-ENT.ExplosionSoundRange = 2000
+ENT.ExplosionSoundRange = 256
 ENT.ExplosionSoundMemory = 5
 ENT.ExplosionSoundTurnSpeed = 8
 
-ENT.SoundAlertRange = 2000
-ENT.SoundAlertDuration = 800
+ENT.SoundAlertRange = 360
+ENT.SoundAlertDuration = 8
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(20, 20, 160), Vector(-20, -20, 0))
