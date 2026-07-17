@@ -460,25 +460,36 @@ function ENT:StopFiringRoutine(skipcooldown)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsNearEdge(dist)
-	dist = dist or 280
-
+	dist = dist or 90
+ 
+	local pos = self:GetPos()
 	local forward = self:GetForward()
 	local right = self:GetRight()
-
-	local checks = {self:GetPos() + forward * dist, self:GetPos() + forward * dist + right * dist, self:GetPos() + forward * dist - right * dist}
-
-	for _, pos in ipairs(checks) do
-		local tr = util.TraceLine({
-			start = pos + Vector(0, 0, 10),
-			endpos = pos - Vector(0, 0, 70),
+ 
+	local groundTr = util.TraceLine({
+		start = pos + Vector(0, 0, 10),
+		endpos = pos - Vector(0, 0, 70),
+		mask = MASK_NPCWORLDSTATIC
+	})
+ 
+	local groundZ = groundTr.Hit and groundTr.HitPos.z or pos.z
+ 
+	local checks = {pos + forward * dist, pos + forward * dist + right * 24, pos + forward * dist - right * 24}
+ 
+	for _, checkPos in ipairs(checks) do
+		local tr = util.TraceHull({
+			start = checkPos + Vector(0, 0, 10),
+			endpos = checkPos - Vector(0, 0, 90),
+			mins = Vector(-6, -6, 0),
+			maxs = Vector(6, 6, 6),
 			mask = MASK_NPCWORLDSTATIC
 		})
-
-		if !tr.Hit then
+ 
+		if !tr.Hit or (groundZ - tr.HitPos.z) > 60 then
 			return true
 		end
 	end
-
+ 
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -516,11 +527,16 @@ function ENT:ChargeThink()
 		end)
 	end
 
-	local speed = 628
+	local speed = 1256
 
 	if self.Charge_ShouldApplyForce && self:IsOnGround() then
-		self:SetVelocity(self:GetForward()*speed)
-		util.ScreenShake(self:GetPos(), 12, 1, 0.18, 650)
+		local vel = self:GetVelocity()
+		local forwardVel = vel:Dot(self:GetForward())
+
+		if forwardVel < speed then
+			self:SetVelocity(self:GetForward() * (speed - forwardVel))
+			util.ScreenShake(self:GetPos(), 12, 1, 0.18, 650)
+		end
 	end
 
 	if self:CustomMeleeDamage(self.ChargeDamage, bit.bor(DMG_CLUB,DMG_CRUSH,DMG_SLASH)) == true then -- Player or NPC was hit.
@@ -529,61 +545,55 @@ function ENT:ChargeThink()
 		self:VJ_ACT_PLAYACTIVITY("chargeend", true, duration, true)
 	end
 
+	local wallHullMins, wallHullMaxs = self:OBBMins(), self:OBBMaxs()
+
 	local wallTrace = util.TraceHull({
 		start = self:GetPos(),
 		endpos = self:GetPos() + self:GetForward() * 60,
-		mins = self:OBBMins(),
+		mins = Vector(wallHullMins.x, wallHullMins.y, 32),
 		maxs = self:OBBMaxs(),
 		filter = self,
 		mask = MASK_SOLID_BRUSHONLY
 	})
 
 	if wallTrace.Hit then
-		self:EmitSound("physics/metal/metal_sheet_impact_hard" .. math.random(6, 8) .. ".wav", 100, math.random(90,110))
-		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		local normal = wallTrace.HitNormal
 
-		self:TakeDamage(1)
+		if normal.z > 0.25 then
+			return
+		end
+
+		self:EmitSound("physics/metal/metal_sheet_impact_hard" .. math.random(6, 8) .. ".wav", 90, math.random(80,110))
+		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		self:TakeDamage(5)
 		return
 	end
 
-	local collision_positions = {
-		self:GetPos() + self:GetForward()*100,
-		self:GetPos() + self:GetForward()*100 + self:GetRight() * 65,
-		self:GetPos() + self:GetForward()*100 - self:GetRight() * 65,
+	local sidePositions = {
+		self:GetPos() + self:GetForward() * 60,
+		self:GetPos() + self:GetForward() * 60 + self:GetRight() * 30,
+		self:GetPos() + self:GetForward() * 60 - self:GetRight() * 30,
 	}
 
-	for k,pos in pairs(collision_positions) do
+	for _, sidePos in ipairs(sidePositions) do
 		local tr = util.TraceHull({
 			start = self:GetPos(),
-			endpos = self:GetPos() + self:GetForward() * 60,
-			mins = Vector(-18, -18, 0),
+			endpos = sidePos,
+			mins = Vector(-18, -18, 32),
 			maxs = Vector(18, 18, 72),
 			filter = self,
 			mask = MASK_SOLID
 		})
-
+ 
 		if tr.Hit then
 			self:StopCharging(true, self.ChargeCooldown * 0.5)
 			return
 		end
 	end
 
-	local forward = self:GetForward()
-	local right = self:GetRight()
-
-	local checks = {self:GetPos() + forward * 170, self:GetPos() + forward * 170 + right * 170, self:GetPos() + forward * 170 - right * 170}
-
-	for _, pos in ipairs(checks) do
-		local tr = util.TraceLine({
-			start = pos + Vector(0,0,10),
-			endpos = pos - Vector(0,0,70),
-			mask = MASK_SOLID_BRUSHONLY
-		})
-
-		if !tr.Hit then
-			self:StopCharging(true, self.ChargeCooldown * 0.5)
-			return
-		end
+	if self:IsNearEdge() then
+		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		return
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

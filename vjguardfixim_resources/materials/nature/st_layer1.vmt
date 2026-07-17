@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "nature\st_layer1"
+	"$bumpmap" "nature\st_layer1_normal"
+	"$surfaceprop" "rock"
+
+}

@@ -14,6 +14,7 @@ VJ.AddNPC("Warpball (Xenian Boss)", "sent_vj_cets_portal_ab",vCat)
 VJ.AddNPC("Warpball (Race X)", "sent_vj_cets_portal_b",vCat)
 VJ.AddNPC("Warpball (Antlions)", "sent_vj_cets_portal_c",vCat)
 VJ.AddNPC("Warpball (Combine)", "sent_vj_cets_portal_d",vCat)
+VJ.AddNPC("Alien Grunt Pod", "npc_agruntpod_vj_cets",vCat)
 //VJ.AddNPC("Vehicle 1", "npc_vehiclealive_1_vj_cets",vCat)
 
 VJ.AddConVar("vehicle_weapon_strip", 1, FCVAR_ARCHIVE)
@@ -26,6 +27,8 @@ VJ.AddConVar("sv_cets_friends_chat_sound_hl1", 0, FCVAR_ARCHIVE)
 VJ.AddConVar("cets_dance_context_menu", 0, FCVAR_ARCHIVE)
 VJ.AddConVar("cets_dance_spawn_menu", 1, FCVAR_ARCHIVE)
 VJ.AddConVar("cets_dance_music", 0, FCVAR_ARCHIVE)
+
+VJ.AddConVar("cl_cets_custom_crosshairs", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_grab_players_phys", 0, FCVAR_ARCHIVE)
 

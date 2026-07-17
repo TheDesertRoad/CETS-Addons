@@ -274,11 +274,16 @@ function ENT:ChargeThink()
 		end)
 	end
 
-	local speed = 628
+	local speed = 1024
 
 	if self.Charge_ShouldApplyForce && self:IsOnGround() then
-		self:SetVelocity(self:GetForward()*speed)
-		util.ScreenShake(self:GetPos(), 8, 1, 0.15, 450)
+		local vel = self:GetVelocity()
+		local forwardVel = vel:Dot(self:GetForward())
+
+		if forwardVel < speed then
+			self:SetVelocity(self:GetForward() * (speed - forwardVel))
+			util.ScreenShake(self:GetPos(), 8, 1, 0.15, 450)
+		end
 	end
 
 	if self:CustomMeleeDamage(self.ChargeDamage, bit.bor(DMG_CLUB,DMG_CRUSH,DMG_SLASH)) == true then -- Player or NPC was hit.
@@ -288,48 +293,53 @@ function ENT:ChargeThink()
 		self:VJ_ACT_PLAYACTIVITY("chargeend", true, duration, true)
 	end
 
+	local wallHullMins, wallHullMaxs = self:OBBMins(), self:OBBMaxs()
+
 	local wallTrace = util.TraceHull({
 		start = self:GetPos(),
 		endpos = self:GetPos() + self:GetForward() * 60,
-		mins = self:OBBMins(),
+		mins = Vector(wallHullMins.x, wallHullMins.y, 32),
 		maxs = self:OBBMaxs(),
 		filter = self,
 		mask = MASK_SOLID_BRUSHONLY
 	})
 
 	if wallTrace.Hit then
-		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(70,80))
-		ParticleEffect("gonarch_footstep_4", self:GetPos() + self:GetUp() * 30, Angle(0,0,0))
-		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		local normal = wallTrace.HitNormal
 
-		self:TakeDamage(8)
+		if normal.z > 0.25 then
+			return
+		end
+
+		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(70, 80))
+		ParticleEffect("gonarch_footstep_4", self:GetPos() + self:GetUp() * 30, Angle(0,0,0))
+
+		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		self:TakeDamage(5)
 		return
 	end
 
-	local collision_positions = {
-		self:GetPos() + self:GetForward()*100,
-		self:GetPos() + self:GetForward()*100 + self:GetRight() * 65,
-		self:GetPos() + self:GetForward()*100 - self:GetRight() * 65,
+	local sidePositions = {
+		self:GetPos() + self:GetForward() * 60,
+		self:GetPos() + self:GetForward() * 60 + self:GetRight() * 30,
+		self:GetPos() + self:GetForward() * 60 - self:GetRight() * 30,
 	}
 
-	for k,pos in pairs(collision_positions) do
+	for _, sidePos in ipairs(sidePositions) do
 		local tr = util.TraceHull({
 			start = self:GetPos(),
-			endpos = self:GetPos() + self:GetForward() * 20,
-			mins = Vector(-18, -18, 0),
+			endpos = sidePos,
+			mins = Vector(-18, -18, 32),
 			maxs = Vector(18, 18, 72),
 			filter = self,
 			mask = MASK_SOLID
 		})
-
+ 
 		if tr.Hit then
 			self:StopCharging(true, self.ChargeCooldown * 0.5)
 			return
 		end
 	end
-
-	local forward = self:GetForward()
-	local right = self:GetRight()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ChargeAtEnemy(duration)

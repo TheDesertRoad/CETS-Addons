@@ -1,0 +1,14 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "nature/st_rockcliff003"
+	"$basetexture2" "nature/faf_dirtground2"
+	"%tooltexture" "dev/blendgeneric"
+	"$bumpmap" "nature/st_rockcliff003_normal"
+	"$bumpmap2" "nature/faf_dirtground2_normal"
+ 	"$basetexturetransform" "center .5 .5 scale 3 3 rotate 0  translate 0 0"
+      "$basetexturetransform2" "center .5 .5 scale 1 1 rotate 0 translate 0 0"
+	"%detailtype" "short_redgrass_bms"
+	"$surfaceprop" "rock"
+	"$surfaceprop2" "dirt"
+	"%keywords" "bms"
+}

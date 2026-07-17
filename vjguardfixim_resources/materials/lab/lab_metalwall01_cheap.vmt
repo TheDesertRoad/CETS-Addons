@@ -1,0 +1,6 @@
+"LightMappedGeneric"
+{
+	"$baseTexture" "lab\lab_metalwall01"
+	"%keywords" "bms,c1a0"
+	"$surfaceprop" "metal"
+}

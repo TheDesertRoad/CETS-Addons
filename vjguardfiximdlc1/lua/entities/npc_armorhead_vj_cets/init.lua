@@ -145,3 +145,13 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 
 	self:SetVelocity(velocity)
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
+	local effectdata = EffectData()
+	effectdata:SetOrigin(dmginfo:GetDamagePosition())
+
+	if hitgroup == HITGROUP_GEAR && dmginfo:GetDamageType() then
+		dmginfo:ScaleDamage(0.1)
+		VJ_EmitSound("npc/antlion/shell_impact1.wav")
+	end
+end

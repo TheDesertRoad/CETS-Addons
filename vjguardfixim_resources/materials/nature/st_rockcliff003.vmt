@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "nature/st_rockcliff003"
+	"$surfaceprop" "rock"
+	"%keywords" "bms"
+	"$bumpmap" "nature//st_rockcliff003_normal"
+}

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" 				"xen/xen_rock_cliff_001a"
+	"$bumpmap" 					"xen/xen_rock_cliff_001a_normal"
+	"$surfaceprop" 				"rock"
+
+    "$model" 1
+}

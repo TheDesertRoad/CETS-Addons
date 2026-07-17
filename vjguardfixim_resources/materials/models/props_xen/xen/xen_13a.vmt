@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "xen/xen_13a"
+	"$bumpmap" "xen/xen_13a_normal"
+	"$surfaceprop" "Gravel"
+	"$detail" "detail/bm_concrete_detail_04"
+}

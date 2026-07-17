@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props_combine/combine_Tank_glass_energy"
+	"$selfillum" "1"
+	"$selfillummask" "models/props_combine/combine_Tank_glass_energy"
+}

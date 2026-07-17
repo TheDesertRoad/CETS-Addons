@@ -44,11 +44,43 @@ function ENT:Init()
 	util.SpriteTrail(self, 1, Color(255, math.random(2, 160), 0, 64), true, 12, 0, 0.5, 0.1, "sprites/smoke.vmt")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:FindNearestTarget()
+	local myPos = self:GetPos()
+	local nearest = NULL
+	local nearestDist = math.huge
+
+	local owner = self:GetOwner()
+
+	for _, ent in ipairs(ents.GetAll()) do
+		if IsValid(ent) and ent ~= self and ent ~= owner and (ent:IsNPC() or ent:IsPlayer() or ent:IsNextBot()) and ent:Health() > 0 and self:Visible(ent) then
+			local dist = myPos:DistToSqr(ent:WorldSpaceCenter())
+			if dist < nearestDist then
+				nearestDist = dist
+				nearest = ent
+			end
+		end
+	end
+
+	return nearest
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
 	ParticleEffectAttach("jeff_trails",PATTACH_ABSORIGIN_FOLLOW,self,0)
+
+	if !IsValid(self.Track_Ent) then
+		self.Track_Ent = self:FindNearestTarget()
+	end
+
 	local trackedEnt = self.Track_Ent
+
+	if !self.NextTargetSearch or CurTime() > self.NextTargetSearch then
+		self.NextTargetSearch = CurTime() + 0.1
+		self.Track_Ent = self:FindNearestTarget()
+	end
+
 	local trackedEnt = self.Track_Ent
-	if IsValid(trackedEnt) then -- Homing Behavior
+
+	if IsValid(trackedEnt) then
 		local pos = trackedEnt:GetPos() + trackedEnt:OBBCenter()
 		if self:VisibleVec(pos) or self.Track_Position == defVec then
 			self.Track_Position = pos
@@ -57,11 +89,12 @@ function ENT:OnThink()
 		local phys = self:GetPhysicsObject()
 
 		if IsValid(phys) then
-			local targetVel = VJ.CalculateTrajectory(self, trackedEnt, "Line", self:GetPos(), self.Track_Position + VectorRand(-75, 75), 600)
-			local currentVel = phys:GetVelocity()
-			local smoothVel = LerpVector(FrameTime() * 30, currentVel, targetVel)
+			local targetPos = trackedEnt:WorldSpaceCenter()
+			local dir = (targetPos - self:GetPos()):GetNormalized()
+			local speed = 900
 
-			phys:SetVelocity(smoothVel)
+			phys:SetVelocity(dir * speed)
+			self:SetAngles(dir:Angle())
 		end
 	end
 end

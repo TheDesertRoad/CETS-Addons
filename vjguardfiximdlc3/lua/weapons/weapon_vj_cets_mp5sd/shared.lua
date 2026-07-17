@@ -354,3 +354,72 @@ function SWEP:Reload()
 		return true
 	end
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+if CLIENT then
+	function SWEP:CreateWeaponSelectionFonts(height)
+		local scale = (height*0.8)/64 --ScrH()/480
+		
+		surface.CreateFont("CETS_MP5SDfont_Glow", {
+			font = "CETS",
+			size = math.min(42*scale, 150), --165
+			weight = 500,
+			antialias = true,
+			additive = true,
+			blursize = 5*scale,
+			scanlines = 2*scale
+		})
+
+		surface.CreateFont("CETS_MP5SDfont", {
+			font = "CETS",
+			size = math.min(42*scale, 150), --150
+			weight = 500,
+			antialias = true,
+			additive = true
+		})
+		
+	end
+
+	local function GetHUDColor()
+		local path = "resource/ClientScheme.res"
+
+		if not file.Exists(path, "GAME") then
+			return Color(255, 220, 0, 220)
+		end
+
+		local contents = file.Read(path, "GAME")
+		if not contents then
+			return Color(255, 220, 0, 220)
+		end
+
+		local r, g, b, a = contents:match([["FgColorHud"%s*"(%d+)%s+(%d+)%s+(%d+)%s+(%d+)"]])
+
+		if not r then
+			return Color(255, 220, 0, 220)
+		end
+
+		return Color(tonumber(r), tonumber(g), tonumber(b), tonumber(a))
+	end
+
+	local prevScrH = nil
+
+	SWEP.DrawWeaponSelection = function(self, x, y, w, h, alpha)
+		if h != prevScrH then
+			self:CreateWeaponSelectionFonts(h)
+			prevScrH = h
+		end
+			local hudColor = GetHUDColor()
+		
+			r = hudColor.r
+			g = hudColor.g
+			b = hudColor.b
+
+		local glowAlpha = 255
+
+		local icon = "n"
+		local cx = x + w / 2
+		local cy = y + h / 2
+
+		draw.SimpleText(icon, "CETS_MP5SDfont_Glow", cx, cy, Color(r, g, b, glowAlpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(icon, "CETS_MP5SDfont", cx, cy, Color(r, g, b, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	end
+end

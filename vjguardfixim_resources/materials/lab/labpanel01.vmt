@@ -1,0 +1,11 @@
+"LightMappedGeneric"
+{
+	"$baseTexture" "lab\labpanel01"
+	"%keywords" "bms,c1a0"
+	"$surfaceprop" "metal"
+	"$bumpmap" "lab\labpanel01_normal"
+	"$envmap" "env_cubemap"
+   	"$envmaptint" "[.75 .75 .75]"
+	"$normalmapalphaenvmapmask" 1	
+	"$envmapsaturation" 1
+}

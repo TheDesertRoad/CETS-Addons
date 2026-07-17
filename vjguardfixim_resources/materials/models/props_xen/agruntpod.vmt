@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{	
+	//"$color2" 					"[.9 .9 .9]"
+	"$basetexture"					"models/props_xen/agruntpod_d"
+	"$bumpmap" 						"models/props_xen/agruntpod_n"
+
+	"$model" 						"1"
+	"$normalmapalphaenvmapmask"	 	"1"
+	"$surfaceprop" 					"inttower"
+}

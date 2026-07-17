@@ -1,0 +1,5 @@
+"lightmappedgeneric" {
+"$bumpmap" "concrete\hostiles_concrete1_normal" 
+    "$basetexture" "concrete\hostiles_concrete1_green"
+    "$surfaceprop" "concrete"
+}

@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props_combine/combine_ball_Launcher"
+	"$surfaceprop" "Metal"
+	"$selfillum" "1"
+//	"$envmap" "env_cubemap"
+//	"$envmaptint" "[ .5 .6 .8]"
+//	"$basealphaenvmapmask" 1
+}

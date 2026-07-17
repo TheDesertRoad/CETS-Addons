@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "lab/floor_rubber01b"
+	"$bumpmap" "lab/floor_rubber01b_bump"
+	"$surfaceprop" "rubber"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$envmapsaturation" .5
+	"$envmapcontrast" .667
+	"$normalmapalphaenvmapmask" 1
+}

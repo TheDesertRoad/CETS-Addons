@@ -1,0 +1,14 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "nature/sandfloor009a"
+	"$basetexture2" "nature/faf_dirtground2_grass"
+	"%tooltexture" "dev/blendgeneric"
+	"$bumpmap" "nature/sandfloor009a_normal"
+	"$bumpmap2" "nature/faf_dirtground2_normal"
+ 	"$basetexturetransform" "center .5 .5 scale 1 1 rotate 0  translate 0 0"
+      "$basetexturetransform2" "center .5 .5 scale 1 1 rotate 0 translate 0 0"
+	"%detailtype" "short_redgrass_bms"
+	"$surfaceprop" "dirt"
+	"$surfaceprop2" "dirt"
+	"%keywords" "bms,c2a5,c3a1"
+}

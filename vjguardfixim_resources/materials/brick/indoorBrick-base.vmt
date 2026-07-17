@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "brick/indoorBrick-base"
+	"$bumpmap" "brick/indoorBrick-base_normal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .13 .13 .13 ]"
+	"$normalmapalphaenvmapmask" 1
+	"$surfaceprop" "brick"
+}

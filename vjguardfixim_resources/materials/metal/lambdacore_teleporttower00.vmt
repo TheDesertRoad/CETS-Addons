@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$baseTexture" "metal/lambdacore_teleporttower00"
+	"$bumpmap" "metal/lambdacore_teleporttower00_norm"
+	"$surfaceprop" "metal"
+}

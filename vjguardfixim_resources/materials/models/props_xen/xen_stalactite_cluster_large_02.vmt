@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+
+	$basetexture "models/props_xen/xen_stalactite_cluster_large_02"
+	$bumpmap "models/props_xen/xen_stalactite_cluster_large_02_nm"
+
+
+
+
+    "$model" 1
+}

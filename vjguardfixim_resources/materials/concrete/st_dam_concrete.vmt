@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "concrete\st_dam_concrete"
+	"$bumpmap" "concrete\st_dam_concrete_normal"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmaptint" .2 .2 .2
+	"$surfaceprop" "concrete"
+	"%keywords" "bms,c2a5"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props_combine/combine_Tank_bio_glass"
+	"$envmap" "env_cubemap"
+	"$selfillum" "1"
+}

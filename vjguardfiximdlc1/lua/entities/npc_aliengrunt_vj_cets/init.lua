@@ -15,7 +15,7 @@ ENT.ControllerParams = {
 	FirstP_Offset = Vector(12, 0, 5),
 	FirstP_ShrinkBone = false,
 }
-
+ 
 ENT.JumpParams = {
 	Enabled = false, -- Can it do movement jumps?
 }
@@ -24,7 +24,7 @@ ENT.BloodColor = "Yellow"
 ENT.BloodDecalUseGMod = true
 ENT.HasBloodParticle = true
 ENT.HasBloodPool = false
-
+ 
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_DEBRIS
 ENT.DeathCorpseApplyForce = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -37,34 +37,34 @@ ENT.MeleeAttackKnockBack_Up1 = 100 -- How far it will push you forward | First i
 ENT.MeleeAttackKnockBack_Up2 = 150 -- How far it will push you forward | Second in math.random
 ENT.MeleeAttackDistance = 60 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 70 -- How far does the damage go?
-
+ 
 ENT.HasRangeAttack = true
 ENT.RangeAttackProjectiles = "obj_vj_alienhornet_ng"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.01
 ENT.RangeAttackMaxDistance = 1024
-ENT.RangeAttackMinDistance = 128
+ENT.RangeAttackMinDistance = 356
 ENT.NextRangeAttackTime = 0.4
 ENT.AnimTbl_RangeAttack = {"fire2", "fire3"}
-
+ 
 ENT.ChargeDuration = math.random(8, 16)
 ENT.ChargeCooldown = math.random(5, 12)
 ENT.ChargeDamage = GetConVar("sk_cets_agrunt_dmg_charge"):GetInt()
-
+ 
 ENT.LimitChaseDistance = true
 ENT.LimitChaseDistance_Max = "UseRangeDistance"
 ENT.LimitChaseDistance_Min = "UseRangeDistance"
-
+ 
 ENT.CanFlinch = true -- Can it flinch? | false = Don't flinch | true = Always flinch | "DamageTypes" = Flinch only from certain damages types
 ENT.FlinchDamageTypes = {DMG_BLAST} -- Which types of damage types should it flinch from when "DamageTypes" is used?
 ENT.FlinchChance = 24 -- Chance of flinching from 1 to x | 1 = Always flinch
 ENT.FlinchCooldown = 4 -- How much time until it can flinch again? | false = Base auto calculates the duration
 ENT.AnimTbl_Flinch = "big_flinch"
-
+ 
 ENT.FootStepSoundLevel = 60
 ENT.FootStepSoundPitch = 70
-
+ 
 ENT.SoundTbl_FootStep = {"npc/vort/vort_foot1.wav", "npc/vort/vort_foot2.wav", "npc/vort/vort_foot3.wav", "npc/vort/vort_foot4.wav"}
-
+ 
 ENT.SoundTbl_Idle = {
 	"npc/alien_grunt/ag_idle1.wav",
 	"npc/alien_grunt/ag_idle2.wav",
@@ -72,14 +72,14 @@ ENT.SoundTbl_Idle = {
 	"npc/alien_grunt/ag_idle4.wav",
 	"npc/alien_grunt/ag_idle5.wav",
 }
-
+ 
 ENT.SoundTbl_CombatIdle = {
 	"npc/alien_grunt/ag_hide1.wav",
 	"npc/alien_grunt/ag_hide2.wav",
 	"npc/alien_grunt/ag_hide3.wav",
 	"npc/alien_grunt/ag_hide4.wav",
 }
-
+ 
 ENT.SoundTbl_Alert = {
 	"npc/alien_grunt/ag_alert1.wav",
 	"npc/alien_grunt/ag_alert2.wav",
@@ -87,36 +87,36 @@ ENT.SoundTbl_Alert = {
 	"npc/alien_grunt/ag_alert4.wav",
 	"npc/alien_grunt/ag_alert5.wav",
 }
-
+ 
 ENT.SoundTbl_MeleeAttackMiss = {
 	"npc/vort/claw_swing1.wav",
 	"npc/vort/claw_swing2.wav",
 }
-
+ 
 ENT.SoundTbl_MeleeAttack = {
 	"npc/fast_zombie/claw_strike1.wav",
 	"npc/fast_zombie/claw_strike2.wav",
 	"npc/fast_zombie/claw_strike3.wav",
 }
-
+ 
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"npc/alien_grunt/ag_attack1.wav",
 	"npc/alien_grunt/ag_attack2.wav",
 	"npc/alien_grunt/ag_attack3.wav",
 }
-
+ 
 ENT.SoundTbl_BeforeRangeAttack = {
 	"npc/alien_grunt/ag_attack1.wav",
 	"npc/alien_grunt/ag_attack2.wav",
 	"npc/alien_grunt/ag_attack3.wav",
 }
-
+ 
 ENT.SoundTbl_RangeAttack = {
 	"npc/alien_grunt/ag_fire1.wav",
 	"npc/alien_grunt/ag_fire2.wav",
 	"npc/alien_grunt/ag_fire3.wav",
 }
-
+ 
 ENT.SoundTbl_Pain = {
 	"npc/alien_grunt/ag_pain1.wav",
 	"npc/alien_grunt/ag_pain2.wav",
@@ -124,7 +124,7 @@ ENT.SoundTbl_Pain = {
 	"npc/alien_grunt/ag_pain4.wav",
 	"npc/alien_grunt/ag_pain5.wav",
 }
-
+ 
 ENT.SoundTbl_Death = {
 	"npc/alien_grunt/ag_die1.wav",
 	"npc/alien_grunt/ag_die2.wav",
@@ -132,13 +132,18 @@ ENT.SoundTbl_Death = {
 	"npc/alien_grunt/ag_die4.wav",
 	"npc/alien_grunt/ag_die5.wav",
 }
+
+ENT.ChargeStepHeight = 21
+ENT.ChargeObstacleCheckDistance = 24
+ENT.ChargeStepScanIncrement = 0.1
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetSpawnEffect(true)
 	self:SetCollisionBounds(Vector(10, 10, 85), Vector(-10, -10, 0))
-
+ 
 	self.NextChargeTime = CurTime()
-
+	self:SetStepHeight(self.ChargeStepHeight)
+ 
 	self.Bullseye = ents.Create("obj_vj_Bullseye")
 	self.Bullseye:SetModel("models/hunter/blocks/cube1x1x025.mdl")
 	self.Bullseye:SetParent(self)
@@ -148,24 +153,24 @@ function ENT:Init()
 	self.Bullseye:DrawShadow(false)
 	self.Bullseye:SetSolid(SOLID_NONE)
 	self.Bullseye.VJ_NPC_Class = self.VJ_NPC_Class
-
+ 
 	self.BlackAmount = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StartChargeTrail()
 	if IsValid(self.ChargeTrailDummy) then return end
-
+ 
 	local dummy = ents.Create("base_anim")
 	if not IsValid(dummy) then return end
-
+ 
 	dummy:SetPos(self:GetAttachment(8).Pos)
 	dummy:SetAngles(self:GetAngles())
 	dummy:SetNoDraw(true)
 	dummy:Spawn()
 	dummy:SetParent(self)
-
+ 
 	util.SpriteTrail(dummy, 0, Color(128, 128, 128, 24), false, 64, 0, 1, 0.5 / 48, "sprites/baku_burntcer_smoke")
-
+ 
 	self.ChargeTrailDummy = dummy
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -191,17 +196,17 @@ function ENT:OnThink()
 	else
 		self.HasIdleSounds = true
 	end
-
+ 
 	local value = math.Round(Lerp(self.BlackAmount, 255, 90))
 	self:SetColor(Color(value, value, value, 255))
-
+ 
 	self.Bullseye.VJ_NPC_Class = self.VJ_NPC_Class
-
+ 
 	if self.DeathAnimationCodeRan then return end
 	local enemy = self:GetEnemy()
-
+ 
 	if IsValid(enemy) then
-
+ 
 	if self.VJ_IsBeingControlled then
 		local controller = self.VJ_TheController
 			if !self:Attacking() then
@@ -219,9 +224,9 @@ function ENT:OnThink()
 				end
 			end
 		end
-
+ 
 		if self.Charging then self:ChargeThink() end
-
+ 
 		if !IsValid(enemy) then
 			if self.Charging then
 				self:StopCharging(true,self.ChargeCooldown*0.5)
@@ -259,26 +264,26 @@ function ENT:CustomMeleeDamage(damage,damagetype)
 	local realisticRadius = false
 	local damaged_ents = util.VJ_SphereDamage(self, self, self:GetPos() + self:GetForward() * 50, 50, damage, damagetype, true, realisticRadius)
 	local NPCWasHit = false
-
+ 
 	if self.Charging then
 		for _, ent in pairs(damaged_ents) do
 			local dir = self:GetVelocity():GetNormalized()
-
+ 
 			if dir == vector_origin then
 				dir = self:GetForward()
 			end
-
+ 
 			local speed = math.max(self:GetVelocity():Length(), 400)
 			local knockback = dir * (speed * 0.45)
 			knockback.z = math.Clamp(speed * 0.55, 180, 300)
-
+ 
 			local center = self:GetPos() + self:GetForward() * 60
-
+ 
 			for _, ent in ipairs(ents.FindInSphere(center, 48)) do
 				if ent == self then continue end
-
+ 
 				local class = ent:GetClass()
-
+ 
 				if class == "func_breakable" then
 					local dmg = DamageInfo()
 					dmg:SetAttacker(self)
@@ -286,26 +291,26 @@ function ENT:CustomMeleeDamage(damage,damagetype)
 					dmg:SetDamage(500)
 					dmg:SetDamageType(bit.bor(DMG_CLUB, DMG_CRUSH))
 					ent:TakeDamageInfo(dmg)
-
+ 
 				return
-
+ 
 				elseif class == "func_breakable_surf" then
 					ent:Fire("Shatter")
 					return
 				end
 			end
-
+ 
 			if ent:IsNPC() or ent:IsPlayer() then
 				if ent:IsPlayer() then
 					ent:SetVelocity(knockback)
 				elseif !ent.VJ_IsHugeMonster then
 					ent:SetVelocity(knockback / 2)
 				end
-
+ 
 				NPCWasHit = true
 			end
 		end
-
+ 
 		if NPCWasHit then
 			self:PlaySoundSystem("MeleeAttack", SoundTbl_MeleeAttack)
 			return true
@@ -314,49 +319,64 @@ function ENT:CustomMeleeDamage(damage,damagetype)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsNearEdge(dist)
-	dist = dist or 256
-
+	dist = dist or 90
+ 
+	local pos = self:GetPos()
 	local forward = self:GetForward()
 	local right = self:GetRight()
-
-	local checks = {self:GetPos() + forward * dist, self:GetPos() + forward * dist + right * dist, self:GetPos() + forward * dist - right * dist}
-
-	for _, pos in ipairs(checks) do
-		local tr = util.TraceLine({
-			start = pos + Vector(0, 0, 10),
-			endpos = pos - Vector(0, 0, 70),
+ 
+	local groundTr = util.TraceLine({
+		start = pos + Vector(0, 0, 10),
+		endpos = pos - Vector(0, 0, 70),
+		mask = MASK_NPCWORLDSTATIC
+	})
+ 
+	local groundZ = groundTr.Hit and groundTr.HitPos.z or pos.z
+ 
+	local checks = {pos + forward * dist, pos + forward * dist + right * 24, pos + forward * dist - right * 24}
+ 
+	for _, checkPos in ipairs(checks) do
+		local tr = util.TraceHull({
+			start = checkPos + Vector(0, 0, 10),
+			endpos = checkPos - Vector(0, 0, 90),
+			mins = Vector(-6, -6, 0),
+			maxs = Vector(6, 6, 6),
 			mask = MASK_NPCWORLDSTATIC
 		})
-
-		if !tr.Hit then
+ 
+		if !tr.Hit or (groundZ - tr.HitPos.z) > 60 then
 			return true
 		end
 	end
-
+ 
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Attacking() if self.Charging or self.MeleeAttacking then return true end end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CanChargeEnemy()
-	local forward = self:GetForward()
-	local right = self:GetRight()
-
+	local enemy = self:GetEnemy()
+	if !IsValid(enemy) then return false end
+ 
+	local heightOffset = Vector(0, 0, 40)
+ 
 	local tr = util.TraceHull({
-		start = self:GetPos(),
-		endpos = self:GetEnemy():GetPos(),
+		start = self:GetPos() + heightOffset,
+		endpos = enemy:GetPos() + heightOffset,
 		mask = MASK_NPCWORLDSTATIC,
 		mins = self:OBBMins(),
 		maxs = self:OBBMaxs(),
 	})
-
-	if self:IsNearEdge(256) then
+ 
+	if self:IsNearEdge() then
 		return false
 	end
-
-	if self:Visible(self:GetEnemy()) && self:GetEnemy():IsOnGround() && !tr.Hit then
+ 
+	if self:Visible(enemy) && enemy:IsOnGround() && !tr.Hit then
 		return true
 	end
+ 
+	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ChargeThink()
@@ -372,10 +392,15 @@ function ENT:ChargeThink()
 		end)
 	end
 
-	local speed = 512
+	local speed = 1024
 
 	if self.Charge_ShouldApplyForce && self:IsOnGround() then
-		self:SetVelocity(self:GetForward()*speed)
+		local vel = self:GetVelocity()
+		local forwardVel = vel:Dot(self:GetForward())
+
+		if forwardVel < speed then
+			self:SetVelocity(self:GetForward() * (speed - forwardVel))
+		end
 	end
 
 	if self:CustomMeleeDamage(self.ChargeDamage, bit.bor(DMG_CLUB,DMG_CRUSH,DMG_SLASH)) == true then -- Player or NPC was hit.
@@ -385,59 +410,57 @@ function ENT:ChargeThink()
 		self:VJ_ACT_PLAYACTIVITY("MGrunt_Charge_Crash", true, duration, true)
 	end
 
+	local wallHullMins, wallHullMaxs = self:OBBMins(), self:OBBMaxs()
+
 	local wallTrace = util.TraceHull({
 		start = self:GetPos(),
 		endpos = self:GetPos() + self:GetForward() * 60,
-		mins = self:OBBMins(),
+		mins = Vector(wallHullMins.x, wallHullMins.y, 32),
 		maxs = self:OBBMaxs(),
 		filter = self,
 		mask = MASK_SOLID_BRUSHONLY
 	})
 
 	if wallTrace.Hit then
+		local normal = wallTrace.HitNormal
+
+		if normal.z > 0.25 then
+			return
+		end
+
 		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(90,110))
 		ParticleEffect("gonarch_footstep_4", self:GetPos() + self:GetUp() * 30, Angle(0,0,0))
+
 		self:StopCharging(true, self.ChargeCooldown * 0.5)
 		self:TakeDamage(5)
 		return
 	end
 
-	local collision_positions = {
-		self:GetPos() + self:GetForward()*100,
-		self:GetPos() + self:GetForward()*100 + self:GetRight() * 65,
-		self:GetPos() + self:GetForward()*100 - self:GetRight() * 65,
+	local sidePositions = {
+		self:GetPos() + self:GetForward() * 60,
+		self:GetPos() + self:GetForward() * 60 + self:GetRight() * 30,
+		self:GetPos() + self:GetForward() * 60 - self:GetRight() * 30,
 	}
 
-	for k,pos in pairs(collision_positions) do
+	for _, sidePos in ipairs(sidePositions) do
 		local tr = util.TraceHull({
 			start = self:GetPos(),
-			endpos = self:GetPos() + self:GetForward() * 60,
-			mins = Vector(-18, -18, 0),
+			endpos = sidePos,
+			mins = Vector(-18, -18, 32),
 			maxs = Vector(18, 18, 72),
 			filter = self,
 			mask = MASK_SOLID
 		})
-
+ 
 		if tr.Hit then
 			self:StopCharging(true, self.ChargeCooldown * 0.5)
 			return
 		end
 	end
 
-	local forward = self:GetForward()
-	local right = self:GetRight()
-	local checks = {self:GetPos() + forward * 128, self:GetPos() + forward * 128 + right * 128, self:GetPos() + forward * 128 - right * 128}
-
-	for _, pos in ipairs(checks) do
-		local tr = util.TraceLine({
-			start = pos + Vector(0,0,10),
-			endpos = pos - Vector(0,0,70),
-			mask = MASK_SOLID_BRUSHONLY
-		})
-		if !tr.Hit then
-			self:StopCharging(true, self.ChargeCooldown * 0.5)
-			return
-		end
+	if self:IsNearEdge() then
+		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		return
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -446,9 +469,9 @@ function ENT:ChargeAtEnemy(duration)
 	self.Charging = true
 	self.Charge_ApplyForceCountdownStarted = false
 	self.Charge_ShouldApplyForce = false
-
+ 
 	self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
-
+ 
 	timer.Simple(duration, function() if IsValid(self) && self.Charging then
 		self:StopCharging(true,self.ChargeCooldown)
 	end end)
@@ -457,16 +480,16 @@ end
 function ENT:StopCharging(UseAnimation,nextcharge)
 	if self.DeathAnimationCodeRan then return end
 	self:StopSound("npc/alien_grunt/ag_charging1.wav")
-
+ 
 	self.MovementType = VJ_MOVETYPE_STATIONARY
 	self.CanTurnWhileStationary = false
 	self.HasMeleeAttack = false
 	self.HasRangeAttack = false
 	self.IsGuard = true
 	self.CallForHelp = false
-
+ 
 	if UseAnimation then self:VJ_ACT_PLAYACTIVITY("mgrunt_charge_crash", true, self:SequenceDuration(self:LookupSequence( "mgrunt_charge_crash" )), true) end
-
+ 
 	timer.Simple(self:SequenceDuration(self:LookupSequence( "mgrunt_charge_crash" )), function() if IsValid(self) then
 		self.MovementType = VJ_MOVETYPE_GROUND
 		self.CanTurnWhileStationary = true
@@ -475,12 +498,12 @@ function ENT:StopCharging(UseAnimation,nextcharge)
 		self.IsGuard = false
 		self.CallForHelp = true
 	end end)
-
+ 
 	self.Charging = false
 	self.Charge_ShouldApplyForce = false
-
+ 
 	self:StopChargeTrail()
-
+ 
 	self.NextChargeTime = CurTime() + nextcharge
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

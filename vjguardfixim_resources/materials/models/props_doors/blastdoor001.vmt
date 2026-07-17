@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "Models/props_doors/blastdoor001"
+   	"$envmap" "env_cubemap"
+    	"$basealphaenvmapmask" 1 
+	"$envmaptint" .3 .3 .3
+	
+}
+
+

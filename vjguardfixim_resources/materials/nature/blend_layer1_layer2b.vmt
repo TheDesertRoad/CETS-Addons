@@ -1,0 +1,13 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "nature/st_layer1"
+	"$basetexture2" "nature/st_layer2b"
+	"%tooltexture" "dev/blendgeneric"
+	"$bumpmap" "nature/st_layer1_normal"
+	"$bumpmap2" "nature/st_layer2b_normal"
+ 	"$basetexturetransform" "center .5 .5 scale 1 1 rotate 0  translate 0 0"
+      "$basetexturetransform2" "center .5 .5 scale 1 1 rotate 0 translate 0 0"
+	"$surfaceprop" "rock"
+	"$surfaceprop2" "rock"
+	"%keywords" "bms,c2a5,c3a1"
+}

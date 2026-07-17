@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+
+	$basetexture "models/props_xen/xen_healingpool_03"
+	$bumpmap "models/props_xen/xen_healingpool_03_nm"
+
+	$phong 1
+        $phongexponent 4
+        $phongboost .2
+        $phongtint "[.7 .7 1]"
+        $halflambert 1
+
+
+    "$model" 1
+}

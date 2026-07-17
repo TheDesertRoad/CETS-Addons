@@ -1,0 +1,12 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "xen/xen_13a"
+	"$basetexture2" "xen/xen_2c"
+	"$bumpmap" "xen/xen_13a_normal"
+	"$bumpmap2" "xen/xen_2c_normal"
+	"$surfaceprop" "Gravel"
+//	"$envmaptint" "[ 0.7 .01 .02 ]"
+//	"$envmap" "cubemaps/cubemap_xen"
+//	"$detail" "detail/bm_concrete_detail_04"
+	"$blendmodulatetexture" 	"xen/blend/xen_modulate_001"
+}

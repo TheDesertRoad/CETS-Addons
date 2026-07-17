@@ -1,0 +1,10 @@
+// envmaptint_fix
+// CHEAP specular version by CJ, 27 October 2005
+"LightmappedGeneric"
+{
+	"$basetexture" "Metal/metaldoor046a"
+	"$surfaceprop" "metal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .3 .3 .3 ]"
+	"$envmapcontrast" 1
+}

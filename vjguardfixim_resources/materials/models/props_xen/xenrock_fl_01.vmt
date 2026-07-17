@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+
+	$basetexture 	"models/props_xen/xenrock_fl_01"
+	$bumpmap 	"models/props_xen/xenrock_fl_01_nm"
+
+
+
+    "$model" 1
+}

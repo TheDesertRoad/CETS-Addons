@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 				"models/props_xen/interloper/healing_shower_d"
+	"$normalmapalphaenvmapmask" "1"
+	"$surfaceprop" 				"metal"
+	"$model" 					"1"
+        $halflambert 1
+	"$selfillum" 				"1"
+
+	"$phong"					"1"
+	"$phongExponent"			"15"
+	"$phongBoost"				"3"
+	"$phongFresnelRanges" 		"[0.25 0.5 1]"
+}

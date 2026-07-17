@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/props_combine/Combine_field_indicator01"
+	"$surfaceprop" "Metal"
+	"$selfillum" "1"
+}

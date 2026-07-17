@@ -265,12 +265,17 @@ local function CreatePassengerSeats(ply, vehicle)
 				phys:EnableMotion(false)
 			end
 
-			seat:Spawn()
 			if vehicle:GetVehicleClass()=="vehicle_cets_hl2_shared1" then
-				seat:SetNoDraw(false)
+
 			else
 				seat:SetNoDraw(true)	
+				seat:SetRenderMode(RENDERMODE_NONE)
+				seat:SetColor(Color(255, 255, 255, 0))
+				seat:DrawShadow(false)
+				seat:AddEffects(EF_NODRAW)
 			end
+
+			seat:Spawn()
 			seat:Activate()
 
 			constraint.Weld(seat, vehicle, 0, 0, 0, false)

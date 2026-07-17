@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "xen/plant_green"
+	"$surfaceprop" "Flesh"
+//	"$translucent" "1"
+	"$alphatest" "1"
+	"$alphatestreference" 0.5
+//	"$AllowAlphaToCoverage" 1
+	"$nodecal" 1
+	"$nocull" 1
+}
