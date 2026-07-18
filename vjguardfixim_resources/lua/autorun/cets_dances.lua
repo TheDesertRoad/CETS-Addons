@@ -130,7 +130,7 @@ if CLIENT then
 		local indicate, _ = menu:AddSubMenu("Indicate")
 		indicate:AddOption("Salute", function() PlayAnim("salute") end)
 		indicate:AddOption("Forward", function() PlayAnim("forward") end)
-		indicate:AddOption("Beckon", function() PlayAnim("beckon") end)
+		indicate:AddOption("Becon", function() PlayAnim("becon") end)
 		indicate:AddOption("Group", function() PlayAnim("group") end)
 		indicate:AddOption("Halt", function() PlayAnim("halt") end)
 

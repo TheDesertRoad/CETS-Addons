@@ -326,7 +326,6 @@ function SWEP:Reload()
 	if self:Clip1() == self.Primary.ClipSize && isPly then return end
 
 	if isNPC then
-	local owner = funcGetOwner(self)
 	if !IsValid(owner) or !owner:IsPlayer() or !owner:Alive() or owner:GetAmmoCount(self.Primary.Ammo) == 0 or self.Reloading or CurTime() < self.PLY_NextReloadT then return end
 	if self:Clip1() < self.Primary.ClipSize then
 		self.Reloading = true
@@ -358,7 +357,6 @@ function SWEP:Reload()
 		end)
 		return true
 	end
-
 	elseif isPly then
 		if (self.Zoom == 1) && isPly then
 			self.Owner:SetFOV( 0, .5 )

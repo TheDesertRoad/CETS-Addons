@@ -132,6 +132,18 @@ local Presets = {
 		size = 24,
 		color = Color(r, g, b, alpha)
 	},
+
+	rocket = {
+		char = "p",
+		size = 24,
+		color = Color(r, g, b, alpha)
+	},
+
+	crossbow = {
+		char = "o",
+		size = 16,
+		color = Color(r, g, b, alpha)
+	},
 }
 
 local WeaponCrosshairs = {
@@ -163,9 +175,10 @@ local WeaponCrosshairs = {
 
 	weapon_vj_cets_oicw = "oicw",
 
-	weapon_rpg = "rpg",
+	weapon_rpg = "rocket",
 
-	weapon_crossbow = "cross",
+	weapon_crossbow = "crossbow",
+
 	weapon_vj_cets_hecusniper = "cross",
 
 	weapon_smg1 = "smg",

@@ -205,14 +205,14 @@ function SWEP:PrimaryAttack(UseAlt)
 	ang:RotateAroundAxis(ang:Up(), -90)
 	local effect = EffectData()
 
-	if isPly then
-		effect:SetOrigin(self:GetOwner():GetShootPos() - self:GetUp() * 10 + self:GetForward() * 22 + self:GetRight() * 10)
-	elseif isNPC then
-		effect:SetOrigin(self:GetOwner():GetShootPos())
-	end
+	if isPly then 
+		effect:SetOrigin(self.Weapon:GetOwner():GetShootPos() - self:GetUp() * 10 + self:GetForward() * 22 + self:GetRight() * 10) 
+	elseif isNPC then 
+		effect:SetOrigin(self:GetOwner():GetShootPos()) 
+	end 
 
-	effect:SetAngles(ang)
-	effect:SetEntity(self)
+	effect:SetAngles(ang) 
+	effect:SetEntity(self) 
 	util.Effect("RifleShellEject", effect)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
