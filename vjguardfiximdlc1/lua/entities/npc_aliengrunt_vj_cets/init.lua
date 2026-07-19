@@ -144,7 +144,7 @@ function ENT:Init()
 	self.NextChargeTime = CurTime()
 	self:SetStepHeight(self.ChargeStepHeight)
  
-	self.Bullseye = ents.Create("obj_vj_Bullseye")
+	self.Bullseye = ents.Create("base_anim")
 	self.Bullseye:SetModel("models/hunter/blocks/cube1x1x025.mdl")
 	self.Bullseye:SetParent(self)
 	self.Bullseye:SetPos(self:GetPos() + self:GetForward()*100 + Vector(0,0,15))
