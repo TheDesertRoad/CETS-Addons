@@ -3,12 +3,13 @@
  	"$model" 1
  	"$refractamount" ".24"
  	"$bluramount" "0"
-	"$scale" "[1 1]"
- 	"$dudvmap" "Effects/cets/oicw_scope1"
- 	"$normalmap" "Effects/cets/oicw_scope1_n"
+	"$scale" "[0 0]"
 	"$bumpframe" "0"
 	"$translucent" "1"
 	"$ignorez" "1"
 	"$forcerefract" 1
 	"$nofog" "1"
+ 	"$dudvmap" "Effects/cets/oicw_scope1"
+ 	"$normalmap" "Effects/cets/oicw_scope1_n"
+
 }

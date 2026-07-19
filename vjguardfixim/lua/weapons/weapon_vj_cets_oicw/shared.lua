@@ -15,6 +15,7 @@ SWEP.ViewModel		= "models/weapons/c_ar2_nope.mdl"
 SWEP.WorldModel		= "models/weapons/w_oicw.mdl"
 SWEP.ReplacementWeapon = false
 SWEP.ViewModelFOV			= 40
+SWEP.DrawCrosshair = true
 --------------------------------------------------------------------------------|
 SWEP.Primary.Sound				= "Cets_Weapon_OICW.Fire"
 SWEP.Primary.Damage		= GetConVar("sk_plr_cets_dmg_oicw"):GetInt()
@@ -35,8 +36,8 @@ SWEP.Secondary.Ammo = "none"
 --------------------------------------------------------------------------------|
 SWEP.UseScope				= true	
 SWEP.Zoom = 0
-local ScopeMat = Material("effects/cets/oicw_scope1")
-local ScopeMat1 = Material("effects/cets/oicw_scope1_s")
+local ScopeMat1 = Material("effects/cets/oicw_scope1")
+local ScopeMat = Material("effects/cets/oicw_scope1_s")
 --------------------------------------------------------------------------------|
 SWEP.NPC_NextPrimaryFire = 1.6
 SWEP.NPC_TimeUntilFire = 0.1
@@ -57,6 +58,67 @@ function SWEP:OnPrimaryAttack()
 			ef:SetEntity( self )
 			ef:SetFlags( 5 )
 			util.Effect( "MuzzleFlash", ef )
+	end
+end
+--------------------------------------------------------------------------------|
+function SWEP:DrawHUD()
+	if not self:GetNWBool("Scoped", false) then return end
+
+	local w = ScrW()
+	local h = ScrH()
+	local size = math.min(w, h)
+	local x = (w - size) / 2
+	local y = (h - size) / 2
+
+	local mat = ScopeMat1
+	local mat1 = ScopeMat
+	local matW, matH = mat:Width(), mat:Height()
+	local aspect = matW / matH
+
+	local w = ScrW()
+	local h = ScrH()
+	local size = math.min(w, h)
+
+	local drawW, drawH = size, size
+
+	if aspect > 1 then
+		drawH = size / aspect
+	else
+		drawW = size * aspect
+	end
+
+	local x = (w - drawW) / 2
+	local y = (h - drawH) / 2
+	local matW1, matH1 = mat1:Width(), mat1:Height()
+	local aspect1 = matW1 / matH1
+	local w1 = ScrW()
+	local h1 = ScrH()
+	local size1 = math.min(w1, h1)
+
+	local drawW1, drawH1 = size1, size1
+
+	if aspect1 > 1 then
+		drawH1 = size1 / aspect1
+	else
+		drawW1 = size1 * aspect1
+	end
+
+	local x1 = (w1 - drawW1) / 2
+	local y1 = (h1 - drawH1) / 2
+
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.SetDrawColor(0, 0, 0, 255)
+	surface.SetMaterial(mat1)
+	surface.DrawTexturedRect(x, y, drawW, drawH)
+
+	if x > 0 then
+		surface.DrawRect(0, 0, x, h)
+		surface.DrawRect(w - x, 0, x, h)
+	end
+
+	if y > 0 then
+		surface.DrawRect(0, 0, w, y)
+		surface.DrawRect(0, h - y, w, y)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -255,7 +317,7 @@ function SWEP:SecondaryAttack()
 	if not IsValid(owner) or not owner:IsPlayer() then return end
 
 	if self.Zoom == 0 then
-		owner:SetFOV(24, 0.5)
+		owner:SetFOV(20, 0.5)
 		owner:DrawViewModel(false)
 		self:EmitSound("Weapon_AR2.Special1")
 
@@ -283,36 +345,6 @@ function SWEP:SecondaryAttack()
 	end
 
 	self:SetNextSecondaryFire(CurTime() + 0.3)
-end
---------------------------------------------------------------------------------|
-function SWEP:DrawHUD()
-	if not self:GetNWBool("Scoped", false) then return end
-
-	local w = ScrW()
-	local h = ScrH()
-	local size = math.min(w, h)
-	local x = (w - size) / 2
-	local y = (h - size) / 2
-
-	surface.SetDrawColor(255, 255, 255, 255)
-	surface.SetMaterial(ScopeMat)
-
-	surface.DrawTexturedRect(x, y, size, size)
-
-	surface.SetMaterial(ScopeMat1)
-	surface.DrawTexturedRect(x, y, size, size)
-
-	surface.SetDrawColor(0, 0, 0, 255)
-
-	if x > 0 then
-		surface.DrawRect(0, 0, x, h)
-		surface.DrawRect(w - x, 0, x, h)
-	end
-
-	if y > 0 then
-		surface.DrawRect(0, 0, w, y)
-		surface.DrawRect(0, h - y, w, y)
-	end
 end
 --------------------------------------------------------------------------------|
 function SWEP:Reload()
@@ -418,8 +450,8 @@ if CLIENT then
 			dlight.r = 100
 			dlight.g = 255
 			dlight.b = 200
-			dlight.brightness = 1
-			dlight.Size = 1024
+			dlight.brightness = 0
+			dlight.Size = 2048
 			dlight.Decay = 0
 			dlight.DieTime = CurTime() + 0.1
 		end

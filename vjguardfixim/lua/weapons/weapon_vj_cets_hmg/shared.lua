@@ -25,7 +25,7 @@ SWEP.Primary.NumShots		= 1
 SWEP.Primary.Delay			= 0.1
 SWEP.Primary.ClipSize		= GetConVar("sk_max_cets_hmg"):GetInt()		
 SWEP.Primary.DefaultClip	                  = GetConVar("sk_max_cets_hmg_bullet"):GetInt()	
-SWEP.Primary.Force			= 14
+SWEP.Primary.Force			= 8
 SWEP.Primary.Automatic		= 1	
 SWEP.Primary.Ammo		= "SMG1"
 SWEP.Primary.Recoil			= 1.3
@@ -38,8 +38,8 @@ SWEP.Secondary.Ammo = "none"
 --------------------------------------------------------------------------------|
 SWEP.UseScope				= true	
 SWEP.Zoom = 0
-local ScopeMat = Material("effects/cets/oicw_scope1")
-local ScopeMat1 = Material("effects/cets/hmg_scope1_s")
+local ScopeMat1 = Material("effects/cets/oicw_scope1")
+local ScopeMat = Material("effects/cets/hmg_scope1_s")
 --------------------------------------------------------------------------------|
 SWEP.NPC_NextPrimaryFire = 6
 SWEP.NPC_TimeUntilFire = 0.1
@@ -132,13 +132,13 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = (aimPos - spawnPos):GetNormal() //Gets where you're aiming
-		local spread = 0.4 or self.NPC_CustomSpread
-		bullet.Spread = Vector(spread, spread, 0)
+		local spread = 0.1 or self.NPC_CustomSpread / 1.8
+		bullet.Spread = Vector(spread / 1.8, spread / 1.8, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = "Tracer"
 		bullet.TracerName       = "Tracer"
 		bullet.Force = self.Primary.Force 
-		local damage = self.Primary.Damage
+		local damage = self.Primary.Damage / 2
 
 		if owner.ScaleByDifficulty then
 			damage = owner:ScaleByDifficulty(damage)
@@ -188,11 +188,11 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = self.Owner:GetAimVector() //Gets where you're aiming
-		bullet.Spread = Vector( .22 * .22 , .22 * .22, 0)
+		bullet.Spread = Vector( .21 * .21 , .21 * .21, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = 1
 		bullet.TracerName       = "Tracer"
-		bullet.Force = self.Primary.Force 
+		bullet.Force = self.Primary.Force
 		bullet.Damage = self.Primary.Damage 
 		bullet.AmmoType = self.Primary.Ammo 
 		bullet.Callback = function(attacker, tracer)
@@ -206,7 +206,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = self.Owner:GetAimVector() //Gets where you're aiming
-		bullet.Spread = Vector( .22 * .22 , .22 * .22, 0)
+		bullet.Spread = Vector( .2 * .2 , .2 * .2, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = 1
 		bullet.TracerName       = "Tracer"
@@ -259,7 +259,7 @@ function SWEP:SecondaryAttack()
 	if not IsValid(owner) or not owner:IsPlayer() then return end
 
 	if self.Zoom == 0 then
-		owner:SetFOV(24, 0.5)
+		owner:SetFOV(20, 0.5)
 		owner:DrawViewModel(false)
 		self:EmitSound("Weapon_AR2.Special1")
 
@@ -290,15 +290,46 @@ function SWEP:DrawHUD()
 	local x = (w - size) / 2
 	local y = (h - size) / 2
 
+	local mat = ScopeMat1
+	local mat1 = ScopeMat
+	local matW, matH = mat:Width(), mat:Height()
+	local aspect = matW / matH
+
+	local w = ScrW()
+	local h = ScrH()
+	local size = math.min(w, h)
+
+	local drawW, drawH = size, size
+
+	if aspect > 1 then
+		drawH = size / aspect
+	else
+		drawW = size * aspect
+	end
+
+	local x = (w - drawW) / 2
+	local y = (h - drawH) / 2
+	local matW1, matH1 = mat1:Width(), mat1:Height()
+	local aspect1 = matW1 / matH1
+	local w1 = ScrW()
+	local h1 = ScrH()
+	local size1 = math.min(w1, h1)
+
+	local drawW1, drawH1 = size1, size1
+
+	if aspect1 > 1 then
+		drawH1 = size1 / aspect1
+	else
+		drawW1 = size1 * aspect1
+	end
+
+	local x1 = (w1 - drawW1) / 2
+	local y1 = (h1 - drawH1) / 2
+
 	surface.SetDrawColor(255, 255, 255, 255)
-	surface.SetMaterial(ScopeMat)
-
-	surface.DrawTexturedRect(x, y, size, size)
-
-	surface.SetMaterial(ScopeMat1)
-	surface.DrawTexturedRect(x, y, size, size)
-
 	surface.SetDrawColor(0, 0, 0, 255)
+	surface.SetMaterial(mat1)
+	surface.DrawTexturedRect(x, y, drawW, drawH)
 
 	if x > 0 then
 		surface.DrawRect(0, 0, x, h)
@@ -413,8 +444,8 @@ if CLIENT then
 			dlight.r = 48
 			dlight.g = 58
 			dlight.b = 255
-			dlight.brightness = 1
-			dlight.Size = 1024
+			dlight.brightness = 0
+			dlight.Size = 2048
 			dlight.Decay = 0
 			dlight.DieTime = CurTime() + 0.1
 		end
