@@ -63,6 +63,8 @@ VJ.AddNPC("Alien Supporter","npc_xrang_vj_cets",vCat)
 VJ.AddNPC("Combine Flamer","npc_flamer_vj_cets",vCat)
 VJ.AddNPC("Combine Engineer","npc_engi_vj_cets",vCat)
 VJ.AddNPC("Combine Medic","npc_medic_vj_cets",vCat)
+VJ.AddNPC("Advisor","npc_advisor_vj_cets",vCat)
+VJ.AddNPC("Outlands Overwatch Assassin","npc_hunterfassassin_vj_cets",vCat)
 
 VJ.AddNPC("Wasteland Scanner (Paired)","npc_wastescan_pair_vj_cets",vCat1)
 VJ.AddNPC("Super Synth","npc_supersynth_vj_cets",vCat1)

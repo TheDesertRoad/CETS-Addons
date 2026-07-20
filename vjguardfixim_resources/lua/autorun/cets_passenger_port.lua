@@ -9,6 +9,7 @@ local LOOP_SOUND  = "vehicles/digger_grinder_loop1.wav"
 local STOP_SOUND  = "vehicles/digger_grinder_stop1.wav"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "DiggerDamage", function()
+	if not IsValid(ply) then return end
 	for _, ply in player.Iterator() do
 		local veh = ply:GetVehicle()
 
@@ -115,6 +116,7 @@ local VehicleHorns = {
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "VehicleHorn", function()
+	if not IsValid(ply) then return end
 	for _, ply in player.Iterator() do
 
 		local veh = ply:GetVehicle()

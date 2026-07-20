@@ -110,7 +110,9 @@ function ENT:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
-	self:SetLocalVelocity(self:GetMoveVelocity() * 1)
+	if self:IsMoving() then
+		self:SetLocalVelocity(self:GetMoveVelocity() * 1)
+	end
 
 	if self:IsOnFire() then
 		self.Bleeds = false

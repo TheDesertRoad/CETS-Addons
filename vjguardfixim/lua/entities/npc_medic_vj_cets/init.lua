@@ -286,6 +286,10 @@ function ENT:Controller_IntMsg(ply, controlEnt)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink(dmginfo)
+	if self:IsMoving() then
+		self:SetLocalVelocity(self:GetMoveVelocity() * 0.2)
+	end
+
 	if self:IsOnFire() && CurTime() > self.NextDance then
 		self.Bleeds = false
 		timer.Simple(self:SequenceDuration(self:LookupSequence( "bugbait_hit" )), function() if self:IsValid() && self:IsOnFire() then self:TakeDamage(self:GetMaxHealth(), self, self) end end)

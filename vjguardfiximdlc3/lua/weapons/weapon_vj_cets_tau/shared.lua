@@ -83,12 +83,11 @@ end
 --------------------------------------------------------------------------------|
 function SWEP:StopChargeSound()
 	local owner = self:GetOwner()
-	local isNPC = owner:IsNPC()
-	local isPly = owner:IsPlayer()
+
 	self:StopSound(self.Secondary.Sound)
 
 	if IsValid(owner) then
-		self.Owner:StopSound(self.Secondary.Sound)
+		owner:StopSound(self.Secondary.Sound)
 	end
 end
 --------------------------------------------------------------------------------|
@@ -146,7 +145,7 @@ function SWEP:CustomOnHolster()
 		self.Primary.MaxAmmo = 999999
 	end
 end
-
+--------------------------------------------------------------------------------|
 function SWEP:GetWorldModelAttachment(name)
 	local owner = self:GetOwner()
 	if !IsValid(owner) then return end
@@ -378,7 +377,7 @@ function SWEP:SecondaryAttack()
 
 	if isPly then
 
-	if self.Weapon:Ammo1() <= 0 then return end
+	if self.Weapon:Ammo1() <= 6 then return end
 	if not IsValid(owner) then return end
 	if not owner:Alive() then return end
 	if owner:GetActiveWeapon() ~= self then return end
@@ -394,8 +393,8 @@ function SWEP:SecondaryAttack()
 		end
 
 		if self.Weapon:Ammo1() >= 6 then
-			self:EmitSound( self.Secondary.Sound )
-			self:TakePrimaryAmmo( 5 )
+			self:EmitSound(self.Secondary.Sound, 75, 100, 1, CHAN_WEAPON)
+			self:TakePrimaryAmmo( 5 )			
 			self.Weapon:SendWeaponAnim( ACT_GAUSS_SPINUP )
 			self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 			self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
@@ -575,15 +574,21 @@ function SWEP:CustomOnThink()
 			end
 
 			if self.Spin == 1 then
+				if self:Ammo1() <= 0 then
+					self.Spin = 0
+					self:StopChargeSound()
+					if SERVER then
+						self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
+					end
+
+					return
+				end
+
 				if CurTime() >= self.SpinAmmoDrainTime then
 					self.SpinAmmoDrainTime = CurTime() + self.SpinAmmoDrainRate
+
 					if SERVER then
 						self:TakePrimaryAmmo(1)
-						if self:Clip1() <= 0 and self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then
-							self.Spin = 0
-							self:StopChargeSound()
-							return
-						end
 					end
 				end
 			end

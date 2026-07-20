@@ -11,6 +11,9 @@ hook.Add("Think", "NV_Think", function()
 	local ply = LocalPlayer()
 	if not IsValid(ply) then return end
 	if not ply:GetNWBool("HasNV", false) then return end
+	if gui.IsGameUIVisible() or vgui.GetKeyboardFocus() then
+		return
+	end
 
 	local down = input.IsKeyDown(KEY_N)
 	if down and not keyWasDown then

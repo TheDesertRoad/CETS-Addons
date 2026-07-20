@@ -42,7 +42,9 @@ function ENT:Controller_IntMsg(ply, controlEnt)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	self:SetLocalVelocity(self:GetMoveVelocity() *0.4)
+	if self:IsMoving() then
+		self:SetLocalVelocity(self:GetMoveVelocity() * 0.4)
+	end
 
 	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) then
 		self.VJ_TheController:PrintMessage(HUD_PRINTCENTER, "Changing Camouflage!")

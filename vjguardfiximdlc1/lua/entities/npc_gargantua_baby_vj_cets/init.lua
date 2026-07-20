@@ -180,6 +180,10 @@ function ENT:TranslateActivity(act)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
+	if self:IsMoving() then
+		self:SetLocalVelocity(self:GetMoveVelocity() * 1)
+	end
+
 	if self:IsOnFire() then
 		self.Bleeds = false
 		self:TakeDamage(1)
