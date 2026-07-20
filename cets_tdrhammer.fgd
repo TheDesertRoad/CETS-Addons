@@ -86,6 +86,10 @@
 [
 ]
 
+@NPCClass base(BaseNPC) studio("models/hl2_advisor.mdl") = npc_advisor_vj_cets : "Advisor"
+[
+]
+
 @NPCClass base(BaseNPC) studio("models/hl2_crabsynth.mdl") = npc_crabsynth_vj_cets : "(CETS) Crab Synth"
 [
 ]
