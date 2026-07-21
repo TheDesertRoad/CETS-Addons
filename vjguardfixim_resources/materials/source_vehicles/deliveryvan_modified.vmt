@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/DeliveryVan_Modified"
+$Alphatest 1
+
+
+$Alphatestreference ".75"
+}

@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "oceanic/gravelsandstone"
+	"$basetexture2" "oceanic/lavarock"
+	"$surfaceprop" "Rock"
+	"$blendmodulatetexture" "gm_construct/grass_blendmask"
+}

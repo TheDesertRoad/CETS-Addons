@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "oceanic/sandwavy"
+	"$bumpmap" "oceanic/sandwavynrm"
+	"$basetexture2" "oceanic/gravelsandstone"
+	"$surfaceprop" "Gravel"
+}

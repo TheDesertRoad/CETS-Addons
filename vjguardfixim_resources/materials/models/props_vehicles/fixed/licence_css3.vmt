@@ -1,6 +1,0 @@
-VertexLitGeneric
-{
-	$basetexture "models\props_vehicles\fixed\licence_css3"
-
-	$allowdiffusemodulation "0"
-}

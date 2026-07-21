@@ -1,5 +1,0 @@
-VertexLitGeneric
-{
-$baseTexture "models\props_vehicles\fixed/DeliveryVan_Armored_Glass"
-$Translucent 1
-}

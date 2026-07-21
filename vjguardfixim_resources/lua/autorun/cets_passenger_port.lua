@@ -1,15 +1,29 @@
 local Digger = {
-    ["vehicle_cets_hl2_digger"] = true,
+	["vehicle_cets_hl2_digger"] = true,
+}
+
+local Ambulance = {
+	["vehicle_cets_l4d_ambulance_skin"] = true,
+}
+
+local Police = {
+	["vehicle_cets_l4d_police"] = true,
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local DiggerEnabled = {}
+local AmbulanceEnabled = {}
+local PoliceEnabled = {}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local START_SOUND = "vehicles/cets/digger_grinder_start1.wav"
 local LOOP_SOUND  = "vehicles/digger_grinder_loop1.wav"
 local STOP_SOUND  = "vehicles/digger_grinder_stop1.wav"
+
+local LOOP_SOUND1  = "ambient/alarms/city_eurosiren_loop1.wav"
+
+local LOOP_SOUND2  = "ambient/alarms/city_eurosiren_loop2.wav"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "DiggerDamage", function()
-	if not IsValid(ply) then return end
+	if IsValid(ply) then return true end
 	for _, ply in player.Iterator() do
 		local veh = ply:GetVehicle()
 
@@ -66,7 +80,7 @@ hook.Add("Think", "DiggerDamage", function()
 		if ent == ply then continue end
 
 		local dmg = DamageInfo()
-		dmg:SetDamage(50)
+		dmg:SetDamage(12)
 		dmg:SetAttacker(ply)
 		dmg:SetInflictor(veh)
 		dmg:SetDamageType(DMG_CRUSH)
@@ -96,7 +110,123 @@ hook.Add("EntityRemoved", "CleanupDiggerSound", function(ent)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("Think", "AmbulanceSound", function()
+	for _, ply in player.Iterator() do
+		local veh = ply:GetVehicle()
+
+		if not IsValid(veh) then continue end
+		if veh:GetDriver() ~= ply then continue end
+		if not Ambulance[veh.VehicleName] then continue end
+
+		local sid = ply:SteamID64()
+
+		if ply:KeyDown(IN_ATTACK2) then
+			if not ply.AmbulanceTogglePressed then
+				ply.AmbulanceTogglePressed = true
+
+				AmbulanceEnabled[sid] = not AmbulanceEnabled[sid]
+
+				if AmbulanceEnabled[sid] then
+					if not veh.AmbulanceSound then
+						veh.AmbulanceSound = CreateSound(veh, LOOP_SOUND1)
+					end
+
+					veh.AmbulanceSound:Play()
+				else
+					if veh.AmbulanceSound then
+						veh.AmbulanceSound:Stop()
+					end
+				end
+			end
+		else
+			ply.AmbulanceTogglePressed = false
+		end
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("PlayerLeaveVehicle", "StopAmbulanceSound", function(ply, veh)
+	local sid = ply:SteamID64()
+
+	if AmbulanceEnabled[sid] then
+		AmbulanceEnabled[sid] = false
+
+		if veh.AmbulanceSound then
+			veh.AmbulanceSound:Stop()
+		end
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("EntityRemoved", "CleanupAmbulanceSound", function(ent)
+	if ent.AmbulanceDamageSound then
+		ent.AmbulanceDamageSound:Stop()
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("Think", "PoliceSound", function()
+	for _, ply in player.Iterator() do
+		local veh = ply:GetVehicle()
+
+		if not IsValid(veh) then continue end
+		if veh:GetDriver() ~= ply then continue end
+		if not Police[veh.VehicleName] then continue end
+
+		local sid = ply:SteamID64()
+
+		if ply:KeyDown(IN_ATTACK2) then
+			if not ply.PoliceTogglePressed then
+				ply.PoliceTogglePressed = true
+
+				PoliceEnabled[sid] = not PoliceEnabled[sid]
+
+				if PoliceEnabled[sid] then
+					if not veh.PoliceSound then
+						veh.PoliceSound = CreateSound(veh, LOOP_SOUND2)
+					end
+
+					veh.PoliceSound:Play()
+				else
+					if veh.PoliceSound then
+						veh.PoliceSound:Stop()
+					end
+				end
+			end
+		else
+			ply.PoliceTogglePressed = false
+		end
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("PlayerLeaveVehicle", "StopPoliceSound", function(ply, veh)
+	local sid = ply:SteamID64()
+
+	if PoliceEnabled[sid] then
+		PoliceEnabled[sid] = false
+
+		if veh.PoliceSound then
+			veh.PoliceSound:Stop()
+		end
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("EntityRemoved", "CleanupPoliceSound", function(ent)
+	if ent.PoliceDamageSound then
+		ent.PoliceDamageSound:Stop()
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local VehicleHorns = {
+	["vehicle_cets_misc_lunar"] = "ambient/alarms/warningbell2.wav",
+
+	["vehicle_cets_l4d_airport_baggage_tractor"] = "ambient/alarms/warningbell2.wav",
+	["vehicle_cets_l4d_airport_fuel_truck"] = "vehicles/cets/honk2.wav",
+	["vehicle_cets_l4d_ambulance_skin"] = "vehicles/cets/honk1.wav",
+	["vehicle_cets_l4d_army_truck"] = "vehicles/cets/honk2.wav",
+	["vehicle_cets_l4d_cement_truck"] = "vehicles/cets/honk2.wav",
+	["vehicle_cets_l4d_HMMWV"] = "vehicles/cets/honk1.wav",
+	["vehicle_cets_l4d_HMMWV_desert"] = "vehicles/cets/honk1.wav",
+	["vehicle_cets_l4d_news"] = "vehicles/cets/honk1.wav",
+	["vehicle_cets_l4d_police"] = "vehicles/cets/honk1.wav",
+
 	["vehicle_cets_hl2_car"] = "vehicles/cets/honk1_b.wav",
 	["vehicle_cets_hl2_car2"] = "vehicles/cets/honk1_b.wav",
 	["vehicle_cets_hl2_car3"] = "vehicles/cets/honk1_b.wav",
@@ -113,10 +243,11 @@ local VehicleHorns = {
 	["vehicle_cets_css_utility_truck"] = "vehicles/cets/honk1.wav",
 	["vehicle_cets_css_truck"] = "vehicles/cets/honk2.wav",
 	["vehicle_cets_css_truck_open"] = "vehicles/cets/honk2.wav",
+	["vehicle_cets_css_pvan"] = "vehicles/cets/honk1.wav",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "VehicleHorn", function()
-	if not IsValid(ply) then return end
+	if IsValid(ply) then return true end
 	for _, ply in player.Iterator() do
 
 		local veh = ply:GetVehicle()
@@ -142,6 +273,52 @@ hook.Add("Think", "VehicleHorn", function()
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local PassengerVehicles = {
+	["vehicle_cets_l4d_news"] = {
+		{Pos = Vector(20,35,40), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_police"] = {
+		{Pos = Vector(19,0,17), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+		{Pos = Vector(15,-50,17), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+		{Pos = Vector(-15,-50,17), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_HMMWV"] = {
+		{Pos = Vector(32,8,32), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+		{Pos = Vector(32,-33,32), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+		{Pos = Vector(-32,-33,32), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_HMMWV_desert"] = {
+		{Pos = Vector(32,8,32), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+		{Pos = Vector(32,-33,32), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+		{Pos = Vector(-32,-33,32), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_airport_baggage_tractor"] = {
+		{Pos = Vector(15,-27,40), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_airport_fuel_truck"] = {
+		{Pos = Vector(20,85,60), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_ambulance_skin"] = {
+		{Pos = Vector(20,35,40), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_army_truck"] = {
+		{Pos = Vector(20,43,70), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_l4d_cement_truck"] = {
+		{Pos = Vector(20,30,63), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
+	["vehicle_cets_misc_lunar"] = {
+		{Pos = Vector(15,-17,20), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
+
 	["vehicle_cets_hl2_shared1"] = {
 		{Pos = Vector(18,-36,19), Ang = Angle(0,0,0), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(0,0,0), Hide = true, DoorSounds = true, RadioControl = true},
 		{Pos = Vector(32,-102,48), Ang = Angle(0,180,0), ExitPos = Vector(80,-80,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(0,0,0), Hide = true, DoorSounds = true, RadioControl = true},
@@ -219,6 +396,10 @@ local PassengerVehicles = {
 	["vehicle_cets_css_truck_open"] = {
 		{Pos = Vector(20,70,45), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
 	},
+
+	["vehicle_cets_css_pvan"] = {
+		{Pos = Vector(20,35,40), Ang = Angle(0,0,8), ExitPos = Vector(80,40,0), EnterRange = 8200, ExitAng = Angle(0,-90,0), ModelOffset = Vector(12,0,4), Hide = true, DoorSounds = true, RadioControl = true},
+	},
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function CreatePassengerSeats(ply, vehicle)
@@ -270,7 +451,7 @@ local function CreatePassengerSeats(ply, vehicle)
 			if vehicle:GetVehicleClass()=="vehicle_cets_hl2_shared1" then
 
 			else
-				seat:SetNoDraw(true)	
+				seat:SetNoDraw(false)	
 				seat:SetRenderMode(RENDERMODE_NONE)
 				seat:SetColor(Color(255, 255, 255, 0))
 				seat:DrawShadow(false)

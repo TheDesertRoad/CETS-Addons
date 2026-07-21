@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/police_car"
+$selfillum 1
+$selfillumtint "[ .07 .07 .07 ]"
+
+}

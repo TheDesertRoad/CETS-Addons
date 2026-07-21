@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/Tractor01"
+$selfillum 1
+
+
+}

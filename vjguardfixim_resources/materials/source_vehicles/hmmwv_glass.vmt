@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+	$baseTexture "source_vehicles/hmmwv_glass"
+	$envmaptint "[.3 .3 .3]"
+	"$envmap" "env_cubemap"
+	"$surfaceprop" "solidmetal"
+	"$halflambert" 1
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "source_vehicles/wrecked_train_seat"
+	"$bumpmap"	   "source_vehicles/wrecked_train_seat_normal"
+}

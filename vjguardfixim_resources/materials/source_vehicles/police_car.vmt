@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/police_car"
+$envmap env_cubemap
+	"$surfaceprop" "solidmetal"
+	"$halflambert" 1
+}

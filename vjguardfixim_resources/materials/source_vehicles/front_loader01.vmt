@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/Front_Loader01"
+	"$surfaceprop" "solidmetal"
+	"$halflambert" 1
+}

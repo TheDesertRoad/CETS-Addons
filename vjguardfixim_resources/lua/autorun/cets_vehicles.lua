@@ -89,6 +89,204 @@ local function HandleRollercoasterAnimation( vehicle, player )
 	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local VL4D = {
+				// Required information
+				Name =	"Baggage Tractor",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The airport baggage tractor from L4D",
+				Model =	"models/vehicles/CETS/cets_airport_baggage_tractor.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_airport_baggage_tractor.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_airport_baggage_tractor", VL4D )
+
+local VL4D1 = {
+				// Required information
+				Name =	"Fuel Truck",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The airport fuel truck from L4D",
+				Model =	"models/vehicles/CETS/cets_airport_fuel_truck.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_fuel_truck.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_airport_fuel_truck", VL4D1 )
+
+local VL4D2 = {
+				// Required information
+				Name =	"Ambulance Truck",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The ambulance from L4D",
+				Model =	"models/vehicles/CETS/cets_ambulance_skin0.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_ambulance.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_ambulance_skin", VL4D2 )
+
+local VL4D3 = {
+				// Required information
+				Name =	"Army Truck",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The army truck from L4D",
+				Model =	"models/vehicles/CETS/cets_army_truck.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_army_truck.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_army_truck", VL4D3 )
+
+local VL4D4 = {
+				// Required information
+				Name =	"Cement Truck",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The cement truck from L4D",
+				Model =	"models/vehicles/CETS/cets_cement_truck01.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_trucks.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_cement_truck", VL4D4 )
+
+local VL4D5 = {
+				// Required information
+				Name =	"Front Loader",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The front loader from L4D",
+				Model =	"models/vehicles/CETS/cets_front_loader01.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_front_loader.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_front_loader", VL4D5 )
+
+local VL4D6 = {
+				// Required information
+				Name =	"HMMWV",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The HMMWV from L4D",
+				Model =	"models/vehicles/CETS/cets_humvee.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_hmmwv.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_HMMWV", VL4D6 )
+
+local VL4D7 = {
+				// Required information
+				Name =	"HMMWV (Desert)",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The desert HMMWV from L4D",
+				Model =	"models/vehicles/CETS/cets_hmmwv.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_hmmwv.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_HMMWV_desert", VL4D7 )
+
+local VL4D8 = {
+				// Required information
+				Name =	"Modern News Van",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The news van from L4D",
+				Model =	"models/vehicles/CETS/cets_news_van.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_l4d_news_van.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_news", VL4D8 )
+
+local VL4D9 = {
+				// Required information
+				Name =	"Modern Police Car",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The police car from L4D",
+				Model =	"models/vehicles/CETS/cets_police_car_lights_on.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_css_car.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_l4d_police", VL4D9 )
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local VMC = {
+				// Required information
+				Name =	"Lunar Roover",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
+
+				// Optional information
+				Author = "VALVe",
+				Information = "The lunar roover",
+				Model =	"models/vehicles/CETS/lunar_rover.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_lunar_rover.txt"
+				},
+}
+
+list.Set( "Vehicles", "vehicle_cets_misc_lunar", VMC )
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local MVHL = {
 				// Required information
 				Name =	"Motorbike",
@@ -125,14 +323,10 @@ local MVHL1 = {
 				KeyValues = {
 					vehiclescript = "scripts/vehicles/cets_hl2_motorbike.txt"
 				},
-
-				Members = {
-								HandleAnimation = HandleBoatVehicleAnimation,
-				},
 }
 
 list.Set( "Vehicles", "vehicle_cets_hl2_snowbike", MVHL1 )
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local WVHL = {
 				// Required information
 				Name =	"Jetski",
@@ -150,7 +344,7 @@ local WVHL = {
 }
 
 list.Set( "Vehicles", "vehicle_cets_hl2_jetski", WVHL )
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local VHL = {
 				// Required information
 				Name =	"Hatchback Car",
@@ -386,7 +580,7 @@ local VHL12 = {
 }
 
 list.Set( "Vehicles", "vehicle_cets_hl2_digger", VHL12 )
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local V = {
 				// Required information
 				Name =	"Modern Car",
@@ -475,8 +669,24 @@ local V4 = {
 				}
 }
 
-list.Set( "Vehicles", "vehicle_cets_css_forklift", V4 )
+local V5 = {
+				// Required information
+				Name =	"Modern Van",
+				Class = "prop_vehicle_jeep",
+				Category = Category,
 
+				// Optional information
+				Author = "VALVe",
+				Information = "The van from Counter-Strike: Source",
+				Model =	"models/vehicles/CETS/cets_van_militia.mdl",
+
+				KeyValues = {
+					vehiclescript = "scripts/vehicles/cets_css_car.txt"
+				}
+}
+
+list.Set( "Vehicles", "vehicle_cets_css_pvan", V5 )
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local Chair1 = {
 				// Required information
 				Name =	"Armchair",

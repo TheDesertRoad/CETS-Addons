@@ -1,9 +1,0 @@
-VertexLitGeneric
-{
-$baseTexture "models\props_vehicles\fixed/Bus01_A_2_t"
-
-$envmap env_cubemap
-$envmapmask "models\props_vehicles\fixed\Bus01_A_ref"
-
-$translucent "1"
-}

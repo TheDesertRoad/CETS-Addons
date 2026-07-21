@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/oceanic/metalballlight"
+	"$surfaceprop" "Glass"
+}

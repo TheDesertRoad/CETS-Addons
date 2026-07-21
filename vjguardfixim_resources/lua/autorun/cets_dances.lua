@@ -22,6 +22,7 @@ local ActConstants = {
 	muscle = ACT_GMOD_TAUNT_MUSCLE,
 	robot = ACT_GMOD_TAUNT_ROBOT,
 	cheer = ACT_GMOD_TAUNT_CHEER,
+	aerobic = "wOS_UAP_TF2_engineer_aerobic",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then 
@@ -118,6 +119,7 @@ if CLIENT then
 		dances:AddOption("Robot", function() PlayAnim("robot") end)
 		dances:AddOption("Zombie", function() PlayAnim("zombie") end)
 		dances:AddOption("Muscle", function() PlayAnim("muscle") end)
+dances:AddOption("Aerobic", function() PlayAnim("aerobic") end)
 
 		local social, _ = menu:AddSubMenu("Expressions")
 		social:AddOption("Wave", function() PlayAnim("wave") end)
@@ -169,3 +171,4 @@ if CLIENT then
 
 	end)
 end
+

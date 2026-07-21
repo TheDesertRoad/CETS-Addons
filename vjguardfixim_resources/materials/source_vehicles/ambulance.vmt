@@ -1,0 +1,8 @@
+
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "source_vehicles/ambulance"
+	"$surfaceprop" "solidmetal"
+	"$halflambert" 1
+}

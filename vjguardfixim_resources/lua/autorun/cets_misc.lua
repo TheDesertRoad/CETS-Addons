@@ -1,3 +1,15 @@
+hook.Add("InitPostEntity", "MoveGrigoriCategory", function()
+	if not GetConVar("cets_grigori_right"):GetBool() then return end
+
+	local npcList = list.GetForEdit("NPC")
+	if not npcList then return end
+
+	local monk = npcList["npc_monk"]
+	if not monk then return end
+
+	monk.Category = "#spawnmenu.category.humans_resistance"
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 list.Set("PlayerOptionsModel", "Freeman", "models/player/freeman.mdl")
 player_manager.AddValidModel("Freeman", "models/player/freeman.mdl")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -794,4 +806,5 @@ else
 			end
 		end
 	end)
+
 end

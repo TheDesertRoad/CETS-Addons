@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	"$basetexture" "source_vehicles/airport_baggage_tractor"
+	"$surfaceprop" "solidmetal"
+	"$halflambert" 1
+}

@@ -1,0 +1,4 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/van_interior"
+}

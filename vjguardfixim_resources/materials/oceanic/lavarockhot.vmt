@@ -1,0 +1,13 @@
+"UnlitGeneric"
+{
+	"$basetexture" "oceanic/lavarockhot"
+	"$surfaceprop" "Rock"
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$baseTextureTransform"
+			"texturescrollrate" -.02
+
+			"texturescrollangle" 180
+}

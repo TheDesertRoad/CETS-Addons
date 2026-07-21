@@ -1,0 +1,21 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "oceanic/wateroverlayheavy"
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+	"$translucent" 1
+	"$vertexalpha" 1
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$baseTextureTransform"
+			"texturescrollrate" .03
+
+			"texturescrollangle" 90
+
+
+		}
+	}
+}

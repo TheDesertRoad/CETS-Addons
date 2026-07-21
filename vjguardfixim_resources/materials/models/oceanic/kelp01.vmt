@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/oceanic/kelp01"
+	"$surfaceprop" "Grass"
+	"$nocull" 1
+	"$treesway" 1
+	"$treeswaystrength" 1
+	"$treeswaystartheight" 0
+}

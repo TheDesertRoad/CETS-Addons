@@ -1,0 +1,46 @@
+detail
+{
+	detailfoliage //Set detail material file for map to group_ferns.vtf to use.
+	{
+		"density" "2000" //how often they appear inside material
+		Group1
+		{
+			"alpha" ".1"
+			fern1
+			{	"sprite"			"0 0 512 512 1024"
+				"spritesize"		"0.5 0 40 50"
+				"spriterandomscale"	"0.3"
+				"amount"			"0.02"
+				"detailOrientation"	"2"
+				"sway"			".3"
+			}
+			fern2
+			{
+				"sprite"			"512 0 512 512 1024"
+				"spritesize"		"0.5 0 40 40"
+				"spriterandomscale"	"0.3"
+				"amount"			"0.03"
+				"detailOrientation"	"2"
+				"sway"			".1"
+			}
+			fern3
+			{
+				"sprite"			"0 525 512 485 1024"
+				"spritesize"		"0.5 0 28 28"
+				"spriterandomscale"	"0.3"
+				"amount"			"0.35"
+				"detailOrientation"	"2"
+				"sway"			".2"
+			}
+			fern4
+			{
+				"sprite"			"518 519 454 497 1024"
+				"spritesize"		"0.5 0 25 26"
+				"spriterandomscale"	"0.3"
+				"amount"			"0.36"
+				"detailOrientation"	"2"
+				"sway"			".4"
+			}
+		}
+	}
+}

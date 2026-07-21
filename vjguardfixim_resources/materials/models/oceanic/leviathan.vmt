@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/oceanic/leviathan"
+	"$nocull" 1
+}

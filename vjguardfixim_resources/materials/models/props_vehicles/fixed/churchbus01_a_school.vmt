@@ -1,8 +1,0 @@
-VertexLitGeneric
-{
-$basetexture "Models/props_vehicles/fixed/ChurchBus01_A_school"
-$envmap env_cubemap
-$envmaptint "[.4 .4 .4]"
-$basealphaenvmapmask 1
-$surfaceprop metal
-}

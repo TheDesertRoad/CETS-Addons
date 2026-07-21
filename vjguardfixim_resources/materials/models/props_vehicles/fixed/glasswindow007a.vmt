@@ -1,7 +1,0 @@
-VertexLitGeneric
-{
-	$basetexture "models/props_vehicles/fixed/glasswindow007a"
-
-	$translucent 1
-	$nocull 1
-}

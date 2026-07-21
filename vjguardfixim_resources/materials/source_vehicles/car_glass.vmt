@@ -1,0 +1,8 @@
+
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "source_vehicles/car_glass"
+	$envmaptint "[.3 .3 .3]"
+	"$envmap" "env_cubemap"
+}

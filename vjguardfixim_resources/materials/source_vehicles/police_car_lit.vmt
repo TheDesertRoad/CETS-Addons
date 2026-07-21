@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/police_car_lit"
+
+$selfillum 1
+Proxies
+{
+AnimatedTexture
+{
+animatedTextureVar $basetexture
+animatedTextureFrameNumVar $frame
+animatedTextureFrameRate 10
+}
+}
+}

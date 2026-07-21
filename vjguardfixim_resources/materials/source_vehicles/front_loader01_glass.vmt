@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+	$baseTexture "source_vehicles/Front_Loader01_Glass"
+	$envmaptint "[.3 .3 .3]"
+	"$envmap" "env_cubemap"
+}

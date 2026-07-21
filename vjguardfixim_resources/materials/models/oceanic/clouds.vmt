@@ -1,0 +1,18 @@
+"UnlitGeneric"
+{
+	"$basetexture" "oceanic/clouds"
+	"$surfaceprop" "Default"
+	"$nocull" 1
+	"$translucent" 1
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$baseTextureTransform"
+			"texturescrollrate" .01
+
+			"texturescrollangle" 90
+
+
+		}
+}

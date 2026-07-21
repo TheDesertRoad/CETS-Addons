@@ -1,0 +1,13 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/oceanic/rays"
+	"$translucent" 1
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$baseTextureTransform"
+			"texturescrollrate" .4
+
+			"texturescrollangle" 0
+}

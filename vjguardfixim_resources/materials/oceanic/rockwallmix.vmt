@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "oceanic/rockwall"
+	"$basetexture2" "oceanic/rockwallmoss"
+	"$surfaceprop" "Rock"
+}

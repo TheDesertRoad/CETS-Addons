@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "oceanic/rockoverlay"
+	"$surfaceprop" "Rock"
+	"$translucent" 1
+}

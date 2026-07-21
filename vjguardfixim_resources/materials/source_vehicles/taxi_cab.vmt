@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+$baseTexture "source_vehicles/taxi_cab"
+$selfillum 1
+	"$surfaceprop" "solidmetal"
+	"$halflambert" 1
+}

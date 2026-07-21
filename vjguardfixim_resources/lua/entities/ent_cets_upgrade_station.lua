@@ -42,6 +42,8 @@ function ENT:Think()
 
 		local wep = nearestPlayer:GetActiveWeapon()
 
+		wep:SetNW2Float("WeaponBoostMultiplier", wep:GetNW2Float("WeaponBoostMultiplier", 1) + 0.5)
+
 		if not IsValid(wep) then continue end
 
 		nearestPlayer.WeaponBoostMultiplier = (nearestPlayer.WeaponBoostMultiplier or 1) + 0.5
@@ -57,10 +59,12 @@ end
 hook.Add("EntityTakeDamage", "WeaponBoosterDamage", function(target, dmginfo)
 	local attacker = dmginfo:GetAttacker()
 
-	if not IsValid(attacker) then return end
-	if not attacker:IsPlayer() then return end
+	if not IsValid(attacker) or not attacker:IsPlayer() then return end
 
-	local mult = attacker.WeaponBoostMultiplier or 1
+	local wep = attacker:GetActiveWeapon()
+	if not IsValid(wep) then return end
+
+	local mult = wep:GetNW2Float("WeaponBoostMultiplier", 1)
 
 	if mult > 1 then
 		dmginfo:ScaleDamage(mult)
@@ -68,5 +72,9 @@ hook.Add("EntityTakeDamage", "WeaponBoosterDamage", function(target, dmginfo)
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("PlayerDeath", "WeaponBoosterReset", function(ply)
-	ply.WeaponBoostMultiplier = 1
+	for _, wep in ipairs(ply:GetWeapons()) do
+		if IsValid(wep) then
+			wep.WeaponBoostMultiplier = 1
+		end
+	end
 end)
