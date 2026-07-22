@@ -218,6 +218,8 @@ hook.Add("HUDShouldDraw", "CustomCrosshair", function(name)
 	local wep = ply:GetActiveWeapon()
 	if not IsValid(wep) then return end
 
+	if ply:InVehicle() then return end
+
 	if WeaponCrosshairs[wep:GetClass()] then
 		return false
 	end
@@ -231,6 +233,8 @@ hook.Add("HUDPaint", "DrawCustomCrosshair", function()
 
 	local wep = ply:GetActiveWeapon()
 	if not IsValid(wep) then return end
+
+	if ply:InVehicle() then return end
 
 	local presetName = WeaponCrosshairs[wep:GetClass()]
 	if not presetName then return end
