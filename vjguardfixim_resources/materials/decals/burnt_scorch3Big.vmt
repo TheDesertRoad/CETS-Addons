@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$translucent" 1
+	"$basetexture" "decals/burnt_scorch3"
+	"$modelmaterial" "decals/inv"
+	"$decal" 1
+	"$decalscale" 1
+	"$color" "[ 32 24 32 ]"
+}

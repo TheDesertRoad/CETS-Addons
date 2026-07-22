@@ -9,10 +9,15 @@ local Ambulance = {
 local Police = {
 	["vehicle_cets_l4d_police"] = true,
 }
+
+local NewsVan = {
+	["vehicle_cets_l4d_news"] = true,
+}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local DiggerEnabled = {}
 local AmbulanceEnabled = {}
 local PoliceEnabled = {}
+local NewsVanEnabled = {}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local START_SOUND = "vehicles/cets/digger_grinder_start1.wav"
 local LOOP_SOUND  = "vehicles/digger_grinder_loop1.wav"
@@ -21,6 +26,8 @@ local STOP_SOUND  = "vehicles/digger_grinder_stop1.wav"
 local LOOP_SOUND1  = "ambient/alarms/city_eurosiren_loop1.wav"
 
 local LOOP_SOUND2  = "ambient/alarms/city_eurosiren_loop2.wav"
+
+local LOOP_SOUND3  = "music/tv_music2.wav"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "DiggerDamage", function()
 	if IsValid(ply) then return true end
@@ -211,6 +218,58 @@ end)
 hook.Add("EntityRemoved", "CleanupPoliceSound", function(ent)
 	if ent.PoliceDamageSound then
 		ent.PoliceDamageSound:Stop()
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("Think", "NewsVanSound", function()
+	for _, ply in player.Iterator() do
+		local veh = ply:GetVehicle()
+
+		if not IsValid(veh) then continue end
+		if veh:GetDriver() ~= ply then continue end
+		if not NewsVan[veh.VehicleName] then continue end
+
+		local sid = ply:SteamID64()
+
+		if ply:KeyDown(IN_ATTACK2) then
+			if not ply.NewsVanTogglePressed then
+				ply.NewsVanTogglePressed = true
+
+				NewsVanEnabled[sid] = not NewsVanEnabled[sid]
+
+				if NewsVanEnabled[sid] then
+					if not veh.NewsVanSound then
+						veh.NewsVanSound = CreateSound(veh, LOOP_SOUND3)
+					end
+
+					veh.NewsVanSound:Play()
+				else
+					if veh.NewsVanSound then
+						veh.NewsVanSound:Stop()
+					end
+				end
+			end
+		else
+			ply.NewsVanTogglePressed = false
+		end
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("PlayerLeaveVehicle", "StopNewsVanSound", function(ply, veh)
+	local sid = ply:SteamID64()
+
+	if NewsVanEnabled[sid] then
+		NewsVanEnabled[sid] = false
+
+		if veh.NewsVanSound then
+			veh.NewsVanSound:Stop()
+		end
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("EntityRemoved", "CleanupNewsVanSound", function(ent)
+	if ent.NewsVanDamageSound then
+		ent.NewsVanDamageSound:Stop()
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -485,3 +544,107 @@ hook.Add("PlayerLeaveVehicle", "PassengerSeats_CustomExit", function(ply, seat)
 		ply:SetPos(vehicle:LocalToWorld(seat.ExitPos))
 	end)
 end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if SERVER then
+	local TruckGasModel = "models/vehicles/cets/cets_airport_fuel_truck.mdl"
+
+	hook.Add("OnEntityCreated", "TruckGasSpawn", function(ent)
+		if GetConVar("cets_vehicle_explosives"):GetInt() == 0 then return end
+
+		timer.Simple(0, function()
+
+			if not IsValid(ent) then return end
+			if ent:GetClass() ~= "prop_vehicle_jeep" then return end
+			if ent:GetModel() ~= TruckGasModel then return end
+
+			if IsValid(ent.GasEntity) then return end
+
+			ent.GasEntity = gas
+			gas = ents.Create("obj_vj_cets_gasctruck")
+
+			gas:SetPos(ent:GetPos() + ent:GetForward() * -80 + ent:GetUp() * 75 + ent:GetRight() * -32)
+			gas:SetAngles(Angle(90, ent:GetAngles().y, ent:GetAngles().x))
+			gas:Spawn()
+			gas:Activate()
+			gas.LinkedVehicle = ent
+			gas:SetParent(ent)
+
+			ent.GasEntity = gas1
+			gas1 = ents.Create("obj_vj_cets_gasctruck")
+
+			gas1:SetPos(ent:GetPos() + ent:GetForward() * -80 + ent:GetUp() * 75 + ent:GetRight() * 32)
+			gas1:SetAngles(Angle(90, ent:GetAngles().y, ent:GetAngles().x))
+			gas1:Spawn()
+			gas1:Activate()
+			gas1.LinkedVehicle = ent
+			gas1:SetParent(ent)
+		end)
+
+	end)
+
+	hook.Add("OnEntityCreated", "TruckLadderSpawn", function(ent)
+		timer.Simple(0, function()
+
+			if not IsValid(ent) then return end
+			if ent:GetClass() ~= "prop_vehicle_jeep" then return end
+			if ent:GetModel() ~= TruckGasModel then return end
+
+			if IsValid(ent.LadderEntity) then return end
+
+			ent.LadderEntity = Ladder
+			Ladder = ents.Create("obj_vj_cets_ladder")
+
+			Ladder:SetPos(ent:GetPos() + ent:GetForward() * -235 + ent:GetUp() * 5 + ent:GetRight() * 0)
+
+			local ang = ent:GetAngles()
+			ang:RotateAroundAxis(ang:Up(), -90)
+			Ladder:SetAngles(ang)
+
+			Ladder:Spawn()
+			Ladder:Activate()
+			Ladder.LinkedVehicle = ent
+			Ladder:SetParent(ent)
+		end)
+	end)
+
+	local FrontLoaderModel = "models/vehicles/cets/cets_front_loader01.mdl"
+
+	hook.Add("OnEntityCreated", "FrontLoaderLadderSpawn", function(ent)
+		timer.Simple(0, function()
+
+			if not IsValid(ent) then return end
+			if ent:GetClass() ~= "prop_vehicle_jeep" then return end
+			if ent:GetModel() ~= FrontLoaderModel then return end
+
+			if IsValid(ent.FrontLoaderLadderEntity) then return end
+
+			ent.FrontLoaderLadderEntity = FrontLoaderLadder
+			FrontLoaderLadder = ents.Create("obj_vj_cets_ladder")
+
+			FrontLoaderLadder:SetPos(ent:GetPos() + ent:GetForward() * -15 + ent:GetUp() * -40 + ent:GetRight() * -60)
+
+			local ang = ent:GetAngles()
+			ang:RotateAroundAxis(ang:Up(), -180)
+			FrontLoaderLadder:SetAngles(ang)
+
+			FrontLoaderLadder:Spawn()
+			FrontLoaderLadder:Activate()
+			FrontLoaderLadder.LinkedVehicle = ent
+			FrontLoaderLadder:SetParent(ent)
+
+			ent.FrontLoaderLadderEntity = FrontLoaderLadder1
+			FrontLoaderLadder1 = ents.Create("obj_vj_cets_ladder")
+
+			FrontLoaderLadder1:SetPos(ent:GetPos() + ent:GetForward() * -15 + ent:GetUp() * -40 + ent:GetRight() * 60)
+
+			local ang = ent:GetAngles()
+			ang:RotateAroundAxis(ang:Up(), 0)
+			FrontLoaderLadder1:SetAngles(ang)
+
+			FrontLoaderLadder1:Spawn()
+			FrontLoaderLadder1:Activate()
+			FrontLoaderLadder1.LinkedVehicle = ent
+			FrontLoaderLadder1:SetParent(ent)
+		end)
+	end)
+end

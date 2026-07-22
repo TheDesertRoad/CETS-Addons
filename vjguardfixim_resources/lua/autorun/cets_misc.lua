@@ -781,10 +781,10 @@ else
 
 		else
 			local velocity = ply:GetVelocity()
-			local verticalSpeed = velocity.z
+			local speed = velocity:Length()
 
-			if verticalSpeed < -100 and not ply:IsOnGround() then
-				targetVolume = math.Clamp((-verticalSpeed - 100) / 800, 0, 1)
+			if speed > 490 and not ply:IsOnGround() then
+				targetVolume = math.Clamp((speed - 490) / 800, 0, 1)
 
 				if not windSound then
 					windSound = CreateSound(ply, windFile)
@@ -806,5 +806,4 @@ else
 			end
 		end
 	end)
-
 end

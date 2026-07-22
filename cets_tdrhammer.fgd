@@ -766,3 +766,26 @@
 @PointClass base(Item) studio("models/props_phx/mk-82.mdl")= ent_cets_nuke_a : "Nuclear Bomb" []
 @PointClass base(Item) studio("models/props_phx/ww2bomb.mdl")= ent_cets_nuke_b : "Cleaning Bomb" []
 @PointClass base(Item) studio("models/props_phx/misc/egg.mdl")= ent_cets_egg : "Physical Egg" []
+
+@PointClass base(Item) studio("models/props_cets/ammo_stack.mdl") = ent_cets_ammopile : "Ammo Pile"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Can Ammo" : 0
+		128 : "Pile Ammo" : 0
+	]
+]
+
+@PointClass base(Item) studio("models/props_cets/stick.mdl") = ent_cets_glowstick : "Glow Stick"
+[
+	spawnflags(Flags) =
+	[
+		2 : "Red" : 0
+		4 : "Green" : 0
+		8 : "Blue" : 0
+		16 : "Yellow" : 0
+		32 : "Aqua" : 0
+		64 : "Pink" : 0
+		128 : "White" : 0
+	]
+]

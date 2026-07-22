@@ -1,3 +1,5 @@
+
+
 //HORNETGUN
 sound.Add( {
 	name = "Cets_Weapon_HIVEH.Fire",

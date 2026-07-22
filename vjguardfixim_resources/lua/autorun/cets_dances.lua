@@ -2,13 +2,13 @@ local Gestures = {}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local ActSounds = {
 	zombie = "friends/act_zombie1.wav",
-	dance = "friends/act_dance.wav",
+	dance = math.random(1, 1024) == 1 and "music/tv_music3.wav" or "friends/act_dance.wav",
 	salute = "hl1/events/task_complete.wav",
 	agree = "hl1/events/tutor_msg.wav",
 	disagree = "hl1/events/friend_died.wav",
 	muscle = "friends/act_muscle.wav",
 	robot = "friends/act_robot.wav",
-	cheer = "hl1/ambience/goal_1.wav",
+	cheer = math.random(1, 1024) == 1 and "friends/act_cheer_alt.wav" or "hl1/ambience/goal_1.wav",
 	laugh = math.random(1, 1024) == 1 and "friends/act_laugh_alt.wav" or "friends/act_laugh.wav"
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,6 @@ local ActConstants = {
 	muscle = ACT_GMOD_TAUNT_MUSCLE,
 	robot = ACT_GMOD_TAUNT_ROBOT,
 	cheer = ACT_GMOD_TAUNT_CHEER,
-	aerobic = "wOS_UAP_TF2_engineer_aerobic",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then 
@@ -119,7 +118,6 @@ if CLIENT then
 		dances:AddOption("Robot", function() PlayAnim("robot") end)
 		dances:AddOption("Zombie", function() PlayAnim("zombie") end)
 		dances:AddOption("Muscle", function() PlayAnim("muscle") end)
-dances:AddOption("Aerobic", function() PlayAnim("aerobic") end)
 
 		local social, _ = menu:AddSubMenu("Expressions")
 		social:AddOption("Wave", function() PlayAnim("wave") end)

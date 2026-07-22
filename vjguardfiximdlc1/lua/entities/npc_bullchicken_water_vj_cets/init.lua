@@ -135,6 +135,8 @@ function ENT:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
+self.NextFootstepSoundT = CurTime() + 1
+
 	if self:IsOnFire() then
 		self.Bleeds = false
 		self.HasIdleSounds = false

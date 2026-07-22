@@ -1,0 +1,21 @@
+VertexLitGeneric
+{
+	$basetexture	models/props/terror/glow
+	$envmap			env_cubemap
+
+	$selfillum		1
+	$phong			1
+
+	$phongboost		50
+	$phongexponent	200
+	$phongfresnelranges	"[.1 0.5 2]"
+
+"Proxies"
+   {
+	"EntityRandom"
+           	{
+                "scale" "16.99"
+                "resultVar" "$frame"
+            }
+   }
+}

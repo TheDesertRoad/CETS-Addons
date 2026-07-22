@@ -7,6 +7,10 @@ VJ.AddPlugin("CETS", "NPC", "Spawn Portals")
 
 game.AddParticles("particles/vjguardporpar.pcf")
 
+game.AddDecal("VJ_CETS_BurntScorch1B", {"decals/burnt_scorch1Big"})
+game.AddDecal("VJ_CETS_BurntScorch2B", {"decals/burnt_scorch2Big"})
+game.AddDecal("VJ_CETS_BurntScorch3B", {"decals/burnt_scorch3Big"})
+
 local vCat = "Other"
 
 VJ.AddNPC("Warpball (Xen)", "sent_vj_cets_portal_a",vCat)
@@ -43,6 +47,8 @@ VJ.AddConVar("cets_spawnable_nuke", 1, FCVAR_ARCHIVE)
 VJ.AddConVar("cets_spawnable_nuke_cvar_sound", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_xen_jumppad_launchnpcs", 1, FCVAR_ARCHIVE)
+
+VJ.AddConVar("cets_vehicle_explosives", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("sk_cets_adrenaline_time", 10, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_cets_antibleed_time", 10, FCVAR_ARCHIVE)

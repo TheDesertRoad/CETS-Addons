@@ -13,7 +13,7 @@
 	{
 		"HorsePower""200"
 		"MaxRPM""4100"
-		"MaxSpeed""40"
+		"MaxSpeed" "40"
 		"MaxReverseSpeed""5"
 		"AutobrakeSpeedGain""1.1"
 		"AutobrakeSpeedFactor""3"

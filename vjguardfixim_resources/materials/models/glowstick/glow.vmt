@@ -1,0 +1,15 @@
+UnlitGeneric
+{
+	$basetexture	models/glowstick/glow
+	$envmap			env_cubemap
+
+	$surfaceprop	plastic
+	$selfillum		1
+	$phong			1
+
+	$phongboost		50
+	$phongexponent	200
+	$phongfresnelranges	"[.1 0.5 2]"
+
+	$color2 "[10 10 10]"
+}
