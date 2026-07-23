@@ -67,3 +67,7 @@ Drag the extracted addon folder into the addons folder.
 Example:
 
 <img width="600" height="400" alt="imagen" src="https://github.com/user-attachments/assets/2e0b7d14-8c03-4f35-a9e3-50df6190e86f" />
+
+To mount the `.fdg` you just have to:
+
+Open hammer and navigate to "Tools" > "Options...". In the window that opens, add the file of the addon to mount it.
