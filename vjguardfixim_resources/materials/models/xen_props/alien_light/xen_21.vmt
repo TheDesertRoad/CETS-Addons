@@ -1,0 +1,19 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "xen/xen_21"
+	"$bumpmap" "xen/xen_21_normal"
+	"$surfaceprop" "concrete"
+	"$normalmapalphaenvmapmask" 1
+	"$basealphaenvmapmask" "0"
+
+	"$envmaptint" "[ .4 .4 .4 ]"
+	"$envmap" "cubemaps/cubemap_cave01"
+	"$phong" "1"
+	"$phongexponent" "8"
+	"$phongboost"	"1.5"
+	"$phongfresnelranges"	"[1 1 1]"
+	"$rimlight" "1" 
+	"$rimlightexponent" "0.2" 
+	"$rimlightboost" "0.2"
+
+}

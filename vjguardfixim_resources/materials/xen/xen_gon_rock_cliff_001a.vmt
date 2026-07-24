@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
-	"$baseTexture" 	"xen/xen_gon_rock_cliff_001a"
-	"$bumpmap" 	"xen/xen_gon_rock_cliff_001a_ssbump"
+	"$baseTexture" 	"xen/xen_rock_cliff_001a"
+	"$bumpmap" 	"xen/xen_rock_cliff_001a_normal"
 
 		
 	"%keywords" 			"bms, Jenn0, xen"

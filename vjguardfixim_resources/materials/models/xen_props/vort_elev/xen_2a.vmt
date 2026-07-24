@@ -1,0 +1,6 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "xen/xen_2a"
+	"$bumpmap" "xen/xen_28_normal"
+	"$halflambert" "1"
+}

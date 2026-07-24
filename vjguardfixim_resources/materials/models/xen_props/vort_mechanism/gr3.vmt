@@ -1,0 +1,7 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/xen_props/vort_mechanism/gr3"
+	"$bumpmap" "models/xen_props/vort_mechanism/gr3_n"
+	"$surfaceprop" "wood"
+	"$halflambert" "1"
+}

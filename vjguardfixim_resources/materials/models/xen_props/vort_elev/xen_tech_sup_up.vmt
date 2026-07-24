@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "xeno/xen_tech_sup_up"
+	"$bumpmap" "xen/normal"
+
+}

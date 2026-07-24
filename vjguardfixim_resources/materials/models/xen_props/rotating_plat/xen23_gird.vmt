@@ -1,0 +1,11 @@
+"vertexlitgeneric"
+{
+	$basetexture xeno/XENO_GIRD2
+	$bumpmap xenbumpmap/XENO_GIRD2
+	
+	"$envmapcontrast" "1"
+	"$envmapsaturation" 1
+	"$envmap"	"env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$normalmapalphaenvmapmask" "1"
+}

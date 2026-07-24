@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "xeno/tech_sup1"
+	"$bumpmap" "xenbumpmap/tech_sup1"
+	"$surfaceprop" "concrete"
+ 	"$detail" "detail\xen"
+	"$detailscale" "15"
+	"$detailblendfactor" 0.8
+	"$detailblendmode" 0
+}
