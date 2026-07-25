@@ -40,19 +40,25 @@ function ENT:OnTakeDamage(dmginfo)
 		self:Explode()
 	end
 
-	if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_CLUB) or dmginfo:IsDamageType(DMG_SNIPER) or dmginfo:IsDamageType(DMG_BUCKSHOT) then
-			local hitPos = dmginfo:GetDamagePosition()
+	if dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_CLUB) or dmginfo:IsDamageType(DMG_SNIPER) or dmginfo:IsDamageType(DMG_BUCKSHOT) or dmginfo:IsDamageType(DMG_ENERGYBEAM) then
+		local hitPos = dmginfo:GetDamagePosition()
 
-			if hitPos == vector_origin then
-				hitPos = self:GetPos()
-			end
+		if hitPos == vector_origin then
+			hitPos = self:WorldSpaceCenter()
+		end
 
-			if self:WaterLevel() > 1 then
-				ParticleEffect("gascan_gasleak3", hitPos, Angle(0,0,0), self)
-			else
-				ParticleEffect("fire_small_02", hitPos, Angle(0,0,0), self)
-				ParticleEffect(PartEffGasLeak, hitPos, Angle(0,0,0), self)
-			end
+		local localPos = self:WorldToLocal(hitPos)
+
+		local helper = ents.Create("base_anim")
+		helper:SetModel("models/hunter/blocks/cube025x025x025.mdl")
+		helper:SetNoDraw(true)
+		helper:SetNotSolid(true)
+		helper:SetMoveType(MOVETYPE_NONE)
+		helper:SetParent(self)
+		helper:SetLocalPos(self:WorldToLocal(hitPos))
+		helper:Spawn()
+
+		ParticleEffectAttach("fire_small_02", PATTACH_ABSORIGIN_FOLLOW, helper, 0)
 
 			if not  self.Active then 
 				self.Active = true
@@ -198,26 +204,24 @@ function ENT:Explode()
 		end
 	end
 
-	for i = 0, 1 do
-		self.APCGib3 = ents.Create("prop_physics")
-		self.APCGib3:SetModel("models/props_c17/trappropeller_engine.mdl")
-		self.APCGib3:SetPos(myPos + self:GetUp() * 128)
-		self.APCGib3:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		self.APCGib3:Ignite(math.random(8, 16))
-		self.APCGib3:Spawn()
-		CleanupGib(self.APCGib3)
+	self.APCGib3 = ents.Create("prop_physics")
+	self.APCGib3:SetModel("models/props_c17/trappropeller_engine.mdl")
+	self.APCGib3:SetPos(myPos + self:GetUp() * 128)
+	self.APCGib3:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self.APCGib3:Ignite(math.random(8, 16))
+	self.APCGib3:Spawn()
+	CleanupGib(self.APCGib3)
 
-		local phys = self.APCGib3:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
+	local phys = self.APCGib3:GetPhysicsObject()
+	if IsValid(phys) then
+		phys:Wake()
 
-			local explosionPos = myPos
-			local dir = (self.APCGib3:WorldSpaceCenter() - explosionPos):GetNormalized()
-			local force = math.Clamp(DMG_BLAST, 50, 500) * math.random(-64, 64)
+		local explosionPos = myPos
+		local dir = (self.APCGib3:WorldSpaceCenter() - explosionPos):GetNormalized()
+		local force = math.Clamp(DMG_BLAST, 50, 500) * math.random(-64, 64)
 
-			phys:SetVelocity(dir * force)
-			phys:AddAngleVelocity(VectorRand() * 2000)
-		end
+		phys:SetVelocity(dir * force)
+		phys:AddAngleVelocity(VectorRand() * 2000)
 	end
 
 	self:Remove()

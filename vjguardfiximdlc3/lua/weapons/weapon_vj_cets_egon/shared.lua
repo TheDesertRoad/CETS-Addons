@@ -96,9 +96,13 @@ function SWEP:CustomOnInitialize()
 
 	self.Firing = false
 	self.LoopStartTime = 0
-
 	self.FireLoop = CreateSound(self, "hl1/weapons/egon_run3.wav")
-	self.FireLoop:SetSoundLevel(80)
+	self.FireLoop:SetSoundLevel(80)	
+	if self.Mode == 0 then
+		self.FireLoop:ChangePitch(120)	
+	else
+		self.FireLoop:ChangePitch(100)	
+	end
 end
 --------------------------------------------------------------------------------|
 function SWEP:CustomOnDeploy()
@@ -191,7 +195,7 @@ function SWEP:PrimaryAttack(UseAlt)
 	if not self.Firing then
 		self.Firing = true
 		self:EmitSound("hl1/weapons/egon_windup2.wav")
-		self.LoopStartTime = CurTime() + SoundDuration("hl1/weapons/egon_windup2.wav") - 0.2
+		self.LoopStartTime = CurTime() + SoundDuration("hl1/weapons/egon_windup2.wav", 80, 120) - 0.8
 	end
 
 	local ene = owner:GetEnemy()
@@ -314,8 +318,14 @@ function SWEP:PrimaryAttack(UseAlt)
 		if not self.Firing then
 			if self.Weapon:Ammo1() <= 0 then return end
 			self.Firing = true
-			self:EmitSound("hl1/weapons/egon_windup2.wav")
-			self.LoopStartTime = CurTime() + SoundDuration("hl1/weapons/egon_windup2.wav") - 0.2
+
+			if self.Mode == 0 then
+				self:EmitSound("hl1/weapons/egon_windup2.wav", 80, 120)
+				self.LoopStartTime = CurTime() + SoundDuration("hl1/weapons/egon_windup2.wav") - 0.8
+			else
+				self:EmitSound("hl1/weapons/egon_windup2.wav", 80, 100)
+				self.LoopStartTime = CurTime() + SoundDuration("hl1/weapons/egon_windup2.wav") - 0.2
+			end
 		end
 
 		if self.Weapon:Ammo1() <= 0 then return end
@@ -382,7 +392,7 @@ function SWEP:PrimaryAttack(UseAlt)
 							if ent == self.Owner then
 								dmg:SetDamage(3)
 							else
-								dmg:SetDamage(self.Primary.Damage / 2)
+								dmg:SetDamage(self.Primary.Damage / 1.5)
 							end
 							dmg:SetDamageType(bit.bor(DMG_ALWAYSGIB, DMG_ENERGYBEAM, DMG_SONIC)) -- Change to any damage type you want
 							dmg:SetDamagePosition(tr.HitPos)
@@ -492,8 +502,10 @@ function SWEP:PrimaryAttack(UseAlt)
 end
 --------------------------------------------------------------------------------|
 function SWEP:SecondaryAttack()
-	if CurTime() < self:GetNextSecondaryFire() then return end
-	self:SetNextPrimaryFire(CurTime() + 1)
+    if CurTime() < self:GetNextSecondaryFire() then return end
+
+    self:SetNextSecondaryFire(CurTime() + 2)
+    self:SetNextPrimaryFire(CurTime() + 1)
 
 	self:StopSound("hl1/weapons/egon_run3.wav")
 
@@ -559,6 +571,14 @@ function SWEP:CustomOnThink()
 
 			self:EmitSound("hl1/weapons/egon_off1.wav")
 		end
+	end
+
+	if self.FireLoop and self.FireLoop:IsPlaying() then
+		local targetPitch = (self.Mode == 0) and 120 or 100
+
+		self.CurrentPitch = self.CurrentPitch or targetPitch
+		self.CurrentPitch = Lerp(FrameTime() * 8, self.CurrentPitch, targetPitch)
+		self.FireLoop:ChangePitch(self.CurrentPitch, 0)
 	end
 
 	if owner:IsPlayer() and self:Ammo1() > self.Primary.MaxAmmo then

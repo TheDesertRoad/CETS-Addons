@@ -14,7 +14,7 @@
 		"horsepower"			"600"	
 		"maxrpm"			"20000"
 		"maxspeed"			"48"		// mph
-		"maxReverseSpeed"	"34"		// mph
+		"maxReverseSpeed"	"35"		// mph
 		"autotransmission"	"1"
 		"axleratio"			"4.85"
 		"gear"				"3.35"		// 1st gear

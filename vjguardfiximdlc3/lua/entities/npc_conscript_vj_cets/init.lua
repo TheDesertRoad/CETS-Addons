@@ -469,52 +469,52 @@ local SurfaceFootsteps = {
 	},
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:PlayFootstepSound(customSD)
-	local metaEntity = FindMetaTable("Entity")
-	local PICK = VJ.PICK
-	local funcGetTable = metaEntity.GetTable
-	local selfData = funcGetTable(self)
-	if selfData.HasSounds && selfData.HasFootstepSounds && selfData.MovementType != VJ_MOVETYPE_STATIONARY && self:IsOnGround() then
-		if selfData.DisableFootStepSoundTimer then
-			-- Use custom table if available, if none found then use the footstep sound table
-	local tr = util.TraceLine({
-		start = self:GetPos() + Vector(0, 0, 5),
-		endpos = self:GetPos() - Vector(0, 0, 40),
-		filter = self,
-		mask = MASK_SOLID_BRUSHONLY
-	})
-
-	local tbl = SurfaceFootsteps[tr.MatType] or selfData.SoundTbl_FootStep
-	local pickedSD = customSD and PICK(customSD) or PICK(tbl)
-			if pickedSD then
-				VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
-				local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Event", pickedSD) end
-			end
-		elseif self:IsMoving() && CurTime() > selfData.NextFootstepSoundT && self:GetMoveDelay() <= 0 then
-			-- Use custom table if available, if none found then use the footstep sound table
-			local tr = util.TraceLine({
-				start = self:GetPos() + Vector(0, 0, 5),
-				endpos = self:GetPos() - Vector(0, 0, 40),
-				filter = self,
-				mask = MASK_SOLID_BRUSHONLY
-			})
-
-			local tbl = SurfaceFootsteps[tr.MatType] or selfData.SoundTbl_FootStep
-			local pickedSD = customSD and PICK(customSD) or PICK(tbl)
-			if pickedSD then
-				if selfData.FootstepSoundTimerRun && self:GetMovementActivity() == ACT_RUN then
-					VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
-					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Run", pickedSD) end
-					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerRun
-				elseif selfData.FootstepSoundTimerWalk && self:GetMovementActivity() == ACT_WALK then
-					VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
-					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Walk", pickedSD) end
-					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerWalk
-				end
-			end
-		end
-	end
-end
+//function ENT:PlayFootstepSound(customSD)
+//	local metaEntity = FindMetaTable("Entity")
+//	local PICK = VJ.PICK
+//	local funcGetTable = metaEntity.GetTable
+//	local selfData = funcGetTable(self)
+//	if selfData.HasSounds && selfData.HasFootstepSounds && selfData.MovementType != VJ_MOVETYPE_STATIONARY && self:IsOnGround() then
+//		if selfData.DisableFootStepSoundTimer then
+//			-- Use custom table if available, if none found then use the footstep sound table
+//	local tr = util.TraceLine({
+//		start = self:GetPos() + Vector(0, 0, 5),
+//		endpos = self:GetPos() - Vector(0, 0, 40),
+//		filter = self,
+//		mask = MASK_SOLID_BRUSHONLY
+//	})
+//
+//	local tbl = SurfaceFootsteps[tr.MatType] or selfData.SoundTbl_FootStep
+//	local pickedSD = customSD and PICK(customSD) or PICK(tbl)
+//			if pickedSD then
+//				VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
+//				local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Event", pickedSD) end
+//			end
+//		elseif self:IsMoving() && CurTime() > selfData.NextFootstepSoundT && self:GetMoveDelay() <= 0 then
+//			-- Use custom table if available, if none found then use the footstep sound table
+//			local tr = util.TraceLine({
+//				start = self:GetPos() + Vector(0, 0, 5),
+//				endpos = self:GetPos() - Vector(0, 0, 40),
+//				filter = self,
+//				mask = MASK_SOLID_BRUSHONLY
+//			})
+//
+//			local tbl = SurfaceFootsteps[tr.MatType] or selfData.SoundTbl_FootStep
+//			local pickedSD = customSD and PICK(customSD) or PICK(tbl)
+//			if pickedSD then
+//				if selfData.FootstepSoundTimerRun && self:GetMovementActivity() == ACT_RUN then
+//					VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
+//					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Run", pickedSD) end
+//					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerRun
+//				elseif selfData.FootstepSoundTimerWalk && self:GetMovementActivity() == ACT_WALK then
+//					VJ.EmitSound(self, pickedSD, selfData.FootstepSoundLevel, self:GetSoundPitch(selfData.FootstepSoundPitch))
+//					local funcCustom = self.OnFootstepSound; if funcCustom then funcCustom(self, "Walk", pickedSD) end
+//					selfData.NextFootstepSoundT = CurTime() + selfData.FootstepSoundTimerWalk
+//				end
+//			end
+//		end
+//	end
+//end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_IntMsg(ply, controlEnt)
 	ply:ChatPrint("ALT (walk key)")

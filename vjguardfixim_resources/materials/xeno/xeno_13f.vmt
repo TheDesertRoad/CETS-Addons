@@ -4,6 +4,8 @@ WorldVertexTransition
 	$basetexture2 xeno/XENO_14
 	$bumpmap xenbumpmap/XENO_13
 	$bumpmap2 xenbumpmap/XENO_14
+		$surfaceprop "Rock"
+	$blendmodulatetexture xeno/XENO_13F_BLEND
 	
 	// $detail XENO_13F_detail
 	$texscale 8

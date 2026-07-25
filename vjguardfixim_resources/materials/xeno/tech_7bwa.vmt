@@ -2,7 +2,7 @@ LightmappedGeneric
 {
 	$basetexture xeno/TECH_7BWA
 	$bumpmap xenbumpmap/TECH_7BWA
-	
+			$surfaceprop "Rock"
 	"$envmapcontrast" "1"
 	"$envmapsaturation" 1
 	"$envmap"	"env_cubemap"

@@ -8,4 +8,6 @@ LightmappedGeneric
 	"$envmap"	"env_cubemap"
 	"$envmaptint" "[.5 .5 .5]"
 	"$normalmapalphaenvmapmask" "1"
+
+	$surfaceprop "Flesh"
 }

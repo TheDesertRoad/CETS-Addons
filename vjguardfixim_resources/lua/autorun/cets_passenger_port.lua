@@ -529,19 +529,57 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("PlayerSpawnedVehicle", "PassengerSeats_Create", CreatePassengerSeats)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-hook.Add("PlayerLeaveVehicle", "PassengerSeats_CustomExit", function(ply, seat)
+local function FindSafeExitPos(vehicle, exitPos)
+	local desiredPos = vehicle:LocalToWorld(exitPos)
+	local mins = Vector(-16, -16, 0)
+	local maxs = Vector(16, 16, 72)
 
+	local function IsSafe(pos)
+		local tr = util.TraceHull({
+			start = pos,
+			endpos = pos,
+			mins = mins,
+			maxs = maxs,
+			mask = MASK_PLAYERSOLID
+		})
+
+		return not tr.Hit
+	end
+
+	if IsSafe(desiredPos) then
+		return desiredPos
+	end
+
+	local offsets = {Vector(32,0,0), Vector(-32,0,0), Vector(0,32,0), Vector(0,-32,0), Vector(48,48,0), Vector(-48,48,0), Vector(48,-48,0), Vector(-48,-48,0), Vector(64,0,0), Vector(-64,0,0), Vector(0,64,0), Vector(0,-64,0), Vector(0,0,24), Vector(0,0,48)}
+
+	for _, offset in ipairs(offsets) do
+		local pos = desiredPos + vehicle:GetAngles():Forward() * offset.x + vehicle:GetAngles():Right() * offset.y + Vector(0,0,offset.z)
+		if IsSafe(pos) then
+			return pos
+		end
+	end
+	return nil
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("PlayerLeaveVehicle", "PassengerSeats_CustomExit", function(ply, seat)
 	if not IsValid(seat) then return end
 	if not seat.ParentVehicle then return end
 	if not seat.ExitPos then return end
 
 	local vehicle = seat.ParentVehicle
 
-	timer.Simple(0.05, function() if not IsValid(ply) or not IsValid(vehicle) then return end
+	timer.Simple(0.05, function()
 		if not IsValid(ply) then return end
 		if not IsValid(vehicle) then return end
 
-		ply:SetPos(vehicle:LocalToWorld(seat.ExitPos))
+		local pos = FindSafeExitPos(vehicle, seat.ExitPos)
+
+		if pos then
+			ply:SetPos(pos)
+		else
+			ply:SetPos(vehicle:GetPos() + Vector(0,0,60))
+		end
+
 	end)
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

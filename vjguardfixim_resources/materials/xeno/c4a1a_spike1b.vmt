@@ -2,6 +2,7 @@ LightmappedGeneric
 {
 	$basetexture xeno/C4A1A_SPIKE1B
 	$bumpmap xenbumpmap/C4A1A_SPIKE1B
+	$surfaceprop "Rock"
 	
 	"$envmapcontrast" "1"
 	"$envmapsaturation" 1

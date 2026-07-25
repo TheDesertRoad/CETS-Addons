@@ -1,32 +1,47 @@
 if (SERVER) then
-	AddCSLuaFile();
-end;
+	AddCSLuaFile()
+
+	hook.Add("EntityTakeDamage", "MovingLadderDamage", function(ent, dmg)
+		if not ent:IsPlayer() then return end
+		if not ent.OnMovingLadder then return end
+
+		local t = dmg:GetDamageType()
+
+		if bit.band(t, DMG_CRUSH) ~= 0 or bit.band(t, DMG_VEHICLE) ~= 0 then
+			dmg:SetDamage(0)
+			return true
+		end
+	end)
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-DEFINE_BASECLASS("base_entity");
+DEFINE_BASECLASS("base_entity")
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.PrintName		= "Ladder (BASE)";
-ENT.Category		= "Ladders";
-ENT.Spawnable		= false;
-ENT.AdminOnly		= false;
-ENT.Model			= Model("models/props_c17/metalladder001.mdl");
-ENT.RenderGroup 	= RENDERGROUP_BOTH;
+ENT.PrintName		= "Ladder (BASE)"
+ENT.Category		= "Ladders"
+ENT.Spawnable		= false
+ENT.AdminOnly		= false
+ENT.Model			= Model("models/props_c17/metalladder001.mdl")
+ENT.RenderGroup 	= RENDERGROUP_BOTH
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if (SERVER) then
 	function ENT:Initialize()
-		self:SetModel(self.Model);
-		self:SetSolid(SOLID_VPHYSICS);
-		self:SetNoDraw(true);
-		self:PhysicsInit(SOLID_VPHYSICS);
-		self:SetUseType(SIMPLE_USE);
-		self:SetCollisionGroup(COLLISION_GROUP_WEAPON);
-		local phys = self:GetPhysicsObject();
+		self:SetModel(self.Model)
+		self:SetSolid(SOLID_VPHYSICS)
+		self:SetNoDraw(true)
+		self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetUseType(SIMPLE_USE)
+		self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+		local phys = self:GetPhysicsObject()
 
 		if (IsValid(phys)) then
-			phys:EnableMotion(false);
-		end;
+			phys:EnableMotion(false)
+		end
 
-		self:UpdateLadder(true);
-	end;
+		self:UpdateLadder(true)
+
+		self.LastPos = self:GetPos()
+		self.LastAng = self:GetAngles()
+	end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:UpdateLadder(bCreate)
 	if bCreate then
@@ -73,20 +88,35 @@ function ENT:UpdateLadder(bCreate)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-	function ENT:Think()
-		if (IsValid(self.ladder)) then
-			self:UpdateLadder();
-			self:NextThink(CurTime() + 1);
-			return true;
-		end;
-	end;
+function ENT:Think()
+	local newPos = self:GetPos()
+	local newAng = self:GetAngles()
+	local posDelta = newPos - self.LastPos
+	local angDelta = newAng - self.LastAng
+
+	for _, ply in ipairs(player.GetAll()) do
+		if not ply:IsOnGround() then
+			if ply:GetMoveType() == MOVETYPE_LADDER then
+				local localPos = WorldToLocal(ply:GetPos(), angle_zero, self.LastPos, self.LastAng)
+				local worldPos = LocalToWorld(localPos, angle_zero, newPos, newAng)
+			 	ply:SetPos(worldPos)
+			end
+		end
+	end
+
+	self.LastPos = newPos
+	self.LastAng = newAng
+
+	self:NextThink(CurTime())
+	return true
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 elseif (CLIENT) then
 	function ENT:Initialize()
-		self:SetSolid(SOLID_VPHYSICS);
-	end;
+		self:SetSolid(SOLID_VPHYSICS)
+	end
 
 	function ENT:Draw()
-		self:DrawModel();
-	end;
-end;
+		self:DrawModel()
+	end
+end

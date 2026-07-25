@@ -25,6 +25,7 @@ local LootTables = {
 		{class = "weapon_vj_cets_hmg", weight = 5},
 		{class = "weapon_vj_cets_tau", weight = 5},
 		{class = "weapon_vj_cets_hecusniper", weight = 5},
+		{class = "weapon_vj_cets_egon", weight = 5},
 	},
 
 	ammo = {
@@ -45,6 +46,9 @@ local LootTables = {
 		{class = "item_ammo_smg1_large", weight = 10},
 		{class = "item_ammo_ar2_large", weight = 10},
 		{class = "item_ammo_357_large", weight = 10},
+
+		{class = "ent_cets_atomic_ammo", weight = 10},
+		{class = "ent_cets_c_atomic_ammo", weight = 10},
 	},
 
 	utility = {
@@ -54,18 +58,27 @@ local LootTables = {
 		{class = "weapon_ply_comgr", weight = 40},
 		{class = "weapon_ply_comgr_s", weight = 40},
 		{class = "weapon_ply_fragnade", weight = 40},
+		{class = "ent_cets_glowstick", weight = 40},
 
 		{class = "item_healthvial", weight = 25},
 		{class = "item_armor_c", weight = 25},
 		{class = "item_health_vial_c", weight = 25},
 		{class = "ent_cets_mp5grenades", weight = 25},
 		{class = "weapon_ply_snark", weight = 25},
+		{class = "item_cets_resin", weight = 25},
 
 		{class = "item_healthkit", weight = 15},
 		{class = "ent_cets_atomic_ammo", weight = 15},
 		{class = "item_health_kit_c", weight = 15},
 		{class = "weapon_ply_moly", weight = 15},
 		{class = "weapon_ply_comgr_a", weight = 15},
+
+		{class = "ent_cets_antibleed", weight = 10},
+		{class = "ent_cets_adrenaline", weight = 10},
+		{class = "ent_cets_antidote", weight = 10},
+
+		{class = "ent_cets_jump_module", weight = 5},
+		{class = "ent_cets_longfallboots", weight = 5},
 	}
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -73,7 +86,7 @@ function ENT:Initialize()
 	self:SetModel("models/props/cs_militia/footlocker01_closed.mdl")
 	self:SetSolid(SOLID_VPHYSICS)
 
-	self:EmitSound("hl1/ambience/signalgear1.wav", 40, 25)
+	self:EmitSound("friends/player_chest_idle1.wav", 50, 100)
 
 	self.Opened = false
 end
@@ -128,14 +141,15 @@ function ENT:Use(activator)
 	
 	self.Opened = true
 
-	self:EmitSound("hl1/items/protect3.wav")
-	self:StopSound("hl1/ambience/signalgear1.wav")
+	self:EmitSound("friends/player_chest_open1.wav")
+	self:StopSound("friends/player_chest_idle1.wav")
 
 	self:GiveLoot(activator)
 
 	self:SetModel("models/props/cs_militia/footlocker01_open.mdl")
+	self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRemove()
-	self:StopSound("hl1/ambience/signalgear1.wav")
+	self:StopSound("friends/player_chest_idle1.wav")
 end

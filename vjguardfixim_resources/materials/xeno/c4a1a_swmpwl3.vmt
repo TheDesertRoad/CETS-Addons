@@ -10,4 +10,6 @@ WorldVertexTransition
 	"$envmap"	"env_cubemap"
 	"$envmaptint" "[.5 .5 .5]"
 	"$normalmapalphaenvmapmask" "1"
+
+	$blendmodulatetexture xeno/C4A1A_SWMPWL3_BLEND
 }

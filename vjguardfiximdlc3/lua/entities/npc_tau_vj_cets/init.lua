@@ -56,6 +56,7 @@ ENT.ItemDropsOnDeathChance = 2
 ENT.ItemDropsOnDeath_EntityList = {
 	"item_health_pen",
 	"weapon_ply_moly",
+	"ent_cets_atomic_ammo",
 }
 
 ENT.CanBeMedic = false
