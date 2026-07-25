@@ -158,9 +158,37 @@ function ENT:DoTornadoDamage(radius)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:DissolveNearbyEntities(radius)
+	for _, ent in ipairs(ents.FindInSphere(self:GetPos(), radius)) do
+		if not IsValid(ent) then continue end
+		if ent == self then continue end
+		if ent:IsPlayer() then continue end
+		if ent:IsWorld() then continue end
+
+		local dissolver = ents.Create("env_entity_dissolver")
+		if not IsValid(dissolver) then continue end
+
+		local target = "dissolve_" .. ent:EntIndex()
+		ent:SetName(target)
+
+		dissolver:SetKeyValue("target", target)
+		dissolver:SetKeyValue("dissolvetype", "2") -- 0=Energy, 1=Heavy Electrical, 2=Light Electrical, 3=Core Effect
+		dissolver:Spawn()
+		dissolver:Activate()
+		dissolver:Fire("Dissolve", target, 0)
+
+		timer.Simple(0, function()
+			if IsValid(dissolver) then
+				dissolver:Remove()
+			end
+		end)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self:DoTornado(4096)
 	self:DoTornadoDamage(2048)
+	self:DissolveNearbyEntities(512)
 
 	if self:IsMoving() then
 		self:SetLocalVelocity(self:GetMoveVelocity() * 2)
