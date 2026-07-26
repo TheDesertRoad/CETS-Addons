@@ -376,44 +376,43 @@ function SWEP:SecondaryAttack()
 	local spawnPos = self:GetBulletPos()
 
 	if isPly then
+		if self.Weapon:Ammo1() <= 6 then return end
+		if not IsValid(owner) then return end
+		if not owner:Alive() then return end
+		if owner:GetActiveWeapon() ~= self then return end
 
-	if self.Weapon:Ammo1() <= 6 then return end
-	if not IsValid(owner) then return end
-	if not owner:Alive() then return end
-	if owner:GetActiveWeapon() ~= self then return end
+		if self.Spin == 1 then return end
 
-	if self.Spin == 1 then return end
 		if self.Weapon:Ammo1() <= 5 then
-			self.Weapon:EmitSound( "Cets_Weapon_Tau.FireNOO" )
-			self:SetNextPrimaryFire( CurTime() + 0.2 )
-			self:SetNextSecondaryFire( CurTime() + 0.2 )
+			self.Weapon:EmitSound("Cets_Weapon_Tau.FireNOO")
+			self:SetNextPrimaryFire(CurTime() + 0.2)
+			self:SetNextSecondaryFire(CurTime() + 0.2)
 			self:StopChargeSound()
 			self.Spin = 0
-			self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
+			self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
 		end
 
 		if self.Weapon:Ammo1() >= 6 then
-			self:EmitSound(self.Secondary.Sound, 75, 100, 1, CHAN_WEAPON)
-			self:TakePrimaryAmmo( 5 )			
-			self.Weapon:SendWeaponAnim( ACT_GAUSS_SPINUP )
-			self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-			self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+			self:EmitSound(self.Secondary.Sound, 75, 100)
+			self:TakePrimaryAmmo(5)
+			self.Weapon:SendWeaponAnim(ACT_GAUSS_SPINUP)
+			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		end
 
-	if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then
-		self.Weapon:EmitSound( "Cets_Weapon_Tau.FireNOO" )
-		self:SetNextPrimaryFire( CurTime() + 0.2 )
-		self:SetNextSecondaryFire( CurTime() + 0.2 )
-	end
+		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then
+			self.Weapon:EmitSound("Cets_Weapon_Tau.FireNOO")
+			self:SetNextPrimaryFire(CurTime() + 0.2)
+			self:SetNextSecondaryFire(CurTime() + 0.2)
+		end
 
-	if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
+		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
 
-	self.Spin = 1
-	self.SpinTimer = CurTime() + 7
+		self.Spin = 1
+		self.SpinTimer = CurTime() + 7
 
-	self.Idle = 0
-	self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-
+		self.Idle = 0
+		self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
 	end
 end
 --------------------------------------------------------------------------------|
