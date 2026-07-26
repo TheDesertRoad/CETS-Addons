@@ -31,6 +31,7 @@ local LOOP_SOUND3  = "music/tv_music2.wav"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "DiggerDamage", function()
 	if IsValid(ply) then return true end
+
 	for _, ply in player.Iterator() do
 		local veh = ply:GetVehicle()
 
@@ -42,57 +43,75 @@ hook.Add("Think", "DiggerDamage", function()
 
 		if ply:KeyDown(IN_ATTACK2) then
 			if not ply.DiggerTogglePressed then
+				ply.DiggerTogglePressed = true
 
-			ply.DiggerTogglePressed = true
-			DiggerEnabled[sid] = not DiggerEnabled[sid]
-
-			if DiggerEnabled[sid] then
-				veh:EmitSound(START_SOUND)
-				timer.Simple(1.7, function()
-					if not IsValid(veh) then return end
-					if not DiggerEnabled[sid] then return end
-
-					if not veh.DiggerDamageSound then
-						veh.DiggerDamageSound = CreateSound(veh, LOOP_SOUND)
-					end
-
-				veh.DiggerDamageSound:Play()
-				end)
-
-			else
-				if veh.DiggerDamageSound then
-					veh.DiggerDamageSound:Stop()
+				if not DiggerEnabled[sid] and ply.NextDiggerStart and CurTime() < ply.NextDiggerStart then
+					continue
 				end
 
-			veh:EmitSound(STOP_SOUND)
+				DiggerEnabled[sid] = not DiggerEnabled[sid]
+
+				if DiggerEnabled[sid] then
+					if not veh.DiggerStartSound then
+						veh.DiggerStartSound = CreateSound(veh, START_SOUND)
+					end
+
+					veh.DiggerStartSound:Play()
+
+					timer.Simple(1.7, function()
+						if not IsValid(veh) then return end
+						if not DiggerEnabled[sid] then return end
+
+						if veh.DiggerStartSound then
+							veh.DiggerStartSound:Stop()
+						end
+
+						if not veh.DiggerDamageSound then
+							veh.DiggerDamageSound = CreateSound(veh, LOOP_SOUND)
+						end
+
+						veh.DiggerDamageSound:Play()
+					end)
+				else
+					if veh.DiggerStartSound then
+						veh.DiggerStartSound:Stop()
+					end
+
+					if veh.DiggerDamageSound then
+						veh.DiggerDamageSound:Stop()
+					end
+
+					veh:EmitSound(STOP_SOUND)
+
+					-- 2 second cooldown before restarting
+					ply.NextDiggerStart = CurTime() + 2
+				end
 			end
+		else
+			ply.DiggerTogglePressed = false
 		end
-	else
-		ply.DiggerTogglePressed = false
 
-	end
+		if not DiggerEnabled[sid] then continue end
 
-	if not DiggerEnabled[sid] then continue end
-	ply.NextDiggerDamage = ply.NextDiggerDamage or 0
+		ply.NextDiggerDamage = ply.NextDiggerDamage or 0
 
-	if ply.NextDiggerDamage > CurTime() then continue end
-	ply.NextDiggerDamage = CurTime() + 0.1
+		if ply.NextDiggerDamage > CurTime() then continue end
+		ply.NextDiggerDamage = CurTime() + 0.1
 
-	local center = veh:GetPos() + veh:GetForward() * 120 + veh:GetUp() * 20
+		local center = veh:GetPos() + veh:GetForward() * 120 + veh:GetUp() * 20
 
-	for _, ent in ipairs(ents.FindInSphere(center, 80)) do
+		for _, ent in ipairs(ents.FindInSphere(center, 128)) do
+			if not IsValid(ent) then continue end
+			if ent == veh then continue end
+			if ent == ply then continue end
 
-		if not IsValid(ent) then continue end
-		if ent == veh then continue end
-		if ent == ply then continue end
+			local dmg = DamageInfo()
+			dmg:SetDamage(24)
+			dmg:SetAttacker(ply)
+			dmg:SetInflictor(veh)
+			dmg:SetDamageType(DMG_CRUSH)
 
-		local dmg = DamageInfo()
-		dmg:SetDamage(12)
-		dmg:SetAttacker(ply)
-		dmg:SetInflictor(veh)
-		dmg:SetDamageType(DMG_CRUSH)
-
-		ent:TakeDamageInfo(dmg)
+			ent:TakeDamageInfo(dmg)
 		end
 	end
 end)
@@ -103,15 +122,24 @@ hook.Add("PlayerLeaveVehicle", "StopDiggerSound", function(ply, veh)
 	if DiggerEnabled[sid] then
 		DiggerEnabled[sid] = false
 
+		if veh.DiggerStartSound then
+			veh.DiggerStartSound:Stop()
+		end
+
 		if veh.DiggerDamageSound then
 			veh.DiggerDamageSound:Stop()
 		end
 
 		veh:EmitSound(STOP_SOUND)
+		ply.NextDiggerStart = CurTime() + 2
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("EntityRemoved", "CleanupDiggerSound", function(ent)
+	if ent.DiggerStartSound then
+		ent.DiggerStartSound:Stop()
+	end
+
 	if ent.DiggerDamageSound then
 		ent.DiggerDamageSound:Stop()
 	end

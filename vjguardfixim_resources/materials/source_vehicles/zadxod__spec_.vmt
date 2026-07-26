@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+"$basetexturetransform" "center .5 .25 scale 4 4  rotate 0 translate 0 0"
+	$basetexture "models\crskautos\paz\3205/zadxod"
+}

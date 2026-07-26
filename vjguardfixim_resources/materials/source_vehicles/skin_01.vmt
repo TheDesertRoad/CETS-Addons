@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+
+	$basetexture "source_vehicles/skin"
+	"$envmap" "env_cubemap"
+	$envmaptint "[.2 .2 .2]"
+}
