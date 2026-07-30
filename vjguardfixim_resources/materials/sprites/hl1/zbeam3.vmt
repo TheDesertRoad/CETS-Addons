@@ -2,5 +2,5 @@
 {
 	"$spriteorientation" "vp_parallel_oriented"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/zbeam3"
+	"$basetexture" "sprites/hl1/zbeam3"
 }

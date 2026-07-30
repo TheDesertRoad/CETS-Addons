@@ -1,5 +1,19 @@
 "WorldVertexTransition"
 {
-	"$texscale"	1           "$basetexture" "xeno/c4a1a_swmpwl"
+
+          "$basetexture" "xeno/c4a1a_swmpwl"
+	$surfaceprop "Flesh"
+	$surfaceprop2 "Rock"
 	"$basetexture2" "xeno/xeno_7wa"
-	"$baseTextureOffset" "[0.5 0.5]"	"Proxies"	{	"TextureTransform"	{	"translateVar" "$baseTextureOffset"	"scaleVar"     "$texscale"	"resultVar"    "$baseTextureTransform"	}	}	}
+	"$baseTextureOffset" "[0.5 0.5]"
+	"$texscale"	1 
+	"Proxies"
+	{
+	"TextureTransform"
+	{
+	"translateVar" "$baseTextureOffset"
+	"scaleVar"     "$texscale"
+	"resultVar"    "$baseTextureTransform"
+	}
+	}
+}

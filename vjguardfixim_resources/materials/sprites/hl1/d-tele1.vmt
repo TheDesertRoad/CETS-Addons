@@ -2,5 +2,5 @@
 {
 	"$spriteorientation" "vp_parallel_oriented"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "sprites/d-tele1"
+	"$basetexture" "sprites/hl1/d-tele1"
 }

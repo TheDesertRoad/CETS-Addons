@@ -62,6 +62,10 @@ function ENT:Explode()
 
 	local count = 0
 
+
+
+
+
 	game.CleanUpMap()
 
 	for _, ply in ipairs(player.GetAll()) do
