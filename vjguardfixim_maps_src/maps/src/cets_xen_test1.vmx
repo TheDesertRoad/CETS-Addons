@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8871"
-	"mapversion" "104"
+	"mapversion" "111"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -95,7 +95,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "104"
+	"mapversion" "111"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -18145,29 +18145,6 @@ entity
 }
 entity
 {
-	"id" "14689"
-	"classname" "env_sun"
-	"angles" "0 0 0"
-	"HDRColorScale" "1.0"
-	"material" "sprites/light_glow02_add_noz"
-	"overlaycolor" "0 0 0"
-	"overlaymaterial" "sprites/light_glow02_add_noz"
-	"overlaysize" "-1"
-	"pitch" "0"
-	"rendercolor" "255 165 165"
-	"size" "32"
-	"use_angles" "0"
-	"origin" "115.762 -5352 1675.78"
-	editor
-	{
-		"color" "255 0 0"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[500 7000]"
-	}
-}
-entity
-{
 	"id" "14698"
 	"classname" "prop_static"
 	"angles" "0.639469 240.002 0"
@@ -19280,36 +19257,6 @@ entity
 }
 entity
 {
-	"id" "16039"
-	"classname" "ambient_generic"
-	"cspinup" "0"
-	"fadeinsecs" "0"
-	"fadeoutsecs" "0"
-	"health" "10"
-	"lfomodpitch" "0"
-	"lfomodvol" "0"
-	"lforate" "0"
-	"lfotype" "0"
-	"message" "hl1/ambience/alien_beacon.wav"
-	"pitch" "100"
-	"pitchstart" "100"
-	"preset" "0"
-	"radius" "312"
-	"spawnflags" "0"
-	"spindown" "0"
-	"spinup" "0"
-	"volstart" "0"
-	"origin" "712 -3400 -751.304"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 6500]"
-	}
-}
-entity
-{
 	"id" "16048"
 	"classname" "prop_static"
 	"angles" "0 180 180"
@@ -19564,25 +19511,6 @@ entity
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
 		"logicalpos" "[3500 15000]"
-	}
-}
-entity
-{
-	"id" "16156"
-	"classname" "light"
-	"_light" "32 66 181 420"
-	"_lightHDR" "-1 -1 -1 1"
-	"_lightscaleHDR" "1"
-	"_quadratic_attn" "1"
-	"spawnflags" "0"
-	"style" "0"
-	"origin" "712 -3400 -743.304"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[3500 15500]"
 	}
 }
 entity
@@ -24650,6 +24578,213 @@ entity
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
 		"logicalpos" "[0 10000]"
+	}
+}
+entity
+{
+	"id" "27755"
+	"classname" "func_occluder"
+	"StartActive" "1"
+	solid
+	{
+		"id" "27740"
+		side
+		{
+			"id" "2386"
+			"plane" "(-3032 3032 -3834.47) (5085.52 3032 -3834.47) (5085.52 -5604 -3834.47)"
+			vertices_plus
+			{
+				"v" "-3032 3032 -3834.47"
+				"v" "5085.52 3032 -3834.47"
+				"v" "5085.52 -5604 -3834.47"
+				"v" "-3032 -5604 -3834.47"
+			}
+			"material" "TOOLS/TOOLSOCCLUDER"
+			"uaxis" "[1 0 0 -11.041] 0.25"
+			"vaxis" "[0 -1 0 -24] 0.25"
+			"rotation" "0"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "2385"
+			"plane" "(-3032 -5604 -3994.47) (5085.52 -5604 -3994.47) (5085.52 3032 -3994.47)"
+			vertices_plus
+			{
+				"v" "-3032 -5604 -3994.47"
+				"v" "5085.52 -5604 -3994.47"
+				"v" "5085.52 3032 -3994.47"
+				"v" "-3032 3032 -3994.47"
+			}
+			"material" "TOOLS/TOOLSOCCLUDER"
+			"uaxis" "[-1 0 0 11.041] 0.25"
+			"vaxis" "[0 -1 0 -24] 0.25"
+			"rotation" "0"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "2384"
+			"plane" "(-3032 3032 -3834.47) (-3032 -5604 -3834.47) (-3032 -5604 -3994.47)"
+			vertices_plus
+			{
+				"v" "-3032 3032 -3834.47"
+				"v" "-3032 -5604 -3834.47"
+				"v" "-3032 -5604 -3994.47"
+				"v" "-3032 3032 -3994.47"
+			}
+			"material" "TOOLS/TOOLSOCCLUDER"
+			"uaxis" "[0 -1 0 -24] 0.25"
+			"vaxis" "[0 0 -1 -41.8799] 0.25"
+			"rotation" "0"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "2383"
+			"plane" "(5085.52 3032 -3994.47) (5085.52 -5604 -3994.47) (5085.52 -5604 -3834.47)"
+			vertices_plus
+			{
+				"v" "5085.52 3032 -3994.47"
+				"v" "5085.52 -5604 -3994.47"
+				"v" "5085.52 -5604 -3834.47"
+				"v" "5085.52 3032 -3834.47"
+			}
+			"material" "TOOLS/TOOLSOCCLUDER"
+			"uaxis" "[0 1 0 24] 0.25"
+			"vaxis" "[0 0 -1 -41.8799] 0.25"
+			"rotation" "0"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "2382"
+			"plane" "(5085.52 3032 -3834.47) (-3032 3032 -3834.47) (-3032 3032 -3994.47)"
+			vertices_plus
+			{
+				"v" "5085.52 3032 -3834.47"
+				"v" "-3032 3032 -3834.47"
+				"v" "-3032 3032 -3994.47"
+				"v" "5085.52 3032 -3994.47"
+			}
+			"material" "TOOLS/TOOLSOCCLUDER"
+			"uaxis" "[-1 0 0 11.041] 0.25"
+			"vaxis" "[0 0 -1 -41.8799] 0.25"
+			"rotation" "0"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "2381"
+			"plane" "(5085.52 -5604 -3994.47) (-3032 -5604 -3994.47) (-3032 -5604 -3834.47)"
+			vertices_plus
+			{
+				"v" "5085.52 -5604 -3994.47"
+				"v" "-3032 -5604 -3994.47"
+				"v" "-3032 -5604 -3834.47"
+				"v" "5085.52 -5604 -3834.47"
+			}
+			"material" "TOOLS/TOOLSOCCLUDER"
+			"uaxis" "[1 0 0 -11.041] 0.25"
+			"vaxis" "[0 0 -1 -41.8799] 0.25"
+			"rotation" "0"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		editor
+		{
+			"color" "0 255 255"
+			"visgroupshown" "1"
+			"visgroupautoshown" "1"
+		}
+	}
+	editor
+	{
+		"color" "0 255 255"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
+	"id" "27763"
+	"classname" "env_sun"
+	"angles" "-32 79 0"
+	"HDRColorScale" "1.0"
+	"material" "sprites/light_glow02_add_noz"
+	"overlaycolor" "0 0 0"
+	"overlaymaterial" "sprites/light_glow02_add_noz"
+	"overlaysize" "-1"
+	"pitch" "-32"
+	"rendercolor" "255 89 64"
+	"size" "32"
+	"targetname" "env_sun"
+	"use_angles" "1"
+	"origin" "1016.3 -5590 1496.12"
+	editor
+	{
+		"color" "255 0 0"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[500 7000]"
+	}
+}
+entity
+{
+	"id" "27801"
+	"classname" "light"
+	"_castentityshadow" "1"
+	"_fifty_percent_distance" "100"
+	"_light" "32 66 181 420"
+	"_lightHDR" "-1 -1 -1 1"
+	"_lightscaleHDR" "1"
+	"_quadratic_attn" "1"
+	"_zero_percent_distance" "150"
+	"spawnflags" "0"
+	"style" "0"
+	"origin" "725.147 -3435.46 -744"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[3500 15500]"
+	}
+}
+entity
+{
+	"id" "27806"
+	"classname" "ambient_generic"
+	"cspinup" "0"
+	"fadeinsecs" "0"
+	"fadeoutsecs" "0"
+	"health" "10"
+	"lfomodpitch" "0"
+	"lfomodvol" "0"
+	"lforate" "0"
+	"lfotype" "0"
+	"message" "hl1/ambience/alien_beacon.wav"
+	"pitch" "100"
+	"pitchstart" "100"
+	"preset" "0"
+	"radius" "420"
+	"spawnflags" "0"
+	"spindown" "0"
+	"spinup" "0"
+	"volstart" "0"
+	"origin" "725.147 -3435.46 -760"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 6500]"
 	}
 }
 cameras
