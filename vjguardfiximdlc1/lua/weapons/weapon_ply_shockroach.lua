@@ -44,7 +44,10 @@ SWEP.Primary.Force = 100
 --------------------------------------------------------------------------------|
 SWEP.Secondary.ClipSize			= -1
 SWEP.Secondary.DefaultClip		= -1
+SWEP.Secondary.Sound = "npc/shockroach/shock_discharge.wav"
 SWEP.Secondary.Automatic		= false
+SWEP.Secondary.Delay = 2
+SWEP.Secondary.Force = 300
 SWEP.Secondary.Ammo				= "none"
 
 SWEP.DryFireSound = "npc/shockroach/shock_discharge.wav"
@@ -62,16 +65,18 @@ function SWEP:Deploy()
 		self:SetWeaponHoldType( self.HoldType )
 		self:SetNextPrimaryFire( CurTime() + 0.5 )
 		self:SetNextSecondaryFire( CurTime() + 0.5 )
-		self.RegenerationTimer = CurTime() + 0.3
+		self.RegenerationTimer = CurTime() + 2
 		self.Idle = 0
 		self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
 		self.Recoil = 0
 		self.RecoilTimer = CurTime()
+
+		self.Owner:EmitSound("hl1/weapons/shock_draw.wav", 80, 100) 
 	return true
 end
 --------------------------------------------------------------------------------|
 function SWEP:Holster()
-		self.RegenerationTimer = CurTime() + 0.3
+		self.RegenerationTimer = CurTime() + 2
 		self.Idle = 0
 		self.IdleTimer = CurTime()
 		self.Recoil = 0
@@ -136,6 +141,68 @@ function SWEP:PrimaryAttack()
 end
 --------------------------------------------------------------------------------|
 function SWEP:SecondaryAttack()
+	if self.Weapon:Ammo1() <= 0 then return end 
+	if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end 
+
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay) 
+	self:SetNextPrimaryFire(CurTime() + 1) 
+	self:EmitSound(self.Secondary.Sound) 
+	self.Idle = 0 self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration() 
+
+	local owner = self.Owner 
+
+	timer.Simple(0.3, function() 
+		if !IsValid(self) then return end 
+		if !IsValid(owner) then return end 
+
+		self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
+
+		if self.Weapon:Ammo1() <= 0 then return end 
+		if SERVER then 
+			local entity = ents.Create("obj_vj_racexenergyorb_b_big") 
+			entity:SetOwner( self.Owner )
+
+			if IsValid( entity ) then
+				local Forward = self.Owner:EyeAngles():Forward()
+				local Right = self.Owner:EyeAngles():Right()
+				local Up = self.Owner:EyeAngles():Up()
+				entity:SetPos( self.Owner:GetShootPos() + Forward * 12 + Right * 4 + Up * -6 )
+				entity:SetAngles( self.Owner:EyeAngles() )
+				entity:Spawn()
+
+				local phys = entity:GetPhysicsObject()
+				phys:SetMass( 1 )
+				phys:EnableGravity( false )
+				timer.Create( "Flight"..entity:EntIndex(), 0, 0, function()
+
+				if !IsValid( phys ) then
+					timer.Stop( "Flight" )
+				end
+
+				if IsValid( entity ) and IsValid( phys ) then
+					phys:ApplyForceCenter( entity:GetForward() * 100 )
+						end
+					end )
+				end
+			end
+
+		self:TakePrimaryAmmo(8) 
+		self.RegenerationTimer = CurTime() + 1 
+
+		if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
+			self.Recoil = math.random( 1, 2 )
+			self.RecoilTimer = CurTime() + 0.12
+
+			if self.Recoil == 1 then
+				self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -30, 0, 0 ) )
+			end
+
+			if self.Recoil == 2 then
+				self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( 30, 0, 0 ) )
+			end
+		end
+	end)
 end
 --------------------------------------------------------------------------------|
 function SWEP:Reload()
@@ -160,9 +227,12 @@ function SWEP:Think()
 		end
 	end
 
-	if self.RegenerationTimer <= CurTime() and self.Weapon:Ammo1() < self.Primary.MaxAmmo then
-		self.Owner:SetAmmo( self.Weapon:Ammo1() + 1, self.Primary.Ammo )
-		self.RegenerationTimer = CurTime() + 1
+	if !self.Owner:KeyDown(IN_ATTACK) or !self.Owner:KeyDown(IN_ATTACK2) then 
+		if self.RegenerationTimer <= CurTime() and self.Weapon:Ammo1() < self.Primary.MaxAmmo then 
+			self.Owner:SetAmmo(self.Weapon:Ammo1() + 1, self.Primary.Ammo) 
+			self.RegenerationTimer = CurTime() + 2 
+			self.Owner:EmitSound("hl1/weapons/shock_recharge.wav", 30, 100) 
+		end 
 	end
 
 	if self.Idle == 0 and self.IdleTimer <= CurTime() then

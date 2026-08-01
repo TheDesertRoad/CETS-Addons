@@ -9,7 +9,7 @@ SWEP.BounceWeaponIcon = false
 SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
-SWEP.NPC_CanBePickedUp = false
+SWEP.FiresUnderwater = false
 
 SWEP.ViewModelFOV = 54
 SWEP.ViewModel = "models/weapons/c_hl2_taucannon.mdl"
@@ -78,7 +78,6 @@ function SWEP:CustomOnInitialize()
 		self.Primary.DefaultClip = 999999
 		self.Primary.MaxAmmo = 999999
 	end
-
 end
 --------------------------------------------------------------------------------|
 function SWEP:StopChargeSound()
@@ -271,6 +270,37 @@ function SWEP:PrimaryAttack(UseAlt)
 					end
 				end
 
+
+				local radius1 = 64
+
+				for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+					if not IsValid(ent) then continue end
+					if ent == self.Owner then continue end
+					if not SERVER then return end
+
+					local class = ent:GetClass()
+
+					if class == "npc_turret_floor" then
+						ent:Fire("SelfDestruct")
+					end
+
+					if class == "npc_rollermine" then
+						ent:Fire("RespondToExplodeChirp")
+					end
+	
+					if class == "npc_helicopter" then
+						local blast = DamageInfo()
+
+						blast:SetAttacker(self.Owner)
+						blast:SetInflictor(self)
+						blast:SetDamage(self.Primary.Damage)
+						blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+						blast:SetDamagePosition(tracer.HitPos)
+						ent:TakeDamageInfo(blast)
+						ent:SetHealth(ent:Health() - self.Primary.Damage)
+					end
+				end
+
 				local effectdata = EffectData()
 					effectdata:SetOrigin( tracer.HitPos )
 					effectdata:SetNormal( tracer.HitNormal )
@@ -328,26 +358,60 @@ function SWEP:PrimaryAttack(UseAlt)
 			util.Decal("redglowfade", tracer.HitPos, tr.HitPos - tr.HitNormal)
 
 			local radius = 8
+
 			for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
 				if not IsValid(ent) then continue end
 				if ent == self.Owner then continue end
 				if not SERVER then return end
 
-				if IsValid(ent) and ent ~= self then
-					local dmg = DamageInfo()
-					dmg:SetAttacker(self.Owner)
-					dmg:SetInflictor(self)
-					dmg:SetDamage(self.Primary.Damage)
-					dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK)) -- Change to any damage type you want
-					dmg:SetDamagePosition(tracer.HitPos)
+				local class = ent:GetClass()
 
-					if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
-						ent:TakeDamageInfo(dmg)
-					end
+				if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
+
+				local dmg = DamageInfo()
+
+				dmg:SetAttacker(self.Owner)
+				dmg:SetInflictor(self)
+				dmg:SetDamage(self.Primary.Damage)
+				dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+				dmg:SetDamagePosition(tracer.HitPos)
+
+				ent:TakeDamageInfo(dmg)
+
 				end
 			end
 
+			local radius1 = 64
+
+			for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+				if not IsValid(ent) then continue end
+				if ent == self.Owner then continue end
+				if not SERVER then return end
+
+				local class = ent:GetClass()
+
+				if class == "npc_turret_floor" then
+					ent:Fire("SelfDestruct")
+				end
+
+				if class == "npc_rollermine" then
+					ent:Fire("RespondToExplodeChirp")
+				end
+
+				if class == "npc_helicopter" then
+					local blast = DamageInfo()
+
+					blast:SetAttacker(self.Owner)
+					blast:SetInflictor(self)
+					blast:SetDamage(self.Primary.Damage)
+					blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+					blast:SetDamagePosition(tracer.HitPos)
+					ent:TakeDamageInfo(blast)
+					ent:SetHealth(ent:Health() - self.Primary.Damage)
+				end
+			end
 		end
+
 		self.Owner:FireBullets( bullet )
 
 		self:EmitSound( self.Primary.Sound )
@@ -392,7 +456,7 @@ function SWEP:SecondaryAttack()
 			self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
 		end
 
-		if self.Weapon:Ammo1() >= 6 then
+		if self.Weapon:Ammo1() >= 6 && self.Owner:WaterLevel() < 3 then
 			self:EmitSound(self.Secondary.Sound, 75, 100)
 			self:TakePrimaryAmmo(5)
 			self.Weapon:SendWeaponAnim(ACT_GAUSS_SPINUP)
@@ -400,10 +464,11 @@ function SWEP:SecondaryAttack()
 			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		end
 
-		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then
+		if self.FiresUnderwater == false && self.Owner:WaterLevel() == 3 then
 			self.Weapon:EmitSound("Cets_Weapon_Tau.FireNOO")
 			self:SetNextPrimaryFire(CurTime() + 0.2)
 			self:SetNextSecondaryFire(CurTime() + 0.2)
+			self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
 		end
 
 		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
@@ -505,6 +570,56 @@ function SWEP:CustomOnThink()
 							end
 						end
 					end
+
+			local radius1 = 64
+
+			for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+				if not IsValid(ent) then continue end
+				if ent == self.Owner then continue end
+				if not SERVER then return end
+
+				local class = ent:GetClass()
+
+				if class == "npc_turret_floor" then
+					ent:Fire("SelfDestruct")
+				end
+
+				if class == "npc_rollermine" then
+					ent:Fire("RespondToExplodeChirp")
+				end
+
+				if class == "npc_helicopter" or class == "npc_combinegunship" then
+					local blast = DamageInfo()
+
+					blast:SetAttacker(self.Owner)
+					blast:SetInflictor(self)
+					blast:SetDamage(self.Primary.Damage)
+					blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+					blast:SetDamagePosition(tracer.HitPos)
+					ent:TakeDamageInfo(blast)
+
+					if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
+						ent:SetHealth(ent:Health() - self.Primary.Damage)
+					end
+
+					if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
+						ent:SetHealth(ent:Health() - self.Primary.Damage * 2)
+					end
+
+					if self.SpinTimer <= CurTime() + 6 then
+						ent:SetHealth(ent:Health() - self.Primary.Damage * 4)
+					end
+
+					if self.SpinTimer <= CurTime() + 3 then
+						ent:SetHealth(ent:Health() - self.Primary.Damage * 8)
+					end
+
+					if self.SpinTimer <= CurTime() + 1 then
+						ent:SetHealth(ent:Health() - self.Primary.Damage * 16)
+
+							end
+						end
+					end
 				end
 
 				self.Owner:FireBullets( bullet )
@@ -533,24 +648,43 @@ function SWEP:CustomOnThink()
 				self.RecoilTimer = CurTime() + self.Primary.Delay
 				self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
 
+				local push = 100
+
 				if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
-					self.Owner:SetVelocity( self.Owner:GetForward() * -100 )
+					push = 100
+				elseif self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
+					push = 200
+				elseif self.SpinTimer <= CurTime() + 6 and self.SpinTimer > CurTime() + 3 then
+					push = 300
+				elseif self.SpinTimer <= CurTime() + 3 and self.SpinTimer > CurTime() + 1 then
+					push = 600
+				else
+					push = 1000
 				end
 
-				if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-					self.Owner:SetVelocity( self.Owner:GetForward() * -200 )
-				end
+				local owner = self.Owner
 
-				if self.SpinTimer <= CurTime() + 6 then
-					self.Owner:SetVelocity( self.Owner:GetForward() * -300 )
-				end
+				if IsValid(owner) then
+					local pushDir = -owner:GetAimVector()
+					push = push * 1.25
 
-				if self.SpinTimer <= CurTime() + 3 then
-					self.Owner:SetVelocity( self.Owner:GetForward() * -600 )
-				end
 
-				if self.SpinTimer <= CurTime() + 1 then
-					self.Owner:SetVelocity( self.Owner:GetForward() * -1000 )
+					owner:SetVelocity(pushDir * (push * 0.60))
+
+					local remainingForce = push * 0.40
+					local duration = 0.16
+					local steps = 10
+
+					for i = 1, steps do
+						timer.Simple(i * (duration / steps), function()
+							if not IsValid(owner) then return end
+
+							local t = i / steps
+							local scale = 1 - (t * t)
+
+							owner:SetVelocity(pushDir * ((remainingForce / steps) * scale))
+						end)
+					end
 				end
 			end
 

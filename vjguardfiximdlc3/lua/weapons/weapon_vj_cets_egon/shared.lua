@@ -9,7 +9,7 @@ SWEP.BounceWeaponIcon = false
 SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
-SWEP.NPC_CanBePickedUp = false
+SWEP.FiresUnderwater 	= false
 
 SWEP.ViewModelFOV = 86
 SWEP.ViewModel = "models/weapons/c_hl2_egon.mdl"
@@ -294,6 +294,36 @@ function SWEP:PrimaryAttack(UseAlt)
 					end
 				end
 
+				local radius1 = 128
+
+				for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+					if not IsValid(ent) then continue end
+					if ent == self.Owner then continue end
+					if not SERVER then return end
+
+					local class = ent:GetClass()
+
+					if class == "npc_turret_floor" then
+						ent:Fire("SelfDestruct")
+					end
+
+					if class == "npc_rollermine" then
+						ent:Fire("RespondToExplodeChirp")
+					end
+	
+					if class == "npc_helicopter" or class == "npc_combinegunship" then
+						local blast = DamageInfo()
+
+						blast:SetAttacker(self.Owner)
+						blast:SetInflictor(self)
+						blast:SetDamage(self.Primary.Damage)
+						blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+						blast:SetDamagePosition(tr.HitPos)
+						ent:TakeDamageInfo(blast)
+						ent:SetHealth(ent:Health() - self.Primary.Damage)
+					end
+				end
+
 			ParticleEffect("egon_beam_cloud1", tracer.HitPos, Angle(0, 0, 0), nil)
 			return {effects = false}
 		end
@@ -314,6 +344,13 @@ function SWEP:PrimaryAttack(UseAlt)
 		end
 
 	elseif isPly then
+		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then
+			self.Weapon:EmitSound( "Cets_Weapon_Tau.FireNOO" )
+			self:SetNextPrimaryFire( CurTime() + 0.2 )
+			self:SetNextSecondaryFire( CurTime() + 0.2 )
+		end
+
+		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
 
 		if not self.Firing then
 			if self.Weapon:Ammo1() <= 0 then return end
@@ -376,6 +413,36 @@ function SWEP:PrimaryAttack(UseAlt)
 							end
 						end
 					end
+
+					local radius1 = 64
+
+					for _, ent in ipairs(ents.FindInSphere(tr.HitPos, radius1)) do
+						if not IsValid(ent) then continue end
+						if ent == self.Owner then continue end
+						if not SERVER then return end
+
+						local class = ent:GetClass()
+		
+						if class == "npc_turret_floor" then
+							ent:Fire("SelfDestruct")
+						end
+
+						if class == "npc_rollermine" then
+							ent:Fire("RespondToExplodeChirp")
+						end
+
+						if class == "npc_helicopter" or class == "npc_combinegunship" then
+							local blast = DamageInfo()
+
+							blast:SetAttacker(self.Owner)
+							blast:SetInflictor(self)
+							blast:SetDamage(self.Primary.Damage)
+							blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+							blast:SetDamagePosition(tr.HitPos)
+							ent:TakeDamageInfo(blast)
+							ent:SetHealth(ent:Health() - self.Primary.Damage)
+						end
+					end
 				else
 					ParticleEffect("egon_beam_cloud1_weak", tr.HitPos, Angle(0, 0, 0), nil)
 					util.Effect("effect_cets_egonbeam_weak", effectdata )
@@ -401,7 +468,37 @@ function SWEP:PrimaryAttack(UseAlt)
 								ent:TakeDamageInfo(dmg)
 							end
 						end
+					end
 
+
+					local radius1 = 128
+
+					for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+						if not IsValid(ent) then continue end
+						if ent == self.Owner then continue end
+						if not SERVER then return end
+
+						local class = ent:GetClass()
+		
+						if class == "npc_turret_floor" then
+							ent:Fire("SelfDestruct")
+						end
+
+						if class == "npc_rollermine" then
+							ent:Fire("RespondToExplodeChirp")
+						end
+
+						if class == "npc_helicopter" then
+							local blast = DamageInfo()
+
+							blast:SetAttacker(self.Owner)
+							blast:SetInflictor(self)
+							blast:SetDamage(self.Primary.Damage)
+							blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+							blast:SetDamagePosition(tr.HitPos)
+							ent:TakeDamageInfo(blast)
+							ent:SetHealth(ent:Health() - self.Primary.Damage)
+						end
 					end
 				end
 			end
@@ -464,14 +561,6 @@ function SWEP:PrimaryAttack(UseAlt)
 			self:SetNextPrimaryFire( CurTime() + 0.2 )
 			self:SetNextSecondaryFire( CurTime() + 0.2 )
 		end
-
-		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then
-			self.Weapon:EmitSound( "Cets_Weapon_Tau.FireNOO" )
-			self:SetNextPrimaryFire( CurTime() + 0.2 )
-			self:SetNextSecondaryFire( CurTime() + 0.2 )
-		end
-
-		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
 
 		local tr = self.Owner:GetEyeTrace()
 		local hitPos = tr.HitPos

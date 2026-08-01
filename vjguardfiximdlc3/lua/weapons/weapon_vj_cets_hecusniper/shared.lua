@@ -7,7 +7,7 @@ SWEP.Category = "Half-Life 2"
 SWEP.HoldType = "ar2"
 SWEP.Spawnable = true
 SWEP.Purpose = false
-SWEP.NPC_CanBePickedUp = false
+SWEP.FiresUnderwater = false
 
 SWEP.MadeForNPCsOnly = false
 SWEP.UseHands = true

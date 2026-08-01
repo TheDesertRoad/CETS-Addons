@@ -42,7 +42,7 @@ function ENT:SpawnBebcrab()
 	if self:IsValid() then
 		self.Headcrab = ents.Create("npc_babycrab_vj_cets")
 		self.Headcrab:SetPos(self:GetPos() + self:GetUp()*10)
-		self.Headcrab:SetAngles(self:GetAngles())
+		self.Headcrab:SetAngles(Angle(0,0,0))
 		self.Headcrab:SetSpawnFlags(8192)
 		self.Headcrab:AddSpawnFlags(8192)
 		self.Headcrab:Spawn()

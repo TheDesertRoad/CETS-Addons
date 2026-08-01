@@ -296,7 +296,7 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 					effectdata:SetOrigin(self:GetPos())
 					util.Effect("Explosion", effectdata)
 					util.ScreenShake(self:GetPos(),22,500,1,500)
-					VJ.EmitSound(self, "weapons/explode" .. math.random(3, 5) .. ".wav", 100, 150)
+					VJ.EmitSound(self, "weapons/explode" .. math.random(3, 5) .. ".wav", 100, 100)
 			end
 		end)
 	end

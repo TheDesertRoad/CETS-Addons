@@ -410,6 +410,36 @@ function ENT:ChargeThink()
 		self:VJ_ACT_PLAYACTIVITY("MGrunt_Charge_Crash", true, duration, true)
 	end
 
+	if self:IsOnGround() then
+		local tr = util.TraceHull({
+			start = self:GetPos(),
+			endpos = self:GetPos() + self:GetForward() * 28,
+			mins = self:OBBMins(),
+			maxs = self:OBBMaxs(),
+			filter = self,
+			mask = MASK_SOLID
+		})
+
+		if tr.Hit then
+			if tr.HitNormal.z < 0.2 then
+				local stepHeight = 9
+				local stepTrace = util.TraceHull({
+					start = self:GetPos() + Vector(0,0,stepHeight),
+					endpos = self:GetPos() + Vector(0,0,stepHeight) + self:GetForward() * 28,
+					mins = self:OBBMins(),
+					maxs = self:OBBMaxs(),
+					filter = self,
+					mask = MASK_SOLID
+				})
+
+				if !stepTrace.Hit then
+					self:SetPos(self:GetPos() + Vector(0,0,stepHeight))
+					return
+				end
+			end
+		end
+	end
+
 	local wallHullMins, wallHullMaxs = self:OBBMins(), self:OBBMaxs()
 
 	local wallTrace = util.TraceHull({

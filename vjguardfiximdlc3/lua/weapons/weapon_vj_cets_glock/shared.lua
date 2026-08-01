@@ -57,8 +57,8 @@ SWEP.Primary.BulletShot 		= true;
 --------------------------------------------------------------------------------|
 SWEP.Secondary.ClipSize			= -1
 SWEP.Secondary.DefaultClip		= -1
-SWEP.Secondary.Delay 				= 0.1
-SWEP.Secondary.Automatic		= false
+SWEP.Secondary.Delay 				= 0.15
+SWEP.Secondary.Automatic		= true
 SWEP.Secondary.Ammo				= "none"
 --------------------------------------------------------------------------------|
 SWEP.NPC_HasSecondaryFire = false -- Can the weapon have a secondary fire?
@@ -241,6 +241,96 @@ function SWEP:PrimaryAttack(UseAlt)
 
 	effect:SetAngles(ang)
 	effect:SetEntity(self)
+	util.Effect("ShellEject", effect)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:SecondaryAttack()
+	local curTime = CurTime()
+	self:SetNextSecondaryFire(curTime + self.Secondary.Delay)
+
+	local owner = self:GetOwner()
+	local isNPC = owner:IsNPC()
+	local isPly = owner:IsPlayer()
+	local spawnPos = self:GetBulletPos()
+
+	if isPly then
+		if self:Clip1() <= 0 && self:Ammo1() > 0 then
+			self:Reload()
+		end
+
+		if self:Clip1() <= 0 then
+			self.Weapon:EmitSound("weapons/ar2/ar2_empty.wav")
+
+			self:SetNextPrimaryFire(CurTime() + 0.2)
+			self:SetNextSecondaryFire(CurTime() + 0.2)
+
+			return
+		end
+
+		if self.FiresUnderwater == false && self.Owner:WaterLevel() == 3 then
+			self.Weapon:EmitSound("weapons/ar2/ar2_empty.wav")
+
+			self:SetNextPrimaryFire(CurTime() + 0.2)
+			self:SetNextSecondaryFire(CurTime() + 0.2)
+
+			return
+		end
+
+		local tr = self.Owner:GetEyeTrace()
+
+		if self.Primary.BulletShot then
+			local bullet = {}
+			bullet.Num = self.Primary.NumberofShots
+			bullet.Src = self.Owner:GetShootPos()
+			bullet.Dir = self.Owner:GetAimVector()
+			bullet.Spread = Vector(0.21 * 0.21, 0.21 * 0.21, 0)
+			bullet.Tracer = 1
+			bullet.Force = self.Primary.Force
+			bullet.Damage = self.Primary.Damage
+			bullet.AmmoType = self.Primary.Ammo
+			bullet.Callback = function(attacker, tracer)
+
+			end
+
+			self.Owner:FireBullets(bullet)
+		end
+
+		local PlayerPos = self.Owner:GetShootPos()
+		local PlayerAim = self.Owner:GetAimVector()
+
+		local rnda = self.Primary.Recoil * -1
+		local rndb = self.Primary.Recoil * math.random(-1, 1)
+
+		self:TakePrimaryAmmo(1)
+		self:ShootEffects()
+		self.Weapon:MuzzleFlash()
+		self:EmitSound(Sound(self.Primary.Sound))
+		self.Owner:ViewPunch(Angle(rnda, rndb, rnda))
+
+		self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
+		self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
+	end
+
+	local ang = self:GetOwner():EyeAngles()
+	ang:RotateAroundAxis(ang:Up(), -90)
+
+	local effect = EffectData()
+
+	if isPly then
+		effect:SetOrigin(
+			self:GetOwner():GetShootPos()
+			- self:GetUp() * 10
+			+ self:GetForward() * 22
+			+ self:GetRight() * 10
+		)
+	elseif isNPC then
+		effect:SetOrigin(self:GetOwner():GetShootPos())
+	end
+
+	effect:SetAngles(ang)
+	effect:SetEntity(self)
+
 	util.Effect("ShellEject", effect)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -83,15 +83,15 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRangeAttack(status, enemy)
 	if status == "Init" then
-		local randRange = math.random(1, 3)
-		if randRange == 1 then
+		local randRange = math.random(1,100)
+		if randRange <= 75 then
 			self.TimeUntilRangeAttackProjectileRelease = 0.4
 			self.RangeAttackProjectiles = "obj_vj_gonarchspit"
-		elseif randRange == 2 then
+		elseif randRange <= 50 then
 			self.TimeUntilRangeAttackProjectileRelease = 0.2
 			self.RangeAttackProjectiles = "obj_vj_gonarchspit"
 			self.RangeAttackExtraTimers = {0.9,2.1}
-		elseif randRange == 3 then
+		else
 			self.TimeUntilRangeAttackProjectileRelease = 2.8
 			self.RangeAttackProjectiles = "obj_vj_gonarchspit_baby"
 			self.RangeAttackExtraTimers = {3.0,3.2}
