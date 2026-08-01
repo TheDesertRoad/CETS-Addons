@@ -607,6 +607,25 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
 	util.Effect( "Explosion", effectdata )
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local function CleanupGib(ent)
+	if not IsValid(ent) then return end
+
+	local lifetime = math.Rand(10, 30)
+
+	timer.Simple(lifetime - 1, function()
+		if IsValid(ent) then
+			ent:SetRenderMode(RENDERMODE_TRANSALPHA)
+			ent:SetRenderFX(kRenderFxFadeFast) -- or kRenderFxFadeSlow
+		end
+	end)
+
+	timer.Simple(lifetime, function()
+		if IsValid(ent) then
+			ent:Remove()
+		end
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	corpseEnt:Remove()
 	local myPos = self:GetPos()
@@ -643,6 +662,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib1:SetPos(myPos)
 		self.APCGib1:Ignite(math.random(4, 16))
 		self.APCGib1:Spawn()
+		CleanupGib(self.APCGib1)
 
 		local phys = self.APCGib1:GetPhysicsObject()
 		if IsValid(phys) then
@@ -664,6 +684,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib2:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.APCGib2:Ignite(math.random(4, 16))
 		self.APCGib2:Spawn()
+		CleanupGib(self.APCGib2)
 
 		local phys = self.APCGib2:GetPhysicsObject()
 		if IsValid(phys) then
@@ -685,6 +706,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib2b:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.APCGib2b:Ignite(math.random(4, 16))
 		self.APCGib2b:Spawn()
+		CleanupGib(self.APCGib2b)
 
 		local phys = self.APCGib2b:GetPhysicsObject()
 		if IsValid(phys) then
@@ -706,6 +728,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib3:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.APCGib3:Ignite(math.random(8, 16))
 		self.APCGib3:Spawn()
+		CleanupGib(self.APCGib3)
 
 		local phys = self.APCGib3:GetPhysicsObject()
 		if IsValid(phys) then
@@ -717,6 +740,28 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 
 			phys:SetVelocity(dir * force)
 			phys:AddAngleVelocity(VectorRand() * 2000)
+		end
+	end
+
+	for i = 1, 1 do
+		self.APCGib4 = ents.Create("prop_ragdoll")
+		self.APCGib4:SetModel("models/humans/conscripts_heavy/male_masked.mdl")
+		self.APCGib4:SetPos(myPos)
+		self.APCGib4:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		self.APCGib4:Spawn()
+		self.APCGib4:Ignite(math.random(8, 16))
+		self.APCGib4:SetColor(Color(90, 90, 90, 90))
+
+		local phys = self.APCGib4:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:Wake()
+
+			local explosionPos = myPos
+			local dir = (self.APCGib4:WorldSpaceCenter() - explosionPos):GetNormalized()
+			local force = math.Clamp(DMG_BLAST, 50, 500) * math.random(-256, 256)
+
+			phys:SetVelocity(dir * force * 10)
+			phys:AddAngleVelocity(VectorRand() * 8000)
 		end
 	end
 end

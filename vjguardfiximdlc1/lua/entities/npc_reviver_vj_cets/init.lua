@@ -311,7 +311,7 @@ function ENT:CustomOnThink()
 	local value = math.Round(Lerp(self.BlackAmount, 255, 90))
 	self:SetColor(Color(value, value, value, 255))
 
-	if self:WaterLevel() > 1 then
+	if self:WaterLevel() > 2 then
 		self.MovementType = VJ_MOVETYPE_STATIONARY
 		self.SightDistance = 1 
 		self.Behavior = VJ_BEHAVIOR_PASSIVE_NATURE
