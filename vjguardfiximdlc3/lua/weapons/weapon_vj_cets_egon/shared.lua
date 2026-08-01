@@ -470,10 +470,9 @@ function SWEP:PrimaryAttack(UseAlt)
 						end
 					end
 
-
 					local radius1 = 128
 
-					for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+					for _, ent in ipairs(ents.FindInSphere(tr.HitPos, radius1)) do
 						if not IsValid(ent) then continue end
 						if ent == self.Owner then continue end
 						if not SERVER then return end

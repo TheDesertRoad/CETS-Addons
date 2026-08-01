@@ -72,7 +72,7 @@ function ENT:CustomOnKilled(dmginfo,hitgroup)
 
 	self.Body = ents.Create("npc_aliengrunt_vj_cets")
 	self.Body:SetPos(self:GetPos() + self:GetUp() * 4)
-	self.Body:SetAngles(self:GetAngles())
+	self.Body:SetAngles(Angle(0,0,0))
 	self.Body:Spawn()
 	self.Body:Activate() 
 

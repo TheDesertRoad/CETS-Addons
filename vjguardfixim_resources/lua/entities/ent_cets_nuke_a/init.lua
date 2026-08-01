@@ -75,6 +75,18 @@ function ENT:Explode()
 
 				ent:TakeDamageInfo(dmg)
 			end
+
+			local killClasses = {
+				"npc_super_particlestorm_vj_cets",
+				"npc_super_particlestorm_vj_cets",
+			}
+
+			for _, class in ipairs(killClasses) do
+				for _, ent in ipairs(ents.FindByClass(class)) do
+					if not IsValid(ent) then continue end
+					ent:Remove()
+				end
+			end
 		end
 	end)
 end

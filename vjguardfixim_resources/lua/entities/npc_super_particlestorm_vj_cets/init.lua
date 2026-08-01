@@ -53,6 +53,8 @@ ENT.EatCooldown = 5
 ENT.CallForHelp = false
 ENT.HasMeleeAttack = false
 
+ENT.IdleSoundChance = 1
+
 ENT.BreathSoundLevel = 3000
 ENT.IdleSoundLevel = 2000
 ENT.AlertSoundLevel = 100
