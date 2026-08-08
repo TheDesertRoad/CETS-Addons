@@ -1,0 +1,12 @@
+"cets_mode"
+{
+	"base"		"base"
+	"title"		"CETS Maps"
+	"maps"		"^cets_|^tdr_|^tadou_|^tesyclock_"
+	"menusystem"	"0"
+
+	"settings"
+	{
+
+	}
+}

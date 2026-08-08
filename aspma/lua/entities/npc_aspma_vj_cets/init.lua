@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/portal_aspma.mdl"}
+ENT.Model = "models/portal_aspma.mdl"
 ENT.StartHealth = GetConVar("sk_aspma_health"):GetInt()
 ENT.Weapon_Accuracy = 0.8
 ENT.VJ_NPC_Class = {"CLASS_APERTURE"}

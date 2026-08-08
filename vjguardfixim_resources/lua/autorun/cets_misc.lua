@@ -58,7 +58,7 @@ if SERVER then
 		ply:SetVelocity(vel)
 		ply.jumpmodule_can_use = false
 
-		ply:EmitSound("player/cets_jumpmod_boost1.wav", 70, math.random(100,110))
+		ply:EmitSound("hl1/ctf/pow_big_jump.wav", 70, math.random(100,110))
 	end
 
 	local played_sound

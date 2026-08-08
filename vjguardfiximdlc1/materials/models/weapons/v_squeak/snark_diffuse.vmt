@@ -1,15 +1,20 @@
 //"EDITOR_SHADER"
 "VertexLitGeneric"
 {
-	"$SHADERNAME" "model_standard"
+	"$selfillum" 1
 
-	"$baseTexture" "models\weapons\v_squeak/snark_diffuse"
-	"$bumpmap" "models\weapons\v_squeak/snark_normals"
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=dx90_20b"
+	{
+		"$baseTexture" 		"models/weapons/v_squeak/snark_diffuse"
+		"$selfillummask" 	"models/weapons/v_squeak/snark_diffuse_l"
+	}
 
-        "$lightwarptexture" "models\weapons\v_squeak\Base_M_caucasian_wrp"
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<dx90_20b"
+	{
+		"$baseTexture" 	"models/weapons/v_squeak/snark_diffuse"
+	}
 
-//metal
 	"$halflambert" 1
-	
-	"$model" 1
 }

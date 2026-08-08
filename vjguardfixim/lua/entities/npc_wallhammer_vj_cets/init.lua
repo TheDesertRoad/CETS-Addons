@@ -139,7 +139,7 @@ function ENT:CustomOnThink()
 		self.NextDance = CurTime() + self:SequenceDuration(self:LookupSequence( "bugbait_hit" ))
 	end
 
-	if IsValid(self:GetEnemy()) && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1000 && self:GetPos():Distance(self:GetEnemy():GetPos()) > 100 && self:Visible(self:GetEnemy()) then
+	if IsValid(self:GetEnemy()) && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1500 && self:GetPos():Distance(self:GetEnemy():GetPos()) > 200 && self:Visible(self:GetEnemy()) then
 		--self.CallForHelp = true
 		if self.NextRandomFlash != 0 then
 			self.NextRandomFlash = self.NextRandomFlash - 1

@@ -339,6 +339,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 	if dmginfo:IsDamageType( DMG_PHYSGUN ) && self.Flipped == 0 then 
+			self:StopSound("npc/antlion/fly1.wav")
 			self:VJ_ACT_PLAYACTIVITY("flip1",true,4,false)
 			self.MovementType = VJ_MOVETYPE_STATIONARY
 			self.CanTurnWhileStationary = false
@@ -346,7 +347,6 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 			self.SightDistance = 1 
 			self.IsGuard = true
 			self:SetBodygroup(1,0)
-			self:StopSound("npc/antlion/fly1.wav")
 			self.Flipped = 1
 			self.CallForHelp = false
 
@@ -376,6 +376,7 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 		Vector(0, 0, 200) -- slight lift
 
 	self:SetVelocity(velocity)
+	self:StopSound("npc/antlion/fly1.wav")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo,hitgroup)

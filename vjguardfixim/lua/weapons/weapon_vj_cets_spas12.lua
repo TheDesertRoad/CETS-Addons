@@ -94,6 +94,7 @@ util.Effect( "MuzzleFlash", ef )
 	self:SetNextSecondaryFire(CurTime() + 1)
 	return true
 end
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnReload(status)
 	if status == "Finish" then

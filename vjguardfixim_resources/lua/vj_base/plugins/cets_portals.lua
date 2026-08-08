@@ -35,6 +35,8 @@ VJ.AddConVar("cets_dance_music", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_grigori_right", 1, FCVAR_ARCHIVE)
 
+VJ.AddConVar("sv_cets_mission_fail_check", 0, FCVAR_ARCHIVE)
+
 VJ.AddConVar("cl_cets_custom_crosshairs", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_grab_players_phys", 0, FCVAR_ARCHIVE)

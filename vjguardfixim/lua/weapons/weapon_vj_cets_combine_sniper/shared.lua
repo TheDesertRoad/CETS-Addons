@@ -1,5 +1,5 @@
-if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
----------------------------------------------------------------------------------------------------------------------------------------------
+if (!file.Exists("autorun/vj_base_autorun.lua", "LUA")) then return end
+
 SWEP.Base = "weapon_vj_cets_357"
 SWEP.PrintName = "SNIPER COMB"
 SWEP.HoldType = "smg"
@@ -10,7 +10,7 @@ SWEP.MadeForNPCsOnly = true
 SWEP.WorldModel = "models/weapons/w_combinesniper.mdl"
 SWEP.ReplacementWeapon = "item_ammo_ar2_large"
 
-SWEP.Primary.Damage				= 40 -- Damage
+SWEP.Primary.Damage				= 20 -- Damage
 SWEP.Primary.ClipSize			= 1 -- Max amount of bullets per clip
 SWEP.Primary.Delay				= 3 -- Time until it can shoot again
 SWEP.Primary.Sound				= "npc/sniper/sniper1.wav"
@@ -30,39 +30,235 @@ SWEP.NPC_TimeUntilFire = 1
 SWEP.NPC_CustomSpread = 0
 SWEP.NPC_HasSecondaryFire = false -- Can the weapon have a secondary fire?
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:PrimaryAttack(UseAlt)
-	//if self:GetOwner():KeyDown(IN_RELOAD) then return end
-	//self:GetOwner():SetFOV(45, 0.3)
-	//if !IsFirstTimePredicted() then return end
-	local curTime = CurTime()
-	self:SetNextPrimaryFire(curTime + self.Primary.Delay)
-	local owner = self:GetOwner()
-	local isNPC = owner:IsNPC()
-	local isPly = owner:IsPlayer()
-	local spawnPos = self:GetBulletPos()
-	local ene = owner:GetEnemy()
-	local aimPos
-
-	if owner.GetAimPosition then
-		aimPos = owner:GetAimPosition(ene, spawnPos, 0)
-	else
-		aimPos = ene:WorldSpaceCenter()
+local ExplosiveSearchDistance = 24576
+local ExplosiveTargetDistance = 256
+local ExplosiveLineRadius = 128
+local ExplosiveModels = {
+	["models/props_junk/propane_tank001a.mdl"] = true,
+	["models/props_junk/gascan001a.mdl"] = true,
+	["models/props_c17/oildrum001_explosive.mdl"] = true,
+	["models/props_cets/oildrum001_explosive.mdl"] = true,
+	["models/props_explosive/explosive_butane_can02.mdl"] = true,
+	["models/props_explosive/explosive_butane_can.mdl"] = true,
+	["models/props_phx/oildrum001_explosive.mdl"] = true,
+	["models/props_cets_aliens/boomerplant_01.mdl"] = true,
+	["models/props_cets/roller_spikes.mdl"] = true,
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+local function IsExplosiveProp(ent)
+	if !IsValid(ent) then
+		return false
 	end
 
-	local spread = owner.GetAimSpread and owner:GetAimSpread(ene, aimPos, self.NPC_CustomSpread or 1) or (self.NPC_CustomSpread or 1)
+	local class = ent:GetClass()
 
-	
-	if self.Reloading or self:GetNextSecondaryFire() > curTime then return end
-	if isNPC && !owner.VJ_IsBeingControlled && !IsValid(owner:GetEnemy()) then return end -- If the NPC owner isn't being controlled and doesn't have an enemy, then return end
-	if !self.IsMeleeWeapon && ((isPly && !self.Primary.AllowInWater && owner:WaterLevel() == 3) or (self:Clip1() <= 0)) then
-		if SERVER then
-			owner:EmitSound(VJ.PICK(self.DryFireSound), self.DryFireSoundLevel, math.random(self.DryFireSoundPitch.a, self.DryFireSoundPitch.b))
+	if class != "prop_physics" && class != "npc_boomplant_vj_cets" && class != "ent_cets_navalmine" then
+		return false
+	end
+
+	if class == "npc_boomplant_vj_cets" then
+		return true
+	end
+
+	if class == "ent_cets_navalmine" then
+		return true
+	end
+
+	local model = string.lower(ent:GetModel() or "")
+
+	return ExplosiveModels[model] == true
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local function IsValidExplosiveVictim(ent, owner)
+	if !IsValid(ent) then
+		return false
+	end
+
+	if ent == owner then
+		return false
+	end
+
+	if ent:IsPlayer() then
+		return ent:Alive()
+	end
+
+	if ent:IsNPC() then
+		if ent:Health() <= 0 then
+			return false
 		end
+
+		if !ent.IsVJBaseSNPC_Human then
+			return false
+		end
+
+		return true
+	end
+
+	return false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local function FindVictimNearExplosive(explosive, owner)
+	if !IsValid(explosive) then
+		return nil
+	end
+
+	local explosivePos = explosive:WorldSpaceCenter()
+	local closestTarget = nil
+	local closestDistance = math.huge
+
+	for _, ent in ipairs(ents.FindInSphere(explosivePos, ExplosiveTargetDistance)) do
+		if IsValidExplosiveVictim(ent, owner) then
+			local distance = explosivePos:DistToSqr(ent:WorldSpaceCenter())
+
+			if distance < closestDistance then
+				closestDistance = distance
+				closestTarget = ent
+			end
+		end
+	end
+
+	return closestTarget
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local function IsExplosiveBetween(sniper, explosive, target)
+	if !IsValid(sniper) then return false end
+	if !IsValid(explosive) then return false end
+	if !IsValid(target) then return false end
+
+	local sniperPos = sniper:WorldSpaceCenter()
+	local explosivePos = explosive:WorldSpaceCenter()
+	local targetPos = target:WorldSpaceCenter()
+
+	local direction = (targetPos - sniperPos):GetNormalized()
+	local sniperToExplosive = explosivePos - sniperPos
+
+	local distanceAlongLine = sniperToExplosive:Dot(direction)
+
+	if distanceAlongLine <= 0 then
+		return false
+	end
+
+	local targetDistance = sniperPos:Distance(targetPos)
+
+	if distanceAlongLine >= targetDistance then
+		return false
+	end
+
+	local closestPoint = sniperPos + direction * distanceAlongLine
+	local distanceFromLine = closestPoint:Distance(explosivePos)
+
+	return distanceFromLine <= ExplosiveLineRadius
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local function FindExplosiveTarget(owner)
+	if !IsValid(owner) then
+		return nil, nil
+	end
+
+	local sniperPos = owner:WorldSpaceCenter()
+
+	local bestExplosive = nil
+	local bestVictim = nil
+	local bestDistance = math.huge
+
+	for _, explosive in ipairs(ents.FindInSphere(sniperPos, ExplosiveSearchDistance)) do
+		if !IsExplosiveProp(explosive) then
+			continue
+		end
+
+		local victim = FindVictimNearExplosive(explosive, owner)
+
+		if !IsValid(victim) then
+			continue
+		end
+
+		if !IsExplosiveBetween(owner, explosive, victim) then
+			continue
+		end
+
+		local distance = sniperPos:DistToSqr(explosive:WorldSpaceCenter())
+
+		if distance < bestDistance then
+			bestDistance = distance
+			bestExplosive = explosive
+			bestVictim = victim
+		end
+	end
+
+	return bestExplosive, bestVictim
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:PrimaryAttack(UseAlt)
+	local curTime = CurTime()
+
+	if self.Reloading then
 		return
 	end
-	if !self:CanPrimaryAttack() then return end
-	if self:OnPrimaryAttack("Init") == true then return end
-	
+
+	if self:GetNextSecondaryFire() > curTime then
+		return
+	end
+
+	if !self:CanPrimaryAttack() then
+		return
+	end
+
+	local owner = self:GetOwner()
+
+	if !IsValid(owner) then
+		return
+	end
+
+	local isNPC = owner:IsNPC()
+	local isPly = owner:IsPlayer()
+	local normalEnemy = nil
+
+	if isNPC && owner.GetEnemy then
+		normalEnemy = owner:GetEnemy()
+	end
+
+	local explosiveTarget = nil
+	local explosiveVictim = nil
+
+	if isNPC then
+		explosiveTarget, explosiveVictim = FindExplosiveTarget(owner)
+	end
+
+	local spawnPos
+
+	if self.GetBulletPos then
+		spawnPos = self:GetBulletPos()
+	else
+		spawnPos = owner:GetShootPos()
+	end
+
+	if !spawnPos then
+		spawnPos = owner:GetShootPos()
+	end
+
+	local aimPos = nil
+
+	if IsValid(explosiveTarget) && IsValid(explosiveVictim) then
+		aimPos = explosiveTarget:WorldSpaceCenter()
+
+	elseif IsValid(normalEnemy) then
+		if owner.GetAimPosition then
+			aimPos = owner:GetAimPosition(normalEnemy, spawnPos, 0)
+		else
+			aimPos = normalEnemy:WorldSpaceCenter()
+		end
+
+	elseif isPly then
+		aimPos = owner:GetEyeTrace().HitPos
+	else
+		return
+	end
+
+	if !aimPos then
+		return
+	end
+
+	self:SetNextPrimaryFire(curTime + self.Primary.Delay)
 	if isNPC && owner.IsVJBaseSNPC then
 		timer.Simple(self.NPC_ExtraFireSoundTime, function()
 			if IsValid(self) && IsValid(owner) then
@@ -97,7 +293,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		bullet.Num = self.Primary.NumberofShots //The number of shots fired
 		bullet.Src = self.Owner:GetShootPos() //Gets where the bullet comes from
 		bullet.Dir = (aimPos - spawnPos):GetNormal() //Gets where you're aiming
-		local spread = 0.08 or self.NPC_CustomSpread
+		local spread = 0.01 or self.NPC_CustomSpread
 		bullet.Spread = Vector(spread, spread, 0)
                 //The above, sets how far the bullets spread from each other. 
 		bullet.Tracer = self.Primary.Tracer
@@ -134,7 +330,7 @@ if CLIENT then
 	local matSprite = Material("sprites/blueglow2")
 	local laserColor = Color(100, 220, 255, 64)
 	local spriteColor = Color(0, 64, 255, 255)
-
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnDrawWorldModel()
 	local owner = self:GetOwner()
 		if IsValid(owner) then

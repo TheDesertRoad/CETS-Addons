@@ -149,6 +149,33 @@ function ENT:Init()
 		self.DynamicLight:Fire("TurnOn", "", 0)
 		self:DeleteOnRemove(self.DynamicLight)
 
+		local glow1 = ents.Create("env_sprite")
+		glow1:SetKeyValue("model", "sprites/glow06.vmt")
+		glow1:SetKeyValue("GlowProxySize", "1") -- Size of the glow to be rendered for visibility testing.
+		glow1:SetKeyValue("renderfx", "14")
+		glow1:SetKeyValue("scale", "1")
+		glow1:Fire("Color", "255 0 0 1")
+		glow1:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+		glow1:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+		glow1:SetKeyValue("spawnflags", "0")
+		glow1:SetParent(self)
+		local attID = self:LookupAttachment("eyes")
+
+		hook.Add("Think", glow1, function()
+			if not IsValid(glow1) or not IsValid(self) then return end
+
+			local att = self:GetAttachment(attID)
+			if not att then return end
+
+			glow1:SetPos(att.Pos + att.Ang:Forward() * 7)
+			glow1:SetAngles(att.Ang)
+		end)
+
+		glow1:Spawn()
+		glow1:Activate()
+
+		self:DeleteOnRemove(glow1)
+
 	elseif bit.band(flags, 128) ~= 0 or self:HasSpawnFlags(128) then
 		self.Skin_Rand = 2
 		self:SetSkin(1)
@@ -168,6 +195,33 @@ function ENT:Init()
 		self.DynamicLight:Fire("SetParentAttachment", "eyes")
 		self.DynamicLight:Fire("TurnOn", "", 0)
 		self:DeleteOnRemove(self.DynamicLight)
+
+		local glow1 = ents.Create("env_sprite")
+		glow1:SetKeyValue("model", "sprites/glow06.vmt")
+		glow1:SetKeyValue("GlowProxySize", "1") -- Size of the glow to be rendered for visibility testing.
+		glow1:SetKeyValue("renderfx", "14")
+		glow1:SetKeyValue("scale", "1")
+		glow1:Fire("Color", "0 0 255 1")
+		glow1:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+		glow1:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+		glow1:SetKeyValue("spawnflags", "0")
+		glow1:SetParent(self)
+		local attID = self:LookupAttachment("eyes")
+
+		hook.Add("Think", glow1, function()
+			if not IsValid(glow1) or not IsValid(self) then return end
+
+			local att = self:GetAttachment(attID)
+			if not att then return end
+
+			glow1:SetPos(att.Pos + att.Ang:Forward() * 7)
+			glow1:SetAngles(att.Ang)
+		end)
+
+		glow1:Spawn()
+		glow1:Activate()
+
+		self:DeleteOnRemove(glow1)
 	else
 		if math.random(1,2) == 1 then
 			self.Skin_Rand = 1
@@ -188,6 +242,33 @@ function ENT:Init()
 			self.DynamicLight:Fire("SetParentAttachment", "eyes")
 			self.DynamicLight:Fire("TurnOn", "", 0)
 			self:DeleteOnRemove(self.DynamicLight)
+
+			local glow1 = ents.Create("env_sprite")
+			glow1:SetKeyValue("model", "sprites/glow06.vmt")
+			glow1:SetKeyValue("GlowProxySize", "1") -- Size of the glow to be rendered for visibility testing.
+			glow1:SetKeyValue("renderfx", "14")
+			glow1:SetKeyValue("scale", "1")
+			glow1:Fire("Color", "255 0 0 1")
+			glow1:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+			glow1:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+			glow1:SetKeyValue("spawnflags", "0")
+			glow1:SetParent(self)
+			local attID = self:LookupAttachment("eyes")
+
+			hook.Add("Think", glow1, function()
+				if not IsValid(glow1) or not IsValid(self) then return end
+
+				local att = self:GetAttachment(attID)
+				if not att then return end
+
+				glow1:SetPos(att.Pos + att.Ang:Forward() * 7)
+				glow1:SetAngles(att.Ang)
+			end)
+
+			glow1:Spawn()
+			glow1:Activate()
+
+			self:DeleteOnRemove(glow1)
 		else
 			self.Skin_Rand = 2
 			self:SetSkin(1)
@@ -207,6 +288,33 @@ function ENT:Init()
 			self.DynamicLight:Fire("SetParentAttachment", "eyes")
 			self.DynamicLight:Fire("TurnOn", "", 0)
 			self:DeleteOnRemove(self.DynamicLight)
+
+			local glow1 = ents.Create("env_sprite")
+			glow1:SetKeyValue("model", "sprites/glow06.vmt")
+			glow1:SetKeyValue("GlowProxySize", "1") -- Size of the glow to be rendered for visibility testing.
+			glow1:SetKeyValue("renderfx", "14")
+			glow1:SetKeyValue("scale", "1")
+			glow1:Fire("Color", "0 0 255 1")
+			glow1:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+			glow1:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+			glow1:SetKeyValue("spawnflags", "0")
+			glow1:SetParent(self)
+			local attID = self:LookupAttachment("eyes")
+
+			hook.Add("Think", glow1, function()
+				if not IsValid(glow1) or not IsValid(self) then return end
+
+				local att = self:GetAttachment(attID)
+				if not att then return end
+
+				glow1:SetPos(att.Pos + att.Ang:Forward() * 7)
+				glow1:SetAngles(att.Ang)
+			end)
+
+			glow1:Spawn()
+			glow1:Activate()
+
+			self:DeleteOnRemove(glow1)
 		end
 	end
 
