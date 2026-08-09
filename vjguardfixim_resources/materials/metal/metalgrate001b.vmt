@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmapAlphaBlend
+	"$basetexture" "Metal/metalgrate001a"
+	"$surfaceprop" "metalgrate"
+	"%keywords" "c17industrial"
+}

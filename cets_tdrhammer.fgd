@@ -756,6 +756,18 @@
 [
 ]
 
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_death.vmt") = ent_cets_xen_portal3 : "Xen Portal (Death)"
+[
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_exit.vmt") = ent_cets_xen_portal2 : "Xen Portal (Exit)"
+[
+]
+
+@NPCClass base(BaseNPC) iconsprite("editor/cets_portal_enter.vmt") = ent_cets_xen_portal1 : "Xen Portal (Enter)"
+[
+]
+
 @PointClass base(Weapon) studio("models/props_phx/misc/egg.mdl") = weapon_ply_egg : "Throwable Egg" []
 @PointClass base(Weapon) iconsprite("effects/bluemuzzle.vmt") = weapon_vj_cets_confetti : "Confetti" []
 @PointClass base(Weapon) iconsprite("effects/bluemuzzle.vmt") = weapon_vj_cets_confetti_arg : "Confetti ARGENTINA" []

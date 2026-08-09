@@ -78,7 +78,7 @@ function ENT:Explode()
 
 			local killClasses = {
 				"npc_super_particlestorm_vj_cets",
-				"npc_super_particlestorm_vj_cets",
+				"npc_particlestorm_vj_cets",
 			}
 
 			for _, class in ipairs(killClasses) do

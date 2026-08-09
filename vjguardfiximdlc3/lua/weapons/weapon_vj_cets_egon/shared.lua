@@ -700,6 +700,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
 	function SWEP:CreateWeaponSelectionFonts(height)
+
 		local scale = (height*0.8)/64 --ScrH()/480
 		
 		surface.CreateFont("CETS_EGONfont_Glow", {

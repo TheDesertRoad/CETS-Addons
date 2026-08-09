@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "metal/metalpipe011a_old"
+	"$surfaceprop" "metal"
+	"%keywords" "c17industrial"
+	"$envmapmask" "metal/metalpipe011a_old_mask"
+}

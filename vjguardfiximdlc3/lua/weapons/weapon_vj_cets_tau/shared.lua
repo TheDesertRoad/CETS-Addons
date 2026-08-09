@@ -26,16 +26,15 @@ SWEP.Slot = 3
 SWEP.SlotPos = 4
 --------------------------------------------------------------------------------|
 SWEP.Spin = 0
-SWEP.SpinTimer = CurTime()
-SWEP.Idle = 0
-SWEP.IdleTimer = CurTime()
-SWEP.Recoil = 0
-SWEP.RecoilTimer = CurTime()
-
-SWEP.Temp = 0
-SWEP.HasFiredGauss = false
+SWEP.SpinTimer = 0
 SWEP.SpinAmmoDrainTime = 0
 SWEP.SpinAmmoDrainRate = 0.4
+
+SWEP.GaussCharging = false
+SWEP.GaussChargeStart = 0
+SWEP.GaussChargeDuration = 7
+SWEP.GaussNextAmmoDrain = 0
+SWEP.GaussAmmoDrainRate = 0.4
 --------------------------------------------------------------------------------|
 SWEP.Primary.Sound = "Cets_Weapon_Tau.Fire"
 SWEP.Primary.ClipSize = -1
@@ -92,57 +91,66 @@ end
 --------------------------------------------------------------------------------|
 function SWEP:CustomOnDeploy()
 	local owner = self:GetOwner()
-	local isNPC = owner:IsNPC()
-	local isPly = owner:IsPlayer()
 
-	if isPly then
-		self:SetWeaponHoldType( self.HoldType )
-		self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
-		self:SetNextPrimaryFire( CurTime() + 0.5 )
-		self:SetNextSecondaryFire( CurTime() + 0.5 )
-	
+	if not IsValid(owner) then
+		return
+	end
+
+	self.GaussCharging = false
+	self.GaussAttack2WasDown = false
+	self.Spin = 0
+	self.SpinTimer = 0
+	self.GaussChargeStart = 0
+
+	if owner:IsPlayer() then
+		self:SetWeaponHoldType(self.HoldType)
+
 		self:StopChargeSound()
 
-		self.Spin = 0
 		self.SpinTimer = CurTime()
-
 		self.Idle = 0
-		self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-
 		self.Recoil = 0
-		self.RecoilTimer = CurTime()
 
-		return true
-	else
-		self.Primary.ClipSize = 999999
-		self.Primary.DefaultClip = 999999
-		self.Primary.MaxAmmo = 999999
+		self:SetNextPrimaryFire(CurTime() + 0.5)
+		self:SetNextSecondaryFire(CurTime() + 0.5)
+
+		if SERVER then
+			self:SendWeaponAnim(ACT_VM_DRAW)
+		end
+
+		if IsValid(owner:GetViewModel()) then
+			self.IdleTimer = CurTime() + owner:GetViewModel():SequenceDuration()
+		else
+			self.IdleTimer = CurTime() + 1
+		end
 	end
+
+	return true
 end
 --------------------------------------------------------------------------------|
 function SWEP:CustomOnHolster()
 	local owner = self:GetOwner()
-	local isNPC = owner:IsNPC()
-	local isPly = owner:IsPlayer()
 
-	if isPly then
-		self:StopChargeSound()
+	self.GaussCharging = false
+	self.GaussAttack2WasDown = false
+	self.Spin = 0
+	self.SpinTimer = 0
+	self.GaussChargeStart = 0
 
-		self.Spin = 0
-		self.SpinTimer = CurTime()
+	self:StopChargeSound()
 
+	if IsValid(owner) and owner:IsPlayer() then
 		self.Idle = 0
 		self.IdleTimer = CurTime()
-
 		self.Recoil = 0
 		self.RecoilTimer = CurTime()
 
-		return true
-	else
-		self.Primary.ClipSize = 999999
-		self.Primary.DefaultClip = 999999
-		self.Primary.MaxAmmo = 999999
+		if SERVER then
+			self:SendWeaponAnim(ACT_VM_IDLE)
+		end
 	end
+
+	return true
 end
 --------------------------------------------------------------------------------|
 function SWEP:GetWorldModelAttachment(name)
@@ -433,321 +441,411 @@ function SWEP:PrimaryAttack(UseAlt)
 	end
 end
 --------------------------------------------------------------------------------|
+function SWEP:StartGaussCharge()
+	if not SERVER then return end
+
+	local owner = self:GetOwner()
+
+	if not IsValid(owner) or not owner:IsPlayer() then
+		return
+	end
+
+	if not owner:Alive() then
+		return
+	end
+
+	if owner:GetActiveWeapon() ~= self then
+		return
+	end
+
+	if self.GaussCharging then
+		return
+	end
+
+	if self.FiresUnderwater == false and owner:WaterLevel() >= 3 then
+		self:StopGaussCharge()
+		owner:EmitSound("Cets_Weapon_Tau.FireNOO")
+		self:SetNextPrimaryFire(CurTime() + 0.2)
+		self:SetNextSecondaryFire(CurTime() + 0.2)
+		return
+	end
+
+	local ammo = self:Ammo1()
+
+	if ammo < 6 then
+		owner:EmitSound("Cets_Weapon_Tau.FireNOO")
+
+		self:SetNextPrimaryFire(CurTime() + 0.2)
+		self:SetNextSecondaryFire(CurTime() + 0.2)
+
+		return
+	end
+
+	self.GaussCharging = true
+	self.GaussChargeStart = CurTime()
+	self.GaussNextAmmoDrain = CurTime() + self.GaussAmmoDrainRate
+
+	self.Spin = 1
+	self.SpinTimer = CurTime() + self.GaussChargeDuration
+
+	self:EmitSound(self.Secondary.Sound, 75, 100)
+
+	self:SendWeaponAnim(ACT_GAUSS_SPINUP)
+
+	self:SetNextPrimaryFire(CurTime() + 0.2)
+	self:SetNextSecondaryFire(CurTime() + 0.2)
+
+	self.Idle = 0
+
+	if IsValid(owner:GetViewModel()) then
+		self.IdleTimer =
+			CurTime() + owner:GetViewModel():SequenceDuration()
+	end
+end
+--------------------------------------------------------------------------------|
+function SWEP:StopGaussCharge()
+	self.GaussCharging = false
+
+	self.Spin = 0
+	self.SpinTimer = 0
+
+	self:StopSound(self.Secondary.Sound)
+
+	local owner = self:GetOwner()
+
+	if IsValid(owner) then
+		owner:StopSound(self.Secondary.Sound)
+	end
+
+	if SERVER and IsValid(owner) then
+		self:SendWeaponAnim(ACT_VM_IDLE)
+	end
+end
+--------------------------------------------------------------------------------|
 function SWEP:SecondaryAttack()
 	local owner = self:GetOwner()
-	local isNPC = owner:IsNPC()
-	local isPly = owner:IsPlayer()
-	local spawnPos = self:GetBulletPos()
 
-	if isPly then
-		if self.Weapon:Ammo1() <= 6 then return end
-		if not IsValid(owner) then return end
-		if not owner:Alive() then return end
-		if owner:GetActiveWeapon() ~= self then return end
-
-		if self.Spin == 1 then return end
-
-		if self.Weapon:Ammo1() <= 5 then
-			self.Weapon:EmitSound("Cets_Weapon_Tau.FireNOO")
-			self:SetNextPrimaryFire(CurTime() + 0.2)
-			self:SetNextSecondaryFire(CurTime() + 0.2)
-			self:StopChargeSound()
-			self.Spin = 0
-			self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
-		end
-
-		if self.Weapon:Ammo1() >= 6 && self.Owner:WaterLevel() < 3 then
-			self:EmitSound(self.Secondary.Sound, 75, 100)
-			self:TakePrimaryAmmo(5)
-			self.Weapon:SendWeaponAnim(ACT_GAUSS_SPINUP)
-			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
-		end
-
-		if self.FiresUnderwater == false && self.Owner:WaterLevel() == 3 then
-			self.Weapon:EmitSound("Cets_Weapon_Tau.FireNOO")
-			self:SetNextPrimaryFire(CurTime() + 0.2)
-			self:SetNextSecondaryFire(CurTime() + 0.2)
-			self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
-		end
-
-		if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
-
-		self.Spin = 1
-		self.SpinTimer = CurTime() + 7
-
-		self.Idle = 0
-		self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+	if not IsValid(owner) then
+		return
 	end
+
+	if not owner:IsPlayer() then
+		return
+	end
+
+	if not owner:Alive() then
+		return
+	end
+
+	if owner:GetActiveWeapon() ~= self then
+		return
+	end
+
+	if self.Reloading then
+		return
+	end
+
+	if self.GaussCharging then
+		return
+	end
+
+	local curTime = CurTime()
+
+	if self:GetNextSecondaryFire() > curTime then
+		return
+	end
+
+	if self:GetNextPrimaryFire() > curTime then
+		return
+	end
+
+	if self.FiresUnderwater == false and owner:WaterLevel() >= 3 then
+		owner:EmitSound("Cets_Weapon_Tau.FireNOO")
+
+		self:SetNextPrimaryFire(curTime + 0.2)
+		self:SetNextSecondaryFire(curTime + 0.2)
+
+		return
+	end
+
+	if self:Ammo1() < 6 then
+		owner:EmitSound("Cets_Weapon_Tau.FireNOO")
+
+		self:SetNextPrimaryFire(curTime + 0.2)
+		self:SetNextSecondaryFire(curTime + 0.2)
+
+		return
+	end
+
+	self:StartGaussCharge()
+	self:TakePrimaryAmmo( 5 )
+end
+--------------------------------------------------------------------------------|
+function SWEP:GetGaussChargeProgress()
+	if not self.GaussCharging then
+		return 0
+	end
+
+	local elapsed = CurTime() - self.GaussChargeStart
+
+	return math.Clamp(elapsed / self.GaussChargeDuration, 0, 1)
+end
+--------------------------------------------------------------------------------|
+function SWEP:GetGaussDamage()
+	local progress = self:GetGaussChargeProgress()
+
+	if progress >= 0.95 then
+		return self.Primary.Damage * 32
+	elseif progress >= 0.80 then
+		return self.Primary.Damage * 16
+	elseif progress >= 0.43 then
+		return self.Primary.Damage * 8
+	elseif progress >= 0.14 then
+		return self.Primary.Damage * 4
+	end
+
+	return self.Primary.Damage
+end
+--------------------------------------------------------------------------------|
+function SWEP:GetGaussPush()
+	local progress = self:GetGaussChargeProgress()
+
+	if progress >= 0.95 then
+		return 1000
+	elseif progress >= 0.80 then
+		return 600
+	elseif progress >= 0.43 then
+		return 300
+	elseif progress >= 0.14 then
+		return 200
+	end
+
+	return 100
+end
+--------------------------------------------------------------------------------|
+function SWEP:FireGaussBeam()
+	if not SERVER then
+		return
+	end
+
+	local owner = self:GetOwner()
+
+	if not IsValid(owner) then
+		return
+	end
+
+	local damage = self:GetGaussDamage()
+	local push = self:GetGaussPush()
+	local shootPos = owner:GetShootPos()
+	local aimVector = owner:GetAimVector()
+
+	local bullet = {}
+
+	bullet.Num = 1
+	bullet.Src = shootPos
+	bullet.Dir = aimVector
+	bullet.Spread = Vector(0, 0, 0)
+	bullet.Tracer = 1
+	bullet.TracerName = "cets_taubeam_tracer_b"
+	bullet.Force = self.Primary.Force
+	bullet.Damage = 0
+	bullet.AmmoType = self.Primary.Ammo
+	bullet.Callback = function(attacker, tracer, tr, dmginfo)
+		if not IsValid(self) then
+			return
+		end
+
+		if not IsValid(owner) then
+			return
+		end
+
+		local tr = self.Owner:GetEyeTrace()
+		local effectdata = EffectData()
+			effectdata:SetOrigin( tracer.HitPos )
+			effectdata:SetNormal( tr.HitNormal )
+			effectdata:SetStart( self.Owner:GetShootPos() )
+			effectdata:SetAttachment( 1 )
+			effectdata:SetEntity( self.Weapon )
+		util.Effect( "effect_cets_taubeam_b", effectdata )
+		util.Decal("redglowfade", tracer.HitPos, tr.HitPos - tr.HitNormal)
+		self:SparksHuge(attacker, tracer, tr, dmginfo)
+
+		local radius = 16
+
+		for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
+			if not IsValid(ent) then continue end
+			if ent == self.Owner then continue end
+			if not SERVER then return end
+
+			local class = ent:GetClass()
+
+			if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
+
+			local dmg = DamageInfo()
+
+			dmg:SetAttacker(self.Owner)
+			dmg:SetInflictor(self)
+			dmg:SetDamage(damage)
+			dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
+			dmg:SetDamagePosition(tracer.HitPos)
+
+			ent:TakeDamageInfo(dmg)
+
+			end
+		end
+
+		local radius1 = 64
+
+		for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
+			if not IsValid(ent) then continue end
+			if ent == self.Owner then continue end
+			if not SERVER then return end
+
+			local class = ent:GetClass()
+
+			if class == "npc_turret_floor" then
+				ent:Fire("SelfDestruct")
+			end
+
+			if class == "npc_rollermine" then
+				ent:Fire("RespondToExplodeChirp")
+			end
+
+			if class == "npc_helicopter" then
+				local blast = DamageInfo()
+
+				blast:SetAttacker(self.Owner)
+				blast:SetInflictor(self)
+				blast:SetDamage(self.Primary.Damage)
+				blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
+				blast:SetDamagePosition(tracer.HitPos)
+				ent:TakeDamageInfo(blast)
+				ent:SetHealth(ent:Health() - self.Primary.Damage)
+			end
+		end
+	end
+
+	owner:FireBullets(bullet)
+
+	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+
+	owner:SetAnimation(PLAYER_ATTACK1)
+	owner:MuzzleFlash()
+
+	self:StopSound(self.Secondary.Sound)
+	owner:StopSound(self.Secondary.Sound)
+
+	self:EmitSound("Cets_Weapon_Tau.FireAlt")
+
+	owner:ViewPunch(Angle(-3, 0, 0))
+
+	local pushDirection = -aimVector
+
+	owner:SetVelocity(pushDirection * push * 2)
+
+	local remainingForce = push * 0.40
+	local duration = 0.16
+	local steps = 10
+
+	for i = 1, steps do
+		timer.Simple(i * (duration / steps), function()
+			if not IsValid(owner) then
+				return
+			end
+
+			local t = i / steps
+			local scale = 1 - (t * t)
+
+			owner:SetVelocity(pushDirection * ((remainingForce / steps) * scale))
+		end)
+	end
+
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 end
 --------------------------------------------------------------------------------|
 function SWEP:CustomOnThink()
 	local owner = self:GetOwner()
-	local isNPC = owner:IsNPC()
-	local isPly = owner:IsPlayer()
-	local spawnPos = self:GetBulletPos()
 
-	if isPly then
-		for _, v in ipairs(player.GetAll()) do
-		
-			if not IsValid(v) or not owner:Alive() then
-				self:StopChargeSound()
-				self.Spin = 0
+	if not IsValid(owner) then
+		return
+	end
+
+	if not owner:IsPlayer() then
+		return
+	end
+
+	if self.GaussCharging then
+		if not owner:Alive() or owner:GetActiveWeapon() ~= self or self.Reloading then
+			self:StopGaussCharge()
+			return
+		end
+
+		if self.FiresUnderwater == false and owner:WaterLevel() >= 3 then
+			self:StopGaussCharge()
+			return
+		end
+
+		if CurTime() >= self.GaussNextAmmoDrain then
+			self.GaussNextAmmoDrain = CurTime() + self.GaussAmmoDrainRate
+
+			if self:Ammo1() > 0 then
+				self:TakePrimaryAmmo(1)
+			else
+				self:StopGaussCharge()
 				return
 			end
+		end
 
-			if owner:GetActiveWeapon() ~= self then
-				self:StopChargeSound()
-				self.Spin = 0
-				return
+		if not owner:KeyDown(IN_ATTACK2) then
+			self:FireGaussBeam()
+			self.GaussCharging = false
+			self.Spin = 0
+			self.SpinTimer = 0
+
+			self.Idle = 0
+
+			if IsValid(owner:GetViewModel()) then
+				self.IdleTimer = CurTime() + owner:GetViewModel():SequenceDuration()
 			end
 
-			if self.Spin == 1 and not self.Owner:KeyDown(IN_ATTACK2) then
-				local bullet = {}
-				bullet.Num = self.Primary.NumberofShots
-				bullet.Src = self.Owner:GetShootPos()
-				bullet.Ang = self.Owner:GetAngles()
-				bullet.Dir = self.Owner:GetAimVector()
-				bullet.Spread = Vector( 1 * self.Primary.Spread, 1 * self.Primary.Spread, 0 )
-				bullet.Tracer = 1
-				bullet.TracerName       = "cets_taubeam_tracer_b"
-				bullet.Force = self.Primary.Force
-				bullet.Damage = 0
-				bullet.AmmoType = self.Primary.Ammo
-				bullet.Callback = function(attacker, tracer, tr, dmginfo)
-					self:SparksHuge(attacker, tracer, tr, dmginfo)
-					local tr = self.Owner:GetEyeTrace()
-					local effectdata = EffectData()
-						effectdata:SetOrigin( tracer.HitPos )
-						effectdata:SetNormal( tr.HitNormal )
-						effectdata:SetStart( self.Owner:GetShootPos() )
-						effectdata:SetAttachment( 1 )
-						effectdata:SetEntity( self.Weapon )
-					util.Effect( "effect_cets_taubeam_b", effectdata )
-					util.Decal("redglowfade", tracer.HitPos, tr.HitPos - tr.HitNormal)
-					local radius = 8
+			return
+		end
 
-					for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius)) do
-						if not IsValid(ent) then continue end
-						if ent == self.Owner then continue end
-						if not SERVER then return end
+		if CurTime() >= self.GaussChargeStart + self.GaussChargeDuration then
+			self:StopSound(self.Secondary.Sound)
+			owner:StopSound(self.Secondary.Sound)
 
-						if IsValid(ent) and ent ~= self then
-							local dmg = DamageInfo()
-							dmg:SetAttacker(self.Owner)
-							dmg:SetInflictor(self)
-							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-	
-							if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
-								dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-								dmg:SetDamage(self.Primary.Damage)
-							end
+			self:EmitSound("Cets_HL2.Electric")
+			self:EmitSound("Cets_Weapon_Tau.FireAlt")
+			self.GaussCharging = false
+			self.Spin = 0
+			self.SpinTimer = 0
 
-							if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-								dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-								dmg:SetDamage(self.Primary.Damage * 2)
-							end
+			self:ExplodeGauss()
 
-							if self.SpinTimer <= CurTime() + 6 then
-								dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-								dmg:SetDamage(self.Primary.Damage * 4)
-							end
+			local effectPos = owner:GetShootPos()
 
-							if self.SpinTimer <= CurTime() + 3 then
-								dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-								dmg:SetDamage(self.Primary.Damage * 8)
-							end
+			ParticleEffect("grenade_explosion_01", effectPos, Angle(0, 0, 0), nil)
 
-							if self.SpinTimer <= CurTime() + 1 then
-								dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-								dmg:SetDamage(self.Primary.Damage * 16)
-							end
+			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 
-							dmg:SetDamagePosition(tracer.HitPos)
-							dmg:SetDamageType(bit.bor(DMG_ENERGYBEAM, DMG_SHOCK))
-							if ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() then
-								ent:TakeDamageInfo(dmg)
-							end
-						end
-					end
+			return
+		end
 
-			local radius1 = 64
+		if self.Idle == 1 then
+			self:SendWeaponAnim(ACT_GAUSS_SPINCYCLE)
 
-			for _, ent in ipairs(ents.FindInSphere(tracer.HitPos, radius1)) do
-				if not IsValid(ent) then continue end
-				if ent == self.Owner then continue end
-				if not SERVER then return end
+			self.Idle = 0
 
-				local class = ent:GetClass()
-
-				if class == "npc_turret_floor" then
-					ent:Fire("SelfDestruct")
-				end
-
-				if class == "npc_rollermine" then
-					ent:Fire("RespondToExplodeChirp")
-				end
-
-				if class == "npc_helicopter" or class == "npc_combinegunship" then
-					local blast = DamageInfo()
-
-					blast:SetAttacker(self.Owner)
-					blast:SetInflictor(self)
-					blast:SetDamage(self.Primary.Damage)
-					blast:SetDamageType(bit.bor(DMG_BLAST, DMG_AIRBOAT, DMG_ENERGYBEAM, DMG_SHOCK, DMG_GENERIC))
-					blast:SetDamagePosition(tracer.HitPos)
-					ent:TakeDamageInfo(blast)
-
-					if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
-						ent:SetHealth(ent:Health() - self.Primary.Damage)
-					end
-
-					if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-						ent:SetHealth(ent:Health() - self.Primary.Damage * 2)
-					end
-
-					if self.SpinTimer <= CurTime() + 6 then
-						ent:SetHealth(ent:Health() - self.Primary.Damage * 4)
-					end
-
-					if self.SpinTimer <= CurTime() + 3 then
-						ent:SetHealth(ent:Health() - self.Primary.Damage * 8)
-					end
-
-					if self.SpinTimer <= CurTime() + 1 then
-						ent:SetHealth(ent:Health() - self.Primary.Damage * 16)
-
-							end
-						end
-					end
-				end
-
-				self.Owner:FireBullets( bullet )
-
-				self:EmitSound( self.Primary.Sound )
-				self:StopSound( self.Secondary.Sound )
-
-				if SERVER then
-					self.Owner:StopSound( self.Secondary.Sound )
-					self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK )
-					self.Owner:StopSound( "Cets_Weapon_Tau.Charge" )
-					self:EmitSound( "Cets_Weapon_Tau.FireAlt" )
-				end		
-
-				self.Owner:SetAnimation( PLAYER_ATTACK1 )
-				self.Owner:MuzzleFlash()
-
-				self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-				self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
-				self.Spin = 0
-
-				self.Idle = 0
-				self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-
-				self.Recoil = 1
-				self.RecoilTimer = CurTime() + self.Primary.Delay
-				self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
-
-				local push = 100
-
-				if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
-					push = 100
-				elseif self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-					push = 200
-				elseif self.SpinTimer <= CurTime() + 6 and self.SpinTimer > CurTime() + 3 then
-					push = 300
-				elseif self.SpinTimer <= CurTime() + 3 and self.SpinTimer > CurTime() + 1 then
-					push = 600
-				else
-					push = 1000
-				end
-
-				local owner = self.Owner
-
-				if IsValid(owner) then
-					local pushDir = -owner:GetAimVector()
-					push = push * 1.25
-
-
-					owner:SetVelocity(pushDir * (push * 0.60))
-
-					local remainingForce = push * 0.40
-					local duration = 0.16
-					local steps = 10
-
-					for i = 1, steps do
-						timer.Simple(i * (duration / steps), function()
-							if not IsValid(owner) then return end
-
-							local t = i / steps
-							local scale = 1 - (t * t)
-
-							owner:SetVelocity(pushDir * ((remainingForce / steps) * scale))
-						end)
-					end
-				end
-			end
-
-			if self.Idle == 0 and self.IdleTimer <= CurTime() then
-				if SERVER then
-					if self.Spin == 0 then
-						self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
-					end
-
-					if self.Spin == 1 then
-						self.Weapon:SendWeaponAnim( ACT_GAUSS_SPINCYCLE )
-					end
-				end
-
-				self.Idle = 1
-			end
-
-			if self.Weapon:Ammo1() > self.Primary.MaxAmmo then
-				self.Owner:SetAmmo( self.Primary.MaxAmmo, self.Primary.Ammo )
-			end
-
-			if self.Spin == 1 then
-				if self:Ammo1() <= 0 then
-					self.Spin = 0
-					self:StopChargeSound()
-					if SERVER then
-						self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
-					end
-
-					return
-				end
-
-				if CurTime() >= self.SpinAmmoDrainTime then
-					self.SpinAmmoDrainTime = CurTime() + self.SpinAmmoDrainRate
-
-					if SERVER then
-						self:TakePrimaryAmmo(1)
-					end
-				end
-			end
-
-			if self.Spin == 1 and self.SpinTimer <= CurTime() and self.Weapon:Ammo1() >= 6 then
-				if SERVER then
-					self.Owner:StopSound( "Cets_Weapon_Tau.Charge" )
-					self.Owner:EmitSound( "Cets_HL2.Electric" )
-					self.Owner:EmitSound( "Cets_Weapon_Tau.FireAlt" )
-
-					self.Spin = 0
-					self.Idle = 0
-					self.Recoil = 0
-
-					if not self.Owner:HasGodMode() then
-						self:ExplodeGauss()
-						ParticleEffect("grenade_explosion_01",self:GetPos(),Angle(0, 0, 0),nil)
-					end
-				end
+			if IsValid(owner:GetViewModel()) then
+				self.IdleTimer =
+					CurTime()
+					+ owner:GetViewModel():SequenceDuration()
 			end
 		end
 	end
-end
---------------------------------------------------------------------------------|
-function SWEP:Reload() 
-
 end
 --------------------------------------------------------------------------------|
 function SWEP:SparksSmall(attacker, tracer, tr, dmginfo)
@@ -788,12 +886,36 @@ function SWEP:SparksHuge(attacker, tracer, tr, dmginfo)
 	dmginfo:SetInflictor(self)
 end
 --------------------------------------------------------------------------------|
-function SWEP:ExplodeGauss() 
-	if not self.Owner:HasGodMode() then
-		util.BlastDamage( self, self, self:GetPos(), 180, 300 )
-		self.Owner:EmitSound( "hl1/shatter.wav" )
-		self.Owner:EmitSound( "hl1/discreturn.wav" )
+function SWEP:ExplodeGauss()
+	if not SERVER then
+		return
 	end
+
+	local owner = self:GetOwner()
+
+	if not IsValid(owner) then
+		return
+	end
+
+	if owner:HasGodMode() then
+		return
+	end
+
+	local pos = owner:GetShootPos()
+
+	util.BlastDamage(self, owner, pos, 180, 300)
+
+	util.ScreenShake(pos, 8, 100, 0.5, 500)
+
+	owner:EmitSound("hl1/shatter.wav")
+	owner:EmitSound("hl1/discreturn.wav")
+
+	local effectdata = EffectData()
+
+	effectdata:SetOrigin(pos)
+	effectdata:SetScale(2)
+
+	util.Effect("cball_explode", effectdata, true, true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then

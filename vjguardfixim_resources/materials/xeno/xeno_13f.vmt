@@ -5,14 +5,13 @@ WorldVertexTransition
 	$bumpmap xenbumpmap/XENO_13
 	$bumpmap2 xenbumpmap/XENO_14
 		$surfaceprop "Rock"
-	$blendmodulatetexture xeno/XENO_13F_BLEND
-	
-	// $detail XENO_13F_detail
-	$texscale 8
- "$envmap"			"environment maps/xen_envmap"
-     "$envmapcontrast" "1"
-   "$envmapsaturation" 1 
-  "$envmaptint" "[.335 .335 .335]"
-   "$normalmapalphaenvmapmask" "1"
-	"$baseTextureOffset" "[0.5 0.5]"	"Proxies"	{	"TextureTransform"	{	"translateVar" "$baseTextureOffset"	"scaleVar"     "$texscale"	"resultVar"    "$baseTextureTransform"	}	}
+		$surfaceprop2 "Rock"
+
+	"$envmapcontrast" "1"
+	"$envmapsaturation" 1
+	"$envmap"	"env_cubemap"
+	"$envmaptint" "[.5 .5 .5]"
+	"$normalmapalphaenvmapmask" "1"
+
+	$blendmodulatetexture xeno/c4a1_swmpceil_blend
 }
