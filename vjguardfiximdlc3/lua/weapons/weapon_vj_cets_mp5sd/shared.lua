@@ -274,12 +274,12 @@ function SWEP:SecondaryAttack()
 	self.Idle = 0
 	self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
 
-if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
-	self.Recoil = 0
-	self.RecoilTimer = CurTime() + self.Secondary.Delay
-	self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -20, 0, 0 ) )
-	end
-	end
+	if IsFirstTimePredicted() then
+			self.Recoil = 1
+			self.RecoilTimer = CurTime() + self.Primary.Delay
+			owner:ViewPunch(Angle(-8, 0, 0))
+		end
+	end 
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:NPC_SecondaryFire()

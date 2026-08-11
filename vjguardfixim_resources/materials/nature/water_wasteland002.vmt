@@ -2,7 +2,7 @@
 {
 	"%compilewater" 1
 	"$forcecheap" 1
-	"$envmap" "Environment Maps/sky_wasteland02"
+	"$envmap" "env_cubemap"
 	"%tooltexture" "nature/water002a"
 	"$refracttexture" "_rt_WaterRefraction"
 	"$refractamount" "0.0"

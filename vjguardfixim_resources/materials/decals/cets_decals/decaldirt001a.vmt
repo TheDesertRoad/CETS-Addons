@@ -1,9 +1,9 @@
 "UnlitGeneric"
 {
 	// Original shader: DecalSpecularCubicEnvMap
-	"%tooltexture" "Decals/decalborealispuddle001a"
-	"$envmap" "environment maps/borealis_003"
-	"$envmapmask" "decals/decalborealispuddlemask001a"
+	"%tooltexture" "Decals/cets_decals/decalborealispuddle001a"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "decals/cets_decals/decalborealispuddlemask001a"
 	"$additive" 1
 	"$decal" 1
 	"$decalscale" 0.25

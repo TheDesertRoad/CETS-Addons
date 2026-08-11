@@ -4,7 +4,7 @@
 	"$envmapsphere" 1
 	"$basealphaenvmapmask" 1
 	"$basetexture" "Metal/metalfloor009a"
-	"$envmap" "environment maps/envmap001b"
+	"$envmap" "env_cubemap"
 	"$surfaceprop" "metalpanel"
 	"%keywords" "kraken"
 }

@@ -2,7 +2,7 @@
 {
 	// Original shader: DecalBaseTimesLightmapAlphaBlend
 	"$translucent" 1
-	"$basetexture" "Decals/ship_snow2a"
+	"$basetexture" "Decals/cets_decals/ship_snow2a"
 	"$decal" 1
 	"%keywords" "borealis"
 }

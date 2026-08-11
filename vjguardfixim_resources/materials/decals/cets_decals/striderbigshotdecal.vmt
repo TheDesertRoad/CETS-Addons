@@ -5,7 +5,7 @@
 	"$vertexcolor" 1
 	"$vertexalpha" 1
 	"$decal" 1
-	"$basetexture" "decals/striderbigshotdecal"
+	"$basetexture" "decals/cets_decals/striderbigshotdecal"
 	"$decalscale" 0.50
 	"$decalfadeduration" 4.00
 	"$decalfadetime" 0.00

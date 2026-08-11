@@ -4,7 +4,7 @@ LightmappedGeneric
 $translucent 1
 $vertexcolor 1
 $vertexalpha 1
-$basetexture "Decals/TrashDecal01b"
+$basetexture "Decals/cets_decals/TrashDecal01b"
 $decal 1
 $decalscale .25
 }

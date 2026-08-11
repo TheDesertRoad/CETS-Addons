@@ -2,7 +2,7 @@
 {
 	// Original shader: DecalBaseTimesLightmapAlphaBlend
 	"$translucent" 1
-	"$basetexture" "Decals/decalmetalgrate006a"
+	"$basetexture" "Decals/cets_decals/decalmetalgrate006a"
 	"$decal" 1
 	"$decalscale" 0.25
 	"%keywords" "c17downtown"

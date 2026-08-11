@@ -1,7 +1,7 @@
 "LightmappedGeneric"
 {
 	"$translucent" 1
-	"$basetexture" "Decals/decalwhitepaint001a"
+	"$basetexture" "Decals/cets_decals/decalwhitepaint001a"
 	"$decal" 1
 	"$decalscale" 0.25
 }

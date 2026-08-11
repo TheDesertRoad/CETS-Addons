@@ -28,10 +28,7 @@ ENT.FireCount = 6
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetAngles(self:GetVelocity():GetNormal():Angle())
-
-	if self:WaterLevel() < 1 then 
-		ParticleEffectAttach("fire_small_02",PATTACH_ABSORIGIN_FOLLOW,self,0)
-	end
+	ParticleEffectAttach("fire_small_02",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local defAngle = Angle(0, 0, 0)

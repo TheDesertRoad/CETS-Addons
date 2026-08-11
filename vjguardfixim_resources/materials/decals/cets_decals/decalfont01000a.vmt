@@ -2,7 +2,7 @@
 {
 	// Original shader: DecalBaseTimesLightmapAlphaBlend
 	"$translucent" 1
-	"$basetexture" "Decals/decalfont01000a"
+	"$basetexture" "Decals/cets_decals/decalfont01000a"
 	"$decal" 1
 	"$decalscale" 1
 }

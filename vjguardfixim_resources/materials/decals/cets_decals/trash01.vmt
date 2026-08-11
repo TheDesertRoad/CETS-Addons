@@ -1,6 +1,6 @@
 LightmappedGeneric
 {
-$baseTexture "decals/trash01"
+$baseTexture "decals/cets_decals/trash01"
 $translucent 1
 $decal 1
 $decalscale "0.50000"

@@ -126,7 +126,7 @@ function SWEP:PrimaryAttack()
 	self.Idle = 0
 	self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
 
-	if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
+	if IsFirstTimePredicted() then
 		self.Recoil = math.random( 1, 2 )
 		self.RecoilTimer = CurTime() + 0.12
 
@@ -137,7 +137,7 @@ function SWEP:PrimaryAttack()
 		if self.Recoil == 2 then
 			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( 2.5, 0, 0 ) )
 		end
-	end
+	end 
 end
 --------------------------------------------------------------------------------|
 function SWEP:SecondaryAttack()
@@ -190,18 +190,18 @@ function SWEP:SecondaryAttack()
 		self:TakePrimaryAmmo(8) 
 		self.RegenerationTimer = CurTime() + 1 
 
-		if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
+		if IsFirstTimePredicted() then
 			self.Recoil = math.random( 1, 2 )
 			self.RecoilTimer = CurTime() + 0.12
 
 			if self.Recoil == 1 then
-				self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -30, 0, 0 ) )
+				self.Owner:ViewPunch(Angle(30, 0, 0))
 			end
 
 			if self.Recoil == 2 then
-				self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( 30, 0, 0 ) )
+				self.Owner:ViewPunch(Angle(-30, 0, 0))
 			end
-		end
+		end 
 	end)
 end
 --------------------------------------------------------------------------------|
@@ -209,7 +209,7 @@ function SWEP:Reload()
 end
 --------------------------------------------------------------------------------|
 function SWEP:Think()
-	if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
+	if IsFirstTimePredicted() then
 		if self.Recoil == 1 and self.RecoilTimer <= CurTime() then
 			self.Recoil = 0
 		end
@@ -219,11 +219,11 @@ function SWEP:Think()
 		end
 
 		if self.Recoil == 1 then
-			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( 0.415, 0, 0 ) )
+			self.Owner:ViewPunch(Angle(0.415, 0, 0))
 		end
 
 		if self.Recoil == 2 then
-			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -0.415, 0, 0 ) )
+			self.Owner:ViewPunch(Angle(-0.415, 0, 0))
 		end
 	end
 
