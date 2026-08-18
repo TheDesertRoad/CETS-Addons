@@ -39,14 +39,6 @@ function ENT:Use(activator)
 			self:EmitSound("hl1/weapons/c4_plant.wav", 100, 100)
 		end
 	end
-
-		local dmg = DamageInfo()
-		dmg:SetAttacker(self)
-		dmg:SetInflictor(self)
-		dmg:SetDamageType(DMG_GENERIC)
-		dmg:SetDamageCustom(467565)
-		dmg:SetDamage(1)
-		activator:TakeDamageInfo(dmg)
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnTakeDamage(dmg)
