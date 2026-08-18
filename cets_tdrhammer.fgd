@@ -528,6 +528,31 @@
 [
 ]
 
+@NPCClass base(BaseNPC) studio("models/hl_tank_chasis.mdl") = npc_hecu_tank_vj_cets : "HECU Tank"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Stationary" : 1
+		128 : "Green" : 0
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/hl_tank_chasis.mdl") = npc_hecu_sentry_vj_cets : "Conscript Tank"
+[
+	spawnflags(Flags) =
+	[
+		64 : "Stationary" : 1
+	]
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/human_workers/group03/male_01_bloody.mdl") = npc_unarmed_worker_vj_cets : "Off-Worker"
+[
+]
+
+@NPCClass base(BaseNPC) studio("models/humans/blackops/hassassin.mdl") = npc_blackops_assassin_vj_cets : "Black-Ops Assassin"
+[
+]
+
 @NPCClass base(BaseNPC) studio("models/humans/grunt/hgrunt1.mdl") = npc_hecu_vj_cets : "HECU"
 [
 	spawnflags(Flags) =
@@ -604,18 +629,9 @@
 [
 ]
 
-@NPCClass base(BaseNPC) studio("models/weapons/w_hl2_gaussammo.mdl") = ent_cets_atomic_ammo : "Atomic Ammo"
-[
-]
-
-@NPCClass base(BaseNPC) studio("models/weapons/hl2_mp5_grenade.mdl") = ent_cets_mp5grenades : "MP5SD Grenades"
-[
-]
-
-@NPCClass base(BaseNPC) studio("models/items/boxsniperroundz.mdl") = ent_cets_sniper_ammo : "Sniper Ammo"
-[
-]
-
+@PointClass base(Item) studio("models/weapons/w_hl2_gaussammo.mdl") = ent_cets_atomic_ammo : "Atomic Ammo" []
+@PointClass base(Item) studio("models/weapons/hl2_mp5_grenade.mdl") = ent_cets_mp5grenades : "MP5SD Grenades" []
+@PointClass base(Item) studio("models/items/boxsniperroundz.mdl") = ent_cets_sniper_ammo : "Sniper Ammo" []
 @PointClass base(Item) studio("models/items/classic_battery.mdl")= item_armor_c : "Classic Armor" []
 @PointClass base(Item) studio("models/items/classic_healthkit.mdl")= item_health_kit_c : "Classic Health Kit" []
 @PointClass base(Item) studio("models/items/classic_healthvial.mdl")= item_health_vial_c : "Classic Vial" []
@@ -627,6 +643,7 @@
 @PointClass base(Weapon) studio("models/weapons/W_hl2_taucannon.mdl") = weapon_vj_cets_tau : "Gauss Gun" []
 @PointClass base(Weapon) studio("models/weapons/w_hl2_m40a1.mdl") = weapon_vj_cets_hecusniper : "Green Hecu Sniper" []
 @PointClass base(Weapon) studio("models/weapons/w_hl2_egon.mdl") = weapon_vj_cets_egon : "Gluon Gun" []
+@PointClass base(Weapon) studio("models/weapons/w_hl2_m16.mdl") = weapon_vj_cets_m16 : "M16" []
 
 //-------------------------------------------------------------------------
 //
@@ -782,6 +799,34 @@
 @PointClass base(Item) studio("models/props_phx/mk-82.mdl")= ent_cets_nuke_a : "Nuclear Bomb" []
 @PointClass base(Item) studio("models/props_phx/ww2bomb.mdl")= ent_cets_nuke_b : "Cleaning Bomb" []
 @PointClass base(Item) studio("models/props_phx/misc/egg.mdl")= ent_cets_egg : "Physical Egg" []
+
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_apple : "Apple" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_banana : "Banana" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_bananabunch : "Banana Bunch" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_beera : "Beer" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_beerb : "Beer on Bag" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_bigslam : "Big Slam" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsb : "C-Rations B" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_breenwater : "Breen Water" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_carrot : "Carrtot" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_cheese : "Cheese" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_chocolate : "Chocolate" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsa : "C-Rations A" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_coolwater : "Water Bottle" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationse : "C-Rations E" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsh : "C-Rations H" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_imitgrape : "Grape Soda" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsf : "C-Rations F" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsc : "C-Rations C" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsd : "C-Rations D" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_rationsg : "C-Rations G" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_orange : "Orange" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_pear : "Pear" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_pineapple : "Pineapple" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_pumpkin : "Pumpkin" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_oranger : "Torange" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_watermelon : "Watermelon" []
+@PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_wine : "Wine" []
 
 @PointClass base(Item) studio("models/props_cets/ammo_stack.mdl") = ent_cets_ammopile : "Ammo Pile"
 [

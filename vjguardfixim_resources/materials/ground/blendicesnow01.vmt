@@ -2,8 +2,7 @@
 {
 	"$basetexture" 	"ground/ice01"
 	"$basetexture2" "ground/snow01"
-	"$surfaceprop" "ice"
-	"%keywords" "coastline"
+	"%keywords" "snow,ice,coastline,freeze"
 	"$bumpmap" "ground/ice01_normal"
 	"$bumpmap2" "ground/snow01_normal"
 	"$normalmapalphaenvmapmask" 1
@@ -11,4 +10,6 @@
 	"$envmaptint" "[ .7 .7 .7]"
 	"$envmap" "env_cubemap"
 	"$nodecal" "1"
+	"$surfaceprop" "Ice"
+	"$surfaceprop2" "Sand"
 }
