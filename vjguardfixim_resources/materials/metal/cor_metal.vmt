@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+    "$basetexture" "metal/Cor_Metal"
+    "$surfaceprop" "Metal"    
+    "$bumpmap" "metal/Cor_Metal_normal"
+}

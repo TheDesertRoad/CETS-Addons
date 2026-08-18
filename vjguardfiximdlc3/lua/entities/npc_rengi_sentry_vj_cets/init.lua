@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/combine_turrets/floor_turret.mdl"
-ENT.StartHealth = 2000000000
+ENT.StartHealth = 200
 ENT.HullType = HULL_HUMAN
 ENT.SightDistance = 3000
 ENT.SightAngle = 256
@@ -26,7 +26,7 @@ ENT.ControllerParams = {
 ENT.AllowIgnition = true -- Can it be set on fire?
 ENT.Immune_Bullet = true  -- Immune to bullet damages
 ENT.Immune_Melee = true  -- Immune to melee damages (Ex: Slashes, stabs, punches, claws, crowbar, blunt attacks)
-ENT.Immune_Explosive = true  -- Immune to explosive damages (Ex: Grenades, rockets, bombs, missiles)
+ENT.Immune_Explosive = false  -- Immune to explosive damages (Ex: Grenades, rockets, bombs, missiles)
 ENT.Immune_Dissolve = true  -- Immune to dissolving damage (Ex: Combine ball)
 ENT.Immune_Toxic = true  -- Immune to toxic effect damages (Ex: Acid, poison, radiation, gas)
 ENT.Immune_Fire = true  -- Immune to fire / flame damages
@@ -73,6 +73,10 @@ ENT.Turret_IdleAngryAnim = ACT_IDLE -- Will be replaced on initialize
 ENT.Turret_Down = 1
 ENT.IsGoingDown = 0
 ENT.Turret_Picked = 0
+ENT.Turret_DownLookYaw = 0
+ENT.Turret_DownLookPitch = 0
+ENT.Turret_DownLookNextT = 0
+ENT.Turret_DownLookSpeed = 8
 
 -- Pose Parameters:
 	-- aim_yaw -60 / 60
@@ -86,7 +90,7 @@ function ENT:Init()
 	spr:SetKeyValue("scale", "0.4")
 	spr:SetKeyValue("rendermode", "9") -- kRenderWorldGlow
 	spr:SetKeyValue("renderfx", "14") -- kRenderFxNoDissipation
-	spr:SetKeyValue("rendercolor", "255 0 0")
+	spr:SetKeyValue("rendercolor", "128 0 0")
 	spr:SetKeyValue("renderamt", "200")
 	spr:SetParent(self)
 	spr:Fire("SetParentAttachment", "light")
@@ -116,8 +120,36 @@ function ENT:Init()
 	self.TurretSD_Turning:SetSoundLevel(60)
 	self.TurretSD_Alarm = CreateSound(self, "npc/turret_floor/alarm.wav")
 	self.TurretSD_Alarm:SetSoundLevel(75)
+	self:SetTurretStatus(TURRET_STATUS_IDLE)
 
 	self:SetSkin(math.random(1, 2))
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:SetTurretStatus(status)
+	if self.Turret_Status == status then
+		return
+	end
+
+	self.Turret_Status = status
+
+	if not IsValid(self.Turret_Sprite) then
+		return
+	end
+
+	if status == TURRET_STATUS_UNKNOWN then
+		self.Turret_Sprite:Fire("HideSprite")
+	elseif status == TURRET_STATUS_IDLE then
+		self.Turret_Sprite:Fire("HideSprite")
+	elseif status == TURRET_STATUS_DEPLOYING then
+		self.Turret_Sprite:Fire("Color", "0 255 0")
+		self.Turret_Sprite:Fire("ShowSprite")
+	elseif status == TURRET_STATUS_SEEKING then
+		self.Turret_Sprite:Fire("Color", "255 180 0")
+		self.Turret_Sprite:Fire("ShowSprite")
+	elseif status == TURRET_STATUS_TARGETING then
+		self.Turret_Sprite:Fire("Color", "255 0 0")
+		self.Turret_Sprite:Fire("ShowSprite")
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_Initialize(ply, controlEnt)
@@ -189,7 +221,12 @@ function ENT:OnThinkActive()
 		if self.IsGoingDown == 0 then
 			self:Turret_PhysDown()
 			self.IsGoingDown = 1
+			self:Turret_DownLookRandom()
 		end
+
+		self:Turret_DownLookRandom()
+
+		return
 	else
 		if self.IsGoingDown == 1 then
 			self.IsGoingDown = 0
@@ -205,10 +242,10 @@ function ENT:OnThinkActive()
 			self.Turret_StandDown = false
 			-- Handle the light sprite
 			if self.Turret_HasLOS && eneValid then
-				self.Turret_Sprite:Fire("Color", "255 0 0") -- Red
+				self.Turret_Sprite:Fire("Color", "128 0 0") -- Red
 				self.Turret_Sprite:Fire("ShowSprite")
 			elseif self.HasPoseParameterLooking == true then -- So when the alert animation is playing, it won't replace the activating light (green)
-				self.Turret_Sprite:Fire("Color", "255 128 0 128") -- Orange
+				self.Turret_Sprite:Fire("Color", "128 64 0 64") -- Orange
 				self.Turret_Sprite:Fire("ShowSprite")
 			end
 			
@@ -262,7 +299,7 @@ function ENT:OnThinkActive()
 				if self.VJ_IsBeingControlled then
 					self.Turret_Sprite:Fire("HideSprite")
 				else
-					self.Turret_Sprite:Fire("Color", "0 255 0") -- Green
+					self.Turret_Sprite:Fire("Color", "0 128 0") -- Green
 					self.Turret_Sprite:Fire("ShowSprite")
 				end
 				self.Turret_StandDown = true
@@ -281,6 +318,7 @@ function ENT:PropSpawn()
 	self.turret = ents.Create("prop_physics")
 	self.turret:SetModel("models/combine_turrets/floor_turret.mdl")
 	self.turret:SetPos(self:GetPos())
+	self.turret:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 	self.turret:SetAngles(self:GetAngles())
 	self.turret:Spawn()
 	self.turret:Activate()
@@ -314,7 +352,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Turret_Activate()
 	if IsValid(self) then
-		self.Turret_Sprite:Fire("Color", "0 255 0") -- Green
+		self.Turret_Sprite:Fire("Color", "0 128 0") -- Green
 		self.Turret_Sprite:Fire("ShowSprite")
 		self.HasPoseParameterLooking = false -- Make it not aim at the enemy right away!
 		self.Turret_Status = TURRET_STATUS_DEPLOYING
@@ -336,196 +374,98 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local downbulletSpread = Vector(2, 2, 2) * 1
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Turret_PhysDown()
-	if IsValid(self) then
-		self.HasRangeAttack = false
-		self.Turret_Sprite:Fire("Color", "255 0 0") -- Green
-		self.Turret_Sprite:Fire("ShowSprite")
-		self.HasPoseParameterLooking = false -- Make it not aim at the enemy right away!
-		self.Turret_Status = TURRET_STATUS_SEEKING
+function ENT:Turret_DownLookRandom()
+	if not IsValid(self) then return end
 
-	local startPos = self:GetAttachment(self:LookupAttachment("eyes")).Pos
+	if self.Turret_DownLookNextT <= CurTime() then
+		self.Turret_DownLookYaw = math.Rand(-40, 40)
+		self.Turret_DownLookPitch = math.Rand(-15, 15)
+		self.Turret_DownLookNextT = CurTime() + math.Rand(0.04, 0.08)
+	end
+
+	local yaw = self:GetPoseParameter("aim_yaw")
+	local pitch = self:GetPoseParameter("aim_pitch")
+
+	yaw = math.Approach(yaw, self.Turret_DownLookYaw, 30)
+	pitch = math.Approach(pitch, self.Turret_DownLookPitch, 24)
+
+	self:SetPoseParameter("aim_yaw", yaw)
+	self:SetPoseParameter("aim_pitch", pitch)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Turret_PhysDown()
+	if not IsValid(self) then
+		return
+	end
+
+	self.TurretSD_Alarm:PlayEx(1, 100)
+
+	self.HasRangeAttack = false
+	self.Turret_IsFiring = false
+	self.HasPoseParameterLooking = false
+	self.Turret_HasLOS = false
+	self:SetTurretStatus(TURRET_STATUS_SEEKING)
+	self.Turret_DownLookNextT = CurTime()
+	self.Turret_DownLookYaw = self:GetPoseParameter("aim_yaw")
+	self.Turret_DownLookPitch = self:GetPoseParameter("aim_pitch")
+	local ejectID = self:LookupAttachment("eyes")
+
+	if not ejectID or ejectID <= 0 then
+		return
+	end
+
+	local eject = self:GetAttachment(ejectID)
+
+	if not eject then
+		return
+	end
+
 	local bullet = {}
 	bullet.Num = 1
-		bullet.Src = startPos
-		bullet.Dir = (self:GetPos()):GetNormal()
-		bullet.Spread = downbulletSpread
-		bullet.Tracer = 1
-		bullet.TracerName = "AR2Tracer"
-		bullet.Force = 5
-		bullet.Damage = 2
-		bullet.AmmoType = "AR2"
+	bullet.Src = eject.Pos
+	bullet.Dir = (self:GetPos() - eject.Pos):GetNormalized()
+	bullet.Spread = downbulletSpread
+	bullet.Tracer = 1
+	bullet.TracerName = "AR2Tracer"
+	bullet.Force = 5
+	bullet.Damage = 2
+	bullet.AmmoType = "SMG1"
 
-	timer.Simple(0.1, function()
-		if IsValid(self) then
-			self.Turret_Down = 1
-			VJ.EmitSound(self, "npc/turret_floor/alarm.wav", 70, 100)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-			self:PlayAnim("fire", true, false)
-		end
-	end)
+	for i = 1, 20 do
+		timer.Simple(i * 0.1, function()
+			if not IsValid(self) then
+				return
+			end
 
-	timer.Simple(0.2, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
 			self:FireBullets(bullet)
+			self:PlayAnim("fire", true, false)
 			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
 
-	timer.Simple(0.3, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(0.4, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(0.5, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(0.6, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(0.7, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(0.8, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(0.9, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.1, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.2, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.3, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.4, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.5, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.6, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.7, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.8, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
-
-	timer.Simple(1.9, function()
-		if IsValid(self) then
-			self:PlayAnim("fire", true, false)
-			self:FireBullets(bullet)
-			VJ.EmitSound(self, sdFiring, 70, 100)
-		end
-	end)
+			local fireLight = ents.Create("light_dynamic")
+			fireLight:SetKeyValue("brightness", "3")
+			fireLight:SetKeyValue("distance", "60")
+			fireLight:SetPos(eject.Pos)
+			fireLight:SetLocalAngles(self:GetAngles())
+			fireLight:Fire("Color", "0 64 225")
+			fireLight:SetParent(self)
+			fireLight:Spawn()
+			fireLight:Activate()
+			fireLight:Fire("TurnOn", "", 0)
+			fireLight:Fire("Kill", "", 0.07)
+			self:DeleteOnRemove(fireLight)
+		end)
+	end
 
 	timer.Simple(2, function()
-		if IsValid(self) then
-			self.Turret_Down = 1
-			self.Turret_Status = TURRET_STATUS_UNKNOWN
-			self:SetHealth(1)
-			self:TakeDamage(2)
-			self:StopSound("npc/turret_floor/alarm.wav")
+		if not IsValid(self) then
+			return
 		end
-	end)
-	self:PlayAnim("fire", true, false)
-	self.Turret_Down = 1
-	VJ.EmitSound(self, "npc/turret_floor/deploy.wav", 70, 100)
-	self.TurretSD_Alarm:PlayEx(1, 100)
-	timer.Simple(0.8, function() VJ.STOPSOUND(self.TurretSD_Alarm) end)
 
-	end
+		self.Turret_Down = 1
+		self:SetTurretStatus(TURRET_STATUS_UNKNOWN)
+		self:SetHealth(1)
+		self:TakeDamage(20)
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRangeAttack(status, enemy)
@@ -595,6 +535,7 @@ function ENT:CustomOnKilled()
 		self.bulletprop1:SetPos(mypos)
 		self.bulletprop1:SetSkin(self:GetSkin())
 		self.bulletprop1:SetAngles(angles)
+		self.bulletprop1:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.bulletprop1:SetSolid(SOLID_NONE)
 		self.bulletprop1:AddEFlags(EFL_DONTBLOCKLOS)
 		self.bulletprop1:Spawn()
@@ -605,6 +546,8 @@ local sdGibCollide = {"physics/metal/metal_box_impact_hard1.wav", "physics/metal
 --
 function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 	self.HasDeathSounds = false
+	self.Turret_Down = 0
+	VJ.EmitSound(self, "npc/turret_floor/detonate.wav", 70, 100)
 	ParticleEffect("explosion_turret_break", self:WorldSpaceCenter() + self:GetUp()*12, defAng, NULL)
 	util.BlastDamage(self, self, self:WorldSpaceCenter() + self:GetUp()*12, 120, 15)
 	self:CreateGibEntity("prop_physics", "models/combine_turrets/floor_turret_gib1.mdl",  {BloodType="", Pos=self:LocalToWorld(Vector(0, 0, 40)),  CollisionSound=sdGibCollide})
@@ -616,6 +559,8 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
+	if not IsValid(corpse) then return end
+
 	if self.Turret_Down == 0 then
 		ParticleEffectAttach("smoke_exhaust_01a", PATTACH_POINT_FOLLOW, corpse, 2)
 	end

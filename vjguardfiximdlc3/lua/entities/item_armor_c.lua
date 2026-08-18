@@ -13,6 +13,7 @@ function ENT:Initialize()
 	self:SetModel("models/items/classic_battery.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
 	self:SetSolid(SOLID_VPHYSICS)
 
 	local phys = self:GetPhysicsObject()

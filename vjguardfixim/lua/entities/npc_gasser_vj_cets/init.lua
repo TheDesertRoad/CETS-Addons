@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/combine_gasser.mdl"}
-ENT.StartHealth = 100
+ENT.StartHealth = GetConVar("sk_cets_gasser_s_health"):GetInt()
 ENT.Weapon_Accuracy = 2
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.AnimTbl_GrenadeAttack = {"grenthrow"}

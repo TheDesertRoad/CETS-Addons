@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = {"models/elitepolice.mdl"}
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.StartHealth = 70
+ENT.StartHealth = GetConVar("sk_cets_metropolice_e_health"):GetInt()
 ENT.ItemDropsOnDeathChance = 1
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Weapon_Accuracy  = 3

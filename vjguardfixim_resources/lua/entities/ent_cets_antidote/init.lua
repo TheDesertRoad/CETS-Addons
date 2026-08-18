@@ -44,13 +44,19 @@ local function GiveAntitoxin(ply)
 	if not IsValid(ply) or not ply:IsPlayer() then return end
 
 	ply.AntitoxinEnd = CurTime() + ANTITOXIN_TIME
+	ply:SetNWBool("HasAntitoxin", true)
+
 	ply:EmitSound(SND_GAIN, 75, 100)
+
+	timer.Remove("CETS_Antitoxin_" .. ply:EntIndex())
 
 	timer.Create("CETS_Antitoxin_" .. ply:EntIndex(), ANTITOXIN_TIME, 1, function()
 		if not IsValid(ply) then return end
 
 		if CurTime() >= (ply.AntitoxinEnd or 0) then
 			ply.AntitoxinEnd = nil
+			ply:SetNWBool("HasAntitoxin", false)
+
 			ply:EmitSound(SND_EXPIRE, 75, 100)
 		end
 	end)
@@ -66,7 +72,9 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("PlayerDeath", "CETS_AntitoxinCleanup", function(ply)
 	timer.Remove("CETS_Antitoxin_" .. ply:EntIndex())
+
 	ply.AntitoxinEnd = nil
+	ply:SetNWBool("HasAntitoxin", false)
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("PlayerDisconnected", "CETS_AntitoxinCleanup", function(ply)

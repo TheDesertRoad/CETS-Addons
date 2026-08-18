@@ -38,10 +38,17 @@ VJ.AddConVar("cets_grigori_right", 1, FCVAR_ARCHIVE)
 VJ.AddConVar("sv_cets_mission_fail_check", 0, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cl_cets_custom_crosshairs", 1, FCVAR_ARCHIVE)
+VJ.AddConVar("cl_cets_custom_train_hud", 1, FCVAR_ARCHIVE)
+VJ.AddConVar("cl_cets_custom_hud", 0, FCVAR_ARCHIVE)
+
+VJ.AddConVar("cets_cl_custom_aux_sys_hud", 0, FCVAR_ARCHIVE)
+VJ.AddConVar("cets_cl_custom_aux_sys_hud_episodic_flashlight", 1, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_grab_players_phys", 0, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_better_npc_phys", 0, FCVAR_ARCHIVE)
+
+VJ.AddConVar("cets_hide_death_notice", 0, FCVAR_ARCHIVE)
 
 VJ.AddConVar("cets_quake_jump_sounds", 0, FCVAR_ARCHIVE)
 VJ.AddConVar("cets_quake_burn_sounds", 0, FCVAR_ARCHIVE)
@@ -209,70 +216,84 @@ function VJ.CETS_Effect_SpwPrtl_Blu(pos, size, color, onSpawn)
 	return spr
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_ClearInventory(ply, cmd, args)
-	if IsValid(ply) then
-		ply:RemoveAllItems()
-		ply:SendLua("notification.AddLegacy('Cleared Your Inventory', NOTIFY_GENERIC, 2)")
-	MsgN("Cleared Your Inventory")
-	end
-end
+if SERVER then
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_ClearCurrentWeapon(ply, cmd, args)
-	if IsValid(ply) then
-		plyWeapon = ply:GetActiveWeapon()
-		if IsValid(ply) then
-			className = plyWeapon:GetClass(plyWeapon)
-			ply:StripWeapon(className)
-		end
-	ply:SendLua("notification.AddLegacy('Cleared Current Weapon', NOTIFY_GENERIC, 2)")
-		MsgN("Cleared Current Weapon")
+local function Cets_ClearInventory(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
 	end
-end
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_ClearInventory_NOMSG(ply, cmd, args)
-	if IsValid(ply) then
-		ply:RemoveAllItems()
-	end
-end
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_ClearCurrentWeapon_NOMSG(ply, cmd, args)
-	if IsValid(ply) then
-		plyWeapon = ply:GetActiveWeapon()
-		if IsValid(ply) then
-			className = plyWeapon:GetClass(plyWeapon)
-			ply:StripWeapon(className)
-		end
-	end
-end
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_giveSuit(ply)
-	if IsValid(ply) then
-		ply:EquipSuit()
-	end
-end
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_takeOffSuit(ply)
-	if IsValid(ply) then
-		ply:RemoveSuit()
-	end
-end
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-function Cets_NudePlayer(ply)
-	if IsValid(ply) then
-		ply:RemoveSuit()
-		ply:RemoveAllItems()
 
-		ply:SetNWBool("HasLongJump", false)
-		ply.jumpmodule_can_use = nil
-		ply.jumpmodule_keypress = nil
-		ply.LongJumpBattery = nil
-		ply.LongJumpRecharge = nil
-
-		ply:SetNWBool("HasFallDampener", false)
-
-		ply:SetNWBool("HasNV", false)
-		ply:SetNWBool("NVActive", false)
+	ply:RemoveAllItems()
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function Cets_ClearCurrentWeapon(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
 	end
+
+	local plyWeapon = ply:GetActiveWeapon()
+
+	if IsValid(plyWeapon) then
+		local className = plyWeapon:GetClass()
+		ply:StripWeapon(className)
+	end
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function Cets_ClearInventory_NOMSG(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
+	end
+
+	ply:RemoveAllItems()
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function Cets_ClearCurrentWeapon_NOMSG(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
+	end
+
+	local plyWeapon = ply:GetActiveWeapon()
+
+	if IsValid(plyWeapon) then
+		local className = plyWeapon:GetClass()
+		ply:StripWeapon(className)
+	end
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function Cets_giveSuit(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
+	end
+
+	ply:EquipSuit()
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function Cets_takeOffSuit(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
+	end
+
+	ply:RemoveSuit()
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function Cets_NudePlayer(ply, cmd, args)
+	if not IsValid(ply) or not ply:IsPlayer() then
+		return
+	end
+
+	ply:RemoveSuit()
+	ply:RemoveAllItems()
+
+	ply:SetNWBool("HasLongJump", false)
+	ply.jumpmodule_can_use = nil
+	ply.jumpmodule_keypress = nil
+	ply.LongJumpBattery = nil
+	ply.LongJumpRecharge = nil
+
+	ply:SetNWBool("HasFallDampener", false)
+
+	ply:SetNWBool("HasNV", false)
+	ply:SetNWBool("NVActive", false)
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 concommand.Add("cets_clear_inv", Cets_ClearInventory)
@@ -284,3 +305,5 @@ concommand.Add("cets_remove_hev", Cets_takeOffSuit)
 concommand.Add("cets_remove_everything", Cets_NudePlayer)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 MsgN("Added 'cets_clear_inv', 'cets_clear_inv_clear_current_weapon', 'cets_clear_inv_nomsg', 'cets_clear_inv_clear_current_weapon_nomsg', 'cets_give_hev', 'cets_remove_hev', 'cets_remove_everything' commands")
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+end

@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = "models/assault_synth.mdl"
 ENT.CanChatMessage = false
-ENT.StartHealth = 170
+ENT.StartHealth = GetConVar("sk_cets_assault_synth_health"):GetInt()
 ENT.HullType = HULL_WIDE_SHORT
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.SightAngle = 280
@@ -46,7 +46,7 @@ ENT.MeleeAttackKnockBack_Forward1 = 200
 ENT.MeleeAttackKnockBack_Forward2 = 200
 ENT.MeleeAttackKnockBack_Up1 = 100
 ENT.MeleeAttackKnockBack_Up2 = 100
-ENT.MeleeAttackDamage = 32
+ENT.MeleeAttackDamage = GetConVar("sk_cets_assault_synth_dmg"):GetInt()
 ENT.MeleeAttackDamageDistance = 125
 ENT.MeleeAttackDistance = 60
 

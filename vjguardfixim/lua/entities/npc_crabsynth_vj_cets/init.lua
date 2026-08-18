@@ -404,7 +404,14 @@ function ENT:FireGun()
 			expLight:Fire("TurnOn", "", 0)
 		timer.Simple(0.1,function() if IsValid(expLight) then expLight:Remove() end end)
 		self:DeleteOnRemove(expLight)
-		ParticleEffect("ar2_muzzleflash_cets",bullet_source,self:GetAttachment(2).Ang)
+
+		local ef = EffectData()
+		ef:SetEntity(self)
+		ef:SetAttachment(1)
+
+        	util.Effect("GunshipMuzzleFlash", ef)
+
+		//ParticleEffect("ar2_muzzleflash_cets",bullet_source,self:GetAttachment(2).Ang)
 	end
 
 	self:FireBullets({

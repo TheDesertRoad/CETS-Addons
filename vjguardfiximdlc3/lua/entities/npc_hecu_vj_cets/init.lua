@@ -24,6 +24,22 @@ ENT.GrenadeAttackAttachment = "anim_attachment_LH"
 ENT.GrenadeAttackEntity = "obj_vj_cets_hecxtrac" -- The entity that the SNPC throws | Half Life 2 Grenade: "npc_grenade_frag"
 ENT.ThrowGrenadeChance = 1 -- Chance that it will throw the grenade | Set to 1 to throw all the time
 
+ENT.IdleSoundLevel = 80
+ENT.IdleDialogueSoundLevel = 75
+ENT.CombatIdleSoundLevel = 75
+ENT.OnPlayerSightSoundLevel = 75
+ENT.InvestigateSoundLevel = 75
+ENT.LostEnemySoundLevel = 75
+ENT.AlertSoundLevel = 75
+ENT.CallForHelpSoundLevel = 75
+ENT.GrenadeAttackSoundLevel = 75
+ENT.DangerSightSoundLevel = 75
+ENT.KilledEnemySoundLevel = 75
+ENT.AllyDeathSoundLevel = 75
+ENT.PainSoundLevel = 75
+ENT.DeathSoundLevel = 75
+ENT.WeaponReloadSoundLevel = 80
+
 local mdlHECU = {
 	"models/humans/grunt/hgrunt1.mdl",
 	"models/humans/grunt/hgrunt2.mdl",
@@ -76,8 +92,8 @@ function ENT:PreInit()
 		self.Model = mdlHECU
 	end
 
-	self:MaleSounds()
 	self:Give("weapon_vj_cets_mp5sd")
+	self:MaleSounds()
 
 	if GetConVar("npc_cets_hecu_voice"):GetInt() == 1 then
 		self:HecuSounds()
@@ -109,6 +125,7 @@ function ENT:Init()
 
 	if !IsValid(SquadC_Leader) && string.lower(self:GetModel()) == "models/humans/grunt/hgrunt3.mdl" or bit.band(flags, 32) ~= 0 or self:HasSpawnFlags(32) then
 		VJ.SquadC_Leader = self
+		self:Give("weapon_vj_cets_m16")
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -214,7 +231,17 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeathWeaponDrop(dmginfo, hitgroup, wepEnt)
 	wepEnt:Remove()
-	if self.Weapon_Rand == 1 then
+	local flags = self:GetSpawnFlags()
+
+	if !IsValid(SquadC_Leader) && string.lower(self:GetModel()) == "models/humans/grunt/hgrunt3.mdl" or bit.band(flags, 32) ~= 0 or self:HasSpawnFlags(32) then
+		for i = 1, 1 do
+			local att = self:GetAttachment(1 +i)
+			local m16 = ents.Create("weapon_vj_cets_m16")
+			m16:SetPos(att.Pos)
+			m16:SetAngles(att.Ang)
+			m16:Spawn()
+		end
+	elseif self.Weapon_Rand == 1 then
 		for i = 1, 1 do
 			local att = self:GetAttachment(1 +i)
 			local mp5sd = ents.Create("weapon_vj_cets_mp5sd")
@@ -222,7 +249,7 @@ function ENT:OnDeathWeaponDrop(dmginfo, hitgroup, wepEnt)
 			mp5sd:SetAngles(att.Ang)
 			mp5sd:Spawn()
 		end
-	else
+	elseif self.Weapon_Rand == 2 then
 		for i = 1, 1 do
 			local att = self:GetAttachment(1 +i)
 			local shotgun = ents.Create("weapon_shotgun")

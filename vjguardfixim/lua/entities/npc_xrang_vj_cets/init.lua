@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/hl2_alienranger.mdl"}
-ENT.StartHealth = 150
+ENT.StartHealth = GetConVar("sk_cets_alien_support_s_health"):GetInt()
 ENT.Weapon_Accuracy  = 1.3
 ENT.JumpParams = {
 	Enabled = true,
@@ -24,7 +24,7 @@ ENT.AnimTbl_Medic_GiveHealth = {"harassfront1"} -- Animations is plays when givi
 ENT.Medic_TimeUntilHeal = 0.5 -- Time until the ally receives health | Set to false to let the base decide the time
 
 ENT.AnimTbl_MeleeAttack = {"melee_gunhit"} -- Melee Attack Animations
-ENT.MeleeAttackDamage = 33 -- Melee Attack Animations
+ENT.MeleeAttackDamage = GetConVar("sk_cets_alien_support_s_slash"):GetInt() -- Melee Attack Animations
 
 ENT.CanUseSecondaryOnWeaponAttack = true -- Can the NPC use a secondary fire if it's available?
 

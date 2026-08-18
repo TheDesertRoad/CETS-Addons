@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture"  "models/Weapons/v_m16/m16"
+     "$bumpmap" "models/Weapons/v_m16/m16_N"
+
+	"$selfillum" 1
+	"$phong" "1"
+	"$phongboost" ".7"
+	"$phongexponent" 9
+	"$phongalbedotint" "1"								
+	"$phongfresnelranges"	"[.1 5 1]"

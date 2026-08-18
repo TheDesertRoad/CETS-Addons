@@ -6,7 +6,8 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/hl2_combine_engineer.mdl"}
-ENT.StartHealth = 50
+ENT.StartHealth = GetConVar("sk_cets_engi_s_health"):GetInt()
+
 ENT.Weapon_Accuracy = 2
 ENT.Weapon_MinDistance = 8 -- Min distance it can fire a weapon
 ENT.Weapon_MaxDistance = 1500 -- Max distance it can fire a weapon

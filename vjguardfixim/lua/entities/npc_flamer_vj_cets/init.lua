@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/hl2_flamercomb_soldier.mdl"}
-ENT.StartHealth = 150
+ENT.StartHealth = GetConVar("sk_cets_cflamer_s_health"):GetInt()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Weapon_Accuracy = 4
 ENT.Weapon_MinDistance = 20 -- Min distance it can fire a weapon
@@ -131,7 +131,7 @@ function ENT:CustomOnThink()
 		self.Comb_FlameLevel = 2
 
 		local range = 280
-		VJ.ApplyRadiusDamage(self, self, self:GetPos(), range, 2, DMG_BURN, true, true, {UseConeDegree = 46}, function(ent) if !ent:IsOnFire() && (ent:IsPlayer() or ent:IsNPC()) then ent:Ignite(5) end end)
+		VJ.ApplyRadiusDamage(self, self, self:GetPos(), range, GetConVar("sk_cets_cflamer_flame_dmg"):GetInt(), DMG_BURN, true, true, {UseConeDegree = 46}, function(ent) if !ent:IsOnFire() && (ent:IsPlayer() or ent:IsNPC()) then ent:Ignite(5) end end)
 
 		self.Comb_FlameSd = VJ.CreateSound(self, "weapons/flamethrow/flame_thrower_loop.wav", 80)
 		self:StopParticles()

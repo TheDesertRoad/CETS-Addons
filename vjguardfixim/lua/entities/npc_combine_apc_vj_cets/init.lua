@@ -489,7 +489,14 @@ function ENT:ShootBullet()
 	expLight:Fire("TurnOn", "", 0)
 	timer.Simple(0.1,function() if IsValid(expLight) then expLight:Remove() end end)
 	self:DeleteOnRemove(expLight)
-	ParticleEffectAttach("ar2_muzzleflash_cets",PATTACH_POINT_FOLLOW,self,7)
+
+	local ef = EffectData()
+	ef:SetEntity(self)
+	ef:SetAttachment(7)
+
+        util.Effect("AirboatMuzzleFlash", ef)
+
+	//ParticleEffectAttach("ar2_muzzleflash_cets",PATTACH_POINT_FOLLOW,self,7)
 
 	self.bulletprop1:FireBullets({
 		Src = self.bulletprop1:GetPos(),

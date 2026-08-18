@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/hl2_elite_brown.mdl"}
-ENT.StartHealth = 120
+ENT.StartHealth = GetConVar("sk_cets_synth_s_health"):GetInt()
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.CanRedirectGrenades = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ ENT.FlinchChance = 4 -- Chance of it flinching from 1 to x | 1 will make it alwa
 
 ENT.AnimTbl_MeleeAttack = {"melee_gunhit"} -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = 0.3 -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDamage = 30
+ENT.MeleeAttackDamage = GetConVar("sk_cets_synth_s_slash"):GetInt()
 ENT.HasMeleeAttackKnockBack = true
 ENT.MeleeAttackDistance = 30 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 30 -- How far does the damage go?

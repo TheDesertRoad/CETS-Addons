@@ -41,6 +41,7 @@ function ENT:StartTouch(ent)
 	if not IsValid(ent) or not ent:IsPlayer() then return end
 
 	ent.CETS_BleedImmuneUntil = CurTime() + BLEED_IMMUNITY_TIME
+	ent:SetNWBool("HasBleedImmunity", true)
 
 	timer.Remove("timer_melee_bleed" .. ent:EntIndex())
 
@@ -50,6 +51,8 @@ function ENT:StartTouch(ent)
 		if not IsValid(ent) then return end
 
 		ent.CETS_BleedImmuneUntil = nil
+		ent:SetNWBool("HasBleedImmunity", false)
+
 		ent:EmitSound("hl1/items/r_item1.wav")
 	end)
 
@@ -99,4 +102,5 @@ hook.Add("PlayerDeath", "CETS_BleedImmunityCleanup", function(ply)
 	timer.Remove("timer_melee_bleed" .. ply:EntIndex())
 
 	ply.CETS_BleedImmuneUntil = nil
+	ply:SetNWBool("HasBleedImmunity", false)
 end)

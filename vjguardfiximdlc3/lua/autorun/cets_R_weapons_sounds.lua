@@ -149,6 +149,16 @@ sound.Add( {
     sound = { "hl1/weapons/glauncher.wav", "hl1/weapons/glauncher2.wav" }
 } )
 
+//M16
+sound.Add( {
+    name = "Cets_Weapon_M16.Fire",
+    channel = CHAN_WEAPON,
+    volume = 1.0,
+    pitch =	100,
+    soundlevel = SNDLVL_GUNFIRE,
+    sound = { "hl1/weapons/hd_hks1.wav", "hl1/weapons/hd_hks2.wav", "hl1/weapons/hd_hks3.wav" }
+} )
+
 //MISC
 sound.Add( {
 	name = "Cets_Weapon_Pipe.Hit",

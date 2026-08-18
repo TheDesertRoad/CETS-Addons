@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/hl2_combine_wallhammer.mdl"}
-ENT.StartHealth = 175
+ENT.StartHealth = GetConVar("sk_cets_wallhammer_s_health"):GetInt()
 ENT.Weapon_Accuracy = 1.5
 ENT.Weapon_MinDistance = 8 -- Min distance it can fire a weapon
 ENT.Weapon_MaxDistance = 1500 -- Max distance it can fire a weapon
@@ -21,7 +21,7 @@ ENT.Medic_TimeUntilHeal = 0.5 -- Time until the ally receives health | Set to fa
 
 ENT.AnimTbl_MeleeAttack = {"melee_gunhit"} -- Melee Attack Animations
 
-ENT.MeleeAttackDamage = 10
+ENT.MeleeAttackDamage = GetConVar("sk_cets_wallhammer_s_kick"):GetInt()
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
 ENT.MeleeAttackKnockBack_Forward1 = 200 -- How far it will push you forward | First in math.random
 ENT.MeleeAttackKnockBack_Forward2 = 400 -- How far it will push you forward | Second in math.random
@@ -207,7 +207,7 @@ function ENT:OnMeleeAttack(status, enemy)
 		local randRange = math.random(1, 3)
 		if randRange == 1 then
 			self.TimeUntilMeleeAttackDamage = 0.2
-			self.MeleeAttackDamage = 10
+			self.MeleeAttackDamage = GetConVar("sk_cets_wallhammer_s_kick"):GetInt()
 			self.NextAnyAttackTime_Melee = 0.5
 			self.SoundTbl_MeleeAttackMiss = "Zombie.AttackMiss"
 			self.AnimTbl_MeleeAttack = {"melee_gunhit"}
@@ -215,7 +215,7 @@ function ENT:OnMeleeAttack(status, enemy)
 
 		elseif randRange == 2 && GetConVar("sk_charger_stunbaton_chance"):GetInt() == 1 then
 			self.TimeUntilMeleeAttackDamage = 0.6
-			self.MeleeAttackDamage = 30
+			self.MeleeAttackDamage = GetConVar("sk_cets_wallhammer_s_stunt"):GetInt()
 			self:SetBodygroup(1,1)
 			self.NextAnyAttackTime_Melee = 1.6
 			self.AnimTbl_MeleeAttack = {"melee_stunstick2"}

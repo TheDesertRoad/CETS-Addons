@@ -8,7 +8,7 @@ util.AddNetworkString("AdvisorBlindOverlay")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/hl2_advisor.mdl"
-ENT.StartHealth = 600
+ENT.StartHealth = GetConVar("sk_advisor_health"):GetInt()
 ENT.HullType = HULL_TINY
 ENT.MovementType = VJ_MOVETYPE_AERIAL
 ENT.CanChatMessage = false
@@ -35,7 +35,7 @@ ENT.MeleeAttackDistance = 60
 ENT.MeleeAttackDamageDistance = 67
 ENT.TimeUntilMeleeAttackDamage = 0.5
 ENT.NextAnyAttackTime_Melee = 1.3
-ENT.MeleeAttackDamage = 15
+ENT.MeleeAttackDamage = GetConVar("sk_cets_advisor_dmg"):GetInt()
  
 ENT.HasDeathCorpse = true
 ENT.HasExtraMeleeAttackSounds = true

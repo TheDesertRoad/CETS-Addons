@@ -78,8 +78,8 @@ VJ.AddConVar("sk_max_cets_mp5k", 30, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_max_cets_mp5k_bullet", 120, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_plr_cets_dmg_mp5k", 6, FCVAR_ARCHIVE)
 
-VJ.AddConVar("sk_max_cets_hmg", 100, FCVAR_ARCHIVE)
-VJ.AddConVar("sk_max_cets_hmg_bullet", 200, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_max_cets_hmg", 30, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_max_cets_hmg_bullet", 120, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_plr_cets_dmg_hmg", 10, FCVAR_ARCHIVE)
 
 VJ.AddConVar("sk_max_cets_oicw", 30, FCVAR_ARCHIVE)
@@ -99,6 +99,53 @@ VJ.AddConVar("sk_cets_kiscrotums_dieraddam", 56, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_crabsynth_health", 700, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_crabsynth_charge_dmg", 60, FCVAR_ARCHIVE)
 VJ.AddConVar("npc_crabsynth_disable_charge", 0, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_advisor_dmg", 18, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_assault_synth_health", 180, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_assault_synth_dmg", 32, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_echo_s_health", 50, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_haz_s_health", 50, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_cflamer_s_health", 50, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_cflamer_flame_dmg", 2, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_engi_s_health", 50, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_gasser_s_health", 100, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_spike_s_health", 120, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_spike_s_kick", 20, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_wallhammer_s_health", 175, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_wallhammer_s_kick", 10, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_wallhammer_s_stunt", 24, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_synth_s_health", 120, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_synth_s_slash", 30, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_work_s_health", 50, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_alien_support_s_health", 150, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_alien_support_s_slash", 30, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_synth_elite_s_health", 240, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_synth_elite_s_slash", 60, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_suppressor_s_health", 160, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_suppressor_s_kick", 15, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_ordinal_s_health", 75, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_ordinal_s_kick", 10, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_medic_s_health", 130, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_cets_medic_s_kick", 8, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_metropolice_e_health", 70, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_engi_sentry_health", 250, FCVAR_ARCHIVE)
 
 VJ.AddConVar("npc_apc_cets_hacks", 0, FCVAR_ARCHIVE)
 

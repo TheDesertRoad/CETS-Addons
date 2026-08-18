@@ -55,12 +55,12 @@ ENT.ShootCoolDown = {
 	max = 3,
 }
 
-ENT.BreathSoundLevel = 90
+ENT.BreathSoundLevel = 70
 ENT.SoundTbl_Breath = {"vehicles/apc/apc_cons1.wav"}
 
 ENT.APC_RunOverDist = 750
 ENT.APC_MinDriveDist = 1250
-ENT.APC_AccelSpeed = 15
+ENT.APC_AccelSpeed = 16
 ENT.APC_DrivingSpeed = 280
 ENT.APC_BackPedalSpeed = 200
 ENT.APC_TurnSpeedMax = 45

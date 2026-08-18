@@ -401,7 +401,6 @@ function SWEP:PrimaryAttack(UseAlt)
 
 		self:SparksSmall(attacker, tracer, tr, dmginfo)
 		self:CreatePrimaryBeam(hitPos, hitNormal, shootPos)
-
 		util.Decal("redglowfade", hitPos, hitPos - hitNormal)
 
 		for _, ent in ipairs(ents.FindInSphere(hitPos, 8)) do

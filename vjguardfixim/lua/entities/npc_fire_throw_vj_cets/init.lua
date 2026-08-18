@@ -58,20 +58,6 @@ function ENT:CustomOnInitialize ()
 	self:SetNotSolid(true)
 	self.MovementType = VJ_MOVETYPE_STATIONARY
 
-	self.DynamicLight = ents.Create("light_dynamic")
-	self.DynamicLight:SetKeyValue("brightness", "0.6")
-	self.DynamicLight:SetKeyValue("distance", "256")
-	self.DynamicLight:SetLocalPos(self:GetPos())
-	self.DynamicLight:SetLocalAngles(self:GetAngles())
-	self.DynamicLight:Fire("Color", "255 128 4")
-	self.DynamicLight:SetParent(self)
-	self.DynamicLight:Spawn()
-	self.DynamicLight:Activate()
-	self.DynamicLight:SetParent(self)
-	self.DynamicLight:Fire("SetParentAttachment", "Origin", 0)
-	self.DynamicLight:Fire("TurnOn", "", 0)
-	self:DeleteOnRemove(self.DynamicLight)
-
 	ParticleEffectAttach("asp_lemon_01",PATTACH_POINT_FOLLOW,self,0)
 
 	local myPos = self:GetPos()

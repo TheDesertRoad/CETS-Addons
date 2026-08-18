@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/workernpc.mdl"}
-ENT.StartHealth = 50
+ENT.StartHealth = GetConVar("sk_cets_work_s_health"):GetInt()
 
 ENT.Weapon_Accuracy = 10
 ENT.Weapon_MinDistance = 2 -- Min distance it can fire a weapon

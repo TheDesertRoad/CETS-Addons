@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/hl2_combine_suppressor.mdl"}
-ENT.StartHealth = 160
+ENT.StartHealth = GetConVar("sk_cets_suppressor_s_health"):GetInt()
 ENT.Weapon_Accuracy = 2
 ENT.Weapon_MinDistance = 30 -- Min distance it can fire a weapon
 ENT.Weapon_MaxDistance = 900 -- Max distance it can fire a weapon
@@ -21,7 +21,7 @@ ENT.Medic_TimeUntilHeal = 0.5 -- Time until the ally receives health | Set to fa
 
 ENT.AnimTbl_MeleeAttack = {"melee_gunhit"} -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = 0.3 -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDamage = 10
+ENT.MeleeAttackDamage = GetConVar("sk_cets_suppressor_s_kick"):GetInt()
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
 ENT.MeleeAttackKnockBack_Forward1 = 100 -- How far it will push you forward | First in math.random
 ENT.MeleeAttackKnockBack_Forward2 = 200 -- How far it will push you forward | Second in math.random

@@ -6,6 +6,7 @@
 VJ.AddPlugin("CETS", "NPC", "Humans Expansion")
 
 local vCat = "Humans + Resistance"
+local vCat1 = "Other"
 local spawnCategory = "CETS"
 
 VJ.AddNPCWeapon("VJ-CETS Gauss Gun", "weapon_vj_cets_tau", spawnCategory)
@@ -16,6 +17,7 @@ VJ.AddNPCWeapon("VJ-CETS MP5SD", "weapon_vj_cets_mp5sd", spawnCategory)
 VJ.AddNPCWeapon("VJ-CETS Glock-18", "weapon_vj_cets_glock", spawnCategory)
 VJ.AddNPCWeapon("VJ-CETS HECU Sniper", "weapon_vj_cets_hecusniper", spawnCategory)
 VJ.AddNPCWeapon("VJ-CETS Gluon Gun", "weapon_vj_cets_egon", spawnCategory)
+VJ.AddNPCWeapon("VJ-CETS M16", "weapon_vj_cets_m16", spawnCategory)
 
 VJ.AddCategoryInfo(spawnCategory, {Icon = "games/16/hl2.png"})
 VJ.AddNPC("Conscript","npc_conscript_vj_cets",vCat)
@@ -39,7 +41,12 @@ VJ.AddNPC("HECU Mechanical Unit","npc_hecu_robot_vj_cets",vCat)
 VJ.AddNPC("Caste","npc_caste_vj_cets",vCat)
 VJ.AddNPC("Citylesszen","npc_citylesszen_vj_cets",vCat)
 VJ.AddNPC("Egon Holder","npc_egon_vj_cets",vCat)
+VJ.AddNPC("Off-worker","npc_unarmed_worker_vj_cets",vCat)
+VJ.AddNPC("HECU Tank","npc_hecu_tank_vj_cets",vCat)
+VJ.AddNPC("HECU Sentry","npc_hecu_sentry_vj_cets",vCat)
 //VJ.AddNPC("Black Ops. Assassin","npc_blackops_assassin_vj_cets",vCat)
+
+VJ.AddNPC("Conscript Tank","npc_conscript_tank_vj_cets",vCat1)
 
 VJ.AddConVar("radiobroad_volume", 75, FCVAR_ARCHIVE)
 
@@ -57,6 +64,14 @@ VJ.AddConVar("sk_max_cets_mp5sd", 50, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_max_cets_mp5sd_bullet", 200, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_plr_cets_dmg_mp5sd", 4, FCVAR_ARCHIVE)
 
+VJ.AddConVar("sk_max_cets_m16", 56, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_max_cets_m16_bullet", 250, FCVAR_ARCHIVE)
+VJ.AddConVar("sk_plr_cets_dmg_m16", 6, FCVAR_ARCHIVE)
+
 VJ.AddConVar("sk_max_cets_hecsnip", 15, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_max_cets_hecsnip_bullet", 5, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_plr_cets_dmg_hecsnip", 100, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_hecu_sentry_health", 86, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_hecu_tank_health", 800, FCVAR_ARCHIVE)
