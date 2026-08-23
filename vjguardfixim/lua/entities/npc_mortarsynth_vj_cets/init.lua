@@ -223,8 +223,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 		if file.Exists("autorun/server/sv_entdamageoverlay.lua", "LUA") then
 			self:CopyEntDamageOverlays(CrashingScannerProp)
 		end
-
-		-- Gib function
+ 
 		local function SpawnMortarGibs(pos)
 			local gibModels = {
 				"models/gibs/msynth_gibs1.mdl",
@@ -248,18 +247,11 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 
 					if IsValid(phys) then
 						phys:Wake()
-
-						-- Strong explosion-like gib velocity
 						local direction = VectorRand():GetNormalized()
 
-						phys:SetVelocity(
-							direction * math.random(150, 400)
-							+ Vector(0, 0, math.random(100, 250))
-						)
+						phys:SetVelocity(direction * math.random(150, 400) + Vector(0, 0, math.random(100, 250)))
 
-						phys:AddAngleVelocity(
-							VectorRand() * math.random(200, 500)
-						)
+						phys:AddAngleVelocity(VectorRand() * math.random(200, 500))
 					end
 
 					SafeRemoveEntityDelayed(gib, 15)
@@ -298,7 +290,6 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 				CrashingScannerProp:EmitSound("weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 80, 100)
 
 			else
-
 				local effectdata = EffectData()
 				effectdata:SetOrigin(explosionPos)
 				util.Effect("Explosion", effectdata)
@@ -326,12 +317,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 				filter = CrashingScannerProp
 			})
 
-			sound.EmitHint(
-				SOUND_DANGER,
-				tr.HitPos,
-				300,
-				0.5
-			)
+			sound.EmitHint(SOUND_DANGER, tr.HitPos, 300, 0.5)
 
 			return true
 		end

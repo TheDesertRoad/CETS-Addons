@@ -132,14 +132,6 @@ ENT.SoundTbl_CombatIdle = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PreInit()
 	local flags = self:GetSpawnFlags()
-
-	if bit.band(flags, 512) ~= 0 or self:HasSpawnFlags(512) then
-		self.EnemyTouchDetection = true
-		self.AlliedWithPlayerAllies = true
-		self.CanReceiveOrders = true
-		self.FollowPlayer = true
-		self.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_BLACKOPS", "CLASS_UNITED_STATES"}
-	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()

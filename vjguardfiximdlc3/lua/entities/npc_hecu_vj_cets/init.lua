@@ -119,6 +119,7 @@ function ENT:Init()
 	end
 
 	self.BlackAmount = 0
+	local flags = self:GetSpawnFlags()
 
 	self.Squadrant_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
 
