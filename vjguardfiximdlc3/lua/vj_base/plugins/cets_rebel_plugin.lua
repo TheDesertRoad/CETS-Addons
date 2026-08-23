@@ -44,7 +44,7 @@ VJ.AddNPC("Egon Holder","npc_egon_vj_cets",vCat)
 VJ.AddNPC("Off-worker","npc_unarmed_worker_vj_cets",vCat)
 VJ.AddNPC("HECU Tank","npc_hecu_tank_vj_cets",vCat)
 VJ.AddNPC("HECU Sentry","npc_hecu_sentry_vj_cets",vCat)
-//VJ.AddNPC("Black Ops. Assassin","npc_blackops_assassin_vj_cets",vCat)
+VJ.AddNPC("Black Ops. Assassin","npc_blackops_assassin_vj_cets",vCat)
 
 VJ.AddNPC("Conscript Tank","npc_conscript_tank_vj_cets",vCat1)
 
@@ -75,3 +75,5 @@ VJ.AddConVar("sk_plr_cets_dmg_hecsnip", 100, FCVAR_ARCHIVE)
 VJ.AddConVar("sk_cets_hecu_sentry_health", 86, FCVAR_ARCHIVE)
 
 VJ.AddConVar("sk_cets_hecu_tank_health", 800, FCVAR_ARCHIVE)
+
+VJ.AddConVar("sk_cets_hassassin_health", 65, FCVAR_ARCHIVE)

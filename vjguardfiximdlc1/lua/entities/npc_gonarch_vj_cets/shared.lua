@@ -2,3 +2,4 @@
 ENT.Type 			= "ai"
 ENT.PrintName 		= "Gonarch"
 ENT.Author 			= "VALVe"
+

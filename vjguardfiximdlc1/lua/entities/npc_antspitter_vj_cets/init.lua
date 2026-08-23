@@ -59,14 +59,13 @@ ENT.RangeAttackMinDistance = 86
 ENT.HasLeapAttack = true
 ENT.AnimTbl_LeapAttack = ACT_JUMP
 ENT.LeapAttackMaxDistance = 1024
-ENT.LeapAttackMinDistance = 128
+ENT.LeapAttackMinDistance = 512
 ENT.TimeUntilLeapAttackDamage = 0.2
 ENT.NextLeapAttackTime = 6
 ENT.NextAnyAttackTime_Leap = 1
 ENT.LeapAttackStopOnHit = true
-ENT.TimeUntilLeapAttackVelocity = 0.2
+ENT.TimeUntilLeapAttackVelocity = 0.3
 ENT.LeapAttackDamage = GetConVar("sk_antlion_air_attack_dmg"):GetInt()
-ENT.LeapAttackExtraTimers = {0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4}
 ENT.LeapAttackDamageDistance = 40
 
 ENT.ConstantlyFaceEnemy = true
@@ -371,9 +370,7 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 
 	local dir = ply:GetAimVector()
 
-	local velocity =
-		(dir * 900) +   -- forward force
-		Vector(0, 0, 200) -- slight lift
+	local velocity = (dir * 900) + Vector(0, 0, 200)
 
 	self:SetVelocity(velocity)
 	self:StopSound("npc/antlion/fly1.wav")
@@ -535,26 +532,16 @@ function ENT:ExecuteLeapAttack()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:LeapAttackJump()
-    local ene = self:GetEnemy()
-    if not IsValid(ene) then return end
+	local ene = self:GetEnemy()
+	if !IsValid(ene) then return end
+	self:SetGroundEntity(NULL)
+	self.LeapAttackHasJumped = true
+	-- Classic velocity, useful for more straight line jumps
+	//return ((ene:GetPos() + ene:OBBCenter()) - (self:GetPos() + self:OBBCenter())):GetNormal() * 400 + self:GetForward() * 200 + self:GetUp() * 100
+	self:SetLocalVelocity(self:OnLeapAttack("Jump", ene) or VJ.CalculateTrajectory(self, ene, "Curve", self:GetPos() + self:OBBCenter(), ene:GetPos() + ene:OBBCenter(), 1))
 
-    self:SetGroundEntity(NULL)
-    self.LeapAttackHasJumped = true
-
-    self:SetBodygroup(1, 1)
-    self:EmitSound("npc/antlion/fly1.wav", 75, 100)
-
-    self:SetLocalVelocity(
-        self:OnLeapAttack("Jump", ene) or
-        VJ.CalculateTrajectory(
-            self,
-            ene,
-            "Curve",
-            self:GetPos() + self:OBBCenter(),
-            ene:GetPos() + ene:OBBCenter(),
-            1
-        )
-    )
+	self:SetBodygroup(1, 1)
+	self:EmitSound("npc/antlion/fly1.wav", 75, 100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StopAttacks(checkTimers)

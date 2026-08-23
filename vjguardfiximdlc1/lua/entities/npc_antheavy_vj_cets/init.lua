@@ -43,13 +43,26 @@ ENT.MeleeAttackBleedEnemyTime = 3 -- How much time until the next repetition?
 ENT.MeleeAttackBleedEnemyReps = 2 -- How many repetitions?
 
 ENT.HasRangeAttack = false
+ENT.RangeAttackProjectiles = "obj_vj_nothing_of_the_lazyness"
+ENT.AnimTbl_RangeAttack = false
 
-ENT.LeapAttackMaxDistance = 512
-ENT.LeapAttackMinDistance = 128
+ENT.RangeAttackProjectiles = {"obj_vj_antlionspit"}
+ENT.TimeUntilRangeAttackProjectileRelease = 100
+ENT.NextRangeAttackTime = 10000
+ENT.RangeAttackMaxDistance = 1000
+ENT.RangeAttackExtraTimers = {0.4, 0.6, 0.9}
+ENT.RangeAttackMinDistance = 10000
+
+ENT.LeapAttackMaxDistance = 1024
+ENT.LeapAttackMinDistance = 512
 ENT.TimeUntilLeapAttackDamage = 0.2
 ENT.NextLeapAttackTime = 12
 ENT.LeapAttackDamage = GetConVar("sk_antlion_air_attack_dmg"):GetInt()
 
+ENT.ChargeDuration = math.random(6, 12)
+ENT.ChargeCooldown = math.random(4, 8)
+ENT.ChargeDamage = 15
+ 
 ENT.MainSoundLevel = 70
 ENT.MainSoundPitch = 80
 
@@ -75,6 +88,12 @@ ENT.NextThumperSound = 0
 
 ENT.ThumperFearRadius = 1000
 ENT.ThumperSafeDistance = 1500
+
+ENT.ChargeStepHeight = 12
+ENT.ChargeObstacleCheckDistance = 24
+ENT.ChargeStepScanIncrement = 0.1
+
+ENT.ChargeFootstepInterval = 0.15
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PreInit()
 	if game.GetGlobalState("antlion_allied") == 1 then
@@ -93,6 +112,19 @@ function ENT:Init()
 	self.IsDigging = false
 	self.HasDeathCorpse = true
 	self:Dig()
+
+	self.NextChargeTime = CurTime()
+	self:SetStepHeight(self.ChargeStepHeight)
+
+	self.Bullseye = ents.Create("base_anim")
+	self.Bullseye:SetModel("models/hunter/blocks/cube1x1x025.mdl")
+	self.Bullseye:SetParent(self)
+	self.Bullseye:SetPos(self:GetPos() + self:GetForward()*100 + Vector(0,0,15))
+	self.Bullseye:Spawn()
+	self.Bullseye:SetNoDraw(true)
+	self.Bullseye:DrawShadow(false)
+	self.Bullseye:SetSolid(SOLID_NONE)
+	self.Bullseye.VJ_NPC_Class = self.VJ_NPC_Class
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
@@ -253,10 +285,395 @@ function ENT:CustomOnThink(ent)
 
 		timer.Simple(6, function() if self:IsValid() && self:WaterLevel() > 1 then self:TakeDamage(self:GetMaxHealth(), self, self) end end)
 	end
+
+	self.Bullseye.VJ_NPC_Class = self.VJ_NPC_Class
+ 
+	if self.DeathAnimationCodeRan then return end
+	local enemy = self:GetEnemy()
+ 
+	if IsValid(enemy) then
+ 
+	if self.VJ_IsBeingControlled then
+		local controller = self.VJ_TheController
+			if !self:Attacking() then
+				if controller:KeyDown(IN_JUMP) && self.NextChargeTime < CurTime() then
+					self:ChargeAtEnemy(5)
+				end
+			end
+	else
+			if !self:Attacking() && self.NextChargeTime < CurTime() && self:CanChargeEnemy() && self.EnemyData.DistanceNearest > 256 then
+					self:ChargeAtEnemy(self.ChargeDuration)
+				end
+			end
+		end
+ 
+		if self.Charging then self:ChargeThink() end
+ 
+		if !IsValid(enemy) then
+			if self.Charging then
+				self:StopCharging(true,self.ChargeCooldown*0.5)
+			end
+		self.ShootPos = nil
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnMeleeAttack_AfterStartTimer(seed)
+	timer.Simple(0.2, function() if IsValid(self) && !self.DeathAnimationCodeRan then self:CustomMeleeDamage(self.MeleeDamage) end end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomMeleeDamage(damage,damagetype)
+	damagetype = damagetype or DMG_SLASH
+	local realisticRadius = false
+	local damaged_ents = util.VJ_SphereDamage(self, self, self:GetPos() + self:GetForward() * 50, 50, damage, damagetype, true, realisticRadius)
+	local NPCWasHit = false
+ 
+	if self.Charging then
+		for _, ent in pairs(damaged_ents) do
+			local dir = self:GetVelocity():GetNormalized()
+ 
+			if dir == vector_origin then
+				dir = self:GetForward()
+			end
+ 
+			local speed = math.max(self:GetVelocity():Length(), 300)
+			local knockback = dir * (speed * 0.55)
+			knockback.z = math.Clamp(speed * 0.55, 120, 250)
+ 
+			local center = self:GetPos() + self:GetForward() * 60
+ 
+			for _, ent in ipairs(ents.FindInSphere(center, 48)) do
+				if ent == self then continue end
+ 
+				local class = ent:GetClass()
+ 
+				if class == "func_breakable" then
+					local dmg = DamageInfo()
+					dmg:SetAttacker(self)
+					dmg:SetInflictor(self)
+					dmg:SetDamage(500)
+					dmg:SetDamageType(bit.bor(DMG_CLUB, DMG_CRUSH))
+					ent:TakeDamageInfo(dmg)
+ 
+				return
+ 
+				elseif class == "func_breakable_surf" then
+					ent:Fire("Shatter")
+					return
+				end
+			end
+ 
+			if ent:IsNPC() or ent:IsPlayer() then
+				if ent:IsPlayer() then
+					ent:SetVelocity(knockback)
+					ent:ScreenFade(SCREENFADE.IN, Color(32, 32, 0, 200), 1, 0.2)
+				elseif !ent.VJ_IsHugeMonster then
+					ent:SetVelocity(knockback / 2)
+				end
+ 
+				NPCWasHit = true
+			end
+		end
+ 
+		if NPCWasHit then
+			self:PlaySoundSystem("MeleeAttack", SoundTbl_MeleeAttack)
+			return true
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:IsNearEdge(dist)
+	dist = dist or 90
+ 
+	local pos = self:GetPos()
+	local forward = self:GetForward()
+	local right = self:GetRight()
+ 
+	local groundTr = util.TraceLine({
+		start = pos + Vector(0, 0, 10),
+		endpos = pos - Vector(0, 0, 70),
+		mask = MASK_NPCWORLDSTATIC
+	})
+ 
+	local groundZ = groundTr.Hit and groundTr.HitPos.z or pos.z
+ 
+	local checks = {pos + forward * dist, pos + forward * dist + right * 24, pos + forward * dist - right * 24}
+ 
+	for _, checkPos in ipairs(checks) do
+		local tr = util.TraceHull({
+			start = checkPos + Vector(0, 0, 10),
+			endpos = checkPos - Vector(0, 0, 90),
+			mins = Vector(-6, -6, 0),
+			maxs = Vector(6, 6, 6),
+			mask = MASK_NPCWORLDSTATIC
+		})
+ 
+		if !tr.Hit or (groundZ - tr.HitPos.z) > 60 then
+			return true
+		end
+	end
+ 
+	return false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Attacking()
+	if self.Charging or self.MeleeAttacking then
+		return true
+	end
+
+	if self.AttackType == VJ.ATTACK_TYPE_MELEE or self.AttackType == VJ.ATTACK_TYPE_RANGE or self.AttackType == VJ.ATTACK_TYPE_LEAP then
+		return true
+	end
+
+	return false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:StartChargeFootsteps()
+	if self.ChargeFootstepTimer then return end
+
+	local timerName = "ChargeFootsteps_" .. self:EntIndex()
+	self.ChargeFootstepTimer = timerName
+
+	timer.Create(timerName, self.ChargeFootstepInterval, 0, function()
+		if not IsValid(self) or not self.Charging then
+			timer.Remove(timerName)
+			if IsValid(self) then
+				self.ChargeFootstepTimer = nil
+			end
+			return
+		end
+
+		self:EmitSound("npc/antlion/foot" .. math.random(1, 4) .. ".wav", 75, math.random(90, 110))
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:StopChargeFootsteps()
+	if self.ChargeFootstepTimer then
+		timer.Remove(self.ChargeFootstepTimer)
+		self.ChargeFootstepTimer = nil
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CanChargeEnemy()
+	local enemy = self:GetEnemy()
+	if !IsValid(enemy) then return false end
+ 
+	local heightOffset = Vector(0, 0, 40)
+ 
+	local tr = util.TraceHull({
+		start = self:GetPos() + heightOffset,
+		endpos = enemy:GetPos() + heightOffset,
+		mask = MASK_NPCWORLDSTATIC,
+		mins = self:OBBMins(),
+		maxs = self:OBBMaxs(),
+	})
+ 
+	if self:IsNearEdge() then
+		return false
+	end
+ 
+	if self:Visible(enemy) && enemy:IsOnGround() && !tr.Hit then
+		return true
+	end
+ 
+	return false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:ChargeThink()
+	if IsValid(self:GetEnemy()) && self:Visible(self:GetEnemy()) then
+		self:SetIdealYawAndUpdate( (self:GetEnemy():GetPos() - self:GetPos() ):Angle().y )
+	end
+
+	if !self.Charge_ApplyForceCountdownStarted && self:GetActivity() == ACT_SPECIAL_ATTACK1 then
+		self.Charge_ApplyForceCountdownStarted = true
+		timer.Simple(0.6, function() if IsValid(self) then
+				self.Charge_ShouldApplyForce = true
+			end
+		end)
+	end
+
+	local speed = 1024
+
+	if self.Charge_ShouldApplyForce && self:IsOnGround() then
+		local vel = self:GetVelocity()
+		local forwardVel = vel:Dot(self:GetForward())
+
+		if forwardVel < speed then
+			self:SetVelocity(self:GetForward() * (speed - forwardVel))
+		end
+	end
+
+	if self:CustomMeleeDamage(self.ChargeDamage, bit.bor(DMG_CLUB,DMG_CRUSH,DMG_SLASH)) == true then -- Player or NPC was hit.
+		self:StopCharging(false, self.ChargeCooldown)
+		self:EmitSound("npc/antlion/attack_charge1.wav", 90, math.random(70, 80))
+
+		local seq = self:LookupSequence("charge_end")
+		local duration = seq > 0 and self:SequenceDuration(seq) or 0.5
+
+		self:VJ_ACT_PLAYACTIVITY("charge_end", true, duration, true)
+	end
+
+	if self:IsOnGround() then
+		local tr = util.TraceHull({
+			start = self:GetPos(),
+			endpos = self:GetPos() + self:GetForward() * 28,
+			mins = self:OBBMins(),
+			maxs = self:OBBMaxs(),
+			filter = self,
+			mask = MASK_SOLID
+		})
+
+		if tr.Hit then
+			if tr.HitNormal.z < 0.2 then
+				local stepHeight = 9
+				local stepTrace = util.TraceHull({
+					start = self:GetPos() + Vector(0,0,stepHeight),
+					endpos = self:GetPos() + Vector(0,0,stepHeight) + self:GetForward() * 28,
+					mins = self:OBBMins(),
+					maxs = self:OBBMaxs(),
+					filter = self,
+					mask = MASK_SOLID
+				})
+
+				if !stepTrace.Hit then
+					self:SetPos(self:GetPos() + Vector(0,0,stepHeight))
+					return
+				end
+			end
+		end
+	end
+
+	local wallHullMins, wallHullMaxs = self:OBBMins(), self:OBBMaxs()
+
+	local wallTrace = util.TraceHull({
+		start = self:GetPos(),
+		endpos = self:GetPos() + self:GetForward() * 60,
+		mins = Vector(wallHullMins.x, wallHullMins.y, 32),
+		maxs = self:OBBMaxs(),
+		filter = self,
+		mask = MASK_SOLID_BRUSHONLY
+	})
+
+	if wallTrace.Hit then
+		local normal = wallTrace.HitNormal
+
+		if normal.z > 0.25 then
+			return
+		end
+
+		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(90,110))
+
+		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		self:TakeDamage(5)
+		return
+	end
+
+	local sidePositions = {
+		self:GetPos() + self:GetForward() * 60,
+		self:GetPos() + self:GetForward() * 60 + self:GetRight() * 30,
+		self:GetPos() + self:GetForward() * 60 - self:GetRight() * 30,
+	}
+
+	for _, sidePos in ipairs(sidePositions) do
+		local tr = util.TraceHull({
+			start = self:GetPos(),
+			endpos = sidePos,
+			mins = Vector(-18, -18, 32),
+			maxs = Vector(18, 18, 72),
+			filter = self,
+			mask = MASK_SOLID
+		})
+ 
+		if tr.Hit then
+			self:StopCharging(true, self.ChargeCooldown * 0.5)
+			return
+		end
+	end
+
+	if self:IsNearEdge() then
+		self:StopCharging(true, self.ChargeCooldown * 0.5)
+		return
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:ChargeAtEnemy(duration)
+	if self.Charging then return end
+
+	self.Charging = true
+	self.Charge_ApplyForceCountdownStarted = false
+	self.Charge_ShouldApplyForce = false
+
+	self:VJ_ACT_PLAYACTIVITY("charge_start", true, false, true)
+
+	local seq = self:LookupSequence("charge_start")
+	local animDuration = 0
+	
+	self:EmitSound("npc/antlion/antlion_preburst_scream" .. math.random(1, 2) .. ".wav", 80, math.random(70, 80))
+
+	if seq and seq > 0 then
+		animDuration = self:SequenceDuration(seq)
+	end
+
+	if animDuration <= 0 then
+		animDuration = 0.5
+	end
+
+	timer.Simple(animDuration, function()
+		if not IsValid(self) then return end
+		if not self.Charging then return end
+		if self.DeathAnimationCodeRan then return end
+
+		local enemy = self:GetEnemy()
+		if not IsValid(enemy) then
+			self:StopCharging(true, self.ChargeCooldown * 0.5)
+			return
+		end
+
+		self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
+
+		self:StartChargeFootsteps()
+		VJ.EmitSound(self, "npc/antlion/charge_loop1.wav", 80, 70)
+
+		timer.Simple(duration, function()
+			if IsValid(self) && self.Charging then
+				self:StopCharging(true, self.ChargeCooldown)
+			end
+		end)
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:StopCharging(UseAnimation,nextcharge)
+	if self.DeathAnimationCodeRan then return end
+	self:StopChargeFootsteps()
+	self:StopSound("npc/antlion/charge_loop1.wav")
+ 
+	self.MovementType = VJ_MOVETYPE_STATIONARY
+	self.CanTurnWhileStationary = false
+	self.HasMeleeAttack = false
+	self.HasRangeAttack = false
+	self.IsGuard = true
+	self.CallForHelp = false
+ 
+	if UseAnimation then self:VJ_ACT_PLAYACTIVITY("charge_end", true, self:SequenceDuration(self:LookupSequence( "mgrunt_charge_crash" )), true) end
+ 
+	timer.Simple(self:SequenceDuration(self:LookupSequence( "charge_end" )), function() if IsValid(self) then
+		self.MovementType = VJ_MOVETYPE_GROUND
+		self.CanTurnWhileStationary = true
+		self.HasMeleeAttack = true
+		self.HasRangeAttack = true
+		self.IsGuard = false
+		self.CallForHelp = true
+	end end)
+ 
+	self.Charging = false
+	self.Charge_ShouldApplyForce = false
+ 
+	self.NextChargeTime = CurTime() + nextcharge
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo,hitgroup)
 	self:StopSound("npc/antlion/fly1.wav")
+	self:StopSound("npc/antlion/charge_loop1.wav")
+	self:StopChargeFootsteps()
 	if dmginfo:IsDamageType( DMG_BUCKSHOT ) && self.EnemyData.DistanceNearest < 400 then 
 		self.HasDeathCorpse = false
 
@@ -400,6 +817,8 @@ end
 function ENT:StopAttacks(checkTimers)
 	self:SetBodygroup(1,0)
 	self:StopSound("npc/antlion/fly1.wav")
+	self:StopSound("npc/antlion/charge_loop1.wav")
+	self:StopChargeFootsteps()
 	if !self:Alive() then return end
 	local selfData = self:GetTable()
 	if selfData.VJ_DEBUG && GetConVar("vj_npc_debug_attack"):GetInt() == 1 then VJ.DEBUG_Print(self, "StopAttacks", "Attack type = " .. selfData.AttackType) end
@@ -418,4 +837,6 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
 	self:StopSound("npc/antlion/fly1.wav")
+	self:StopChargeFootsteps()
+	self:StopSound("npc/antlion/charge_loop1.wav")
 end

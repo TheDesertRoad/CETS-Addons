@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/dmi_crossbow/sci_fi_bow"
+	"$phong" 				"1"
+	"$phongboost" 				"10"
+	"$phongalbedotint"			 "1"
+	"$phongexponent" 			"30"
+	"$phongfresnelranges" 			"[1 5 22.5]"
+}

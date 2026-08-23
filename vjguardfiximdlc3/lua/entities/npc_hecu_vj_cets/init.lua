@@ -91,7 +91,7 @@ function ENT:PreInit()
 	else
 		self.Model = mdlHECU
 	end
-
+		
 	self:Give("weapon_vj_cets_mp5sd")
 	self:MaleSounds()
 
@@ -117,11 +117,10 @@ function ENT:Init()
 		self.YieldToAlliedPlayers = false
 		self.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"}
 	end
+
 	self.BlackAmount = 0
 
 	self.Squadrant_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
-
-	local flags = self:GetSpawnFlags()
 
 	if !IsValid(SquadC_Leader) && string.lower(self:GetModel()) == "models/humans/grunt/hgrunt3.mdl" or bit.band(flags, 32) ~= 0 or self:HasSpawnFlags(32) then
 		VJ.SquadC_Leader = self

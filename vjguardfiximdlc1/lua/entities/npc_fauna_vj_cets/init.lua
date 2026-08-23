@@ -101,6 +101,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo,hitgroup)
 	VJ_EmitSound(self,"npc/antlion/antlion_shoot3.wav",100,100)
+	self:StopSound("npc/alienfauna/growl.wav")
 	util.VJ_SphereDamage(self,self,self:GetPos(),150,43,DMG_POISON,true,true)
 	util.ScreenShake(self:GetPos(),44,1000,2,1000)
 	ParticleEffect("antlion_gib_02",self:GetPos() + self:GetUp()* 10,Angle(0,0,0),nil)

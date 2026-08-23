@@ -68,7 +68,7 @@ light_plus
 postprocess_plus
 {
 	"enable" "1"
-	"copied_from_controller" "0"
+	"copied_from_controller" "1"
 	"bloom_scale" "1"
 	"bloom_exponent" "2.5"
 	"bloom_saturation" "1"

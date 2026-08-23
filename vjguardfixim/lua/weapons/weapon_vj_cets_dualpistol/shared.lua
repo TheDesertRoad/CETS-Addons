@@ -37,6 +37,6 @@ function SWEP:OnAnimEvent(pos, ang, event, options)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnGetBulletPos()
-	local att = self.CurrentMuzzle == "left" && "right" && 1 or 2
+	local att = self.CurrentMuzzle == "LeftMuzzle" && "RightMuzzle" && 3 or 4
 	return self:GetOwner():GetAttachment(att).Pos
 end

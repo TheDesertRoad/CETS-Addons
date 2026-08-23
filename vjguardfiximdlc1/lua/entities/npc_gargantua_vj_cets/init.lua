@@ -48,7 +48,14 @@ ENT.MeleeAttackDamageDistance = 185
 ENT.MeleeAttackDamageType = DMG_CRUSH
 ENT.HasExtraMeleeAttackSounds = true
 
-ENT.HasRangeAttack = false
+ENT.HasRangeAttack = true
+
+ENT.RangeAttackDistance = 1200
+ENT.RangeAttackMinDistance = 400
+ENT.NextRangeAttackTime = VJ.SET(2, 12)
+ENT.RangeAttackPos_Forward = 0
+ENT.RangeAttackPos_Right = 0
+ENT.RangeAttackPos_Up = 0
 
 ENT.CanFlinch = "DamageTypes"
 ENT.FlinchDamageTypes = {DMG_BLAST}
@@ -128,7 +135,11 @@ ENT.SoundTbl_Flinch = {
 	"npc/gargantua/gar_alert3.wav"
 }
 
+ENT.SoundTbl_RangeAttack = "npc/gargantua/gar_stomp1.wav"
+
 ENT.SoundTbl_MeleeAttackExtra = "npc/gargantua/gar_shove1.wav"
+
+ENT.Garg_SpecialAttack = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PreInit()
 	self.TimersToRemove[#self.TimersToRemove + 1] = "garg_flame_reset"
@@ -254,6 +265,129 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		end)
 	else
 		self:Garg_ResetFlame()
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnRangeAttack(status, enemy)
+	if status == "Init" then
+		self.Garg_SpecialRangeAttack = false
+
+		local randRange = math.random(1, 4)
+		if randRange == 1 then
+			self.Garg_SpecialRangeAttack = true
+
+			self.RangeAttackProjectiles = "obj_vj_nothing_of_the_lazyness"
+			self.AnimTbl_RangeAttack = {"bitehead"}
+			self.TimeUntilRangeAttackProjectileRelease = 0.4
+
+			VJ.EmitSound(self, "npc/gargantua/gar_yawn1.wav", 100, 100)
+		else
+			self.Garg_SpecialRangeAttack = false
+
+			self.RangeAttackProjectiles = "obj_vj_garg_energyorb"
+			self.TimeUntilRangeAttackProjectileRelease = 1.5
+			self.AnimTbl_RangeAttack = {"stomp"}
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjPos(projectile)
+	local attachment = self:GetAttachment(2)
+
+	if not attachment then
+		return self:GetPos() + self:GetForward() * 50
+	end
+
+	local offset = Vector(50, -20, 2400)
+
+	return attachment.Pos + attachment.Ang:Forward() * offset.x + attachment.Ang:Right() * offset.y + attachment.Ang:Up() * offset.z
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjVel(projectile)
+	return VJ.CalculateTrajectory(self, self:GetEnemy(), "Line", projectile:GetPos(), 0, 400)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnRangeAttackExecute(status, enemy, projectile)
+	if status != "PostSpawn" then
+		return
+	end
+
+	if self.Garg_SpecialRangeAttack then
+		if IsValid(projectile) then
+			projectile:Remove()
+		end
+
+		self.Garg_SpecialRangeAttack = false
+
+		VJ.ApplyRadiusDamage(self, self, self:GetPos(), 2048, 25, DMG_SONIC, true, true)
+
+		util.ScreenShake(self:GetPos(), 2048, 1, 5, 2048)
+
+		for _, ent in ipairs(ents.FindInSphere(self:GetPos(), 2028)) do
+			if !IsValid(ent) || ent == self then
+				continue
+			end
+
+			local class = ent:GetClass()
+
+			if class == "func_breakable" then
+				local dmg = DamageInfo()
+
+				dmg:SetAttacker(self)
+				dmg:SetInflictor(self)
+				dmg:SetDamage(32)
+				dmg:SetDamageType(DMG_SONIC)
+				dmg:SetDamagePosition(ent:WorldSpaceCenter())
+
+				ent:TakeDamageInfo(dmg)
+
+			elseif class == "func_breakable_surf" then
+				ent:Fire("Shatter", "", 0)
+			end
+		end
+
+		for _, ply in ipairs(player.GetAll()) do
+			if IsValid(ply) && ply:GetPos():DistToSqr(self:GetPos()) <= (2048 * 2048) then
+				ply:SetDSP(15, false)
+				ply:EmitSound("hl1/misc/ear_ringing.wav", 100, 100)
+
+				net.Start("GargantuaSpecialStompBlur")
+				net.Send(ply)
+
+				timer.Simple(8, function()
+					if IsValid(ply) then
+						ply:SetDSP(0, false)
+						ply:StopSound("hl1/misc/ear_ringing.wav")
+					end
+				end)
+			end
+		end
+
+		local effectdata = EffectData()
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetScale(1024)
+		util.Effect("ThumperDust", effectdata)
+
+		return
+	end
+
+	if not IsValid(projectile) then
+		return
+	end
+
+	projectile.Track_Ent = enemy
+
+	local pos = projectile:GetPos()
+
+	local tr = util.TraceLine({
+		start = pos + Vector(0, 0, 32),
+		endpos = pos - Vector(0, 0, 72),
+		filter = {self, projectile},
+		mask = MASK_SOLID
+	})
+
+	if tr.Hit then
+		ParticleEffect("gargantua_stomp2a", tr.HitPos + tr.HitNormal, Angle(0, 0, 0), nil)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -408,6 +408,18 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnFireBullet(data)
 	self.Assassin_CloakLevel = 0
+
+	for _, attachmentName in ipairs({"LeftMuzzle", "RightMuzzle"}) do
+		local attachment = self:LookupAttachment(attachmentName)
+
+		if attachment > 0 then
+			local ef = EffectData()
+			ef:SetEntity(self)
+			ef:SetAttachment(attachment)
+
+			util.Effect("HunterMuzzleFlash", ef)
+		end
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Dodge()

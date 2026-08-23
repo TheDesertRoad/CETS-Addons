@@ -212,13 +212,11 @@ function ENT:OnThink()
 			if !self:Attacking() then
 				if controller:KeyDown(IN_JUMP) && self.NextChargeTime < CurTime() then
 					self:ChargeAtEnemy(5)
-					VJ.EmitSound(self, "npc/alien_grunt/ag_charging1.wav", 70)
 					self:StartChargeTrail()
 				end
 			end
 	else
 			if !self:Attacking() && self.NextChargeTime < CurTime() && self:CanChargeEnemy() && self.EnemyData.DistanceNearest > 256 then
-					VJ.EmitSound(self, "npc/alien_grunt/ag_charging1.wav", 70)
 					self:StartChargeTrail()
 					self:ChargeAtEnemy(self.ChargeDuration)
 				end
@@ -404,9 +402,13 @@ function ENT:ChargeThink()
 	end
 
 	if self:CustomMeleeDamage(self.ChargeDamage, bit.bor(DMG_CLUB,DMG_CRUSH,DMG_SLASH)) == true then -- Player or NPC was hit.
-		self:StopCharging(false,self.ChargeCooldown)
 		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(90,110))
 		ParticleEffect("gonarch_footstep_4", self:GetPos() + self:GetUp()*30, Angle(0,0,0))
+		self:StopCharging(false, self.ChargeCooldown)
+
+		local seq = self:LookupSequence("MGrunt_Charge_Crash")
+		local duration = seq > 0 and self:SequenceDuration(seq) or 0.5
+
 		self:VJ_ACT_PLAYACTIVITY("MGrunt_Charge_Crash", true, duration, true)
 	end
 
@@ -496,15 +498,47 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ChargeAtEnemy(duration)
 	if self.Charging then return end
+
 	self.Charging = true
 	self.Charge_ApplyForceCountdownStarted = false
 	self.Charge_ShouldApplyForce = false
- 
-	self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
- 
-	timer.Simple(duration, function() if IsValid(self) && self.Charging then
-		self:StopCharging(true,self.ChargeCooldown)
-	end end)
+
+	self:VJ_ACT_PLAYACTIVITY("mgrunt_charge_start", true, false, true)
+
+	local seq = self:LookupSequence("mgrunt_charge_start")
+	local animDuration = 0
+
+	self:EmitSound("npc/alien_grunt/ag_charge_start_" .. math.random(1, 3) .. ".wav", 90, math.random(90, 110))
+
+	if seq and seq > 0 then
+		animDuration = self:SequenceDuration(seq)
+	end
+
+	if animDuration <= 0 then
+		animDuration = 0.5
+	end
+
+	timer.Simple(animDuration, function()
+		if not IsValid(self) then return end
+		if not self.Charging then return end
+		if self.DeathAnimationCodeRan then return end
+
+		local enemy = self:GetEnemy()
+		if not IsValid(enemy) then
+			self:StopCharging(true, self.ChargeCooldown * 0.5)
+			return
+		end
+
+		self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
+
+		VJ.EmitSound(self, "npc/alien_grunt/ag_charging1.wav", 70)
+
+		timer.Simple(duration, function()
+			if IsValid(self) && self.Charging then
+				self:StopCharging(true, self.ChargeCooldown)
+			end
+		end)
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StopCharging(UseAnimation,nextcharge)

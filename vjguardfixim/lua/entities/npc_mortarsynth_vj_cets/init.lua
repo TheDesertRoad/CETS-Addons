@@ -176,14 +176,34 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.CrashChance = GetConVar("sk_mortar_crash_chance"):GetInt()
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local function CleanupGib(ent)
+	if not IsValid(ent) then return end
+
+	local lifetime = math.Rand(10, 30)
+
+	timer.Simple(lifetime - 1, function()
+		if IsValid(ent) then
+			ent:SetRenderMode(RENDERMODE_TRANSALPHA)
+			ent:SetRenderFX(kRenderFxFadeSlow) -- or kRenderFxFadeFast
+		end
+	end)
+
+	timer.Simple(lifetime, function()
+		if IsValid(ent) then
+			ent:Remove()
+		end
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 	local effectdata = EffectData()
 	effectdata:SetOrigin(self:GetPos())
-	util.Effect( "Explosion", effectdata )
+	util.Effect("Explosion", effectdata)
 
 	if math.random(1, self.CrashChance) == 1 then -- Crash
 
-		local targetpos = self:GetPos() + self:GetForward() * 100 - Vector(0,0,100)
+		local targetpos = self:GetPos() + self:GetForward() * 100 - Vector(0, 0, 100)
+
 		if IsValid(self:GetEnemy()) then
 			targetpos = self:GetEnemy():GetPos()
 		end
@@ -191,6 +211,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 		local crashdir = targetpos - self:GetPos()
 
 		local CrashingScannerProp = ents.Create("base_gmodentity")
+
 		CrashingScannerProp:SetModel(self:GetModel())
 		CrashingScannerProp:SetPos(self:GetPos())
 		CrashingScannerProp:SetAngles(crashdir:Angle())
@@ -198,37 +219,132 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 		CrashingScannerProp:SetMoveType(MOVETYPE_FLY)
 		CrashingScannerProp:SetSolid(SOLID_VPHYSICS)
 		CrashingScannerProp.VJ_NPC_Class = self.VJ_NPC_Class
+
 		if file.Exists("autorun/server/sv_entdamageoverlay.lua", "LUA") then
 			self:CopyEntDamageOverlays(CrashingScannerProp)
 		end
 
+		-- Gib function
+		local function SpawnMortarGibs(pos)
+			local gibModels = {
+				"models/gibs/msynth_gibs1.mdl",
+				"models/gibs/msynth_gibs2.mdl",
+				"models/gibs/msynth_gibs3.mdl"
+			}
+
+			for i = 1, math.random(4, 7) do
+				local gib = ents.Create("prop_physics")
+
+				if IsValid(gib) then
+					gib:SetModel(gibModels[math.random(#gibModels)])
+					gib:SetPos(pos + VectorRand() * math.random(5, 20))
+					gib:SetAngles(AngleRand())
+					gib:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+					gib:Spawn()
+					gib:Activate()
+					CleanupGib(gib)
+
+					local phys = gib:GetPhysicsObject()
+
+					if IsValid(phys) then
+						phys:Wake()
+
+						-- Strong explosion-like gib velocity
+						local direction = VectorRand():GetNormalized()
+
+						phys:SetVelocity(
+							direction * math.random(150, 400)
+							+ Vector(0, 0, math.random(100, 250))
+						)
+
+						phys:AddAngleVelocity(
+							VectorRand() * math.random(200, 500)
+						)
+					end
+
+					SafeRemoveEntityDelayed(gib, 15)
+				end
+			end
+		end
+
 		CrashingScannerProp.Explode = function()
-			util.VJ_SphereDamage(Entity(0),Entity(0),CrashingScannerProp:GetPos(),300,100,DMG_BLAST,false,false,false,false)
-			local effectdata = EffectData()
-			effectdata:SetOrigin(CrashingScannerProp:GetPos())
-			util.Effect( "Explosion", effectdata )
-			CrashingScannerProp:EmitSound( "Explo.ww2bomb", 130, 100)
+			if not IsValid(CrashingScannerProp) then
+				return
+			end
+
+			local explosionPos = CrashingScannerProp:GetPos()
+
+			util.VJ_SphereDamage(Entity(0), Entity(0), explosionPos, 300, 100, DMG_BLAST, false, false, false, false)
+
+			if CrashingScannerProp:WaterLevel() >= 3 then
+				local surface = explosionPos
+				local ed = EffectData()
+				ed:SetOrigin(explosionPos)
+				util.Effect("WaterSurfaceExplosion", ed, true, true)
+
+				local tr = util.TraceLine({
+					start = explosionPos,
+					endpos = explosionPos + Vector(0,0,32768),
+					mask = MASK_WATER
+				})
+
+				if tr.Hit then
+					local effect = EffectData()
+					effect:SetOrigin(tr.HitPos - tr.HitNormal)
+					effect:SetNormal(tr.HitNormal)
+					util.Effect("WaterSurfaceExplosion", effect)
+				end
+
+				CrashingScannerProp:EmitSound("weapons/underwater_explode" .. math.random(3, 4) .. ".wav", 80, 100)
+
+			else
+
+				local effectdata = EffectData()
+				effectdata:SetOrigin(explosionPos)
+				util.Effect("Explosion", effectdata)
+
+				CrashingScannerProp:EmitSound("weapons/explode" .. math.random(3, 5) .. ".wav", 100, 100)
+			end
+
+			SpawnMortarGibs(explosionPos)
 			CrashingScannerProp:Remove()
 		end
 
 		CrashingScannerProp.Think = function()
+			if not IsValid(CrashingScannerProp) then
+				return
+			end
+
 			CrashingScannerProp:SetVelocity(crashdir:GetNormalized() * 30)
-			CrashingScannerProp:SetAngles(CrashingScannerProp:GetAngles() + Angle(0,0,3))
+			CrashingScannerProp:SetAngles(CrashingScannerProp:GetAngles() + Angle(0, 0, 3))
 			CrashingScannerProp:NextThink(CurTime())
+
 			local tr = util.TraceLine({
 				start = CrashingScannerProp:GetPos(),
-				endpos = CrashingScannerProp:GetPos() + crashdir:GetNormalized() * 3000,
-				filter = self
+				endpos = CrashingScannerProp:GetPos()
+					+ crashdir:GetNormalized() * 3000,
+				filter = CrashingScannerProp
 			})
 
-			sound.EmitHint(SOUND_DANGER, tr.HitPos, 300, 0.5)
+			sound.EmitHint(
+				SOUND_DANGER,
+				tr.HitPos,
+				300,
+				0.5
+			)
+
 			return true
 		end
 
 		CrashingScannerProp.StartTouch = function()
 			CrashingScannerProp:Explode()
 		end
-		timer.Simple(2, function() if IsValid(CrashingScannerProp) then CrashingScannerProp:Explode() end end)
+
+		timer.Simple(2, function()
+			if IsValid(CrashingScannerProp) then
+				CrashingScannerProp:Explode()
+			end
+		end)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

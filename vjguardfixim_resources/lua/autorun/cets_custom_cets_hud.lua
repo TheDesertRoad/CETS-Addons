@@ -6,7 +6,7 @@ local DamageIcons = {
 
 	[DMG_POISON] = {
 		char = "c",
-		size = 48
+		size = 44
 	},
 
 	[DMG_PARALYZE] = {
@@ -16,7 +16,7 @@ local DamageIcons = {
 
 	[DMG_ACID] = {
 		char = "a",
-		size = 48
+		size = 44
 	},
 
 	[DMG_NERVEGAS] = {
@@ -26,7 +26,7 @@ local DamageIcons = {
 
 	[DMG_DROWN] = {
 		char = "b",
-		size = 48
+		size = 40
 	},
 
 	[DMG_SHOCK] = {
@@ -40,7 +40,7 @@ local DamageIcons = {
 	},
 
 	[DMG_PLASMA] = {
-		char = "d",
+		char = "m",
 		size = 44
 	},
 
@@ -56,6 +56,16 @@ local DamageIcons = {
 
 	[DMG_SLOWBURN] = {
 		char = "g",
+		size = 44
+	},
+
+	[DMG_SONIC] = {
+		char = "n",
+		size = 44
+	},
+
+	[DMG_DISSOLVE] = {
+		char = "m",
 		size = 44
 	},
 }
@@ -101,6 +111,8 @@ local CETS_DamageIndicatorTypes = {
 	DMG_PLASMA,
 	DMG_PHYSGUN,
 	DMG_BURN,
+	DMG_SONIC,
+	DMG_DISSOLVE,
 	DMG_SLOWBURN
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1284,6 +1296,20 @@ hook.Add("HUDPaint", "CETS_AuxPower_Flashlight_Draw", function()
 		glowAlpha = 255 * (1 - fadeProgress)
 	end
 
+	local drawColor = Color(flashlightHUDColor.r, flashlightHUDColor.g, flashlightHUDColor.b, 255)
+	local glowColor = Color(flashlightHUDColor.r, flashlightHUDColor.g, flashlightHUDColor.b, glowAlpha)
+
+	local numberX = x + HS(80)
+	local numberY = y + HS(32)
+
+	local powerText = tostring(math.floor(math.Clamp(CETS_AuxPower.FlashlightPower, 0, 100)))
+
+	if glowAlpha > 0 then
+		draw.SimpleText(powerText, GetHealthHUD_NFont(36, true), numberX, numberY, glowColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	end
+
+	draw.SimpleText(powerText, GetHealthHUD_NFont(36, false), numberX, numberY, drawColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
 	local iconX = x - HS(12)
 	local iconY = y
 
@@ -1295,19 +1321,9 @@ hook.Add("HUDPaint", "CETS_AuxPower_Flashlight_Draw", function()
 		flashlightIcon = "®"
 	end
 
-	draw.SimpleText(flashlightIcon, GetHealthHUD_NFont(58, false), iconX, iconY, flashlightHUDColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+	draw.SimpleText(flashlightIcon, GetHealthHUD_NFont(58, false), iconX, iconY, drawColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
-	local numberX = x + HS(80)
-	local numberY = y + HS(32)
-
-	local powerText = tostring(math.floor(math.Clamp(CETS_AuxPower.FlashlightPower, 0, 100)))
-
-	if glowAlpha > 0 then
-		draw.SimpleText(powerText, GetHealthHUD_NFont(36, true), numberX, numberY, glowColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	end
-
-	draw.SimpleText(powerText, GetHealthHUD_NFont(36, false), numberX, numberY, flashlightHUDColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	draw.SimpleText("FLASHLIGHT", GetHealthHUD_WFont(20, false), x - HS(64), y + HS(35), flashlightHUDColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	draw.SimpleText("FLASHLIGHT", GetHealthHUD_WFont(20, false), x - HS(64), y + HS(35), drawColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 	local segments = 10
 	local segmentGap = 3
@@ -1476,29 +1492,30 @@ hook.Add("HUDPaint", "HL2HealthHUD_Draw", function()
 	draw.RoundedBox(HS(8), x - boxW / 2.5, y - boxH / 2, boxW, boxH, Color(0, 0, 0, 100))
 
 	local glowTime = CurTime() - lastHealthChange
+	local glowAlpha = 255
 
-	if glowTime <= 0.2 then
-		glowAlpha = 255
-	else
-		local fadeTime = 2
-		local fadeProgress = math.Clamp((glowTime - 1) / fadeTime, 0, 1)
+	if glowTime > 1 then
+		local fadeProgress = math.Clamp((glowTime - 1) / 2, 0, 1)
 
 		glowAlpha = 255 * (1 - fadeProgress)
 	end
 
-	local iconX = x - HS(4)
-	local iconY = y - HS(6)
-
-	draw.SimpleText("G", GetHealthHUDFont(64, false), iconX, iconY, healthHUDColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+	local drawColor = Color(healthHUDColor.r, healthHUDColor.g, healthHUDColor.b, 255)
+	local glowColor = Color(healthHUDColor.r, healthHUDColor.g, healthHUDColor.b, glowAlpha)
 
 	local numberX = x + HS(60)
 	local numberY = y - HS(4)
 
 	if glowAlpha > 0 then
-		draw.SimpleText(tostring(health), GetHealthHUD_NFont(72, true), numberX, numberY, healthHUDColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(tostring(health), GetHealthHUD_NFont(72, true), numberX, numberY,glowColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
-	draw.SimpleText(tostring(health), GetHealthHUD_NFont(72, false), numberX, numberY, healthHUDColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(tostring(health), GetHealthHUD_NFont(72, false), numberX, numberY, drawColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+	local iconX = x - HS(4)
+	local iconY = y - HS(6)
+
+	draw.SimpleText("G", GetHealthHUDFont(62, false), iconX, iconY, drawColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
 	local labelX = x - HS(64)
 	local labelY = y + HS(32)
@@ -1585,32 +1602,30 @@ hook.Add("HUDPaint", "HL2SuitHUD_Draw", function()
 	draw.RoundedBox(HS(8), x - boxW / 2.5, y - boxH / 2, boxW, boxH, Color(0, 0, 0, 100))
 
 	local glowTime = CurTime() - lastSuitChange
+	local glowAlpha = 255
 
-	if glowTime <= 0.2 then
-		glowAlpha = 255
-	else
-		local fadeTime = 2
-		local fadeProgress = math.Clamp( (glowTime - 1) / fadeTime, 0, 1)
+	if glowTime > 1 then
+		local fadeProgress = math.Clamp((glowTime - 1) / 2, 0, 1)
 
-		glowAlpha =
-			255 * (1 - fadeProgress)
+		glowAlpha = 255 * (1 - fadeProgress)
 	end
 
 	local drawColor = Color(suitHUDColor.r, suitHUDColor.g, suitHUDColor.b, 255)
-
-	local iconX = x - HS(10)
-	local iconY = y - HS(6)
-
-	draw.SimpleText("H", GetHealthHUDFont(64, false), iconX, iconY, drawColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+	local glowColor = Color(suitHUDColor.r, suitHUDColor.g, suitHUDColor.b, glowAlpha)
 
 	local numberX = x + HS(60)
 	local numberY = y - HS(4)
 
 	if glowAlpha > 0 then
-		draw.SimpleText(tostring(suitCharge), GetHealthHUD_NFont(72, true), numberX, numberY, drawColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(tostring(suitCharge), GetHealthHUD_NFont(72, true), numberX, numberY, glowColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	draw.SimpleText(tostring(suitCharge), GetHealthHUD_NFont(72, false), numberX, numberY, drawColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+	local iconX = x - HS(10)
+	local iconY = y - HS(6)
+
+	draw.SimpleText("H", GetHealthHUDFont(62, false), iconX, iconY, drawColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
 	local labelX = x - HS(64)
 	local labelY = y + HS(32)
@@ -2038,24 +2053,26 @@ hook.Add("HUDPaint", "HL2PrimaryClipHUD_Draw", function()
 
 	draw.RoundedBox(HS(8), x - boxW / 2, y - boxH / 2, boxW, boxH, Color(0, 0, 0, 100))
 
-	local drawColor = primaryAmmoHUDColor
-
 	local glowTime = CurTime() - lastPrimaryClipChange
 	local glowAlpha = 255
 
 	if glowTime > 1 then
 		local fadeProgress = math.Clamp((glowTime - 1) / 2, 0, 1)
+
 		glowAlpha = 255 * (1 - fadeProgress)
 	end
 
 	local numberX = x + HS(32)
 	local numberY = y - HS(4)
 
+	local drawColor = Color(primaryAmmoHUDColor.r, primaryAmmoHUDColor.g, primaryAmmoHUDColor.b, 255)
+	local glowColor = Color(primaryAmmoHUDColor.r, primaryAmmoHUDColor.g, primaryAmmoHUDColor.b, glowAlpha)
+
 	if glowAlpha > 0 then
-		draw.SimpleText(tostring(clip), GetHealthHUD_NFont(72, true), numberX, numberY, drawColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText(tostring(clip), GetHealthHUD_NFont(72, true), numberX, numberY, glowColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 
-	draw.SimpleText(tostring(clip), GetHealthHUD_NFont(72, false), numberX, numberY, primaryAmmoHUDColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	draw.SimpleText(tostring(clip), GetHealthHUD_NFont(72, false), numberX, numberY, drawColor, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
 	local ammoIcon = GetPrimaryAmmoIcon(ply, weapon)
 
@@ -2065,7 +2082,7 @@ hook.Add("HUDPaint", "HL2PrimaryClipHUD_Draw", function()
 	local iconX = x - HS(48)
 	local iconY = y - HS(12)
 
-	draw.SimpleText(iconChar, GetHealthHUD_AFont(iconSize, false), iconX, iconY, primaryAmmoHUDColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+	draw.SimpleText(iconChar, GetHealthHUD_AFont(iconSize, false), iconX, iconY, drawColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
 	local labelX = x - HS(130)
 	local labelY = y + HS(24)
@@ -2260,10 +2277,6 @@ hook.Add("HUDPaint", "HL2ReserveClipHUD_Draw", function()
 
 			local iconX = x - HS(56)
 			local iconY = y - HS(12)
-
-			if glowAlpha > 0 then
-				draw.SimpleText(iconChar, GetHealthHUD_AFont(iconSize, true), iconX, iconY, glowColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-			end
 
 			draw.SimpleText(iconChar, GetHealthHUD_AFont(iconSize, false), iconX, iconY, drawColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		end
@@ -2501,7 +2514,7 @@ local DamageIcons = {
 
 	[DMG_POISON] = {
 		char = "c",
-		size = 48
+		size = 44
 	},
 
 	[DMG_PARALYZE] = {
@@ -2511,7 +2524,7 @@ local DamageIcons = {
 
 	[DMG_ACID] = {
 		char = "a",
-		size = 48
+		size = 44
 	},
 
 	[DMG_NERVEGAS] = {
@@ -2521,7 +2534,7 @@ local DamageIcons = {
 
 	[DMG_DROWN] = {
 		char = "b",
-		size = 48
+		size = 40
 	},
 
 	[DMG_SHOCK] = {
@@ -2556,12 +2569,12 @@ local DamageIcons = {
 
 	[DMG_SONIC] = {
 		char = "n",
-		size = 844
+		size = 44
 	},
 
 	[DMG_DISSOLVE] = {
 		char = "m",
-		size = 844
+		size = 44
 	},
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2579,12 +2592,27 @@ local StatusIcons = {
 	BleedImmunity = {
 		char = "k",
 		size = 48
-	}
+	},
+
+	LongJump = {
+		char = "o",
+		size = 36
+	},
+
+	NightVision = {
+		char = "p",
+		size = 36
+	},
+
+	LongFall = {
+		char = "q",
+		size = 48
+	},
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local DamageIconsActive = {}
 
-local MaxDamageIcons = 6
+local MaxDamageIcons = 8
 
 local DamageIconSpacing = 80
 local DamageIconRight = 1890
@@ -2682,6 +2710,9 @@ local StatusUpdateInterval = 0.1
 local LastSpeedBoost = false
 local LastAntitoxin = false
 local LastBleedImmunity = false
+local LastLongJump = false
+local LastNightVision = false
+local LastLongFall = false
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function UpdateStatusIcons(ply)
 	if not IsValid(ply) then
@@ -2723,6 +2754,42 @@ local function UpdateStatusIcons(ply)
 			RemoveStatusIcon("status_bleedimmunity")
 		end
 	end
+
+	local longJump = ply:GetNWBool("HasLongJump", false)
+
+	if longJump ~= LastLongJump then
+		LastLongJump = longJump
+
+		if longJump then
+			AddStatusIcon("status_longjump", StatusIcons.LongJump)
+		else
+			RemoveStatusIcon("status_longjump")
+		end
+	end
+
+	local nightVision = ply:GetNWBool("HasNV", false)
+
+	if nightVision ~= LastNightVision then
+		LastNightVision = nightVision
+
+		if nightVision then
+			AddStatusIcon("status_nightvision", StatusIcons.NightVision)
+		else
+			RemoveStatusIcon("status_nightvision")
+		end
+	end
+
+	local longFall = ply:GetNWBool("HasFallDampener", false)
+
+	if longFall ~= LastLongFall then
+		LastLongFall = longFall
+
+		if longFall then
+			AddStatusIcon("status_longfall", StatusIcons.LongFall)
+		else
+			RemoveStatusIcon("status_longfall")
+		end
+	end
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 timer.Create("CETS_DMG_CustomHUD_StatusUpdate", StatusUpdateInterval, 0, function()
@@ -2746,6 +2813,21 @@ timer.Create("CETS_DMG_CustomHUD_StatusUpdate", StatusUpdateInterval, 0, functio
 		if LastBleedImmunity then
 			LastBleedImmunity = false
 			RemoveStatusIcon("status_bleedimmunity")
+		end
+
+		if LastLongJump then
+			LastLongJump = false
+			RemoveStatusIcon("status_longjump")
+		end
+
+		if LastNightVision then
+			LastNightVision = false
+			RemoveStatusIcon("status_nightvision")
+		end
+
+		if LastLongFall then
+			LastLongFall = false
+			RemoveStatusIcon("status_longfall")
 		end
 
 		return
@@ -2908,7 +2990,7 @@ hook.Add("HUDPaint", "CETS_DMG_DrawDamageIndicators", function()
 		x = Lerp(progress, startX, targetX)
 	end
 
-	local maxWidth = HUDX(280)
+	local maxWidth = HUDX(512)
 	local boxHeight = HUDY(72)
 
 	local padding = HUDX(40)

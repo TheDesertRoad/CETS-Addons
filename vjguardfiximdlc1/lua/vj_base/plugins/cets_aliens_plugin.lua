@@ -12,6 +12,7 @@ local spawnCategory = "CETS"
 
 VJ.AddCategoryInfo(spawnCategory, {Icon = "games/16/hl2.png"})
 
+game.AddDecal("VJ_CETS_Garg_Break1", {"decals/cets_garg_break"})
 game.AddDecal("VJ_CETS_Burnt1_Small", {"decals/cets_scorch_small1", "decals/cets_scorch_small2", "decals/cets_scorch_small3"})
 game.AddDecal("VJ_CETS_Garg_Burnt1", {"decals/cets_garg_burnt"})
 game.AddDecal("VJ_CETS_Mom", {"decals/cets_mom1", "decals/cets_mom2", "decals/cets_mom3", "decals/cets_mom4"})

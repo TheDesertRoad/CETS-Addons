@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/dmi_crossbow/xbow"
+	"$bumpmap" "models/weapons/dmi_crossbow/xbow_normal"
+
+	"$phong" 				"1"
+	"$phongboost" 				"1"
+	"$phongalbedotint"			 "1"
+	"$phongexponent" 			"128"
+	"$phongfresnelranges" 			"[1 5 1]"
+}

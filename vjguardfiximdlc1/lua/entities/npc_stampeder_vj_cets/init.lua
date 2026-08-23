@@ -42,8 +42,6 @@ ENT.MeleeAttackDamageDistance = 70 -- How far does the damage go?
 ENT.AnimTbl_MeleeAttack = "attack"
 
 ENT.HasRangeAttack = false
-ENT.RangeAttackProjectiles = "obj_vj_nothing_of_the_lazyness"
-ENT.NextRangeAttackTime = 99999999999999999999999999999999
 
 ENT.ChargeDuration = math.random(4, 8)
 ENT.ChargeCooldown = math.random(2, 8)
@@ -152,14 +150,10 @@ function ENT:OnThink()
 			if !self:Attacking() then
 				if controller:KeyDown(IN_JUMP) && self.NextChargeTime < CurTime() then
 					self:ChargeAtEnemy(5)
-					VJ.EmitSound(self, "npc/stampeder/misc" .. math.random(1, 2) .. ".wav", 70)
-					VJ.EmitSound(self, "npc/alien_grunt/ag_charging1.wav", 70)
 				end
 			end
 	else
 			if !self:Attacking() && self.NextChargeTime < CurTime() && self:CanChargeEnemy() && self.EnemyData.DistanceNearest > 64 then
-					VJ.EmitSound(self, "npc/stampeder/misc" .. math.random(1, 2) .. ".wav", 70)
-					VJ.EmitSound(self, "npc/alien_grunt/ag_charging1.wav", 70)
 					self:ChargeAtEnemy(self.ChargeDuration)
 				end
 			end
@@ -287,10 +281,14 @@ function ENT:ChargeThink()
 	end
 
 	if self:CustomMeleeDamage(self.ChargeDamage, bit.bor(DMG_CLUB,DMG_CRUSH,DMG_SLASH)) == true then -- Player or NPC was hit.
-		self:StopCharging(false,self.ChargeCooldown)
 		self:EmitSound("npc/alien_grunt/ag_charger_smash_0" .. math.random(1, 3) .. ".wav", 90, math.random(70,80))
 		ParticleEffect("gonarch_footstep_4", self:GetPos() + self:GetUp()*30, Angle(0,0,0))
-		self:VJ_ACT_PLAYACTIVITY("chargeend", true, duration, true)
+		self:StopCharging(false, self.ChargeCooldown)
+
+		local seq = self:LookupSequence("attack")
+		local duration = seq > 0 and self:SequenceDuration(seq) or 0.5
+
+		self:VJ_ACT_PLAYACTIVITY("attack", true, duration, true)
 	end
 
 	if self:IsOnGround() then
@@ -374,15 +372,48 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ChargeAtEnemy(duration)
 	if self.Charging then return end
+
 	self.Charging = true
 	self.Charge_ApplyForceCountdownStarted = false
 	self.Charge_ShouldApplyForce = false
 
-	self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
+	self:VJ_ACT_PLAYACTIVITY("chargestart", true, false, true)
 
-	timer.Simple(duration, function() if IsValid(self) && self.Charging then
-		self:StopCharging(true,self.ChargeCooldown)
-	end end)
+	local seq = self:LookupSequence("chargestart")
+	local animDuration = 0
+	
+	self:EmitSound("npc/stampeder/grumble" .. math.random(1, 3) .. ".wav", 90, math.random(90, 110))
+
+	if seq and seq > 0 then
+		animDuration = self:SequenceDuration(seq)
+	end
+
+	if animDuration <= 0 then
+		animDuration = 0.5
+	end
+
+	timer.Simple(animDuration, function()
+		if not IsValid(self) then return end
+		if not self.Charging then return end
+		if self.DeathAnimationCodeRan then return end
+
+		local enemy = self:GetEnemy()
+		if not IsValid(enemy) then
+			self:StopCharging(true, self.ChargeCooldown * 0.5)
+			return
+		end
+
+		self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
+
+		VJ.EmitSound(self, "npc/stampeder/misc" .. math.random(1, 2) .. ".wav", 70)
+		VJ.EmitSound(self, "npc/alien_grunt/ag_charging1.wav", 70)
+
+		timer.Simple(duration, function()
+			if IsValid(self) && self.Charging then
+				self:StopCharging(true, self.ChargeCooldown)
+			end
+		end)
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StopCharging(UseAnimation,nextcharge)
@@ -402,7 +433,7 @@ function ENT:StopCharging(UseAnimation,nextcharge)
 		self.MovementType = VJ_MOVETYPE_GROUND
 		self.CanTurnWhileStationary = true
 		self.HasMeleeAttack = true
-		self.HasRangeAttack = true
+		self.HasRangeAttack = false
 		self.IsGuard = false
 		self.CallForHelp = true
 	end end)

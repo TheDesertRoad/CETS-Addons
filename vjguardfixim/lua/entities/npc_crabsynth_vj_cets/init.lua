@@ -417,12 +417,12 @@ function ENT:FireGun()
 	self:FireBullets({
 		Src = bullet_source,
 		Dir = fire_dir,
-			Damage = 2,
-			Force = 25,
-	TracerName = "AirboatGunHeavyTracer",
-	Tracer = 2,
-	Spread = Vector( self.BulletSpread,self.BulletSpread,self.BulletSpread ),
-	Num = 1,
+		Damage = 2,
+		Force = 25,
+		TracerName = "AirboatGunHeavyTracer",
+		Tracer = 2,
+		Spread = Vector( self.BulletSpread,self.BulletSpread,self.BulletSpread ),
+		Num = 1,
 		Callback = function(attacker, tracer)
 			if math.random(1, 4) == 1 then
 				local effectdata = EffectData()
@@ -636,41 +636,71 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ChargeAtEnemy(duration)
 	if self.Charging then return end
+
 	self.Charging = true
 	self.Charge_ApplyForceCountdownStarted = false
 	self.Charge_ShouldApplyForce = false
 
-	self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
+	self:VJ_ACT_PLAYACTIVITY("chargeready", true, false, true)
 
-	timer.Simple(duration, function() if IsValid(self) && self.Charging then
-		self:StopCharging(true,self.ChargeCooldown)
-	end end)
+	local seq = self:LookupSequence("chargeready")
+	local animDuration = 0
+	
+	self:EmitSound("npc/crabsynth/cs_roar0" .. math.random(1, 2) .. ".wav", 80, math.random(90, 110))
+
+	if seq and seq > 0 then
+		animDuration = self:SequenceDuration(seq)
+	end
+
+	if animDuration <= 0 then
+		animDuration = 0.5
+	end
+
+	timer.Simple(animDuration, function()
+		if not IsValid(self) then return end
+		if not self.Charging then return end
+		if self.DeathAnimationCodeRan then return end
+
+		local enemy = self:GetEnemy()
+		if not IsValid(enemy) then
+			self:StopCharging(true, self.ChargeCooldown * 0.5)
+			return
+		end
+
+		self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, duration, false)
+
+		timer.Simple(duration, function()
+			if IsValid(self) && self.Charging then
+				self:StopCharging(true, self.ChargeCooldown)
+			end
+		end)
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StopCharging(UseAnimation,nextcharge)
 	if self.DeathAnimationCodeRan then return end
-
+ 
 	self.MovementType = VJ_MOVETYPE_STATIONARY
 	self.CanTurnWhileStationary = false
 	self.HasMeleeAttack = false
 	self.HasRangeAttack = false
 	self.IsGuard = true
 	self.CallForHelp = false
-
-	if UseAnimation then self:VJ_ACT_PLAYACTIVITY("chargeend", true, self:SequenceDuration(self:LookupSequence( "mgrunt_charge_crash" )), true) end
-
+ 
+	if UseAnimation then self:VJ_ACT_PLAYACTIVITY("chargeend", true, self:SequenceDuration(self:LookupSequence( "chargeend" )), true) end
+ 
 	timer.Simple(self:SequenceDuration(self:LookupSequence( "chargeend" )), function() if IsValid(self) then
 		self.MovementType = VJ_MOVETYPE_GROUND
 		self.CanTurnWhileStationary = true
 		self.HasMeleeAttack = true
-		self.HasRangeAttack = true
+		self.HasRangeAttack = false
 		self.IsGuard = false
 		self.CallForHelp = true
 	end end)
-
+ 
 	self.Charging = false
 	self.Charge_ShouldApplyForce = false
-
+ 
 	self.NextChargeTime = CurTime() + nextcharge
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

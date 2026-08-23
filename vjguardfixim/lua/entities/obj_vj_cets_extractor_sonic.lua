@@ -114,6 +114,19 @@ function ENT:OnDestroy()
 		VJ.EmitSound(self, "hl1/misc/ear_ringing.wav", 70, 100)
 		util.ScreenShake(myPos, 60, 70, 1, 4096)
 
+		for _, ply in ipairs(player.GetAll()) do
+			if IsValid(ply) && ply:GetPos():DistToSqr(self:GetPos()) <= (512 * 512) then
+				ply:SetDSP(15, false)
+
+				timer.Simple(3, function()
+					if IsValid(ply) then
+						ply:SetDSP(0, false)
+						ply:StopSound("hl1/misc/ear_ringing.wav")
+					end
+				end)
+			end
+		end
+
 		effects.BeamRingPoint(myPos, 0.5, 30, 1024, 75, 0, color1)
 
 		ParticleEffect("hunter_projectile_explosion_1", self:GetPos(), Angle(0,0,0))

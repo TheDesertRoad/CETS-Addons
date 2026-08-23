@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/dmi_crossbow/crossbow dirtmap"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.25 .25 .25]"
+	"$normalmapalphaenvmapmask" 1
+}
