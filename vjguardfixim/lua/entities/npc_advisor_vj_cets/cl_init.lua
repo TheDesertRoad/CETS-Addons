@@ -5,7 +5,7 @@ function ENT:Draw()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local overlayEnd = 0
-local overlayMaterial = Material("effects/advisoreffect/advisorblast1")
+local overlayMaterial = Material("effects/advisoreffect/advisorblast1_cets")
 ---------------------------------------------------------------------------------------------------------------------------------------------
 net.Receive("AdvisorBlindOverlay", function()
 	local duration = net.ReadFloat()
@@ -19,5 +19,5 @@ hook.Add("RenderScreenspaceEffects", "AdvisorBlindOverlay", function()
 	local intensity = 1
 
 	overlayMaterial:SetFloat("$alpha", intensity)
-	DrawMaterialOverlay("effects/advisoreffect/advisorblast1", intensity)
+	DrawMaterialOverlay("effects/advisoreffect/advisorblast1_cets", intensity)
 end)

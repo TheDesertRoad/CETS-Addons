@@ -828,6 +828,11 @@
 @PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_watermelon : "Watermelon" []
 @PointClass base(Item) iconsprite("editor/cets_food.vmt") = ent_hlfood_wine : "Wine" []
 
+@PointClass base(Item) studio("models/props_combine/bunker_gun01.mdl") = ent_cets_emplacement : "AR3 Emplacement" []
+@PointClass base(Item) studio("models/props_cets/hmg1_mount_gun01.mdl") = ent_cets_emplacement_hmg : "HMG Emplacement" []
+@PointClass base(Item) studio("models/props_combine/bunker_gun01.mdl") = ent_cets_emplacement_rocket : "Rocket Emplacement" []
+@PointClass base(Item) studio("models/props_combine/bunker_gun01.mdl") = ent_cets_emplacement_hecu : "HECU Emplacement" []
+
 @PointClass base(Item) studio("models/props_cets/ammo_stack.mdl") = ent_cets_ammopile : "Ammo Pile"
 [
 	spawnflags(Flags) =

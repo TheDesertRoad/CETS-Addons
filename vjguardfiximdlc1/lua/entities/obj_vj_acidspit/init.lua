@@ -42,7 +42,7 @@ end
 function ENT:OnThink()
 	if self:WaterLevel() > 0 then 
 		local pos = self:GetPos() +self:GetAngles():Forward()
-		effects.BubbleTrail(pos +Vector(-1, -1, -1), pos +Vector(1, 1, 1), math.random(0.3, 0.8), 0, 6, 0)
+		VJ_CETS_StartBubbleTrail(self, {Offset = Vector(0, 0, 0), BoxSize = Vector(8, 8, 8), Amount = 2, Interval = 0.2, SurfaceOffset = 10, SpeedMin = 48, SpeedMax = 72, SizeMin = 1, SizeMax = 3, LifeMin = 1, LifeMax = 2, AlphaMin = 4, AlphaMax = 86, Color = Color(255, 255, 255), Texture = "effects/bubble"})
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

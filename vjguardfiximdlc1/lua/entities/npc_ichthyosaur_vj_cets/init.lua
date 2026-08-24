@@ -1,5 +1,5 @@
-AddCSLuaFile( "shared.lua" )
-include('shared.lua')
+AddCSLuaFile("shared.lua")
+include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
@@ -9,8 +9,8 @@ ENT.Model = "models/hl2_ichthy.mdl"
 ENT.StartHealth = 1000
 ENT.CanChatMessage = false
 ENT.HullType = HULL_WIDE_SHORT
-ENT.SightAngle = 280
-ENT.SightDistance = 2000
+ENT.SightAngle = 360
+ENT.SightDistance = 4096
 ENT.TurningSpeed = 7
 ENT.AnimTbl_Walk = {"walk", "walk_original"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -145,12 +145,6 @@ function ENT:CustomOnThink()
 	self.NextFootstepSoundT = CurTime() + 1
 
 	local enemy = self:GetEnemy()
-	if IsValid(enemy) && enemy:WaterLevel() <= 3  && self:WaterLevel() <= 3 then
-		self:ClearEnemyMemory(enemy)
-		self:SetEnemy(nil)
-		self.MeleeAttackTarget = nil
-		self:MaintainAlertBehavior()
-	end
 
 	if self:WaterLevel() <= 2 then
 		if self.MeleeAttackStarted then
@@ -193,6 +187,8 @@ function ENT:CustomOnThink()
 	end
 
 	if self.MovementType == VJ_MOVETYPE_AQUATIC then
+		VJ_CETS_CreateBubbles(self, {Offset = Vector(16, 0, 0), BoxSize = Vector(16, 16, 10), Amount = 1, Interval = 0.2, SurfaceOffset = 10, SpeedMin = 35, SpeedMax = 65, SizeMin = 1, SizeMax = 3, LifeMin = 1, LifeMax = 4, AlphaMin = 4, AlphaMax = 86, Color = Color(255, 255, 255), Texture = "effects/bubble"})
+
 		if self:GetAbsVelocity():Length() < 1 then
 			self.TurningUseAllAxis = false
 			if self:GetAngles().x > 1 then
@@ -204,39 +200,6 @@ function ENT:CustomOnThink()
 			end
 		end
 	end
-
-	if self:WaterLevel() > 2 then
-		if not IsValid(self) then return end
-		if self:WaterLevel() <= 0 then return end
-
-		local pos = self:GetPos()
-
-		local tr = util.TraceLine({
-			start = pos,
-			endpos = pos + Vector(0, 0, 4096),
-			mask = MASK_WATER
-		})
-
-		if not tr.Hit then return end
-
-		local waterSurfaceZ = tr.HitPos.z
-
-		local bubbleLimitZ = waterSurfaceZ - (self.BubbleSurfaceDistance or 20)
-
-		local mins = pos + self:OBBMins()
-		local maxs = pos + self:OBBMaxs()
-
-		maxs.z = math.min(maxs.z, bubbleLimitZ)
-
-		if maxs.z <= mins.z then
-			return
-		end
-
-		effects.Bubbles(mins, maxs, math.random(0, 1), math.random(64, 128), 1)
-	
-	else 
-
-	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
@@ -245,45 +208,20 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 	self.IsAbleToRangeAttack = true
 
 	if dmginfo:IsDamageType( DMG_PHYSGUN ) or dmginfo:IsDamageType( DMG_CRUSH ) then 
+		VJ_CETS_CreateBubbles(self, {Offset = Vector(12, 0, 0), BoxSize = Vector(32, 32, 18), Amount = 25, Interval = 0.01, SurfaceOffset = 10, SpeedMin = 35, SpeedMax = 65, SizeMin = 1, SizeMax = 3, LifeMin = 1, LifeMax = 4, AlphaMin = 4, AlphaMax = 86, Color = Color(255, 255, 255), Texture = "effects/bubble"})
+
 		self:VJ_ACT_PLAYACTIVITY("thrash",true,2,false)
 		self.HasMeleeAttack = false
+		self.MeleeAttackStarted = false
+		self.MeleeAttackHit = false
+		self.MeleeAttackTarget = nil
 		self.SightDistance = 1 
 		self.CallForHelp = true
 
-		if self:WaterLevel() > 2 then
-			if not IsValid(self) then return end
-			if self:WaterLevel() <= 0 then return end
+		VJ_CETS_CreateBubbles(self, 2, Vector(20, 30, 10), 20)
 
-			local pos = self:GetPos()
-
-			local tr = util.TraceLine({
-				start = pos,
-				endpos = pos + Vector(0, 0, 4096),
-				mask = MASK_WATER
-			})
-
-			if not tr.Hit then return end
-
-			local waterSurfaceZ = tr.HitPos.z
-
-			local bubbleLimitZ = waterSurfaceZ - (self.BubbleSurfaceDistance or 20)
-
-			local mins = pos + self:OBBMins() * 1.5
-			local maxs = pos + self:OBBMaxs() * 1.5
-
-			maxs.z = math.min(maxs.z, bubbleLimitZ)
-
-			if maxs.z <= mins.z then
-				return
-			end
-
-			effects.Bubbles(mins, maxs, math.random(8, 16), math.random(64, 128), 1)
-	
-			else 
-
-			end
-
-			timer.Simple(self:SequenceDuration(self:LookupSequence( "thrash" )),function() if IsValid(self) then
+		timer.Simple(self:SequenceDuration(self:LookupSequence( "thrash" )),function() 
+			if IsValid(self) then
 				self.SightDistance = 60000 
 				self.CallForHelp = true
 				self.HasMeleeAttack = true
@@ -293,45 +231,18 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 	end
 
 	if dmginfo:IsDamageType( DMG_SONIC ) then 
+		VJ_CETS_CreateBubbles(self, {Offset = Vector(12, 0, 0), BoxSize = Vector(32, 32, 18), Amount = 25, Interval = 0.01, SurfaceOffset = 10, SpeedMin = 35, SpeedMax = 65, SizeMin = 1, SizeMax = 3, LifeMin = 1, LifeMax = 4, AlphaMin = 4, AlphaMax = 86, Color = Color(255, 255, 255), Texture = "effects/bubble"})
+
 		self:VJ_ACT_PLAYACTIVITY("thrash",true,1,false)
 		self.HasMeleeAttack = false
+		self.MeleeAttackStarted = false
+		self.MeleeAttackHit = false
+		self.MeleeAttackTarget = nil
 		self.SightDistance = 1 
 		self.CallForHelp = true
 
-		if self:WaterLevel() > 2 then
-			if not IsValid(self) then return end
-			if self:WaterLevel() <= 0 then return end
-
-			local pos = self:GetPos()
-
-			local tr = util.TraceLine({
-				start = pos,
-				endpos = pos + Vector(0, 0, 4096),
-				mask = MASK_WATER
-			})
-
-			if not tr.Hit then return end
-
-			local waterSurfaceZ = tr.HitPos.z
-
-			local bubbleLimitZ = waterSurfaceZ - (self.BubbleSurfaceDistance or 20)
-
-			local mins = pos + self:OBBMins() * 1.5
-			local maxs = pos + self:OBBMaxs() * 1.5
-
-			maxs.z = math.min(maxs.z, bubbleLimitZ)
-
-			if maxs.z <= mins.z then
-				return
-			end
-
-			effects.Bubbles(mins, maxs, math.random(8, 16), math.random(64, 128), 1)
-	
-			else 
-
-			end
-
-			timer.Simple(self:SequenceDuration(self:LookupSequence( "thrash" )),function() if IsValid(self) then
+		timer.Simple(self:SequenceDuration(self:LookupSequence( "thrash" )), function() 
+			if IsValid(self) then
 				self.SightDistance = 60000 
 				self.CallForHelp = true
 				self.HasMeleeAttack = true
@@ -347,11 +258,11 @@ function ENT:OnAlert(ent)
 		return true
 	end
 
-	self:SetMaxLookDistance(1024)
+	self:SetMaxLookDistance(4098)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnResetEnemy() 
-	self:SetMaxLookDistance(1024)
+	self:SetMaxLookDistance(4098)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
@@ -394,9 +305,7 @@ function ENT:StartChargeAttack(enemy)
 	end
 
 	self.MeleeAttackChargeDirection = direction
-
 	self:SetVelocity(direction * self.MeleeAttackChargeSpeed)
-
 	self.MeleeAttackChargeAngle = direction:Angle()
 
 	local timerName = "IchthyosaurCharge_" .. self:EntIndex()
@@ -519,6 +428,8 @@ function ENT:EndChargeAttack()
 	self:SetLocalVelocity(Vector(0, 0, 0))
 	self:SetLocalAngularVelocity(Angle(0, 0, 0))
 	self:RestoreChargeAngle()
+
+	VJ_CETS_CreateBubbles(self, {Offset = Vector(24, 0, 0), BoxSize = Vector(48, 48, 24), Amount = 50, Interval = 0.01, SurfaceOffset = 10, SpeedMin = 48, SpeedMax = 65, SizeMin = 1, SizeMax = 3, LifeMin = 1, LifeMax = 4, AlphaMin = 4, AlphaMax = 86, Color = Color(255, 255, 255), Texture = "effects/bubble"})
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FinishChargeAttack(hitEnt)
@@ -551,13 +462,6 @@ function ENT:FinishChargeAttack(hitEnt)
 
 	timer.Simple(self:SequenceDuration(self:LookupSequence(self.MeleeAttackFinishHitAnimation)) + 0.1, function()
 		if not IsValid(self) then return end
-
-		self.MeleeAttackStarted = false
-		self.MeleeAttackHit = false
-
-		if IsValid(self:GetEnemy()) then
-			self:ClearSchedule()
-		end
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -569,16 +473,10 @@ function ENT:MissChargeAttack()
 	VJ_EmitSound(self, self.SoundTbl_MeleeAttackMiss, 100, math.random(95, 105))
 
 	self:EndChargeAttack()
-
 	self:VJ_ACT_PLAYACTIVITY(self.MeleeAttackFinishMissAnimation, true, false, true)
 
 	timer.Simple(self:SequenceDuration(self:LookupSequence(self.MeleeAttackFinishMissAnimation)) + 0.1, function()
 		if not IsValid(self) then return end
-
-		self.MeleeAttackStarted = false
-		self.MeleeAttackHit = false
-
-		self:ClearSchedule()
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -20,6 +20,6 @@ if CLIENT then
 		local remaining = GargStompBlurEnd - CurTime()
 		local strength = math.Clamp(remaining, 0, 1) * 1
 
-		DrawMotionBlur(0.1, strength, 0.02)
+		DrawMotionBlur(0.1, strength, 0.01)
 	end)
 end

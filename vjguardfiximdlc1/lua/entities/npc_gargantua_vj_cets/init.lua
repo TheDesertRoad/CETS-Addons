@@ -291,6 +291,19 @@ function ENT:OnRangeAttack(status, enemy)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Garg_ForceAlert()
+	if not IsValid(self) or self.Dead then return end
+
+	self.Garg_SpecialRangeAttack = false
+	self.Garg_CanFlame = false
+	self.Garg_FlameLevel = 0
+	self.DisableChasingEnemy = false
+
+	self:ResetTurnTarget()
+
+	self:SetSchedule(SCHED_IDLE_WANDER)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjPos(projectile)
 	local attachment = self:GetAttachment(2)
 
@@ -354,6 +367,12 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 				net.Start("GargantuaSpecialStompBlur")
 				net.Send(ply)
 
+				timer.Simple(6, function()
+					if IsValid(self) then
+						self:Garg_ForceAlert()
+					end
+				end)
+
 				timer.Simple(8, function()
 					if IsValid(ply) then
 						ply:SetDSP(0, false)
@@ -389,6 +408,8 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 	if tr.Hit then
 		ParticleEffect("gargantua_stomp2a", tr.HitPos + tr.HitNormal, Angle(0, 0, 0), nil)
 	end
+
+	self:Garg_ForceAlert()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Garg_ResetFlame()
