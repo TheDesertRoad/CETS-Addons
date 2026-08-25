@@ -22,14 +22,14 @@ ENT.Automatic = true
 ENT.DoNetworking = true
 ENT.HideGunModel = true
 
-ENT.Damage = 28
-ENT.NPCDamage = 14
+ENT.Damage = 100
+ENT.NPCDamage = 130
 
 ENT.NPCFire = true
 
 ENT.NPC_NextPrimaryFire = 2
-ENT.NPC_TimeUntilFire = 1
-ENT.NPC_TimeUntilFireExtraTimers = {3, 5}
+ENT.NPC_TimeUntilFire = 3
+ENT.NPC_TimeUntilFireExtraTimers = {2, 5}
 
 ENT.Spread = Vector(1, 1, 0) * 0.02
 ENT.NPCSpread = Vector(1, 1, 0) * 0.08

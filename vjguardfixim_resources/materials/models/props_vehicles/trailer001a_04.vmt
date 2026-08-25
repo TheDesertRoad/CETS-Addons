@@ -1,0 +1,7 @@
+
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "Models/props_vehicles/trailer001a_04"
+	"$surfaceprop" "solidmetal"
+}

@@ -13,14 +13,14 @@ ENT.Author 			= "VALVe"
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 ENT.AutomaticFrameAdvance = true
 
-ENT.Model = "models/weapons/w_mach_m60.mdl"
+ENT.Model = "models/props_marines/50cal.mdl"
 ENT.InvModel = "models/props_combine/bunker_gun01_nogun.mdl"
 
 ENT.ShootDelay = 0.08
 ENT.Ammo = -1
 ENT.Automatic = true
 ENT.DoNetworking = true
-ENT.HideGunModel = true
+ENT.HideGunModel = false
 
 ENT.Damage = 28
 ENT.NPCDamage = 16

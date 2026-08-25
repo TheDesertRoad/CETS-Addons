@@ -29,7 +29,7 @@ ENT.NPCFire = true
 
 ENT.NPC_NextPrimaryFire = 0.1
 ENT.NPC_TimeUntilFire = 0
-ENT.NPC_TimeUntilFireExtraTimers = {0.055, 0.4}
+ENT.NPC_TimeUntilFireExtraTimers = {0.055, 0.1}
 
 ENT.Spread = Vector(1, 1, 0) * 0.02
 ENT.NPCSpread = Vector(1, 1, 0) * 0.08

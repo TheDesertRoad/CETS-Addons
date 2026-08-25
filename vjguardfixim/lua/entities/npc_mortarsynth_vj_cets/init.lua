@@ -231,7 +231,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 				"models/gibs/msynth_gibs3.mdl"
 			}
 
-			for i = 1, math.random(4, 7) do
+			for i = 1, math.random(1, 5) do
 				local gib = ents.Create("prop_physics")
 
 				if IsValid(gib) then
