@@ -457,11 +457,25 @@ end)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("PlayerSpawn", "CETS_AuxPower_Reset", function(ply)
-	if not GetConVar("cets_cl_custom_aux_sys_hud"):GetBool() then return end
+	if not GetConVar("cets_cl_custom_aux_sys_hud"):GetBool() then
+		return
+	end
 
 	if not auxData[ply] then
 		auxData[ply] = CreateData()
 	end
+
+	local data = auxData[ply]
+
+	data.power = MAX_POWER
+	data.lastUse = 0
+	data.flashlightPower = FLASHLIGHT_MAX_POWER
+	data.lastFlashlightUse = 0
+	data.expenses = {}
+	data.oxygen = 1
+	data.oxygenTick = 0
+	data.drownHealth = 0
+	data.drownHealthTick = 0
 
 	timer.Simple(0.1, function()
 		if not IsValid(ply) then

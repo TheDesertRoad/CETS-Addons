@@ -37,7 +37,7 @@ ENT.AnimTbl_MeleeAttack = false
 ENT.MeleeAttackStartAnimation = "attackstart"
 ENT.MeleeAttackFinishHitAnimation = "attackend"
 ENT.MeleeAttackFinishMissAnimation = "attackmiss"
-ENT.MeleeAttackChargeSpeed = 12
+ENT.MeleeAttackChargeSpeed = 16
 ENT.MeleeAttackChargeTime = 1
 ENT.NextAnyAttackTime_Melee = 4
 
