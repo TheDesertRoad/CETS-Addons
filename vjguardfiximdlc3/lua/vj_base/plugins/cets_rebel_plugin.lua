@@ -49,6 +49,8 @@ VJ.AddNPC("Black Ops. Assassin","npc_blackops_assassin_vj_cets",vCat)
 VJ.AddNPC("Conscript Tank","npc_conscript_tank_vj_cets",vCat1)
 
 VJ.AddConVar("radiobroad_volume", 75, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_limit_uranium_ammo", 1, FCVAR_ARCHIVE)
+VJ.AddConVar("sv_cets_uranium_ammo", 200, FCVAR_ARCHIVE)
 
 VJ.AddConVar("npc_cets_barney_voice", 1, FCVAR_ARCHIVE)
 VJ.AddConVar("npc_cets_hecu_voice", 1, FCVAR_ARCHIVE)

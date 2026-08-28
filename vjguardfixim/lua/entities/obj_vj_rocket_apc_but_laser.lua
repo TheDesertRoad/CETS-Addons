@@ -10,7 +10,7 @@ ENT.PrintName		= "Missile"
 ENT.Spawnable = false
 
 ENT.RadiusDamage = GetConVar("sk_apc_missile_damage"):GetInt()
-ENT.RadiusDamageRadius = 130
+ENT.RadiusDamageRadius = 256
 
 ENT.SoundTbl_Idle = "weapons/physcannon/energy_sing_loop4.wav"
 ENT.SoundTbl_OnCollide = {"weapons/physcannon/energy_disintegrate4.wav", "weapons/physcannon/energy_disintegrate5.wav"}

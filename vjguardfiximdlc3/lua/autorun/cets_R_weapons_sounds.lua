@@ -1,3 +1,23 @@
+if SERVER then
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+local MAX_URANIUM = GetConVar("sv_cets_uranium_ammo"):GetInt()
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("Think", "CETS_UraniumAmmoLimit", function()
+	if GetConVar("sv_cets_limit_uranium_ammo"):GetInt() == 0 then return end
+
+	local ammoID = game.GetAmmoID("UraniumEnergy_CETS")
+
+	if ammoID == -1 then return end
+
+	for _, ply in ipairs(player.GetAll()) do
+		if ply:GetAmmoCount(ammoID) > MAX_URANIUM then
+			ply:SetAmmo(MAX_URANIUM, ammoID)
+		end
+	end
+end)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+end
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 game.AddAmmoType( {
 	name = 'MP5Gr_CETS',
 	dmgtype = {DMG_BLAST},

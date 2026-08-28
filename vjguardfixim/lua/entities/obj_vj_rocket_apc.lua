@@ -10,7 +10,7 @@ ENT.PrintName		= "Missile"
 ENT.Spawnable = false
 
 ENT.RadiusDamage = GetConVar("sk_apc_missile_damage"):GetInt()
-ENT.RadiusDamageRadius = 130
+ENT.RadiusDamageRadius = 256
 ENT.SoundTbl_OnCollide = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()

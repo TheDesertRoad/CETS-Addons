@@ -47,8 +47,8 @@ SWEP.GaussRecoilDirection = vector_origin
 --------------------------------------------------------------------------------|
 SWEP.Primary.Sound = "Cets_Weapon_Tau.Fire"
 SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = 24
-SWEP.Primary.MaxAmmo = 200
+SWEP.Primary.DefaultClip = 20
+SWEP.Primary.MaxAmmo = 8192
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "UraniumEnergy_CETS"
 SWEP.Primary.TracerType = "cets_taubeam_tracer"
