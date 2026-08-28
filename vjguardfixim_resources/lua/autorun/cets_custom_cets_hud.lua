@@ -888,8 +888,6 @@ local function GetHealthHUD_AFont(size, glow)
 	return name
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-local HEALTH_HUD_ENABLED = GetConVar("cl_cets_custom_hud"):GetInt()
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CETS_AuxPower = CETS_AuxPower or {}
 CETS_AuxPower.Power = 100
 
@@ -1121,10 +1119,6 @@ hook.Add("HUDPaint", "CETS_AuxPower_Draw", function()
 		return
 	end
 
-	if not HEALTH_HUD_ENABLED then
-		return
-	end
-
 	local ply = LocalPlayer()
 
 	if not IsValid(ply) then
@@ -1283,10 +1277,6 @@ hook.Add("HUDPaint", "CETS_AuxPower_Flashlight_Draw", function()
 
 	local glowColor = Color(flashlightHUDColor.r, flashlightHUDColor.g, flashlightHUDColor.b, glowAlpha)
 
-	if not HEALTH_HUD_ENABLED then
-		return
-	end
-
 	if not GetConVar("cets_cl_custom_aux_sys_hud_episodic_flashlight"):GetBool() then
 		flashlightHUDVisible = false
 		flashlightHUDExiting = false
@@ -1437,10 +1427,6 @@ hook.Add("HUDShouldDraw", "HL2HUD_HideDefault", function(name)
 		return
 	end
 
-	if not HEALTH_HUD_ENABLED then
-		return
-	end
-
 	if name == "CHudHealth" then
 		return false
 	end
@@ -1464,11 +1450,6 @@ local healthHUDSlideStart = 0
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("HUDPaint", "HL2HealthHUD_Draw", function()
 	if not GetConVar("cl_cets_custom_hud"):GetBool() then
-		return
-	end
-
-
-	if not HEALTH_HUD_ENABLED then
 		return
 	end
 
@@ -1565,10 +1546,6 @@ local suitHUDExiting = false
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("HUDPaint", "HL2SuitHUD_Draw", function()
 	if not GetConVar("cl_cets_custom_hud"):GetBool() then
-		return
-	end
-
-	if not HEALTH_HUD_ENABLED then
 		return
 	end
 
@@ -1996,8 +1973,6 @@ hook.Add("HUDPaint", "HL2PrimaryClipHUD_Draw", function()
 		return
 	end
 
-	if not HEALTH_HUD_ENABLED then return end
-
 	local ply = LocalPlayer()
 
 	if not IsValid(ply) then return end
@@ -2128,10 +2103,6 @@ end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("HUDPaint", "HL2ReserveClipHUD_Draw", function()
 	if not GetConVar("cl_cets_custom_hud"):GetBool() then
-		return
-	end
-
-	if not HEALTH_HUD_ENABLED then
 		return
 	end
 
@@ -2366,10 +2337,6 @@ end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("HUDPaint", "HL2SecondaryClipHUD_Draw", function()
 	if not GetConVar("cl_cets_custom_hud"):GetBool() then
-		return
-	end
-
-	if not HEALTH_HUD_ENABLED then
 		return
 	end
 
@@ -2909,10 +2876,6 @@ local function AddFreezeDamageHUD()
 		return
 	end
 
-	if not HEALTH_HUD_ENABLED then
-		return
-	end
-
 	if not ply:IsSuitEquipped() then
 		return
 	end
@@ -2962,7 +2925,7 @@ local function AddFreezeDamageHUD()
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("HUDPaint", "CETS_DMG_DrawDamageIndicators", function()
-	if not GetConVar("cl_cets_custom_hud"):GetBool() or not HEALTH_HUD_ENABLED then
+	if not GetConVar("cl_cets_custom_hud"):GetBool() then
 		return
 	end
 
