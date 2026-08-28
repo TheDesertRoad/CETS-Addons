@@ -1,6 +1,6 @@
 if SERVER then
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-local MAX_URANIUM = GetConVar("sv_cets_uranium_ammo"):GetInt()
+local MAX_URANIUM = 200
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 hook.Add("Think", "CETS_UraniumAmmoLimit", function()
 	if GetConVar("sv_cets_limit_uranium_ammo"):GetInt() == 0 then return end
