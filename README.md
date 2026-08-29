@@ -70,4 +70,4 @@ Example:
 
 To mount the `.fdg` you just have to:
 
-Open hammer and navigate to "Tools" > "Options...". In the window that opens, add the file of the addon to mount it.
+Open hammer and navigate to "Tools" > "Options...". In the window that opens, add the file of the addon to mount it. The `.fdg` has to be in the addons folder, otherwise the models might not show up.
