@@ -7,13 +7,13 @@ SWEP.WorldModel							= ""
 SWEP.HoldType 							= "duel"
 SWEP.NPC_CanBePickedUp = false
 
-SWEP.NPC_NextPrimaryFire 				= 0.6
+SWEP.NPC_NextPrimaryFire 				= 1
 SWEP.NPC_TimeUntilFire 					= 0.1
-SWEP.NPC_TimeUntilFireExtraTimers 		= {0.1, 0.2, 0.3}
+SWEP.NPC_TimeUntilFireExtraTimers 		= {0.1, 0.2, 0.3, 0.4, 0.5, 0.6}
 SWEP.ReplacementWeapon = "item_ammo_ar2_large"
 
-SWEP.Primary.Sound						= {"hl1/weapons/pl_gun1.wav", "hl1/weapons/pl_gun2.wav"}
-SWEP.Primary.DistantSound				= {"hl1/weapons/pl_gun1.wav", "hl1/weapons/pl_gun2.wav"}
+SWEP.Primary.Sound						= {"hl1/weapons/usp1.wav", "hl1/weapons/usp2.wav"}
+SWEP.Primary.DistantSound				= {"hl1/weapons/usp1.wav", "hl1/weapons/usp2.wav"}
 SWEP.Primary.Damage						= 2
 SWEP.Primary.ClipSize					= 120
 SWEP.Primary.TracerType = ""

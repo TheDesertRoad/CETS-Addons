@@ -57,7 +57,7 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasMeleeAttack = true
 ENT.MeleeAttackDamage = GetConVar("sk_fassassin_dmg_melee"):GetInt()
 ENT.AnimTbl_MeleeAttack = {"melee", "melee2"}
-ENT.MeleeAttackDistance = 55
+ENT.MeleeAttackDistance = 65
 ENT.MeleeAttackDamageDistance = 100
 
 ENT.Assassin_NextJumpT = 0
@@ -219,6 +219,18 @@ ENT.SoundTbl_RadioOff = {
 }
 
 ENT.SoundTbl_CombatIdle = "npc/fempolice/takedown.wav"
+
+ENT.Assassin_NextLeapT = 0
+ENT.Assassin_LeapCooldown = 8
+ENT.Assassin_LeapSpeed = 750
+ENT.Assassin_LeapDamage = 50
+ENT.Assassin_LeapDamageRadius = 80
+ENT.Assassin_Leaping = false
+ENT.Assassin_LeapGrenadeChance = 4
+ENT.Assassin_LeapGrenadeClass = "obj_vj_cets_grenade_blind"
+
+ENT.Assassin_CriticalCloak = false
+ENT.Assassin_CriticalCloakInterval = 3
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self.MainSoundLevel = 20
@@ -269,26 +281,44 @@ function ENT:OnThink()
 	end
 
 	if !self.VJ_IsBeingControlled then
-			if IsValid(self:GetEnemy()) then
+		if IsValid(self:GetEnemy()) then
+			if self:Health() <= self:GetMaxHealth() / 2 then
 				if CurTime() > self.Assassin_NextCloakT then
 					self:ASSASSIN_DOCLOAK()
 				end
+			elseif CurTime() > self.Assassin_NextCloakT then
+				self:ASSASSIN_DOCLOAK()
+			end
 
-			elseif self:GetNPCState() != NPC_STATE_ALERT && self:GetNPCState() != NPC_STATE_COMBAT then
-				if self.Assassin_Cloaking == true then self:ASSASSIN_RESETCLOAK() end
+		elseif self:GetNPCState() != NPC_STATE_ALERT && self:GetNPCState() != NPC_STATE_COMBAT then
+			if self.Assassin_Cloaking == true then
+				self:ASSASSIN_RESETCLOAK()
+			end
 		end
 	end
 
-	if self.Assassin_OffGround == true then
-		if self:GetVelocity().z == 0 then
+	if self.Assassin_OffGround then
+		if self:IsOnGround() then
 			self.Assassin_OffGround = false
+			self.Assassin_Leaping = false
 			self:ClearSchedule()
 			self:StopMoving()
-			self:PlayAnim("jumpland", true, false, false)
+
+			if self:LookupSequence("jumpland") >= 0 then
+				self:AssassinLeapDamage()
+				self:PlayAnim("jumpland", true, false, false)
+			end
+
 			self.AnimTbl_IdleStand = {ACT_IDLE}
 		else
-			if self:GetActivity() != ACT_GLIDE then
-				self:PlayAnim(ACT_GLIDE, true, false, false)
+			if self.Assassin_Leaping then
+				if self:GetActivity() != ACT_GLIDE then
+					if self:LookupSequence("jumploop") >= 0 then
+						self:PlayAnim("jumploop", true, false, false)
+					else
+						self:PlayAnim(ACT_GLIDE, true, false, false)
+					end
+				end
 			end
 		end
 	end
@@ -297,23 +327,104 @@ function ENT:OnThink()
 		self:Dodge()
 	end
 
-	if validEnt && self.WeaponAttackState == self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
-		self:StopMoving()
-		self:SetGroundEntity(NULL)
+	if not self.VJ_IsBeingControlled and IsValid(self:GetEnemy()) and not self.WeaponAttackState and CurTime() > self.Assassin_NextLeapT and not self:IsMoving() and self:IsOnGround() and self:GetPos():Distance(self:GetEnemy():GetPos()) < 3600 then
+		self:AssassinLeap()
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:AssassinSpawnLeapGrenade()
+	if math.random(1, self.Assassin_LeapGrenadeChance) != 1 then return end
 
-		if math.random(1, 2) == 1 then
-			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*500 + self:GetRight()*1)--self:GetUp()*600
-		else
-			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*500 + self:GetRight()*1)--self:GetUp()*600
-		end
+	local grenade = ents.Create(self.Assassin_LeapGrenadeClass)
+	if not IsValid(grenade) then return end
 
-		self.AnimTbl_IdleStand = {ACT_GLIDE}
-		self:PlayAnim(ACT_JUMP, true, false, true, 0, {}, function(sched)
-			self.Assassin_OffGround = true
-			self:PlayAnim(ACT_GLIDE, true, false, false)
+	local spawnPos = self:GetPos() + self:GetUp() * -5
+
+	grenade:SetPos(spawnPos)
+	grenade:SetAngles(Angle(0, self:GetAngles().y, 0))
+	grenade:SetOwner(self)
+	grenade:Spawn()
+	grenade:Activate()
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:AssassinLeap()
+	if self.Assassin_Leaping then return end
+	if CurTime() < self.Assassin_NextLeapT then return end
+	if not self:IsOnGround() then return end
+	if self:IsBusy() then return end
+
+	local enemy = self:GetEnemy()
+	if not IsValid(enemy) then return end
+
+	local startPos = self:GetPos()
+	local targetPos = enemy:GetPos() + enemy:OBBCenter()
+	local direction = (targetPos - startPos):GetNormalized()
+
+	self:SetAngles(Angle(0, direction:Angle().y, 0))
+
+	self.Assassin_Leaping = true
+	self.Assassin_OffGround = true
+	self.Assassin_LeapHasHit = false
+	self.Assassin_NextLeapT = CurTime() + self.Assassin_LeapCooldown
+
+	self:StopMoving()
+	self:SetGroundEntity(NULL)
+
+	local startSeq = self:LookupSequence("jumpstart")
+
+	if startSeq >= 0 then
+		self:PlayAnim("jumpstart", true, false, true, 0, {}, function()
+			if not IsValid(self) then return end
+			if not self.Assassin_Leaping then return end
+
+			local enemyNow = self:GetEnemy()
+
+			if IsValid(enemyNow) then
+				targetPos = enemyNow:GetPos() + enemyNow:OBBCenter()
+				direction = (targetPos - self:GetPos()):GetNormalized()
+				self:SetAngles(Angle(0, direction:Angle().y, 0))
+			end
+
+			local velocity = direction * self.Assassin_LeapSpeed
+			velocity.z = 250
+
+			self:SetLocalVelocity(velocity)
+
+			if self:LookupSequence("jumploop") >= 0 then
+				self:AssassinSpawnLeapGrenade()
+				self:PlayAnim("jumploop", true, false, false)
+			else
+				self:PlayAnim(ACT_GLIDE, true, false, false)
+			end
 		end)
+	else
+		local velocity = direction * self.Assassin_LeapSpeed
+		velocity.z = 350
 
-		self.Assassin_NextJumpT = CurTime() + 8
+		self:SetLocalVelocity(velocity)
+		self:PlayAnim("jumploop", true, false, false)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:AssassinLeapDamage()
+	if not self.Assassin_Leaping then return end
+	if self.Assassin_LeapHasHit then return end
+
+	local enemy = self:GetEnemy()
+	if not IsValid(enemy) then return end
+
+	local distance = self:GetPos():Distance(enemy:GetPos())
+
+	if distance <= self.Assassin_LeapDamageDistance then
+		self.Assassin_LeapHasHit = true
+
+		util.VJ_SphereDamage(self, self, self:GetPos(), self.Assassin_LeapDamageDistance, self.Assassin_LeapDamage, DMG_SLASH + DMG_CLUB, true, true, false, false)
+
+		self:SetVelocity(-self:GetVelocity() * 0.35)
+
+		if self:LookupSequence("jumpland") >= 0 then
+			self:PlayAnim("jumpland", true, false, false)
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -365,39 +476,89 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ASSASSIN_RESETCLOAK()
 	self.Assassin_Cloaking = false
+	self.Assassin_CriticalCloak = false
+
 	self:SetColor(Color(255, 255, 255, 255))
 	self:DrawShadow(true)
+	self:SetNoDraw(false)
 	self:RemoveFlags(FL_NOTARGET)
+
 	VJ.EmitSound(self, "buttons/combine_button5.wav", 72, 100)
+
 	local curWep = self:GetActiveWeapon()
+
 	if IsValid(curWep) then
 		if IsValid(self.SecondGun) then
 			self.SecondGun:SetColor(colorVis)
 			self.SecondGun:DrawShadow(true)
 		end
+
 		curWep:SetDrawWorldModel(true)
 	end
+
 	if self.VJ_IsBeingControlled == false then
-		timer.Simple(math.random(5, 10), function() if IsValid(self) then self:ASSASSIN_DOCLOAK() end end)
+		-- At half health, come out of cloak only briefly before recloaking.
+		local delay = math.random(2, 4)
+
+		if self:Health() <= self:GetMaxHealth() / 2 then
+			delay = math.random(1, 3)
+		end
+
+		timer.Simple(delay, function()
+			if IsValid(self) and IsValid(self:GetEnemy()) then
+				self:ASSASSIN_DOCLOAK()
+			end
+		end)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ASSASSIN_DOCLOAK()
 	self.Assassin_Cloaking = true
+
+	if self:Health() <= self:GetMaxHealth() / 2 then
+		self.Assassin_CriticalCloak = true
+		self:AddFlags(FL_NOTARGET)
+		self:SetColor(Color(255, 255, 255, 0))
+		self:DrawShadow(false)
+		self:SetNoDraw(true)
+
+		local curWep = self:GetActiveWeapon()
+		if IsValid(curWep) then
+			if IsValid(self.SecondGun) then
+				self.SecondGun:SetColor(Color(255, 255, 255, 0))
+				self.SecondGun:DrawShadow(false)
+			end
+
+			curWep:SetDrawWorldModel(false)
+		end
+
+		self.Assassin_NextCloakT = CurTime() + self.Assassin_CriticalCloakInterval
+		return
+	end
+
+	self.Assassin_CriticalCloak = false
 	self:AddFlags(FL_NOTARGET)
 	self:SetColor(Color(255, 255, 255, 16))
 	self:DrawShadow(true)
+
 	local curWep = self:GetActiveWeapon()
 	if IsValid(curWep) then
 		if IsValid(self.SecondGun) then
 			self.SecondGun:SetColor(colorInv)
 			self.SecondGun:DrawShadow(false)
 		end
+
 		curWep:SetDrawWorldModel(false)
 	end
+
 	if self.VJ_IsBeingControlled == false then
-		timer.Simple(math.random(10, 30), function() if IsValid(self) then self:ASSASSIN_RESETCLOAK() end end)
+		timer.Simple(math.random(10, 30), function()
+			if IsValid(self) then
+				self:ASSASSIN_RESETCLOAK()
+			end
+		end)
 	end
+
 	self.Assassin_NextCloakT = CurTime() + math.random(5, 10)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -493,6 +654,7 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 	if status == "Init" then
 		self.Assassin_Cloaking = false
 		self:SetBodygroup(1, 1)
+		self:SetNoDraw(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

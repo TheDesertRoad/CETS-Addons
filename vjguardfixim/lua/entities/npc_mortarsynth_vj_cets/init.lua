@@ -42,7 +42,7 @@ ENT.HasExtraMeleeAttackSounds = true
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
-ENT.RangeAttackProjectiles = {"grenade_ar2", "obj_vj_cguard_extractor"}
+ENT.RangeAttackProjectiles = {"obj_vj_rocket_apc_but_laser_that_follows", "obj_vj_cguard_extractor"}
 ENT.TimeUntilRangeAttackProjectileRelease = 1
 ENT.NextRangeAttackTime = 2
 ENT.RangeAttackMaxDistance = 2500
@@ -121,10 +121,27 @@ function ENT:Init()
 	glowFX:SetLocalAngles(self:GetAngles())
 	glowFX:Fire("Color", "0 50 255")
 	glowFX:SetParent(self)
+	glowFX:Fire("SetParentAttachment", "2")
 	glowFX:Spawn()
 	glowFX:Activate()
 	glowFX:Fire("TurnOn", "", 0)
 	self:DeleteOnRemove(glowFX)
+
+	local glow1 = ents.Create("env_sprite")
+	glow1:SetKeyValue("model", "sprites/blueflare1.vmt")
+	glow1:SetKeyValue("GlowProxySize", "2.0") -- Size of the glow to be rendered for visibility testing.
+	glow1:SetKeyValue("renderfx", "14")
+	glow1:SetKeyValue("scale", "1")
+	glow1:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+	glow1:SetKeyValue("renderamt", "200")
+	glow1:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+	glow1:SetKeyValue("spawnflags", "0")
+	glow1:SetParent(self)
+	glow1:Fire("SetParentAttachment", "2")
+	glow1:Fire("Color", "0 50 255")
+	glow1:Spawn()
+	glow1:Activate()
+	self:DeleteOnRemove(glow1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
@@ -143,6 +160,14 @@ function ENT:OnFlinch(dmginfo, hitgroup, status)
 			self.AnimTbl_Flinch = {"Mortar_BigFlinch_Back", "Mortar_BigFlinch_Left", "Mortar_BigFlinch_Right", "Mortar_BigFlinch_Front"}
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjPos(projectile)
+	return self:GetPos() + self:GetUp()* 16 + self:GetForward()*-16
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnRangeAttackExecute()
+	ParticleEffect("hunter_projectile_explosion_1", self:GetPos() + self:GetUp()* 16 + self:GetForward()*-16 ,Angle(0,0,0),nil)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
@@ -166,12 +191,18 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjPos(projectile)
-	return self:GetPos() + self:GetUp() * 10 + self:GetForward() * -20
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjVel(projectile)
-	return self:CalculateProjectile("Curve", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
+	local enemy = self:GetEnemy()
+
+	if not IsValid(enemy) then
+		return self:GetForward() * 1200
+	end
+
+	local targetPos = enemy:GetPos() + enemy:OBBCenter()
+	local direction = (targetPos - projectile:GetPos()):GetNormalized()
+	local speed = 1200
+
+	return direction * speed
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.CrashChance = GetConVar("sk_mortar_crash_chance"):GetInt()
@@ -226,12 +257,12 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
  
 		local function SpawnMortarGibs(pos)
 			local gibModels = {
-				"models/gibs/msynth_gibs1.mdl",
-				"models/gibs/msynth_gibs2.mdl",
-				"models/gibs/msynth_gibs3.mdl"
+				"models/gibs/msynth_gibs4.mdl",
+				"models/gibs/msynth_gibs5.mdl",
+				"models/gibs/msynth_gibs6.mdl"
 			}
 
-			for i = 1, math.random(1, 5) do
+			for i = 1, math.random(3, 6) do
 				local gib = ents.Create("prop_physics")
 
 				if IsValid(gib) then
@@ -255,6 +286,84 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 					end
 
 					SafeRemoveEntityDelayed(gib, 15)
+				end
+			end
+
+			for i = 1, 1 do
+				local gib1 = ents.Create("prop_physics")
+
+				if IsValid(gib1) then
+					gib1:SetModel("models/gibs/msynth_gibs1.mdl")
+					gib1:SetPos(pos + VectorRand() * math.random(5, 20))
+					gib1:SetAngles(AngleRand())
+					gib1:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+					gib1:Spawn()
+					gib1:Activate()
+					CleanupGib(gib1)
+
+					local phys = gib1:GetPhysicsObject()
+
+					if IsValid(phys) then
+						phys:Wake()
+						local direction = VectorRand():GetNormalized()
+
+						phys:SetVelocity(direction * math.random(150, 400) + Vector(0, 0, math.random(100, 250)))
+						phys:AddAngleVelocity(VectorRand() * math.random(200, 500))
+					end
+
+					SafeRemoveEntityDelayed(gib1, 15)
+				end
+			end
+
+			for i = 1, 1 do
+				local gib2 = ents.Create("prop_physics")
+
+				if IsValid(gib2) then
+					gib2:SetModel("models/gibs/msynth_gibs2.mdl")
+					gib2:SetPos(pos + VectorRand() * math.random(5, 20))
+					gib2:SetAngles(AngleRand())
+					gib2:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+					gib2:Spawn()
+					gib2:Activate()
+					CleanupGib(gib2)
+
+					local phys = gib2:GetPhysicsObject()
+
+					if IsValid(phys) then
+						phys:Wake()
+						local direction = VectorRand():GetNormalized()
+
+						phys:SetVelocity(direction * math.random(150, 400) + Vector(0, 0, math.random(100, 250)))
+						phys:AddAngleVelocity(VectorRand() * math.random(200, 500))
+					end
+
+					SafeRemoveEntityDelayed(gib2, 15)
+				end
+			end
+
+			for i = 1, 1 do
+				local gib3 = ents.Create("prop_physics")
+
+				if IsValid(gib3) then
+					gib3:SetModel("models/gibs/msynth_gibs3.mdl")
+					gib3:SetPos(pos + VectorRand() * math.random(5, 20))
+					gib3:SetAngles(AngleRand())
+					gib3:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+					gib3:Spawn()
+					gib3:Activate()
+					CleanupGib(gib3)
+
+					local phys = gib3:GetPhysicsObject()
+
+					if IsValid(phys) then
+						phys:Wake()
+						local direction = VectorRand():GetNormalized()
+
+						phys:SetVelocity(direction * math.random(150, 400) + Vector(0, 0, math.random(100, 250)))
+						phys:AddAngleVelocity(VectorRand() * math.random(200, 500))
+					end
+
+					SafeRemoveEntityDelayed(gib3, 15)
 				end
 			end
 		end

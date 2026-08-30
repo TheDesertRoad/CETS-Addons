@@ -291,6 +291,23 @@ function ENT:DriveThink()
 		else
 			self:SetPoseParameter("vehicle_steer", 0)
 	end
+
+	local wheels = {
+		fl = self.Wheel_FL,
+		fr = self.Wheel_FR,
+		rl = self.Wheel_RL,
+		rr = self.Wheel_RR,
+	}
+
+	for k,ent_wheel in pairs(wheels) do
+		local poseparam_name = "vehicle_wheel_" .. k .. "_spin"
+		local poseparam_add = ent_wheel:GetPhysicsObject():GetAngleVelocity().z*0.06
+			if k == "fr" or k == "rr" then
+				poseparam_add = -poseparam_add
+	end
+
+		self:SetPoseParameter(poseparam_name, self:GetPoseParameter(poseparam_name) + poseparam_add)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateWheels()

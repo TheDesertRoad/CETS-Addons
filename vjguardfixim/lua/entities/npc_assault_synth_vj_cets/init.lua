@@ -110,6 +110,14 @@ function ENT:OnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnRangeAttackExecute()
+	local attachment = self:GetAttachment(self:LookupAttachment("gun"))
+
+	if attachment then
+		ParticleEffect("hunter_projectile_explosion_1", attachment.Pos, attachment.Ang, nil)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	self.HasPainSounds = false
 	self.Bleeds = false

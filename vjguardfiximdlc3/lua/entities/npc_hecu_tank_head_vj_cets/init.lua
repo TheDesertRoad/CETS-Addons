@@ -96,7 +96,14 @@ Called when the tank is firing its shell
 =-=-=| RETURNS |=-=-=
 	-> [nil | bool | vector] : Depends on `status` value, refer to it for more details
 --]]
-function ENT:Tank_OnFireShell(status, statusData) end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Tank_OnFireShell(status, statusData)
+	local smokePos = self:LocalToWorld(self.Tank_Shell_ParticlePos)
+	local smokeAng = self:GetAngles() + Angle(0, 180, 0)
+
+	ParticleEffect("tank_fire_steam1", smokePos, smokeAng)
+	ParticleEffect("tank_fire_steam2", smokePos, smokeAng)
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Tank_UpdateIdleParticles()
 	-- Example:

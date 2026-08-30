@@ -42,11 +42,17 @@ ENT.HasMeleeAttackKnockBack = true
 ENT.MeleeAttackDistance = 30 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 30 -- How far does the damage go?
 
-ENT.HasGrenadeAttack = true -- Should the SNPC have a grenade attack?
+ENT.HasGrenadeAttack = true
 ENT.AnimTbl_GrenadeAttack = {"grenthrow"}
 ENT.GrenadeAttackAttachment = "anim_attachment_LH"
-ENT.GrenadeAttackEntity = "npc_grenade_frag" -- The entity that the SNPC throws | Half Life 2 Grenade: "npc_grenade_frag"
-ENT.ThrowGrenadeChance = 2 -- Chance that it will throw the grenade | Set to 1 to throw all the time
+ENT.GrenadeAttackEntity = "obj_vj_cets_extractor_heal"
+
+ENT.ThrowGrenadeChance = 1
+ENT.GrenadeAttackDistance = 800
+ENT.GrenadeAttackMinDistance = 150
+
+ENT.AllyGrenadeThrowSpeed = 700
+ENT.AllyGrenadeThrowUp = 150
 
 ENT.FootStepTimeRun = 0.3
 ENT.FootStepTimeWalk = 0.5
@@ -60,7 +66,7 @@ ENT.ItemDropsOnDeath_EntityList = {
 
 ENT.IsMedic = true -- Should it heal allied entities?
 ENT.Medic_CheckDistance = 2000 -- Max distance to check for injured allies
-ENT.Medic_HealDistance = 80 -- How close does it have to be until it stops moving and heals its ally?
+ENT.Medic_HealDistance = 80 -- How close does it have to be until it stops moving&&heals its ally?
 ENT.Medic_TimeUntilHeal = false -- Time until the ally receives health | false = Base auto calculates the duration
 ENT.AnimTbl_Medic_GiveHealth = ACT_SPECIAL_ATTACK1 -- Animations to play when it heals an ally | false = Don't play an animation
 ENT.Medic_HealAmount = 128 -- How health does it give?
@@ -310,7 +316,6 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(sdData, sdFile)
-
 	if !( (VJ_HasValue(self.SoundTbl_Pain, sdFile) && !VJ_HasValue(self.SoundTbl_Hurt, sdFile)) or VJ_HasValue(DefaultSoundTbl_MedicAfterHeal, sdFile) or VJ_HasValue(self.DefaultSoundTbl_MeleeAttack, sdFile) or VJ_HasValue(self.SoundTbl_NovaProspektIdle, sdFile)  ) then
 
 		self:EmitSound(table.Random(self.SoundTbl_RadioOn),90,math.random(85, 115))
@@ -349,6 +354,81 @@ function ENT:OnAlert(ent)
 			return
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomGrenadeAttack()
+	if self:IsBusy() then return end
+	if !self:IsOnGround() then return end
+
+	local ally = nil
+	local closestDist = math.huge
+
+	for _, ent in ipairs(ents.FindInSphere(self:GetPos(), self.GrenadeAttackDistance)) do
+		if ent != self&&IsValid(ent)&&ent:IsNPC()&&ent:Health() > 0&&self:Disposition(ent) == D_LI then
+			local dist = self:GetPos():Distance(ent:GetPos())
+
+			if dist >= self.GrenadeAttackMinDistance&&dist < closestDist then
+				closestDist = dist
+				ally = ent
+			end
+		end
+	end
+
+	if !IsValid(ally) then return end
+
+	local attachmentID = self:LookupAttachment(self.GrenadeAttackAttachment)
+	local throwPos = self:GetPos() + self:OBBCenter()
+	local throwAng = self:GetAngles()
+
+	if attachmentID > 0 then
+		local att = self:GetAttachment(attachmentID)
+
+		if att then
+			throwPos = att.Pos
+			throwAng = att.Ang
+		end
+	end
+
+	local targetPos = ally:GetPos() + ally:OBBCenter()
+	local direction = targetPos - self:GetPos()
+	local faceAng = direction:Angle()
+
+	self:SetAngles(Angle(0, faceAng.y, 0))
+	self:PlayAnim("grenthrow", true, false, true)
+
+	timer.Simple(0.3, function()
+		if !IsValid(self) then return end
+		if self:Health() <= 0 then return end
+		if !IsValid(ally) then return end
+
+		local grenade = ents.Create(self.GrenadeAttackEntity)
+		if !IsValid(grenade) then return end
+
+		grenade:SetPos(throwPos)
+		grenade:SetAngles(throwAng)
+		grenade:SetOwner(self)
+		grenade:Spawn()
+		grenade:Activate()
+
+		local target = ally:GetPos() + ally:OBBCenter()
+
+		local velocity = (target - throwPos):GetNormalized()
+		velocity = velocity * self.AllyGrenadeThrowSpeed
+		velocity.z = velocity.z + self.AllyGrenadeThrowUp
+
+		local phys = grenade:GetPhysicsObject()
+
+		if IsValid(phys) then
+			phys:SetVelocity(velocity)
+		else
+			grenade:SetVelocity(velocity)
+		end
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnGrenadeAttack()
+	self:CustomGrenadeAttack()
+	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath( dmginfo, hit_gr, rag )

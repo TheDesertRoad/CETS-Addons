@@ -194,8 +194,8 @@ function ENT:CustomOnCallForHelp(ally)
 
 		timer.Simple(1,function() if IsValid(self) then self.IsDoingFlash = false end end)
 			VJ.EmitSound(self, "npc/wallhammer/flashbang.wav", 100, 100)
-				if IsValid(self:GetEnemy()) && fent:IsPlayer() && self:Visible(self:GetEnemy()) && self:GetPos():Distance(fent:GetPos()) <= 800 then
-					fent:ScreenFade( SCREENFADE.IN, Color( 255, 255, 255, 255 ), 2, 2 )
+			if IsValid(self:GetEnemy()) && fent:IsPlayer() && self:Visible(self:GetEnemy()) && self:GetPos():Distance(fent:GetPos()) <= 800 then
+				fent:ScreenFade( SCREENFADE.IN, Color( 255, 255, 255, 255 ), 2, 2 )
 			end
 		end
 	end)

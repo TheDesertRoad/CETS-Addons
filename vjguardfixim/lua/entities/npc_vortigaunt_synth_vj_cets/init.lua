@@ -156,25 +156,24 @@ function ENT:CustomOnThink_AIEnabled()
 
 	if !self.VJ_IsBeingControlled then
 		if self:Visible(enemy) then
+			local enemydist = enemy:GetPos():Distance(self:GetPos())
 
-		local enemydist = enemy:GetPos():Distance(self:GetPos())
+			if !self:Attacking() && self.NextDispell < CurTime() && enemydist < self.MaxDispellDist then
+				self:DispellAttack()
+			end
 
-		if !self:Attacking() && self.NextDispell < CurTime() && enemydist < self.MaxDispellDist then
-			self:DispellAttack()
-		end
+			if !self:Attacking() && self.NextHeal < CurTime() && enemydist < self.HealDistance && enemydist > self.RangeToMeleeDistance then
+				local tr = util.TraceLine({
+					start = self:GetPos()+self:OBBCenter(),
+					endpos = enemy:GetPos()+enemy:OBBCenter(),
+					mask = MASK_NPCWORLDSTATIC
+				})
 
-		if !self:Attacking() && self.NextHeal < CurTime() && enemydist < self.HealDistance && enemydist > self.RangeToMeleeDistance then
-			local tr = util.TraceLine({
-				start = self:GetPos()+self:OBBCenter(),
-				endpos = enemy:GetPos()+enemy:OBBCenter(),
-				mask = MASK_NPCWORLDSTATIC
-		})
-
-	if !tr.Hit then
-				self:VortHeal(true,enemy) -- HURT enemy, not heal.
+				if !tr.Hit then
+					self:VortHeal(true,enemy) -- HURT enemy, not heal.
+				end
 			end
 		end
-	end
 
 	else
 

@@ -1,3 +1,48 @@
+CETS = CETS or {}
+CETS.TankDeathDebris = CETS.TankDeathDebris or {}
+---------------------------------------------------------------------------------------------------------------------------------------------
+function CETS.RegisterTankDeathDebris(ent)
+	if not IsValid(ent) then return false end
+
+	CETS.TankDeathDebris[ent] = true
+
+	ent:SetCustomCollisionCheck(true)
+	ent:CallOnRemove("CETS_RemoveDeathDebrisFromCollisionList", function(removedEnt)
+		CETS.TankDeathDebris[removedEnt] = nil
+	end)
+
+	return true
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function CETS.UnregisterTankDeathDebris(ent)
+	if not IsValid(ent) then return false end
+
+	CETS.TankDeathDebris[ent] = nil
+
+	return true
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function CETS.IsTankDeathDebris(ent)
+	if not IsValid(ent) then return false end
+
+	return CETS.TankDeathDebris[ent] == true
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+hook.Add("ShouldCollide", "CETS_TankDeathDebrisCollision", function(ent1, ent2)
+	local debris1 = CETS.TankDeathDebris[ent1]
+	local debris2 = CETS.TankDeathDebris[ent2]
+
+	if not debris1 and not debris2 then
+		return
+	end
+
+	if debris1 and debris2 then
+		return false
+	end
+
+	return
+end)
+---------------------------------------------------------------------------------------------------------------------------------------------
 game.AddAmmoType( {
 	name = 'ComGren_CETS',
 	dmgtype = {DMG_BLAST},

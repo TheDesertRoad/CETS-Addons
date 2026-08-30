@@ -139,6 +139,115 @@ function ENT:CustomOnInitialize()
 	self.NextShootTime = CurTime()
 	self.NextChargeTime = CurTime()
 
+	local attachmentID = self:LookupAttachment("head")
+	local spriteOffsets = {
+		Vector(28, -12, 18),
+		Vector(28, -12, -18),
+		Vector(22, -12, 22),
+		Vector(22, -12, -22),
+	}
+
+	for i, offset in ipairs(spriteOffsets) do
+		local sprite = ents.Create("env_sprite")
+
+		if IsValid(sprite) then
+			sprite:SetKeyValue("model", "sprites/light_glow01.vmt")
+			sprite:SetKeyValue("rendermode", "9")
+			sprite:SetKeyValue("scale", "0.3")
+			sprite:SetColor(Color(255, 255, 255, 255))
+			sprite:SetKeyValue("spawnflags", "0")
+			sprite:SetKeyValue("renderamt", "255")
+			local attachment = self:GetAttachment(attachmentID)
+
+			if attachment then
+				sprite:SetPos(attachment.Pos + attachment.Ang:Forward() * offset.x + attachment.Ang:Right() * offset.y + attachment.Ang:Up() * offset.z)
+				sprite:SetParent(self, attachmentID)
+			end
+
+			sprite:Spawn()
+			sprite:Activate()
+
+			self:DeleteOnRemove(sprite)
+		end
+	end
+
+	self.LightSprites = {}
+
+	for i = 1, 4 do
+		local attachmentID = self:LookupAttachment("light" .. i)
+
+		if attachmentID > 0 then
+			local sprite = ents.Create("env_sprite")
+
+			if IsValid(sprite) then
+				sprite:SetKeyValue("model", "sprites/light_glow01.vmt")
+				sprite:SetKeyValue("rendermode", "9")
+				sprite:SetKeyValue("scale", "0.2")
+				sprite:SetKeyValue("spawnflags", "0")
+				sprite:SetKeyValue("renderamt", "128")
+
+				local attachment = self:GetAttachment(attachmentID)
+
+				if attachment then
+					sprite:SetPos(attachment.Pos)
+				end
+
+				sprite:SetParent(self, attachmentID)
+				sprite:Spawn()
+				sprite:Activate()
+
+				self.LightSprites[i] = sprite
+				self:DeleteOnRemove(sprite)
+			end
+		end
+	end
+
+	local lightTimer = "CrabSynth_LightCycle_" .. self:EntIndex()
+
+	self.LightColorTimer = lightTimer
+
+	timer.Create(lightTimer, 0.05, 0, function()
+		if not IsValid(self) then
+			return
+		end
+
+		local time = CurTime() * 0.05
+		local phase = time % 3
+
+		local r
+		local g
+		local b
+
+		if phase < 1 then
+			local t = phase
+
+			r = Lerp(t, 255, 0)
+			g = 0
+			b = Lerp(t, 0, 255)
+
+		elseif phase < 2 then
+			local t = phase - 1
+
+			r = 0
+			g = Lerp(t, 0, 255)
+			b = Lerp(t, 255, 0)
+		else
+			local t = phase - 2
+
+			r = Lerp(t, 0, 255)
+			g = Lerp(t, 255, 0)
+			b = 0
+		end
+
+		local color = Color(r, g, b, 255)
+
+		for _, sprite in ipairs(self.LightSprites) do
+			if IsValid(sprite) then
+				sprite:SetColor(color)
+			end
+		end
+	end)
+
 	self.Bullseye = ents.Create("base_anim")
 	self.Bullseye:SetModel("models/hunter/blocks/cube1x1x025.mdl")
 	self.Bullseye:SetParent(self)
@@ -425,14 +534,16 @@ function ENT:FireGun()
 		Num = 1,
 		Callback = function(attacker, tracer)
 			if math.random(1, 4) == 1 then
-				local effectdata = EffectData()
-				effectdata:SetOrigin(tracer.HitPos)
-				effectdata:SetNormal(tracer.HitNormal)
-				effectdata:SetRadius( 10 )
+
+			local effectdata = EffectData()
+			effectdata:SetOrigin(tracer.HitPos)
+			effectdata:SetNormal(tracer.HitNormal)
+			effectdata:SetRadius( 10 )
+
 			util.Effect( "cball_bounce", effectdata )
 		end
 		effects.BeamRingPoint( tracer.HitPos, 0.3, 0, 70, 12, 6, Color(32,16,255,200) )
-			util.VJ_SphereDamage(self,self,tracer.HitPos,20,3,DMG_SONIC,true,false,false,false)
+			util.VJ_SphereDamage(self, self, tracer.HitPos, 20, 3, DMG_ENERGYBEAM, true, false, false, false)
 		end,
 	})
 end

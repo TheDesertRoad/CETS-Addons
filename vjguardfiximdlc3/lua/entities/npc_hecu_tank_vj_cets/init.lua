@@ -492,25 +492,37 @@ local function CleanupGib(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
-	corpseEnt:Remove()
+	if IsValid(corpseEnt) then
+		corpseEnt:Remove()
+	end
+
 	local myPos = self:GetPos()
+
 	VJ.EmitSound(self, "weapons/explode" .. math.random(3, 4) .. ".wav", 100, 100)
-		local effectdata = EffectData()
-		effectdata:SetOrigin(self:GetPos())
-		effectdata:SetScale( 800 )
-		util.Effect( "Explosion", effectdata )
-		util.Effect( "Explosion", effectdata )
+
+	local effectdata = EffectData()
+	effectdata:SetOrigin(myPos)
+	effectdata:SetScale(800)
+
+	util.Effect("Explosion", effectdata)
+	util.Effect("Explosion", effectdata)
 
 	local gibphys1 = ents.Create("prop_physics")
-		gibphys1:SetPos(self:GetPos() + self:GetUp()*120)
+
+	if IsValid(gibphys1) then
+		gibphys1:SetPos(myPos + self:GetUp() * 120)
 		gibphys1:SetModel("models/hl_tank_chasis.mdl")
 		gibphys1:SetAngles(self:GetAngles())
-		gibphys1:Ignite(16)
 		gibphys1:SetSkin(self:GetSkin())
 		gibphys1:Spawn()
 		gibphys1:Activate()
 
+		CETS.RegisterTankDeathDebris(gibphys1)
+
+		gibphys1:Ignite(16)
+
 		local phys = gibphys1:GetPhysicsObject()
+
 		if IsValid(phys) then
 			phys:Wake()
 
@@ -521,87 +533,115 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 			phys:SetVelocity(dir * force)
 			phys:AddAngleVelocity(VectorRand() * 2000)
 		end
+	end
 
 	for i = 1, 6 do
-		self.APCGib1 = ents.Create("prop_physics")
-		self.APCGib1:SetModel("models/gibs/metal_gib" .. math.random(1, 5) .. ".mdl")
-		self.APCGib1:SetPos(myPos)
-		self.APCGib1:Ignite(math.random(4, 16))
-		self.APCGib1:Spawn()
-		CleanupGib(self.APCGib1)
+		local gib = ents.Create("prop_physics")
 
-		local phys = self.APCGib1:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
+		if IsValid(gib) then
+			gib:SetModel("models/gibs/metal_gib" .. math.random(1, 5) .. ".mdl")
+			gib:SetPos(myPos)
+			gib:Spawn()
+			gib:Activate()
 
-			local explosionPos = myPos
-			local dir = (self.APCGib1:WorldSpaceCenter() - explosionPos):GetNormalized()
-			local force = math.Clamp(DMG_BLAST, 150, 500) * 12
+			CETS.RegisterTankDeathDebris(gib)
 
-			phys:SetVelocity(dir * force)
-			phys:AddAngleVelocity(VectorRand() * 2000)
+			gib:Ignite(math.random(4, 16))
+			CleanupGib(gib)
+
+			local phys = gib:GetPhysicsObject()
+
+			if IsValid(phys) then
+				phys:Wake()
+
+				local explosionPos = myPos
+				local dir = (gib:WorldSpaceCenter() - explosionPos):GetNormalized()
+				local force = math.Clamp(DMG_BLAST, 150, 500) * 12
+
+				phys:SetVelocity(dir * force)
+				phys:AddAngleVelocity(VectorRand() * 2000)
+			end
 		end
 	end
 
 	for i = 1, 3 do
-		self.APCGib2 = ents.Create("prop_physics")
-		self.APCGib2:SetModel("models/props_wasteland/gear01.mdl")
-		self.APCGib2:SetPos(myPos)
-		self.APCGib2:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		self.APCGib2:Ignite(math.random(4, 16))
-		self.APCGib2:Spawn()
-		CleanupGib(self.APCGib2)
+		local gib = ents.Create("prop_physics")
 
-		local phys = self.APCGib2:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
+		if IsValid(gib) then
+			gib:SetModel("models/props_wasteland/gear01.mdl")
+			gib:SetPos(myPos)
+			gib:Spawn()
+			gib:Activate()
 
-			local explosionPos = myPos
-			local dir = (self.APCGib2:WorldSpaceCenter() - explosionPos):GetNormalized()
-			local force = math.Clamp(DMG_BLAST, 50, 500) * 12
+			CETS.RegisterTankDeathDebris(gib)
 
-			phys:SetVelocity(dir * force)
-			phys:AddAngleVelocity(VectorRand() * 2000)
+			gib:Ignite(math.random(4, 16))
+			CleanupGib(gib)
+
+			local phys = gib:GetPhysicsObject()
+
+			if IsValid(phys) then
+				phys:Wake()
+
+				local explosionPos = myPos
+				local dir = (gib:WorldSpaceCenter() - explosionPos):GetNormalized()
+				local force = math.Clamp(DMG_BLAST, 50, 500) * 12
+
+				phys:SetVelocity(dir * force)
+				phys:AddAngleVelocity(VectorRand() * 2000)
+			end
 		end
 	end
 
 	for i = 1, 2 do
-		self.APCGib2b = ents.Create("prop_physics")
-		self.APCGib2b:SetModel("models/props_c17/oildrumchunk01" .. string.char(math.random(string.byte("a"), string.byte("e"))) .. ".mdl")
-		self.APCGib2b:SetPos(myPos)
-		self.APCGib2b:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		self.APCGib2b:Ignite(math.random(4, 16))
-		self.APCGib2b:Spawn()
-		CleanupGib(self.APCGib2b)
+		local gib = ents.Create("prop_physics")
 
-		local phys = self.APCGib2b:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
+		if IsValid(gib) then
+			gib:SetModel("models/props_c17/oildrumchunk01" .. string.char(math.random(string.byte("a"), string.byte("e"))) .. ".mdl")
+			gib:SetPos(myPos)
+			gib:Spawn()
+			gib:Activate()
 
-			local explosionPos = myPos
-			local dir = (self.APCGib2b:WorldSpaceCenter() - explosionPos):GetNormalized()
-			local force = math.Clamp(DMG_BLAST, 50, 500) * 12
+			CETS.RegisterTankDeathDebris(gib)
 
-			phys:SetVelocity(dir * force)
-			phys:AddAngleVelocity(VectorRand() * 2000)
+			gib:Ignite(math.random(4, 16))
+			CleanupGib(gib)
+
+			local phys = gib:GetPhysicsObject()
+
+			if IsValid(phys) then
+				phys:Wake()
+
+				local explosionPos = myPos
+				local dir = (gib:WorldSpaceCenter() - explosionPos):GetNormalized()
+				local force = math.Clamp(DMG_BLAST, 50, 500) * 12
+
+				phys:SetVelocity(dir * force)
+				phys:AddAngleVelocity(VectorRand() * 2000)
+			end
 		end
 	end
 
-	for i = 1, 1 do
-		self.APCGib3 = ents.Create("prop_physics")
-		self.APCGib3:SetModel("models/props_c17/trappropeller_engine.mdl")
-		self.APCGib3:SetPos(myPos)
-		self.APCGib3:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		self.APCGib3:Ignite(math.random(8, 16))
-		self.APCGib3:Spawn()
-		CleanupGib(self.APCGib3)
+	local gib = ents.Create("prop_physics")
 
-		local phys = self.APCGib3:GetPhysicsObject()
+	if IsValid(gib) then
+		gib:SetModel("models/props_c17/trappropeller_engine.mdl")
+		gib:SetPos(myPos)
+		gib:Spawn()
+		gib:Activate()
+
+		CETS.RegisterTankDeathDebris(gib)
+
+		gib:Ignite(math.random(8, 16))
+		CleanupGib(gib)
+
+		local phys = gib:GetPhysicsObject()
+
 		if IsValid(phys) then
 			phys:Wake()
 
 			local explosionPos = myPos
-			local dir = (self.APCGib3:WorldSpaceCenter() - explosionPos):GetNormalized()
+			local dir = (gib:WorldSpaceCenter() - explosionPos):GetNormalized()
 			local force = math.Clamp(DMG_BLAST, 50, 500) * 12
 
 			phys:SetVelocity(dir * force)
@@ -610,24 +650,33 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	end
 
 	for i = 1, 3 do
-		self.APCGib4 = ents.Create("prop_ragdoll")
-		self.APCGib4:SetModel("models/humans/grunt/hgrunt" .. math.random(4, 5) .. ".mdl")
-		self.APCGib4:SetPos(myPos)
-		self.APCGib4:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		self.APCGib4:Spawn()
-		self.APCGib4:Ignite(math.random(8, 16))
-		self.APCGib4:SetColor(Color(90, 90, 90, 90))
+		local ragdoll = ents.Create("prop_ragdoll")
 
-		local phys = self.APCGib4:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
+		if IsValid(ragdoll) then
+			ragdoll:SetModel("models/humans/grunt/hgrunt" .. math.random(4, 5) .. ".mdl")
+			ragdoll:SetPos(myPos)
+			ragdoll:Spawn()
+			ragdoll:Activate()
 
-			local explosionPos = myPos
-			local dir = (self.APCGib4:WorldSpaceCenter() - explosionPos):GetNormalized()
-			local force = math.Clamp(DMG_BLAST, 50, 500) * math.random(-256, 256)
+			CETS.RegisterTankDeathDebris(ragdoll)
 
-			phys:SetVelocity(dir * force * 30)
-			phys:AddAngleVelocity(VectorRand() * 8000)
+			ragdoll:Ignite(math.random(8, 16))
+			ragdoll:SetColor(Color(90, 90, 90, 90))
+
+			CleanupGib(ragdoll)
+
+			local phys = ragdoll:GetPhysicsObject()
+
+			if IsValid(phys) then
+				phys:Wake()
+
+				local explosionPos = myPos
+				local dir = (ragdoll:WorldSpaceCenter() - explosionPos):GetNormalized()
+				local force = math.Clamp(DMG_BLAST, 50, 500) * math.random(-256, 256)
+
+				phys:SetVelocity(dir * force * 30)
+				phys:AddAngleVelocity(VectorRand() * 8000)
+			end
 		end
 	end
 end

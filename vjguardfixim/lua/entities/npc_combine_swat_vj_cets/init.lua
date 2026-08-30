@@ -213,7 +213,6 @@ function ENT:DriveThink()
 	}
 
 	for k,ent_wheel in pairs(wheels) do
-
 		local poseparam_name = "vehicle_wheel_" .. k .. "_spin"
 		local poseparam_add = ent_wheel:GetPhysicsObject():GetAngleVelocity().z*0.06
 			if k == "fr" or k == "rr" then

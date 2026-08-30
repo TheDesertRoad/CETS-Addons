@@ -73,11 +73,12 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	corpseEnt:Remove()
 	local myPos = self:GetPos()
 	VJ.EmitSound(self, "weapons/explode" .. math.random(3, 4) .. ".wav", 100, 100)
-		local effectdata = EffectData()
-		effectdata:SetOrigin(self:GetPos())
-		effectdata:SetScale( 800 )
-		util.Effect( "Explosion", effectdata )
-		util.Effect( "Explosion", effectdata )
+
+	local effectdata = EffectData()
+	effectdata:SetOrigin(self:GetPos())
+	effectdata:SetScale( 800 )
+	util.Effect( "Explosion", effectdata )
+	util.Effect( "Explosion", effectdata )
 
 	local gibphys1 = ents.Create("prop_physics")
 		gibphys1:SetPos(self:GetPos() + self:GetUp()*120)
@@ -85,6 +86,9 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		gibphys1:SetAngles(self:GetAngles())
 		gibphys1:Ignite(16)
 		gibphys1:SetSkin(self:GetSkin())
+
+		CETS.RegisterTankDeathDebris(gibphys1)
+
 		gibphys1:Spawn()
 		gibphys1:Activate()
 
@@ -104,6 +108,9 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib1 = ents.Create("prop_physics")
 		self.APCGib1:SetModel("models/gibs/metal_gib" .. math.random(1, 5) .. ".mdl")
 		self.APCGib1:SetPos(myPos)
+
+		CETS.RegisterTankDeathDebris(self.APCGib1)
+
 		self.APCGib1:Ignite(math.random(4, 16))
 		self.APCGib1:Spawn()
 		CleanupGib(self.APCGib1)
@@ -126,6 +133,9 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib2:SetModel("models/props_wasteland/gear01.mdl")
 		self.APCGib2:SetPos(myPos)
 		self.APCGib2:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+
+		CETS.RegisterTankDeathDebris(self.APCGib2)
+
 		self.APCGib2:Ignite(math.random(4, 16))
 		self.APCGib2:Spawn()
 		CleanupGib(self.APCGib2)
@@ -148,9 +158,13 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib2b:SetModel("models/props_c17/oildrumchunk01" .. string.char(math.random(string.byte("a"), string.byte("e"))) .. ".mdl")
 		self.APCGib2b:SetPos(myPos)
 		self.APCGib2b:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+
+		CETS.RegisterTankDeathDebris(self.APCGib2b)
+
 		self.APCGib2b:Ignite(math.random(4, 16))
 		self.APCGib2b:Spawn()
 		CleanupGib(self.APCGib2b)
+
 
 		local phys = self.APCGib2b:GetPhysicsObject()
 		if IsValid(phys) then
@@ -170,6 +184,9 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib3:SetModel("models/props_c17/trappropeller_engine.mdl")
 		self.APCGib3:SetPos(myPos)
 		self.APCGib3:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+
+		CETS.RegisterTankDeathDebris(self.APCGib3)
+
 		self.APCGib3:Ignite(math.random(8, 16))
 		self.APCGib3:Spawn()
 		CleanupGib(self.APCGib3)
@@ -195,6 +212,8 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 		self.APCGib4:Spawn()
 		self.APCGib4:Ignite(math.random(8, 16))
 		self.APCGib4:SetColor(Color(90, 90, 90, 90))
+
+		CETS.RegisterTankDeathDebris(self.APCGib4)
 
 		local phys = self.APCGib4:GetPhysicsObject()
 		if IsValid(phys) then
