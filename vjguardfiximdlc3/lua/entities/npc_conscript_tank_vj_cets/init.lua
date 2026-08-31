@@ -77,6 +77,9 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	local effectdata = EffectData()
 	effectdata:SetOrigin(self:GetPos())
 	effectdata:SetScale( 800 )
+
+	self:SetSkin(5)
+
 	util.Effect( "Explosion", effectdata )
 	util.Effect( "Explosion", effectdata )
 

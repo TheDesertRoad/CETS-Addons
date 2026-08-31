@@ -504,6 +504,14 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	effectdata:SetOrigin(myPos)
 	effectdata:SetScale(800)
 
+	local flags = self:GetSpawnFlags()
+
+	if bit.band(flags, 128) ~= 0 or self:HasSpawnFlags(128) then
+		self:SetSkin(4)
+	else
+		self:SetSkin(3)
+	end
+
 	util.Effect("Explosion", effectdata)
 	util.Effect("Explosion", effectdata)
 
